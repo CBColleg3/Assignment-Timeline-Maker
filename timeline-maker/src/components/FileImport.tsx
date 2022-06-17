@@ -9,7 +9,18 @@ import { updateFunctionTypeNode } from "typescript";
 //xml file reader
 //import XMLParser from 'react-xml-parser';
 
-export function FileImport(): JSX.Element {
+export function FileImport({
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate
+}:{
+  startDate: Date;
+  setStartDate: (startDate: Date) => void;
+  endDate: Date;
+  setEndDate: (endDate: Date) => void;
+
+}): JSX.Element {
   //State
   const [content, setContent] = useState<string>("No file data uploaded");
   const [importVisible, setImportVisible] = useState<boolean>(false);
@@ -39,8 +50,9 @@ export function FileImport(): JSX.Element {
 
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length) {
-      if (!event.target.files) return;
+      //if (!event.target.files) return;
       const points = findPoints(findParts(readFile(event.target.files)));
+      setTimelineVisible(true);
       console.log(points);
     }
   }
@@ -100,44 +112,31 @@ export function FileImport(): JSX.Element {
     });
   }
 
-  function readDocument({ content }: { content: string }) {
-    setTimelineVisible(true);
-  }
-
   //View
   return (
     <div>
-      <Button
-        onClick={() => setImportVisible(!importVisible)}
-        style={{ marginRight: "5px", marginTop: "5px" }}
-        data-testId="show-hide-import-button"
-      >
-        Import CSV
-      </Button>
-      {importVisible && (
         <div>
+          <p>
           <Form.Group controlId="exampleForm">
-            <Form.Label>Upload a file</Form.Label>
-            <Form.Control type="file" onChange={handleFileInput} />
+            <h2>            <Form.Label>Upload a document</Form.Label></h2>
+
+            <p><Form.Control type="file" onChange={handleFileInput} /> </p>
           </Form.Group>
-          <Button
-            data-testId="import-button"
-            onClick={() => readDocument({ content })}
-            style={{
-              marginTop: "5px",
-            }}
-          >
-            Import
-          </Button>
           {/*<div>{/*content}</div> */}
+
+          </p>
+
         </div>
-      )}
       {timelineVisible && (
         <div>
           {" "}
           <Timeline
             ptsArray={ptsArray}
             setPtsArray={setPtsArray}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
           ></Timeline>{" "}
         </div>
       )}

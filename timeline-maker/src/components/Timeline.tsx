@@ -4,11 +4,19 @@ import 'react-vertical-timeline-component/style.min.css';
 
 export function Timeline({
     ptsArray,
-    setPtsArray
+    setPtsArray,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate
 
 }: {
     ptsArray: string[];
     setPtsArray: (ptsArray: string[]) => void;
+    startDate: Date;
+    setStartDate: (startDate: Date) => void;
+    endDate: Date;
+    setEndDate: (endDate: Date) => void;
 
 }): JSX.Element {
 
@@ -32,6 +40,11 @@ export function Timeline({
 
     }
 
+    function calcHours(pts: number[], index: number): number {
+        let dayArray: number[] = [...pts];
+        return dayArray[index];
+    }
+
 
 
     //Return
@@ -47,7 +60,7 @@ export function Timeline({
                         iconStyle={{ background: 'rgb(160, 16, 82)', color: '#fff' }}
                     >
                         <h3 className="vertical-timeline-element-title">Lets start the Assignment!</h3>
-                        <h4 className="vertical-timeline-element-title">Due Date </h4>
+                        <h4 className="vertical-timeline-element-title">Due Date: {endDate.toLocaleDateString()}{" "}{endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} </h4>
                     </VerticalTimelineElement>
 
                     {[...Array(ptsArray.length)].map((elementInArray, index) => (
@@ -56,7 +69,8 @@ export function Timeline({
                         iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff'  }} 
                         date="2011 - present"
                         >   
-                            <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3> 
+                            <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3>
+                            <h4>{ptsArray[index]} Points</h4> 
                         
                         </VerticalTimelineElement>
                      
