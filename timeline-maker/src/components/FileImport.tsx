@@ -48,7 +48,7 @@ export function FileImport(): JSX.Element {
   function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
     // accepts list of files from event
     // returns string of word/document.xml file
-    const myFile: File = fileList[0];
+    const myFile: File = fileList![0];
     const jsZip = new JSZip();
     const stringText = "";
     console.log(fileList);
