@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
+import { start } from 'repl';
 
 export function Timeline({
     ptsArray,
@@ -19,6 +20,20 @@ export function Timeline({
     setEndDate: (endDate: Date) => void;
 
 }): JSX.Element {
+
+    //State
+    const [completeDay, setCompleteDay] = useState<number>(1);
+
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    // a and b are javascript Date objects
+    function dateDiffInDays(date1: Date, date2: Date): number {
+        // Discard the time and time-zone information.
+        const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+        console.log("days:" + Math.floor((utc2 - utc1) / _MS_PER_DAY));
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    }
 
 
     function calcTotalPoints(pts: string[]): number {
@@ -40,9 +55,18 @@ export function Timeline({
 
     }
 
-    function calcHours(pts: number[], index: number): number {
-        let dayArray: number[] = [...pts];
-        return dayArray[index];
+    function calcDays(pts: string[], totalDays:number, totalPoints:number): string {
+       // let dayCount: number = 1;
+        let taskperDay: number = totalDays / totalPoints;
+        let dayArray: number[] = [...pts].map(Number);
+        for(let i = 0; i < dayArray.length - 1; i++) {
+            if(dayArray[i] + dayArray[i + 1] >= taskperDay) {
+                setCompleteDay(completeDay + 1);
+                break;
+            }
+        }
+        console.log("Day" + completeDay.toString());
+        return "Day " + completeDay.toString();
     }
 
 
@@ -67,8 +91,9 @@ export function Timeline({
                         <div className="vertical-timeline-element--work" key={index}>  
                         <VerticalTimelineElement 
                         iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff'  }} 
-                        date="2011 - present"
+                        date="Day to complete"
                         >   
+
                             <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3>
                             <h4>{ptsArray[index]} Points</h4> 
                         
