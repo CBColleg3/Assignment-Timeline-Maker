@@ -22,7 +22,7 @@ export function Timeline({
 }): JSX.Element {
 
     //State
-    const [completeDay, setCompleteDay] = useState<number>(1);
+    //const [completeDay, setCompleteDay] = useState<number>(1);
 
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -55,18 +55,21 @@ export function Timeline({
 
     }
 
-    function calcDays(pts: string[], totalDays:number, totalPoints:number): string {
-       // let dayCount: number = 1;
-        let taskperDay: number = totalDays / totalPoints;
+    function calcDays(pts: string[], index: number, totalDays:number, totalPoints:number): string {
+        let dayCount: number = 1;  
+        let daySum: number = 0;
+        let pointsperDay: number = Math.ceil(totalPoints / totalDays);
         let dayArray: number[] = [...pts].map(Number);
-        for(let i = 0; i < dayArray.length - 1; i++) {
-            if(dayArray[i] + dayArray[i + 1] >= taskperDay) {
-                setCompleteDay(completeDay + 1);
-                break;
+        for(let i = 0; i <= index; i++) {
+            daySum += dayArray[i];
+            if(daySum >= pointsperDay) {
+                dayCount++;
+                daySum = 0;
             }
         }
-        console.log("Day" + completeDay.toString());
-        return "Day " + completeDay.toString();
+        console.log("taskPerDay:" + pointsperDay);
+        console.log("Day" + dayCount.toString());
+        return "Day " + dayCount.toString();
     }
 
 
@@ -91,11 +94,11 @@ export function Timeline({
                         <div className="vertical-timeline-element--work" key={index}>  
                         <VerticalTimelineElement 
                         iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff'  }} 
-                        date="Day to complete"
                         >   
 
                             <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3>
                             <h4>{ptsArray[index]} Points</h4> 
+                            <p>{calcDays(ptsArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(ptsArray))}</p>
                         
                         </VerticalTimelineElement>
                      
