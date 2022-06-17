@@ -1,3 +1,7 @@
+# CREDIT TO ORIGINAL PROJECT - Special Thanks to Kristina Holsapple! 
+https://github.com/krishols/ss-timeline
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
