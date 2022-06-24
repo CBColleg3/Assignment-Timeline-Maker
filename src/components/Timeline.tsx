@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { start } from 'repl';
+//import { start } from 'repl';
 
 export function Timeline({
     ptsArray,
@@ -72,6 +73,38 @@ export function Timeline({
         return "Day " + dayCount.toString();
     }
 
+    function MoveUp(index: number) {
+        const modifiedPtsArr = [...ptsArray];
+        if(index > 0) {
+            const tmpPts = modifiedPtsArr[index];
+            modifiedPtsArr[index] = modifiedPtsArr[index - 1];
+            modifiedPtsArr[index - 1] = tmpPts;
+        }
+        setPtsArray(modifiedPtsArr);
+    }
+
+    function MoveDown(index: number) {
+        const modifiedPtsArr = [...ptsArray];
+        if(index < modifiedPtsArr.length - 1) {
+            const tmpPts = modifiedPtsArr[index];
+            modifiedPtsArr[index] = modifiedPtsArr[index + 1];
+            modifiedPtsArr[index + 1] = tmpPts;
+        }
+        setPtsArray(modifiedPtsArr);
+    }
+
+    function AddPart(index: number) {
+        const modifiedPtsArr = [...ptsArray];
+        modifiedPtsArr.splice(index + 1, 0, "0");
+        setPtsArray(modifiedPtsArr);
+    }
+
+    function RemovePart(index: number) {
+        const modifiedPtsArr = [...ptsArray];
+        modifiedPtsArr.splice(index, 1);
+        setPtsArray(modifiedPtsArr);
+    }
+
 
 
     //Return
@@ -93,12 +126,17 @@ export function Timeline({
                     {[...Array(ptsArray.length)].map((elementInArray, index) => (
                         <div className="vertical-timeline-element--work" key={index}>  
                         <VerticalTimelineElement 
-                        iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff'  }} 
+                        iconStyle={{ background: `rgb(${ptsArray[index]},0,0)`, color: '#fff'  }} 
                         >   
 
+                            rgb: {`rgb(${ptsArray[index]},0,0)`}
                             <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3>
                             <h4>{ptsArray[index]} Points</h4> 
                             <p>{calcDays(ptsArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(ptsArray))}</p>
+                            <Button onClick={() => AddPart(index)}>Add Part</Button>
+                            <Button onClick={() => RemovePart(index)}>Remove Part</Button>
+                            <Button onClick={() => MoveUp(index)}>▲</Button>
+                            <Button onClick={() => MoveDown(index)}>▼</Button>
                         
                         </VerticalTimelineElement>
                      
