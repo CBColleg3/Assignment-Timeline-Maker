@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
-import {FileImport} from "./FileImport"
+import { FileImport } from "./FileImport";
 
 export function SetDateTime(): JSX.Element {
 
@@ -8,9 +8,6 @@ export function SetDateTime(): JSX.Element {
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [endDate, setEndDate] = useState<Date>(new Date());
 
-    //Component
-
-    //Return
     return (
         <div>
             <div>

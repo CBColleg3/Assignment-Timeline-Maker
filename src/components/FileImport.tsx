@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import JSZip from "jszip";
-import { Button, Col, Row, Form, Container } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Timeline } from "./Timeline";
-
-//axios for xml request
-import axios from "axios";
-import { updateFunctionTypeNode } from "typescript";
-//xml file reader
-//import XMLParser from 'react-xml-parser';
 
 export function FileImport({
   startDate,
@@ -62,7 +56,7 @@ export function FileImport({
     // returns string of word/document.xml file
     const myFile: File = fileList![0];
     const jsZip = new JSZip();
-    const stringText = "";
+    //const stringText = "";
     console.log(fileList);
     return jsZip.loadAsync(myFile).then((zip) => {
       return zip.files["word/document.xml"].async("string");
@@ -85,6 +79,7 @@ export function FileImport({
       return total;
     });
   }
+
   function findPoints(cleanedText: Promise<any>): Promise<any> {
     // accepts string of text from document.xml
     // returns array of point values found in document
