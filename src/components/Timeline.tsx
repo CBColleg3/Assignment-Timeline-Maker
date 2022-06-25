@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import { Task } from '../templates/task';
 import 'react-vertical-timeline-component/style.min.css';
 //import { start } from 'repl';
 
 export function Timeline({
-    ptsArray,
-    setPtsArray,
+    taskArray,
+    setTaskArray,
     startDate,
     setStartDate,
     endDate,
     setEndDate
 
 }: {
-    ptsArray: string[];
-    setPtsArray: (ptsArray: string[]) => void;
+    taskArray: Task[];
+    setTaskArray: (taskArray: Task[]) => void;
     startDate: Date;
     setStartDate: (startDate: Date) => void;
     endDate: Date;
@@ -37,11 +38,11 @@ export function Timeline({
     }
 
 
-    function calcTotalPoints(pts: string[]): number {
+    function calcTotalPoints(tasks: Task[]): number {
         // calculates total points in assignment given
         let total = 0;
-        for (let i = 0; i < pts.length; i++) {
-            total += parseInt(pts[i], 10);
+        for (let i = 0; i < tasks.length; i++) {
+            total += parseInt(tasks[i].points, 10);
         }
         console.log("totalPoints:", total);
         return total;
@@ -56,11 +57,11 @@ export function Timeline({
 
     }
 
-    function calcDays(pts: string[], index: number, totalDays:number, totalPoints:number): string {
+    function calcDays(tasks: Task[], index: number, totalDays:number, totalPoints:number): string {
         let dayCount: number = 1;  
         let daySum: number = 0;
         let pointsperDay: number = Math.ceil(totalPoints / totalDays);
-        let dayArray: number[] = [...pts].map(Number);
+        let dayArray: number[] = [...tasks].map(task => task.points).map(Number);
         for(let i = 0; i <= index; i++) {
             daySum += dayArray[i];
             if(daySum >= pointsperDay) {
@@ -74,35 +75,35 @@ export function Timeline({
     }
 
     function MoveUp(index: number) {
-        const modifiedPtsArr = [...ptsArray];
+        const modifiedPtsArr = [...taskArray];
         if(index > 0) {
             const tmpPts = modifiedPtsArr[index];
             modifiedPtsArr[index] = modifiedPtsArr[index - 1];
             modifiedPtsArr[index - 1] = tmpPts;
         }
-        setPtsArray(modifiedPtsArr);
+        setTaskArray(modifiedPtsArr);
     }
 
     function MoveDown(index: number) {
-        const modifiedPtsArr = [...ptsArray];
+        const modifiedPtsArr = [...taskArray];
         if(index < modifiedPtsArr.length - 1) {
             const tmpPts = modifiedPtsArr[index];
             modifiedPtsArr[index] = modifiedPtsArr[index + 1];
             modifiedPtsArr[index + 1] = tmpPts;
         }
-        setPtsArray(modifiedPtsArr);
+        setTaskArray(modifiedPtsArr);
     }
 
     function AddPart(index: number) {
-        const modifiedPtsArr = [...ptsArray];
-        modifiedPtsArr.splice(index + 1, 0, "0");
-        setPtsArray(modifiedPtsArr);
+        const modifiedTaskArr = [...taskArray];
+        modifiedTaskArr.splice(index + 1, 0,{ name: "Swag", document: "Uh Oh", points: "0", color: 0});
+        setTaskArray(modifiedTaskArr);
     }
 
     function RemovePart(index: number) {
-        const modifiedPtsArr = [...ptsArray];
+        const modifiedPtsArr = [...taskArray];
         modifiedPtsArr.splice(index, 1);
-        setPtsArray(modifiedPtsArr);
+        setTaskArray(modifiedPtsArr);
     }
 
 
@@ -111,7 +112,7 @@ export function Timeline({
     return (
         <>
             <div>
-                <VerticalTimeline>
+                <VerticalTimeline layout="2-columns">
                     <VerticalTimelineElement
                         className="vertical-timeline-element--work"
                         contentStyle={{ background: 'rgb(160, 16, 82)', color: '#fff' }}
@@ -123,24 +124,22 @@ export function Timeline({
                         <h4 className="vertical-timeline-element-title">Due Date: {endDate.toLocaleDateString()}{" "}{endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} </h4>
                     </VerticalTimelineElement>
 
-                    {[...Array(ptsArray.length)].map((elementInArray, index) => (
-                        <div className="vertical-timeline-element--work" key={index}>  
-                        <VerticalTimelineElement 
-                        iconStyle={{ background: `rgb(${ptsArray[index]},0,0)`, color: '#fff'  }} 
-                        >   
+                    {[...Array(taskArray.length)].map((elementInArray, index) => (
 
-                            rgb: {`rgb(${ptsArray[index]},0,0)`}
-                            <h3 className="vertical-timeline-element-title">Finish Part {index + 1}</h3>
-                            <h4>{ptsArray[index]} Points</h4> 
-                            <p>{calcDays(ptsArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(ptsArray))}</p>
-                            <Button onClick={() => AddPart(index)}>Add Part</Button>
-                            <Button onClick={() => RemovePart(index)}>Remove Part</Button>
+                        <VerticalTimelineElement 
+                        className='vertical-timeline-element--work'
+                        date={calcDays(taskArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(taskArray))}
+                        iconStyle={{ background: `rgb(${taskArray[index].color + 100},100,150)`, color: '#fff'  }} 
+                        >   
+                            <h3 className="vertical-timeline-element-title">Finish Task {index + 1}</h3>
+                            <h5>{taskArray[index].document}</h5>
+                            <h4>{taskArray[index].points} Points</h4> 
+                            <Button onClick={() => AddPart(index)}>Add Task</Button>
+                            <Button onClick={() => RemovePart(index)}>RemoveTask</Button>
                             <Button onClick={() => MoveUp(index)}>▲</Button>
                             <Button onClick={() => MoveDown(index)}>▼</Button>
                         
                         </VerticalTimelineElement>
-                     
-                        </div>
                     )
                     )}
                     <VerticalTimelineElement                       
@@ -153,7 +152,7 @@ export function Timeline({
 
             </div>
             <div>
-                {ptsArray.length}
+                {taskArray.length}
 
                 
             </div>
