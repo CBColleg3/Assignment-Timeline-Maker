@@ -125,22 +125,21 @@ export function Timeline({
                     </VerticalTimelineElement>
 
                     {[...Array(taskArray.length)].map((elementInArray, index) => (
-                        <div className="vertical-timeline-element--work" key={index}>  
+
                         <VerticalTimelineElement 
+                        className='vertical-timeline-element--work'
+                        date={calcDays(taskArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(taskArray))}
                         iconStyle={{ background: `rgb(${taskArray[index].color + 100},100,150)`, color: '#fff'  }} 
                         >   
                             <h3 className="vertical-timeline-element-title">Finish Task {index + 1}</h3>
                             <h5>{taskArray[index].document}</h5>
                             <h4>{taskArray[index].points} Points</h4> 
-                            <p>{calcDays(taskArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(taskArray))}</p>
                             <Button onClick={() => AddPart(index)}>Add Task</Button>
                             <Button onClick={() => RemovePart(index)}>RemoveTask</Button>
                             <Button onClick={() => MoveUp(index)}>▲</Button>
                             <Button onClick={() => MoveDown(index)}>▼</Button>
                         
                         </VerticalTimelineElement>
-                     
-                        </div>
                     )
                     )}
                     <VerticalTimelineElement                       
