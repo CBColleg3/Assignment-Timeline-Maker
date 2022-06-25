@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import { Timeline } from "./Timeline";
+import { Task } from '../templates/task';
 
 export function FileImport({
   startDate,
@@ -19,7 +20,7 @@ export function FileImport({
   const [content, setContent] = useState<string>("No file data uploaded");
   const [importVisible, setImportVisible] = useState<boolean>(false);
   const [timelineVisible, setTimelineVisible] = useState<boolean>(false);
-  const [ptsArray, setPtsArray] = useState<string[]>([]);
+  const [taskArray, setTaskArray] = useState<Task[]>([]);
  // let ptArray: string[] = [];
 
   //Control
@@ -83,8 +84,9 @@ export function FileImport({
   function findPoints(cleanedText: Promise<any>): Promise<any> {
     // accepts string of text from document.xml
     // returns array of point values found in document
+    let tasks: Task[] = [];
     let tempArray;
-    let ptsArrayClone: string[] = [];
+    //let ptsArrayClone: string[] = [];
     const resultsArray: string[] = [];
     const re = new RegExp("\\d\\d?\\s?(points?|pts?)", "g");
     const reNum = new RegExp("\\d*");
@@ -97,13 +99,22 @@ export function FileImport({
         tempArray = re.exec(txt);
       }
       for (const elem of resultsArray) {
-        ptsArrayClone.push(reNum.exec(elem)![0]);
+       // ptsArrayClone.push(reNum.exec(elem)![0]);
+        tasks.push(
+          {
+            name: "Swag",
+            document: "Hi",
+            points: reNum.exec(elem)![0],
+            color: parseInt(reNum.exec(elem)![0]) * 5
+          }
+        );
       }
       console.log("resultsArray", resultsArray);
-      setPtsArray(ptsArrayClone);
-      console.log(ptsArray);
-      console.log(ptsArray.length);
-      return ptsArray;
+
+      setTaskArray(tasks);
+      console.log(taskArray);
+      console.log(taskArray.length);
+      return taskArray;
     });
   }
 
@@ -126,8 +137,8 @@ export function FileImport({
         <div>
           {" "}
           <Timeline
-            ptsArray={ptsArray}
-            setPtsArray={setPtsArray}
+            taskArray={taskArray}
+            setTaskArray={setTaskArray}
             startDate={startDate}
             setStartDate={setStartDate}
             endDate={endDate}
