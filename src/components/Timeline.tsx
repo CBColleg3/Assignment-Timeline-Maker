@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+//import { Button } from 'react-bootstrap';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import { Task } from '../templates/task';
 import 'react-vertical-timeline-component/style.min.css';
+import { AddRemoveTask } from './AddRemoveTask';
 //import { start } from 'repl';
 
+
+/**
+ * Generates vertical timeline with tasks and calculates days to complete tasks
+ */
 export function Timeline({
     taskArray,
     setTaskArray,
@@ -26,9 +31,15 @@ export function Timeline({
     //State
     //const [completeDay, setCompleteDay] = useState<number>(1);
 
+    //Milliseconds per day
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-    // a and b are javascript Date objects
+    /**
+     *This function calculates the numerical difference between date 1 and date 2 
+     * @param date1 first day, usually the Start Date
+     * @param date2 second day, usually the End Date
+     * @returns 
+     */
     function dateDiffInDays(date1: Date, date2: Date): number {
         // Discard the time and time-zone information.
         const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
@@ -38,6 +49,11 @@ export function Timeline({
     }
 
 
+    /**
+     * This function calculates the tota; amount of points in the document
+     * @param tasks array of tasks state
+     * @returns 
+     */
     function calcTotalPoints(tasks: Task[]): number {
         // calculates total points in assignment given
         let total = 0;
@@ -47,16 +63,18 @@ export function Timeline({
         console.log("totalPoints:", total);
         return total;
     }
-    function calcWeight(pts: number[], days: number, total: number): number[] {
-        // calculates number of days to spend on each part of timeline
-        let weightedPoints: number[] = [...pts];
-        for (let i = 0; i < weightedPoints.length; i++) {
-            weightedPoints[i] = (weightedPoints[i] / total) * days
-        }
-        return weightedPoints;
 
-    }
 
+    /**
+     * This function calculates the day that a task should be completed on and returns a string
+     * It calculates it by counting up until the index number given, and adding the sum for each arrayValue
+     * and if the sum ever exceeds the pointsperDay, then the Day goes up, rinse and repeat for all tasks.
+     * @param tasks array of tasks
+     * @param index current task function is on
+     * @param totalDays totalDays given
+     * @param totalPoints totalPoints calculated
+     * @returns 
+     */
     function calcDays(tasks: Task[], index: number, totalDays:number, totalPoints:number): string {
         let dayCount: number = 1;  
         let daySum: number = 0;
@@ -69,46 +87,10 @@ export function Timeline({
                 daySum = 0;
             }
         }
-        console.log("taskPerDay:" + pointsperDay);
-        console.log("Day" + dayCount.toString());
         return "Day " + dayCount.toString();
     }
 
-    function MoveUp(index: number) {
-        const modifiedPtsArr = [...taskArray];
-        if(index > 0) {
-            const tmpPts = modifiedPtsArr[index];
-            modifiedPtsArr[index] = modifiedPtsArr[index - 1];
-            modifiedPtsArr[index - 1] = tmpPts;
-        }
-        setTaskArray(modifiedPtsArr);
-    }
 
-    function MoveDown(index: number) {
-        const modifiedPtsArr = [...taskArray];
-        if(index < modifiedPtsArr.length - 1) {
-            const tmpPts = modifiedPtsArr[index];
-            modifiedPtsArr[index] = modifiedPtsArr[index + 1];
-            modifiedPtsArr[index + 1] = tmpPts;
-        }
-        setTaskArray(modifiedPtsArr);
-    }
-
-    function AddPart(index: number) {
-        const modifiedTaskArr = [...taskArray];
-        modifiedTaskArr.splice(index + 1, 0,{ name: "Swag", document: "Uh Oh", points: "0", color: 0});
-        setTaskArray(modifiedTaskArr);
-    }
-
-    function RemovePart(index: number) {
-        const modifiedPtsArr = [...taskArray];
-        modifiedPtsArr.splice(index, 1);
-        setTaskArray(modifiedPtsArr);
-    }
-
-
-
-    //Return
     return (
         <>
             <div>
@@ -134,10 +116,7 @@ export function Timeline({
                             <h3 className="vertical-timeline-element-title">Finish Task {index + 1}</h3>
                             <h5>{taskArray[index].document}</h5>
                             <h4>{taskArray[index].points} Points</h4> 
-                            <Button onClick={() => AddPart(index)}>Add Task</Button>
-                            <Button onClick={() => RemovePart(index)}>RemoveTask</Button>
-                            <Button onClick={() => MoveUp(index)}>▲</Button>
-                            <Button onClick={() => MoveDown(index)}>▼</Button>
+                            <AddRemoveTask taskArray={taskArray} setTaskArray={setTaskArray} index={index}></AddRemoveTask>
                         
                         </VerticalTimelineElement>
                     )

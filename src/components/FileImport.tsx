@@ -4,6 +4,9 @@ import { Form } from "react-bootstrap";
 import { Timeline } from "./Timeline";
 import { Task } from '../templates/task';
 
+/**
+ * Used for importing .xml files into the website. also updates taskArray.
+ */
 export function FileImport({
   startDate,
   setStartDate,
@@ -17,32 +20,14 @@ export function FileImport({
 
 }): JSX.Element {
   //State
-  const [content, setContent] = useState<string>("No file data uploaded");
-  const [importVisible, setImportVisible] = useState<boolean>(false);
+  //const [content, setContent] = useState<string>("No file data uploaded");
   const [timelineVisible, setTimelineVisible] = useState<boolean>(false);
   const [taskArray, setTaskArray] = useState<Task[]>([]);
- // let ptArray: string[] = [];
 
-  //Control
-  function uploadFile(event: React.ChangeEvent<HTMLInputElement>) {
-    // Might have removed the file, need to check that the files exist
-    if (event.target.files && event.target.files.length) {
-      // Get the first filename
-      const filename = event.target.files[0];
-      // Create a reader
-      const reader = new FileReader();
-      // Create lambda callback to handle when we read the file
-      reader.onload = (loadEvent) => {
-        // Target might be null, so provide default error value
-        const newContent = loadEvent.target?.result || "Data was not loaded";
-        // FileReader provides string or ArrayBuffer, force it to be string
-        setContent(newContent as string);
-      };
-      // Actually read the file
-      reader.readAsText(filename);
-    }
-  }
-
+  /**
+   * This function finds the amount of points, and parts of a document that it reads via the readFile function
+   * @param event react event
+   */
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
@@ -52,6 +37,11 @@ export function FileImport({
     }
   }
 
+  /**
+   * This function loads in the focument via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
+   * @param fileList fileList to read from
+   * @returns 
+   */
   function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
     // accepts list of files from event
     // returns string of word/document.xml file
@@ -64,9 +54,13 @@ export function FileImport({
     });
   }
 
+  /**
+   *accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
+   * @param fileText documentText used for finding parts
+   * @returns 
+   */
   function findParts(fileText: Promise<any>): Promise<any> {
-    // accepts string of document.xml and locates 'w:t' tags containing text
-    // returns string of text contained in document.xml
+    // 
     return fileText.then((txt) => {
       const parser = new DOMParser();
       const textDoc = parser.parseFromString(txt, "text/xml");
@@ -76,11 +70,17 @@ export function FileImport({
         total += textArray[i].childNodes[0].nodeValue;
       }
       console.log(total);
-      setContent(total as string);
+      //setContent(total as string);
       return total;
     });
   }
 
+    /**
+   * this function uses regex to find all of the words that say "points, pt, pts, or point" and gets the numerical number infront of them
+   * to make an array of pointValues, this is then put into a taskObject to make an array of tasks.
+   * @param fileText documentText used for finding points
+   * @returns 
+   */
   function findPoints(cleanedText: Promise<any>): Promise<any> {
     // accepts string of text from document.xml
     // returns array of point values found in document
@@ -99,7 +99,6 @@ export function FileImport({
         tempArray = re.exec(txt);
       }
       for (const elem of resultsArray) {
-       // ptsArrayClone.push(reNum.exec(elem)![0]);
         tasks.push(
           {
             name: "Swag",
@@ -118,7 +117,6 @@ export function FileImport({
     });
   }
 
-  //View
   return (
     <div>
         <div>
