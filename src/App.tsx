@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from "react";
 //import logo from './logo.svg';
-import './App.css';
-import {SetDateTime} from "./components/SetDateTime"
-
-
+import "./App.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { Timeline } from "./components/Timeline";
 
 function App() {
-
-  
   return (
     <div className="Timeline-site">
       <header className="App-header">
-        <p>
-          Assignment Timeline Maker
-        </p>
+        <p>Assignment Timeline Maker</p>
       </header>
-      <SetDateTime></SetDateTime>
+      <Timeline></Timeline>
     </div>
   );
 }
