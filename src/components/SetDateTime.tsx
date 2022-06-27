@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import { FileImport } from "./FileImport";
 
+/**
+ * Set Date and Time components on the timeline
+ */
 export function SetDateTime(): JSX.Element {
 
     //State
