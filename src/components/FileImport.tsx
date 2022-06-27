@@ -1,28 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
-import { Timeline } from "./Timeline";
-import { Task } from '../templates/task';
+import { Task } from "../templates/task";
 
 /**
  * Used for importing .xml files into the website. also updates taskArray.
  */
 export function FileImport({
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate
-}:{
-  startDate: Date;
-  setStartDate: (startDate: Date) => void;
-  endDate: Date;
-  setEndDate: (endDate: Date) => void;
-
+  taskArray,
+  setTaskArray,
+  fileImported,
+  setFileImported,
+}: {
+  taskArray: Task[];
+  setTaskArray: (taskArray: Task[]) => void;
+  fileImported: boolean;
+  setFileImported: (timelineVisible: boolean) => void;
 }): JSX.Element {
   //State
   //const [content, setContent] = useState<string>("No file data uploaded");
-  const [timelineVisible, setTimelineVisible] = useState<boolean>(false);
-  const [taskArray, setTaskArray] = useState<Task[]>([]);
 
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -32,7 +28,7 @@ export function FileImport({
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
       const points = findPoints(findParts(readFile(event.target.files)));
-      setTimelineVisible(true);
+      setFileImported(true);
       console.log(points);
     }
   }
@@ -40,7 +36,7 @@ export function FileImport({
   /**
    * This function loads in the focument via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
    * @param fileList fileList to read from
-   * @returns 
+   * @returns
    */
   function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
     // accepts list of files from event
@@ -57,10 +53,10 @@ export function FileImport({
   /**
    *accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
    * @param fileText documentText used for finding parts
-   * @returns 
+   * @returns
    */
   function findParts(fileText: Promise<any>): Promise<any> {
-    // 
+    //
     return fileText.then((txt) => {
       const parser = new DOMParser();
       const textDoc = parser.parseFromString(txt, "text/xml");
@@ -75,11 +71,11 @@ export function FileImport({
     });
   }
 
-    /**
+  /**
    * this function uses regex to find all of the words that say "points, pt, pts, or point" and gets the numerical number infront of them
    * to make an array of pointValues, this is then put into a taskObject to make an array of tasks.
    * @param fileText documentText used for finding points
-   * @returns 
+   * @returns
    */
   function findPoints(cleanedText: Promise<any>): Promise<any> {
     // accepts string of text from document.xml
@@ -99,14 +95,12 @@ export function FileImport({
         tempArray = re.exec(txt);
       }
       for (const elem of resultsArray) {
-        tasks.push(
-          {
-            name: "Swag",
-            document: "Hi",
-            points: reNum.exec(elem)![0],
-            color: parseInt(reNum.exec(elem)![0]) * 5
-          }
-        );
+        tasks.push({
+          name: "Swag",
+          document: "Hi",
+          points: reNum.exec(elem)![0],
+          color: parseInt(reNum.exec(elem)![0]) * 5,
+        });
       }
       console.log("resultsArray", resultsArray);
 
@@ -119,31 +113,21 @@ export function FileImport({
 
   return (
     <div>
-        <div>
-          <p>
+      <div>
+        <p>
           <Form.Group controlId="exampleForm">
-            <h2>            <Form.Label>Upload a document</Form.Label></h2>
+            <h2>
+              {" "}
+              <Form.Label>Upload a document</Form.Label>
+            </h2>
 
-            <p><Form.Control type="file" onChange={handleFileInput} /> </p>
+            <p>
+              <Form.Control type="file" onChange={handleFileInput} />{" "}
+            </p>
           </Form.Group>
           {/*<div>{/*content}</div> */}
-
-          </p>
-
-        </div>
-      {timelineVisible && (
-        <div>
-          {" "}
-          <Timeline
-            taskArray={taskArray}
-            setTaskArray={setTaskArray}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-          ></Timeline>{" "}
-        </div>
-      )}
+        </p>
+      </div>
     </div>
   );
 }
