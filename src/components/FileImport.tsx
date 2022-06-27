@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
-import { Timeline } from "./Timeline";
+import { Timeline } from "./timeline/Timeline";
 import { Task } from '../templates/task';
+
+//TODO: Reorganize your imports! Why is FileImport.tsx importing Timeline? FileImport should just be for
+// importing files, nothing more nothing less...
 
 export function FileImport({
   startDate,

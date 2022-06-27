@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import { Task } from '../templates/task';
+import { Task } from '../../templates/task';
 import 'react-vertical-timeline-component/style.min.css';
 //import { start } from 'repl';
 
@@ -108,7 +108,7 @@ export function Timeline({
 
 
 
-    //Return
+    //TODO: Make this return statement smaller by making sub components! Really difficult to read, modify, and understand whats going on
     return (
         <>
             <div>
@@ -124,16 +124,17 @@ export function Timeline({
                         <h4 className="vertical-timeline-element-title">Due Date: {endDate.toLocaleDateString()}{" "}{endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} </h4>
                     </VerticalTimelineElement>
 
-                    {[...Array(taskArray.length)].map((elementInArray, index) => (
+                    //TODO: Please look at how I changed this mapping... what you did was completely unnecessary...
+                    {taskArray.map((task:Task, index:number) => (
 
                         <VerticalTimelineElement 
                         className='vertical-timeline-element--work'
                         date={calcDays(taskArray, index, dateDiffInDays(startDate, endDate), calcTotalPoints(taskArray))}
-                        iconStyle={{ background: `rgb(${taskArray[index].color + 100},100,150)`, color: '#fff'  }} 
+                        iconStyle={{ background: `rgb(${task.color + 100},100,150)`, color: '#fff'  }} 
                         >   
                             <h3 className="vertical-timeline-element-title">Finish Task {index + 1}</h3>
-                            <h5>{taskArray[index].document}</h5>
-                            <h4>{taskArray[index].points} Points</h4> 
+                            <h5>{task.document}</h5>
+                            <h4>{task.points} Points</h4> 
                             <Button onClick={() => AddPart(index)}>Add Task</Button>
                             <Button onClick={() => RemovePart(index)}>RemoveTask</Button>
                             <Button onClick={() => MoveUp(index)}>▲</Button>
