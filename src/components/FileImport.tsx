@@ -17,8 +17,6 @@ export function FileImport({
   fileImported: boolean;
   setFileImported: (timelineVisible: boolean) => void;
 }): JSX.Element {
-  //State
-  //const [content, setContent] = useState<string>("No file data uploaded");
 
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -72,8 +70,11 @@ export function FileImport({
   }
 
   /**
-   * this function uses regex to find all of the words that say "points, pt, pts, or point" and gets the numerical number infront of them
-   * to make an array of pointValues, this is then put into a taskObject to make an array of tasks.
+   * this function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon, 
+   * it then finds two or more numbers followed by the word point, pt, points, or pts shortly after the number and then ends with a 
+   * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the 
+   * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
+   * Once we find all of this we put it into a taskArray by adding each element of the captured document.
    * @param fileText documentText used for finding points
    * @returns
    */
@@ -84,26 +85,32 @@ export function FileImport({
     let tempArray;
     //let ptsArrayClone: string[] = [];
     const resultsArray: string[] = [];
-    const re = new RegExp("\\d\\d?\\s?(points?|pts?)", "g");
-    const reNum = new RegExp("\\d*");
+    const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
+    const reNum = new RegExp("\\d+\\s?(points?|pts?)");
+   // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
     return cleanedText.then((txt) => {
       tempArray = re.exec(txt);
-      //  console.log("re",re);
-      // console.log("txt:",txt);
+    //  console.log(tempArray);
       while (tempArray !== null) {
-        resultsArray.push(tempArray[0]);
+        console.log(tempArray[0]);
+        resultsArray.push(tempArray![0]);
         tempArray = re.exec(txt);
       }
       for (const elem of resultsArray) {
-        tasks.push({
-          name: "Swag",
-          document: "Hi",
-          points: reNum.exec(elem)![0],
-          color: parseInt(reNum.exec(elem)![0]) * 5,
-        });
+        if(elem != null) {
+          const num = new RegExp("(points?|pts?)");
+          console.log("this code ran");
+          tasks.push({
+            name: "Swag",
+            document: elem.toString(),
+            points: reNum.exec(elem)![0].replace(num, ""),
+            color: parseInt(reNum.exec(elem)![0]) * 5,
+          });
+          console.log(tasks);
+
+        }
       }
       console.log("resultsArray", resultsArray);
-
       setTaskArray(tasks);
       console.log(taskArray);
       console.log(taskArray.length);
@@ -125,7 +132,6 @@ export function FileImport({
               <Form.Control type="file" onChange={handleFileInput} />{" "}
             </p>
           </Form.Group>
-          {/*<div>{/*content}</div> */}
         </p>
       </div>
     </div>
