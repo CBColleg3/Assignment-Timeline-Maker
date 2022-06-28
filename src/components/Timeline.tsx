@@ -104,7 +104,6 @@ export function Timeline(): JSX.Element {
                 contentArrowStyle={{
                   borderRight: "7px solid  rgb(160, 16, 82)",
                 }}
-                date="Due Date: 2011 - present"
                 iconStyle={{ background: "rgb(160, 16, 82)", color: "#fff" }}
               >
                 <h3 className="vertical-timeline-element-title">
