@@ -2,7 +2,7 @@ import React from "react";
 //import logo from './logo.svg';
 import "./App.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { Timeline } from "./components/Timeline";
+import { Timeline } from "./components/timeline/Timeline";
 
 function App() {
   return (
