@@ -1,60 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
-import { Timeline } from "./timeline/Timeline";
-import { Task } from '../templates/task';
+import { Task } from "../templates/task";
 
-//TODO: Reorganize your imports! Why is FileImport.tsx importing Timeline? FileImport should just be for
-// importing files, nothing more nothing less...
-
+/**
+ * Used for importing .xml files into the website. also updates taskArray.
+ */
 export function FileImport({
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate
-}:{
-  startDate: Date;
-  setStartDate: (startDate: Date) => void;
-  endDate: Date;
-  setEndDate: (endDate: Date) => void;
-
+  taskArray,
+  setTaskArray,
+  fileImported,
+  setFileImported,
+}: {
+  taskArray: Task[];
+  setTaskArray: (taskArray: Task[]) => void;
+  fileImported: boolean;
+  setFileImported: (timelineVisible: boolean) => void;
 }): JSX.Element {
-  //State
-  const [content, setContent] = useState<string>("No file data uploaded");
-  const [importVisible, setImportVisible] = useState<boolean>(false);
-  const [timelineVisible, setTimelineVisible] = useState<boolean>(false);
-  const [taskArray, setTaskArray] = useState<Task[]>([]);
- // let ptArray: string[] = [];
 
-  //Control
-  function uploadFile(event: React.ChangeEvent<HTMLInputElement>) {
-    // Might have removed the file, need to check that the files exist
-    if (event.target.files && event.target.files.length) {
-      // Get the first filename
-      const filename = event.target.files[0];
-      // Create a reader
-      const reader = new FileReader();
-      // Create lambda callback to handle when we read the file
-      reader.onload = (loadEvent) => {
-        // Target might be null, so provide default error value
-        const newContent = loadEvent.target?.result || "Data was not loaded";
-        // FileReader provides string or ArrayBuffer, force it to be string
-        setContent(newContent as string);
-      };
-      // Actually read the file
-      reader.readAsText(filename);
-    }
-  }
-
+  /**
+   * This function finds the amount of points, and parts of a document that it reads via the readFile function
+   * @param event react event
+   */
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
       const points = findPoints(findParts(readFile(event.target.files)));
-      setTimelineVisible(true);
+      setFileImported(true);
       console.log(points);
     }
   }
 
+  /**
+   * This function loads in the focument via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
+   * @param fileList fileList to read from
+   * @returns
+   */
   function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
     // accepts list of files from event
     // returns string of word/document.xml file
@@ -67,9 +48,13 @@ export function FileImport({
     });
   }
 
+  /**
+   *accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
+   * @param fileText documentText used for finding parts
+   * @returns
+   */
   function findParts(fileText: Promise<any>): Promise<any> {
-    // accepts string of document.xml and locates 'w:t' tags containing text
-    // returns string of text contained in document.xml
+    //
     return fileText.then((txt) => {
       const parser = new DOMParser();
       const textDoc = parser.parseFromString(txt, "text/xml");
@@ -79,11 +64,20 @@ export function FileImport({
         total += textArray[i].childNodes[0].nodeValue;
       }
       console.log(total);
-      setContent(total as string);
+      //setContent(total as string);
       return total;
     });
   }
 
+  /**
+   * this function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon, 
+   * it then finds two or more numbers followed by the word point, pt, points, or pts shortly after the number and then ends with a 
+   * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the 
+   * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
+   * Once we find all of this we put it into a taskArray by adding each element of the captured document.
+   * @param fileText documentText used for finding points
+   * @returns
+   */
   function findPoints(cleanedText: Promise<any>): Promise<any> {
     // accepts string of text from document.xml
     // returns array of point values found in document
@@ -91,29 +85,32 @@ export function FileImport({
     let tempArray;
     //let ptsArrayClone: string[] = [];
     const resultsArray: string[] = [];
-    const re = new RegExp("\\d\\d?\\s?(points?|pts?)", "g");
-    const reNum = new RegExp("\\d*");
+    const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
+    const reNum = new RegExp("\\d+\\s?(points?|pts?)");
+   // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
     return cleanedText.then((txt) => {
       tempArray = re.exec(txt);
-      //  console.log("re",re);
-      // console.log("txt:",txt);
+    //  console.log(tempArray);
       while (tempArray !== null) {
-        resultsArray.push(tempArray[0]);
+        console.log(tempArray[0]);
+        resultsArray.push(tempArray![0]);
         tempArray = re.exec(txt);
       }
       for (const elem of resultsArray) {
-       // ptsArrayClone.push(reNum.exec(elem)![0]);
-        tasks.push(
-          {
+        if(elem != null) {
+          const num = new RegExp("(points?|pts?)");
+          console.log("this code ran");
+          tasks.push({
             name: "Swag",
-            document: "Hi",
-            points: reNum.exec(elem)![0],
-            color: parseInt(reNum.exec(elem)![0]) * 5
-          }
-        );
+            document: elem.toString(),
+            points: reNum.exec(elem)![0].replace(num, ""),
+            color: parseInt(reNum.exec(elem)![0]) * 5,
+          });
+          console.log(tasks);
+
+        }
       }
       console.log("resultsArray", resultsArray);
-
       setTaskArray(tasks);
       console.log(taskArray);
       console.log(taskArray.length);
@@ -121,34 +118,22 @@ export function FileImport({
     });
   }
 
-  //View
   return (
     <div>
-        <div>
-          <p>
+      <div>
+        <p>
           <Form.Group controlId="exampleForm">
-            <h2>            <Form.Label>Upload a document</Form.Label></h2>
+            <h2>
+              {" "}
+              <Form.Label>Upload a document</Form.Label>
+            </h2>
 
-            <p><Form.Control type="file" onChange={handleFileInput} /> </p>
+            <p>
+              <Form.Control type="file" onChange={handleFileInput} />{" "}
+            </p>
           </Form.Group>
-          {/*<div>{/*content}</div> */}
-
-          </p>
-
-        </div>
-      {timelineVisible && (
-        <div>
-          {" "}
-          <Timeline
-            taskArray={taskArray}
-            setTaskArray={setTaskArray}
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate}
-          ></Timeline>{" "}
-        </div>
-      )}
+        </p>
+      </div>
     </div>
   );
 }
