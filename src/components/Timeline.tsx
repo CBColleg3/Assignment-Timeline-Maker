@@ -8,6 +8,7 @@ import "react-vertical-timeline-component/style.min.css";
 import { AddRemoveTask } from "./AddRemoveTask";
 import { SetDateTime } from "./SetDateTime";
 import { FileImport } from "./FileImport";
+import { EditTask } from "./EditTask";
 
 //Milliseconds per day
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -133,7 +134,7 @@ export function Timeline(): JSX.Element {
                   }}
                 >
                   <h3 className="vertical-timeline-element-title">
-                    Finish Task {index + 1}
+                    {task.name}
                   </h3>
                   <h5>{task.document}</h5>
                   <h4>{task.points} Points</h4>
@@ -142,6 +143,7 @@ export function Timeline(): JSX.Element {
                     setTaskArray={setTaskArray}
                     index={index}
                   ></AddRemoveTask>
+                  <EditTask taskArray={taskArray} setTaskArray={setTaskArray} index={index}/>
                 </VerticalTimelineElement>
               ))}
               <VerticalTimelineElement
@@ -158,7 +160,6 @@ export function Timeline(): JSX.Element {
               </VerticalTimelineElement>
             </VerticalTimeline>
           </div>
-          <div>{taskArray.length}</div>
         </>
       )}
     </>
