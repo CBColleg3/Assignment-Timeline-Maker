@@ -85,7 +85,7 @@ export function FileImport({
     let tempArray;
     //let ptsArrayClone: string[] = [];
     const resultsArray: string[] = [];
-    const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
+    const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g"); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
     const reNum = new RegExp("\\d+\\s?(points?|pts?)");
    // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
     return cleanedText.then((txt) => {
@@ -96,17 +96,20 @@ export function FileImport({
         resultsArray.push(tempArray![0]);
         tempArray = re.exec(txt);
       }
+      let taskIndex: number = 0;
       for (const elem of resultsArray) {
         if(elem != null) {
           const num = new RegExp("(points?|pts?)");
-          console.log("this code ran");
+          console.log("elem:", elem);
+
           tasks.push({
-            name: "Swag",
+            name: "Finish Task " + (taskIndex + 1),
             document: elem.toString(),
             points: reNum.exec(elem)![0].replace(num, ""),
             color: parseInt(reNum.exec(elem)![0]) * 5,
           });
-          console.log(tasks);
+         // console.log(tasks);
+          taskIndex++;
 
         }
       }
