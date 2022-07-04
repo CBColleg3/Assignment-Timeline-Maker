@@ -119,6 +119,7 @@ export function FileImport({
 
           tasks.push({
             name: "Finish Task " + (taskIndex + 1),
+            id: taskIndex + 1,
             document: elem.toString(),
             points: reNum.exec(elem)![0].replace(num, ""),
             color: parseInt(reNum.exec(elem)![0]) * 5,

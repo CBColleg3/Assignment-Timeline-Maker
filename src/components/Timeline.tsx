@@ -1,41 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import { Task } from "../templates/task";
 import "react-vertical-timeline-component/style.min.css";
-import { SetDateTime } from "./SetDateTime";
-import { FileImport } from "./FileImport";
-
 import { TimelineDragDrop } from "./TimelineDragDrop";
 import { Row, Col, Container } from "react-bootstrap";
+
+type TimelineProps = {
+  taskArray: Task[];
+  setTaskArray: (taskArray: Task[]) => void;
+  fileImported: boolean;
+  startDate: Date;
+  endDate: Date;
+};
 
 /**
  * Generates vertical timeline with tasks and calculates days to complete tasks
  */
-export function Timeline(): JSX.Element {
-  //State
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
-  const [taskArray, setTaskArray] = useState<Task[]>([]);
-  const [fileImported, setFileImported] = useState<boolean>(false);
-
+export function Timeline({
+  taskArray,
+  setTaskArray,
+  fileImported,
+  startDate,
+  endDate,
+}: TimelineProps): JSX.Element {
   return (
     <>
-      <SetDateTime
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-      ></SetDateTime>
-      <FileImport
-        taskArray={taskArray}
-        setTaskArray={setTaskArray}
-        fileImported={fileImported}
-        setFileImported={setFileImported}
-      ></FileImport>
-
       <Container>
       <Row>
         <Col>
@@ -72,9 +64,7 @@ export function Timeline(): JSX.Element {
                     taskArray={taskArray}
                     setTaskArray={setTaskArray}
                     startDate={startDate}
-                    setStartDate={setStartDate}
                     endDate={endDate}
-                    setEndDate={setEndDate}
                   ></TimelineDragDrop>
                   <VerticalTimelineElement
                     iconStyle={{
