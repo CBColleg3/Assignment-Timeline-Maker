@@ -31,6 +31,8 @@ function App() {
         setTaskArray={(dates)=>setTaskArray(dates)}
         fileImported={fileImported}
         setFileImported={(dates)=>setFileImported(dates)}
+        startDate={startDate}
+        endDate={endDate}
       />
       <Timeline        
         taskArray={taskArray}

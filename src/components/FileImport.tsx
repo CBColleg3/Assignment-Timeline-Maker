@@ -2,6 +2,7 @@ import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import { Task } from "../templates/task";
+import { calcDays, calcTotalPoints, dateDiffInDays } from "./utils/timelineUtils";
 
 /**
  * Used for importing .xml files into the website. also updates taskArray.
@@ -11,12 +12,17 @@ export function FileImport({
   setTaskArray,
   fileImported,
   setFileImported,
+  startDate,
+  endDate
 }: {
   taskArray: Task[];
   setTaskArray: (taskArray: Task[]) => void;
   fileImported: boolean;
   setFileImported: (timelineVisible: boolean) => void;
+  startDate: Date;
+  endDate: Date;
 }): JSX.Element {
+  const [dayCounter, setDayCounter] = React.useState<number>(0);
 
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -25,9 +31,10 @@ export function FileImport({
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
-      const points = findPoints(findParts(readFile(event.target.files)));
+      findPoints(findParts(readFile(event.target.files)));
+      UpdateDueDates();
       setFileImported(true);
-      console.log(points);
+      //console.log(points);
     }
   }
 
@@ -78,7 +85,7 @@ export function FileImport({
    * @param fileText documentText used for finding points
    * @returns
    */
-  function findPoints(cleanedText: Promise<any>): Promise<any> {
+  function findPoints(cleanedText: Promise<any>): void {
     // accepts string of text from document.xml
     // returns array of point values found in document
     let tasks: Task[] = [];
@@ -88,7 +95,7 @@ export function FileImport({
     const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g"); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
     const reNum = new RegExp("\\d+\\s?(points?|pts?)");
    // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
-    return cleanedText.then((txt) => {
+    cleanedText.then((txt) => {
       tempArray = re.exec(txt);
     //  console.log(tempArray);
       while (tempArray !== null) {
@@ -108,18 +115,31 @@ export function FileImport({
             document: elem.toString(),
             points: reNum.exec(elem)![0].replace(num, ""),
             color: parseInt(reNum.exec(elem)![0]) * 5,
+            dueDate:  new Date(),
+            autoDueDate: true
           });
          // console.log(tasks);
           taskIndex++;
-
         }
       }
       console.log("resultsArray", resultsArray);
       setTaskArray(tasks);
-      console.log(taskArray);
-      console.log(taskArray.length);
-      return taskArray;
     });
+  }
+
+  function UpdateDueDates(): void {
+    
+    const modifiedTasks = [...taskArray].map((task:Task)=>{return{...task, dueDate: calcDays(
+      taskArray,
+      dayCounter, 
+      setDayCounter,
+      dateDiffInDays(startDate, endDate),
+      calcTotalPoints(taskArray),
+      startDate
+    )}});
+    setTaskArray(modifiedTasks);
+    console.log("taskArray",taskArray);
+    console.log("taskArrayLength", taskArray.length);
   }
 
   return (

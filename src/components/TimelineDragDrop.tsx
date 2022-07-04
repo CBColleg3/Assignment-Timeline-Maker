@@ -56,18 +56,16 @@ export function TimelineDragDrop({
                           background: `rgb(${task.color + 100},100,150)`,
                           color: "#fff",
                         }}
+                        contentStyle={{
+                          color: `rgb(${task.color + 100},100,150)`,
+                        }}
                       >
                         <h3 className="vertical-timeline-element-title">
                           {task.name}
                         </h3>
                         <h5>{task.document}</h5>
                         <h4>{task.points} Points</h4>
-                        <h4> {calcDays(
-                          taskArray,
-                          index,
-                          dateDiffInDays(startDate, endDate),
-                          calcTotalPoints(taskArray)
-                        )}</h4>
+                        <h4> {task.dueDate.toDateString()}</h4>
                         <AddRemoveTask
                           taskArray={taskArray}
                           setTaskArray={(tasks)=>setTaskArray(tasks)}
