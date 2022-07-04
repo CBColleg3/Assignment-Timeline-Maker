@@ -1,19 +1,20 @@
-import React from "react";
-//import logo from './logo.svg';
+import React, { useState } from "react";
 import "./App.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "./components/Timeline";
 import { Task } from "./templates/task";
 import { SetDateTime } from "./components/SetDateTime";
 import { FileImport } from "./components/FileImport";
+import { DocViewer } from "./components/document-viewer/DocViewer";
+import { Row, Col } from "react-bootstrap";
 
 function App() {
-
-    //State
-    const [startDate, setStartDate] = React.useState<Date>(new Date());
-    const [endDate, setEndDate] = React.useState<Date>(new Date());
-    const [taskArray, setTaskArray] = React.useState<Task[]>([]);
-    const [fileImported, setFileImported] = React.useState<boolean>(false);
+  //State
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [taskArray, setTaskArray] = useState<Task[]>([]);
+  const [fileImported, setFileImported] = useState<boolean>(false);
+  const [docXML, setDocXML] = useState<Document | undefined>(undefined);
 
   return (
     <div className="Timeline-site">
@@ -22,23 +23,32 @@ function App() {
       </header>
       <SetDateTime
         startDate={startDate}
-        setStartDate={(dates)=>setStartDate(dates)}
+        setStartDate={(dates) => setStartDate(dates)}
         endDate={endDate}
-        setEndDate={(dates)=>setEndDate(dates)}
+        setEndDate={(dates) => setEndDate(dates)}
       />
       <FileImport
         taskArray={taskArray}
-        setTaskArray={(dates)=>setTaskArray(dates)}
+        setTaskArray={(dates) => setTaskArray(dates)}
         fileImported={fileImported}
-        setFileImported={(dates)=>setFileImported(dates)}
+        setFileImported={(dates) => setFileImported(dates)}
+        setDocXML={setDocXML}
       />
-      <Timeline        
-        taskArray={taskArray}
-        setTaskArray={(dates)=>setTaskArray(dates)}
-        fileImported={fileImported}
-        startDate={startDate}
-        endDate={endDate}
-      />
+
+      <Row>
+        <Col>
+          <Timeline
+            taskArray={taskArray}
+            setTaskArray={(dates) => setTaskArray(dates)}
+            fileImported={fileImported}
+            startDate={startDate}
+            endDate={endDate}
+          />
+        </Col>
+        <Col>
+          <DocViewer docXML={docXML} fileImported={fileImported} />{" "}
+        </Col>
+      </Row>
     </div>
   );
 }

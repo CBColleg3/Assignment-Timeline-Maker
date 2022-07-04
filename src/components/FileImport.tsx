@@ -1,6 +1,5 @@
 import React from "react";
 import JSZip, { file } from "jszip";
-import { saveAs } from "file-saver";
 import { Form } from "react-bootstrap";
 import { Task } from "../templates/task";
 
@@ -12,11 +11,13 @@ export function FileImport({
   setTaskArray,
   fileImported,
   setFileImported,
+  setDocXML,
 }: {
   taskArray: Task[];
   setTaskArray: (taskArray: Task[]) => void;
   fileImported: boolean;
   setFileImported: (timelineVisible: boolean) => void;
+  setDocXML: (xml: Document) => void;
 }): JSX.Element {
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -50,10 +51,6 @@ export function FileImport({
     return jsZip.loadAsync(myFile).then((zip) => {
       console.log(zip);
 
-      zip.generateAsync({ type: "blob" }).then(function (blob: string | Blob) {
-        saveAs(blob, "dog.docx");
-      });
-
       return zip.files["word/document.xml"].async("string");
     });
   }
@@ -67,9 +64,12 @@ export function FileImport({
     //
     return fileText.then((txt) => {
       console.log(txt);
+
       const parser = new DOMParser();
       const textDoc = parser.parseFromString(txt, "text/xml");
       console.log(textDoc);
+      setDocXML(textDoc);
+
       const textArray = textDoc.getElementsByTagName("w:t");
       let total = "";
       for (let i = 0; i < textArray.length; i++) {
