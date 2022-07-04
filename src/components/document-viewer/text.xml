@@ -1,0 +1,2858 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:lc="http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas" xmlns:dgm="http://schemas.openxmlformats.org/drawingml/2006/diagram" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml">
+    <w:body>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000001">
+            <w:pPr>
+                <w:ind w:left="2880" w:firstLine="720" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">       Homework 03</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000002">
+            <w:pPr>
+                <w:jc w:val="center" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Fall 2019</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000003">
+            <w:pPr>
+                <w:jc w:val="center" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">CISC 372</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000004">
+            <w:pPr>
+                <w:jc w:val="center" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000005">
+            <w:pPr>
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000006">
+            <w:pPr>
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Student Name: ____________________________</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000007">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="0" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Cambria" w:cs="Cambria" w:eastAsia="Cambria" w:hAnsi="Cambria" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Cambria" w:cs="Cambria" w:eastAsia="Cambria" w:hAnsi="Cambria" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Total 4 questions. 25 points per question. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000008">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="0" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Upload your Jupyter Notebook for HelloWorld code on Canvas. Make sure to save your file as &lt;firstname&gt;.ipynb (ipynb being the extension for Jupyter Notebook). When the TA/myself grade your assignment, we should be able to open the notebook </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">(8 points), </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">build </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">(8 points), </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">run and see a correct output </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">(9 points). </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000009">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000A">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">The output being “Printing helloworld from ThreadXX” and this should appear X number of times depending on how many threads you have allocated. </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000B">
+            <w:pPr>
+                <w:ind w:left="360" w:firstLine="0" />
+                <w:rPr>
+                    <w:color w:val="ed7d31" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000C">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Use EECIS system as your baseline machine. You are welcome to use your laptop if you have OpenMP installed. If you did so, please mention your laptop configuration in the assignment. Most important how many cores does your laptop have. (use the command line options you must have figured out from homework assignment 2) </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000D">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">(25 points) </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000E">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000000F">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="0" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Use the Appentra tool either on your laptop (if you can use OpenMP compiler on your laptop) or the tool on the EECIS machine and learn how pi.c are parallelized. Attach screenshots of your output. </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">25 points (24 points + 1 point for neat presentation of your results)</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000010">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000011">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">For pi.c run the code for 2 diff. inputs. For example ./pi 10000 and ./pi 50000</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000012">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Use word document to document your output and screenshots. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000013">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Your answers should include output for 1, 2, 4, 8 threads </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000014">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Give you answer in the form of a table. Like below</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000015">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">If you do this right, you will earn 3 points per row</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000016">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:tbl>
+            <w:tblPr>
+                <w:tblStyle w:val="Table1" />
+                <w:tblW w:w="4560.0" w:type="dxa" />
+                <w:jc w:val="left" />
+                <w:tblInd w:w="2391.0" w:type="dxa" />
+                <w:tblBorders>
+                    <w:top w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:left w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:bottom w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:right w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:insideH w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:insideV w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                </w:tblBorders>
+                <w:tblLayout w:type="fixed" />
+                <w:tblLook w:val="0400" />
+            </w:tblPr>
+            <w:tblGrid>
+                <w:gridCol w:w="1497" />
+                <w:gridCol w:w="1597" />
+                <w:gridCol w:w="1466" />
+                <w:tblGridChange w:id="0">
+                    <w:tblGrid>
+                        <w:gridCol w:w="1497" />
+                        <w:gridCol w:w="1597" />
+                        <w:gridCol w:w="1466" />
+                    </w:tblGrid>
+                </w:tblGridChange>
+            </w:tblGrid>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000017">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Code</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000018">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Number of threads</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000019">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Execution Time taken</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001A">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 10000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001B">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">1</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001C">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001D">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 10000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001E">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">2</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000001F">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000020">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 10000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000021">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">4</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000022">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000023">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 10000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000024">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">8</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000025">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000026">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 50000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000027">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">1 </w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000028">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000029">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 50000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002A">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">2</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002B">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002C">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 50000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002D">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">4</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002E">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000002F">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./pi 50000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000030">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">8</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000031">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+        </w:tbl>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000032">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000033">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000034">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="0" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Use the Appentra tool either on your laptop (if you can use OpenMP compiler on your laptop) or the tool on the EECIS machine and learn how dotproduct.c are parallelized. Attach screenshots of your output. </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">25 points (24 points + 1 point for neat presentation of your results)</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000035">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000036">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000037">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">For dotproduct.c run the code for 2 diff. inputs. For example ./dotproduct.c 50000 ./dotproduct.c </w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="22" />
+                    <w:szCs w:val="22" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">15000</w:t>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000038">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Use word document to document your output and screenshots. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000039">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Your answers should include output for 1, 2, 4, 8 threads </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003A">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Give you answer in the form of a table. Like below</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003B">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="1" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="1440" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">If you do this right, you will earn 3 points per row</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003C">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003D">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:tbl>
+            <w:tblPr>
+                <w:tblStyle w:val="Table2" />
+                <w:tblW w:w="5785.0" w:type="dxa" />
+                <w:jc w:val="left" />
+                <w:tblInd w:w="0.0" w:type="dxa" />
+                <w:tblBorders>
+                    <w:top w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:left w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:bottom w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:right w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:insideH w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                    <w:insideV w:color="000000" w:space="0" w:sz="4" w:val="single" />
+                </w:tblBorders>
+                <w:tblLayout w:type="fixed" />
+                <w:tblLook w:val="0400" />
+            </w:tblPr>
+            <w:tblGrid>
+                <w:gridCol w:w="2827" />
+                <w:gridCol w:w="1597" />
+                <w:gridCol w:w="1361" />
+                <w:tblGridChange w:id="0">
+                    <w:tblGrid>
+                        <w:gridCol w:w="2827" />
+                        <w:gridCol w:w="1597" />
+                        <w:gridCol w:w="1361" />
+                    </w:tblGrid>
+                </w:tblGridChange>
+            </w:tblGrid>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003E">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Dotproduct</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000003F">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Number of threads</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000040">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">Execution Time taken</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000041">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 500000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000042">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">1</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000043">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000044">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 500000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000045">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">2</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000046">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000047">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 500000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000048">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">4</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000049">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004A">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 500000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004B">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">8</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004C">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004D">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 15000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004E">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">1</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000004F">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000050">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 15000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000051">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">2</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000052">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000053">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 15000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000054">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">4</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000055">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+            <w:tr>
+                <w:trPr>
+                    <w:cantSplit w:val="0" />
+                    <w:tblHeader w:val="0" />
+                </w:trPr>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000056">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">./dotproduct 15000</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000057">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                            <w:t xml:space="preserve">8</w:t>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+                <w:tc>
+                    <w:tcPr />
+                    <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000058">
+                        <w:pPr>
+                            <w:rPr>
+                                <w:sz w:val="22" />
+                                <w:szCs w:val="22" />
+                            </w:rPr>
+                        </w:pPr>
+                        <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                            <w:rPr>
+                                <w:rtl w:val="0" />
+                            </w:rPr>
+                        </w:r>
+                    </w:p>
+                </w:tc>
+            </w:tr>
+        </w:tbl>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000059">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005A">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005B">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005C">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005D">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005E">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000005F">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000060">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000061">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000062">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000063">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000064">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000065">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Note: The Appentra tool gives full compilation output and explanations to how certain things are done. For example see the following screenshot on “code defects” which is the output of the little triangle in the background image. So make sure to press thru the buttons and the compilation outputs to learn the best you can using this tool. Questions from both the codes on how OpenMP was used to parallelize may be asked in the midterm. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000066">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000067">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr />
+                <w:drawing>
+                    <wp:inline distB="0" distT="0" distL="0" distR="0">
+                        <wp:extent cx="5943600" cy="3579495" />
+                        <wp:effectExtent b="0" l="0" r="0" t="0" />
+                        <wp:docPr id="2" name="image1.png" />
+                        <a:graphic>
+                            <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
+                                <pic:pic>
+                                    <pic:nvPicPr>
+                                        <pic:cNvPr id="0" name="image1.png" />
+                                        <pic:cNvPicPr preferRelativeResize="0" />
+                                    </pic:nvPicPr>
+                                    <pic:blipFill>
+                                        <a:blip r:embed="rId7" />
+                                        <a:srcRect b="0" l="0" r="0" t="0" />
+                                        <a:stretch>
+                                            <a:fillRect />
+                                        </a:stretch>
+                                    </pic:blipFill>
+                                    <pic:spPr>
+                                        <a:xfrm>
+                                            <a:off x="0" y="0" />
+                                            <a:ext cx="5943600" cy="3579495" />
+                                        </a:xfrm>
+                                        <a:prstGeom prst="rect" />
+                                        <a:ln />
+                                    </pic:spPr>
+                                </pic:pic>
+                            </a:graphicData>
+                        </a:graphic>
+                    </wp:inline>
+                </w:drawing>
+            </w:r>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000068">
+            <w:pPr>
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="00000069">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:numPr>
+                    <w:ilvl w:val="0" />
+                    <w:numId w:val="1" />
+                </w:numPr>
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:hanging="360" />
+                <w:jc w:val="left" />
+                <w:rPr />
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">Fill up this google form on what you liked and did not like about the tool. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000006A">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="000000" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">3 bullets each for pros and cons = total 6 bullets. </w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000006B">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                    <w:rtl w:val="0" />
+                </w:rPr>
+                <w:t xml:space="preserve">4 points per bullet = 24 points + 1 free point for giving feedback!</w:t>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000006C">
+            <w:pPr>
+                <w:rPr>
+                    <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                </w:rPr>
+            </w:pPr>
+            <w:hyperlink r:id="rId8">
+                <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                    <w:rPr>
+                        <w:rFonts w:ascii="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman" w:hAnsi="Times New Roman" />
+                        <w:color w:val="0000ff" />
+                        <w:u w:val="single" />
+                        <w:rtl w:val="0" />
+                    </w:rPr>
+                    <w:t xml:space="preserve">https://docs.google.com/forms/d/1OznYTYC5vKp2IQBhgSGNiAdSEFDE85GRYPoGFXN4xq4/edit</w:t>
+                </w:r>
+            </w:hyperlink>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000006D">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:p w:rsidR="00000000" w:rsidDel="00000000" w:rsidP="00000000" w:rsidRDefault="00000000" w:rsidRPr="00000000" w14:paraId="0000006E">
+            <w:pPr>
+                <w:keepNext w:val="0" />
+                <w:keepLines w:val="0" />
+                <w:pageBreakBefore w:val="0" />
+                <w:widowControl w:val="1" />
+                <w:pBdr>
+                    <w:top w:space="0" w:sz="0" w:val="nil" />
+                    <w:left w:space="0" w:sz="0" w:val="nil" />
+                    <w:bottom w:space="0" w:sz="0" w:val="nil" />
+                    <w:right w:space="0" w:sz="0" w:val="nil" />
+                    <w:between w:space="0" w:sz="0" w:val="nil" />
+                </w:pBdr>
+                <w:shd w:fill="auto" w:val="clear" />
+                <w:spacing w:after="0" w:before="0" w:line="240" w:lineRule="auto" />
+                <w:ind w:left="720" w:right="0" w:firstLine="0" />
+                <w:jc w:val="left" />
+                <w:rPr>
+                    <w:rFonts w:ascii="Calibri" w:cs="Calibri" w:eastAsia="Calibri" w:hAnsi="Calibri" />
+                    <w:b w:val="0" />
+                    <w:i w:val="0" />
+                    <w:smallCaps w:val="0" />
+                    <w:strike w:val="0" />
+                    <w:color w:val="ed7d31" />
+                    <w:sz w:val="24" />
+                    <w:szCs w:val="24" />
+                    <w:u w:val="none" />
+                    <w:shd w:fill="auto" w:val="clear" />
+                    <w:vertAlign w:val="baseline" />
+                </w:rPr>
+            </w:pPr>
+            <w:r w:rsidDel="00000000" w:rsidR="00000000" w:rsidRPr="00000000">
+                <w:rPr>
+                    <w:rtl w:val="0" />
+                </w:rPr>
+            </w:r>
+        </w:p>
+        <w:sectPr>
+            <w:pgSz w:h="15840" w:w="12240" w:orient="portrait" />
+            <w:pgMar w:bottom="1440" w:top="1440" w:left="1440" w:right="1440" w:header="720" w:footer="720" />
+            <w:pgNumType w:start="1" />
+        </w:sectPr>
+    </w:body>
+</w:document>
