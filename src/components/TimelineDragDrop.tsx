@@ -12,18 +12,13 @@ export function TimelineDragDrop({
     taskArray,
     setTaskArray,
     startDate,
-    setStartDate,
-    endDate,
-    setEndDate
+    endDate
     }:
     {
         taskArray: Task[],
         setTaskArray: (taskArray: Task[]) => void;
         startDate: Date;
-        setStartDate: (startDate: Date) => void;
         endDate: Date;
-        setEndDate: (endDate: Date) => void;
-
     }): JSX.Element {
 
     const OnDragEnd = (result: DropResult) => {
@@ -49,22 +44,14 @@ export function TimelineDragDrop({
             >
               {taskArray.map((task, index) => {
                 return (
-                  <span className="vertical-timeline-element--work">
-                  <Draggable key={task.name} draggableId={task.name} index={index}>
-
+                  <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
                     {(provided, snapshot) => (
-                      <div ref={provided.innerRef}
+                      <span ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
                          <VerticalTimelineElement
                         className="vertical-timeline-element--work"
-                        date={calcDays(
-                          taskArray,
-                          index,
-                          dateDiffInDays(startDate, endDate),
-                          calcTotalPoints(taskArray)
-                        )}
                         iconStyle={{
                           background: `rgb(${task.color + 100},100,150)`,
                           color: "#fff",
@@ -75,22 +62,27 @@ export function TimelineDragDrop({
                         </h3>
                         <h5>{task.document}</h5>
                         <h4>{task.points} Points</h4>
+                        <h4> {calcDays(
+                          taskArray,
+                          index,
+                          dateDiffInDays(startDate, endDate),
+                          calcTotalPoints(taskArray)
+                        )}</h4>
                         <AddRemoveTask
                           taskArray={taskArray}
-                          setTaskArray={setTaskArray}
+                          setTaskArray={(tasks)=>setTaskArray(tasks)}
                           index={index}
                         ></AddRemoveTask>
                         <EditTask
                           taskArray={taskArray}
-                          setTaskArray={setTaskArray}
+                          setTaskArray={(tasks)=>setTaskArray(tasks)}
                           index={index} />
                       </VerticalTimelineElement>
 
-                      </div>
+                      </span>
 
                     )}
                   </Draggable>
-                </span>
                 );
               })}
             </div>
