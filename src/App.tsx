@@ -4,7 +4,6 @@ import "./App.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "./components/Timeline";
 import { Task } from "./templates/task";
-import { AddRemoveTask } from "./components/AddRemoveTask";
 import { SetDateTime } from "./components/SetDateTime";
 import { FileImport } from "./components/FileImport";
 
