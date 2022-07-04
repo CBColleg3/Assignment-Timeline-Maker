@@ -22,6 +22,7 @@ export function AddRemoveTask({
     const modifiedTaskArr = [...taskArray];
     modifiedTaskArr.splice(index + 1, 0, {
       name: "Swag",
+      id: index + 1,
       document: "Uh Oh",
       points: "0",
       color: 0,
