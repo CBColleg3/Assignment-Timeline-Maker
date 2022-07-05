@@ -43,31 +43,21 @@ export function calcTotalPoints(tasks: Task[]): number {
  * @param totalDays totalDays given
  * @param totalPoints totalPoints calculated
  * @returns
+ * // TODO: Add a running total if the points of that task are not greater than or equal to the pointsPerDay
  */
  export function calcDays(
     tasks: Task[],
+    index: number,
     dayCounter: number,
-    setDayCounter: (dayCounter: number) => void,
+    pointSum: number,
     totalDays: number,
     totalPoints: number,
     startDate: Date
-  ): Date {
-    let daySum: number = 0;
-    let pointsperDay: number = Math.ceil(totalPoints / totalDays);
-    let dayArray: number[] = [...tasks].map((task) => task.points).map(Number);
-    for (let i = 0; i <= tasks.length; i++) {
-      daySum += dayArray[i];
-      //console.log("daysum:", daySum, "darArray[i]", dayArray[i]);
-      if (daySum >= pointsperDay) {
-        console.log("dayCounter increased");
-        setDayCounter(1 + dayCounter);
-        daySum = 0;
-      }
-    }
-    //console.log("startDate: ", startDate.getDate());
-    console.log("totalPoints: ", totalPoints);
-    console.log("dayCount: ", dayCounter);
-    let dayAssigned = (startDate.getDate() + dayCounter);
-    let newDate = new Date(startDate.getFullYear(), startDate.getMonth(), dayAssigned);
-    return  newDate; // toDateString
+  ): { date: Date, updateCounter: boolean, updateSum: number } {
+    const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
+    pointSum += +tasks[index].points;
+    const surpassedPoints = pointSum >= pointsPerDay;
+    const dayAssigned = (startDate.getDate() + (surpassedPoints ? dayCounter++ : dayCounter));
+    const newDate = new Date(startDate.getFullYear(), startDate.getMonth(), dayAssigned);
+    return { date: newDate, updateCounter: surpassedPoints, updateSum: pointSum };
   }

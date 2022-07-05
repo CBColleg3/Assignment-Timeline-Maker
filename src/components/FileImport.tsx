@@ -2,7 +2,11 @@ import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import { Task } from "../templates/task";
-import { calcDays, calcTotalPoints, dateDiffInDays } from "./utils/timelineUtils";
+import {
+  calcDays,
+  calcTotalPoints,
+  dateDiffInDays,
+} from "./utils/timelineUtils";
 
 /**
  * Used for importing .xml files into the website. also updates taskArray.
@@ -13,7 +17,7 @@ export function FileImport({
   fileImported,
   setFileImported,
   startDate,
-  endDate
+  endDate,
 }: {
   taskArray: Task[];
   setTaskArray: (taskArray: Task[]) => void;
@@ -22,7 +26,8 @@ export function FileImport({
   startDate: Date;
   endDate: Date;
 }): JSX.Element {
-  const [dayCounter, setDayCounter] = React.useState<number>(0);
+  const [dayCounter] = React.useState<number>(0);
+  const [pointSum] = React.useState<number>(0);
 
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -32,7 +37,6 @@ export function FileImport({
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
       findPoints(findParts(readFile(event.target.files)));
-      UpdateDueDates();
       setFileImported(true);
       //console.log(points);
     }
@@ -77,9 +81,9 @@ export function FileImport({
   }
 
   /**
-   * this function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon, 
-   * it then finds two or more numbers followed by the word point, pt, points, or pts shortly after the number and then ends with a 
-   * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the 
+   * this function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon,
+   * it then finds two or more numbers followed by the word point, pt, points, or pts shortly after the number and then ends with a
+   * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the
    * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
    * Once we find all of this we put it into a taskArray by adding each element of the captured document.
    * @param fileText documentText used for finding points
@@ -92,12 +96,15 @@ export function FileImport({
     let tempArray;
     //let ptsArrayClone: string[] = [];
     const resultsArray: string[] = [];
-    const re = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g"); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
+    const re = new RegExp(
+      "[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)",
+      "g"
+    ); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
     const reNum = new RegExp("\\d+\\s?(points?|pts?)");
-   // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
+    // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
     cleanedText.then((txt) => {
       tempArray = re.exec(txt);
-    //  console.log(tempArray);
+      //  console.log(tempArray);
       while (tempArray !== null) {
         console.log(tempArray[0]);
         resultsArray.push(tempArray![0]);
@@ -105,7 +112,7 @@ export function FileImport({
       }
       let taskIndex: number = 0;
       for (const elem of resultsArray) {
-        if(elem != null) {
+        if (elem != null) {
           const num = new RegExp("(points?|pts?)");
           console.log("elem:", elem);
 
@@ -115,31 +122,69 @@ export function FileImport({
             document: elem.toString(),
             points: reNum.exec(elem)![0].replace(num, ""),
             color: parseInt(reNum.exec(elem)![0]) * 5,
-            dueDate:  new Date(),
-            autoDueDate: true
+            dueDate: new Date(),
+            autoDueDate: true,
           });
-         // console.log(tasks);
+          // console.log(tasks);
           taskIndex++;
         }
       }
       console.log("resultsArray", resultsArray);
-      setTaskArray(tasks);
+      //setTaskArray(tasks);
+      UpdateDueDates(tasks);
     });
   }
 
-  function UpdateDueDates(): void {
-    
-    const modifiedTasks = [...taskArray].map((task:Task)=>{return{...task, dueDate: calcDays(
-      taskArray,
-      dayCounter, 
-      setDayCounter,
-      dateDiffInDays(startDate, endDate),
-      calcTotalPoints(taskArray),
-      startDate
-    )}});
+  /**
+   * Updates the due dates for all task objects, first it deep clones the original task array then it passes it into a helper function which returns
+   * an object with a date, a boolean, and a number. The boolean is for the number of days to complete the task increases while the number is the
+   * total number of points before the number of days increases. It then updates all of the tasks dueDate fields and updates TaskArray state.
+   * 
+   * @param tasks 
+   */
+  function UpdateDueDates(tasks: Task[]): void {
+    const totalPoints = calcTotalPoints(tasks);
+    const dateDiff = dateDiffInDays(startDate, endDate);
+    let updateDayCounter = dayCounter;
+    let updatePointSum = pointSum;
+    const modifiedTasks = [...tasks].map((task: Task, index: number) => {
+      console.log(
+        `state: ${JSON.stringify({
+          index,
+          updateDayCounter,
+          updatePointSum,
+          dateDiff,
+          totalPoints,
+          startDate,
+        })}`
+      );
+      const newDate =  calcDays(
+        tasks,
+        index,
+        updateDayCounter,
+        updatePointSum,
+        dateDiff,
+        totalPoints,
+        startDate
+      );
+      if (newDate.updateCounter) {
+        updateDayCounter++;
+        updatePointSum = 0;
+      }
+      else {
+        updatePointSum = newDate.updateSum;
+      }
+
+      console.log("newDate = ", newDate);
+      return {
+        ...task,
+        dueDate : newDate.date,
+      };
+
+    });
     setTaskArray(modifiedTasks);
-    console.log("taskArray",taskArray);
-    console.log("taskArrayLength", taskArray.length);
+   // console.log("taskArray", taskArray);
+   // console.log("taskArrayLength", taskArray.length);
   }
 
   return (

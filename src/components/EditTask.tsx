@@ -20,14 +20,15 @@ export function EditTask({
   const [nameField, setNameField] = useState<string>(taskArray[index].name);
   const [documentField, setDocumentField] = useState<string>(taskArray[index].document);
   const [pointsField, setPointsField] = useState<string>(taskArray[index].points);
-  const [dueDateMode, setDueDateMode] = useState<boolean>(false);
-  const [dueDate, setDueDate] = useState<Date>(new Date());
+  //const [dueDateMode, setDueDateMode] = useState<boolean>(false);
+  const [dueDateField, setDueDateField] = useState<Date>(taskArray[index].dueDate);
 
   function updateTasks(index: number) {
     const modifiedTasks = [...taskArray].map((task:Task) => {return {...task}});
     modifiedTasks[index].name = nameField;
     modifiedTasks[index].document = documentField;
     modifiedTasks[index].points = pointsField; 
+    modifiedTasks[index].dueDate = dueDateField;
     setTaskArray(modifiedTasks);
   }
 
@@ -41,13 +42,6 @@ export function EditTask({
 
   function updatePointsField(event: ChangeEvent) {
     setPointsField(event.target.value);
-  }
-
-  function updateDueDateMode() {
-    const modifiedTasks = [...taskArray].map((task:Task) => {return {...task}});
-    modifiedTasks[index].autoDueDate = !dueDateMode;
-    setDueDateMode(!dueDateMode);
-    setTaskArray(modifiedTasks);
   }
 
   return (
@@ -91,29 +85,17 @@ export function EditTask({
                 onChange={updatePointsField}
               ></Form.Control>
             </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-              <Col>
-                  <Form.Check
-                  type="switch"
-                  id="specify-due-date-switch"
-                  label="Specify Due Date?"
-                  checked={dueDateMode}
-                  onChange={updateDueDateMode}
-                />
-            </Col>
-          </Form.Group>
-          {dueDateMode &&           
+          </Form.Group>       
           <Form.Group as={Row}>
               <Col>
                   <DatePicker
                   showTimeSelect
                   dateFormat="Pp"
-                  selected={dueDate}
-                  onChange={(date: Date) => setDueDate(dueDate)}
+                  selected={dueDateField}
+                  onChange={(date: Date) => setDueDateField(date)}
                 />
             </Col>
-          </Form.Group>}
+          </Form.Group>
 
           <Button onClick= {()=> {updateTasks(index); setEditMode(!editMode);} }>Save Changes</Button>
         </div>
