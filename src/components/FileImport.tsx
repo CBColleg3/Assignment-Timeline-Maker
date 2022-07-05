@@ -18,6 +18,7 @@ export function FileImport({
   setFileImported,
   startDate,
   endDate,
+  setDocXML,
 }: {
   taskArray: Task[];
   setTaskArray: (taskArray: Task[]) => void;
@@ -25,9 +26,11 @@ export function FileImport({
   setFileImported: (timelineVisible: boolean) => void;
   startDate: Date;
   endDate: Date;
+  setDocXML: (xml: Document) => void;
 }): JSX.Element {
   const [dayCounter] = React.useState<number>(0);
   const [pointSum] = React.useState<number>(0);
+
 
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -36,7 +39,9 @@ export function FileImport({
   function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length) {
       //if (!event.target.files) return;
-      findPoints(findParts(readFile(event.target.files)));
+      const fileContent = readFile(event.target.files);
+      // console.log(fileContent);
+      findPoints(findParts(fileContent));
       setFileImported(true);
       //console.log(points);
     }
@@ -52,9 +57,13 @@ export function FileImport({
     // returns string of word/document.xml file
     const myFile: File = fileList![0];
     const jsZip = new JSZip();
+
     //const stringText = "";
+
     console.log(fileList);
     return jsZip.loadAsync(myFile).then((zip) => {
+      console.log(zip);
+
       return zip.files["word/document.xml"].async("string");
     });
   }
@@ -67,8 +76,13 @@ export function FileImport({
   function findParts(fileText: Promise<any>): Promise<any> {
     //
     return fileText.then((txt) => {
+      console.log(txt);
+
       const parser = new DOMParser();
       const textDoc = parser.parseFromString(txt, "text/xml");
+      console.log(textDoc);
+      setDocXML(textDoc);
+
       const textArray = textDoc.getElementsByTagName("w:t");
       let total = "";
       for (let i = 0; i < textArray.length; i++) {
