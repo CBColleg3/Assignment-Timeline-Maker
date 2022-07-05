@@ -26,6 +26,8 @@ export function AddRemoveTask({
       document: "Uh Oh",
       points: "0",
       color: 0,
+      dueDate: new Date(),
+      autoDueDate: true
     });
     setTaskArray(modifiedTaskArr);
   }

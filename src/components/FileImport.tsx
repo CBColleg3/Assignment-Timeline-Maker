@@ -1,7 +1,12 @@
 import React from "react";
-import JSZip, { file } from "jszip";
+import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import { Task } from "../templates/task";
+import {
+  calcDays,
+  calcTotalPoints,
+  dateDiffInDays,
+} from "./utils/timelineUtils";
 
 /**
  * Used for importing .xml files into the website. also updates taskArray.
@@ -11,14 +16,22 @@ export function FileImport({
   setTaskArray,
   fileImported,
   setFileImported,
+  startDate,
+  endDate,
   setDocXML,
 }: {
   taskArray: Task[];
   setTaskArray: (taskArray: Task[]) => void;
   fileImported: boolean;
   setFileImported: (timelineVisible: boolean) => void;
+  startDate: Date;
+  endDate: Date;
   setDocXML: (xml: Document) => void;
 }): JSX.Element {
+  const [dayCounter] = React.useState<number>(0);
+  const [pointSum] = React.useState<number>(0);
+
+
   /**
    * This function finds the amount of points, and parts of a document that it reads via the readFile function
    * @param event react event
@@ -28,9 +41,9 @@ export function FileImport({
       //if (!event.target.files) return;
       const fileContent = readFile(event.target.files);
       // console.log(fileContent);
-      const points = findPoints(findParts(fileContent));
+      findPoints(findParts(fileContent));
       setFileImported(true);
-      console.log(points);
+      //console.log(points);
     }
   }
 
@@ -90,7 +103,7 @@ export function FileImport({
    * @param fileText documentText used for finding points
    * @returns
    */
-  function findPoints(cleanedText: Promise<any>): Promise<any> {
+  function findPoints(cleanedText: Promise<any>): void {
     // accepts string of text from document.xml
     // returns array of point values found in document
     let tasks: Task[] = [];
@@ -103,7 +116,7 @@ export function FileImport({
     ); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
     const reNum = new RegExp("\\d+\\s?(points?|pts?)");
     // const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
-    return cleanedText.then((txt) => {
+    cleanedText.then((txt) => {
       tempArray = re.exec(txt);
       //  console.log(tempArray);
       while (tempArray !== null) {
@@ -123,17 +136,69 @@ export function FileImport({
             document: elem.toString(),
             points: reNum.exec(elem)![0].replace(num, ""),
             color: parseInt(reNum.exec(elem)![0]) * 5,
+            dueDate: new Date(),
+            autoDueDate: true,
           });
           // console.log(tasks);
           taskIndex++;
         }
       }
       console.log("resultsArray", resultsArray);
-      setTaskArray(tasks);
-      console.log(taskArray);
-      console.log(taskArray.length);
-      return taskArray;
+      //setTaskArray(tasks);
+      UpdateDueDates(tasks);
     });
+  }
+
+  /**
+   * Updates the due dates for all task objects, first it deep clones the original task array then it passes it into a helper function which returns
+   * an object with a date, a boolean, and a number. The boolean is for the number of days to complete the task increases while the number is the
+   * total number of points before the number of days increases. It then updates all of the tasks dueDate fields and updates TaskArray state.
+   * 
+   * @param tasks 
+   */
+  function UpdateDueDates(tasks: Task[]): void {
+    const totalPoints = calcTotalPoints(tasks);
+    const dateDiff = dateDiffInDays(startDate, endDate);
+    let updateDayCounter = dayCounter;
+    let updatePointSum = pointSum;
+    const modifiedTasks = [...tasks].map((task: Task, index: number) => {
+      console.log(
+        `state: ${JSON.stringify({
+          index,
+          updateDayCounter,
+          updatePointSum,
+          dateDiff,
+          totalPoints,
+          startDate,
+        })}`
+      );
+      const newDate =  calcDays(
+        tasks,
+        index,
+        updateDayCounter,
+        updatePointSum,
+        dateDiff,
+        totalPoints,
+        startDate
+      );
+      if (newDate.updateCounter) {
+        updateDayCounter++;
+        updatePointSum = 0;
+      }
+      else {
+        updatePointSum = newDate.updateSum;
+      }
+
+      console.log("newDate = ", newDate);
+      return {
+        ...task,
+        dueDate : newDate.date,
+      };
+
+    });
+    setTaskArray(modifiedTasks);
+   // console.log("taskArray", taskArray);
+   // console.log("taskArrayLength", taskArray.length);
   }
 
   return (

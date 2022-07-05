@@ -1,5 +1,7 @@
 import { Task } from '../../templates/task';
 
+//export let dayCount = 1;
+
 /***This function calculates the numerical difference between date 1 and date 2
  * * @param date1 first day, usually the Start Date
  * @param date2 second day, usually the End Date
@@ -11,22 +13,24 @@ import { Task } from '../../templates/task';
   // Discard the time and time-zone information.
   const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
   const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-  console.log("days:" + Math.floor((utc2 - utc1) / _MS_PER_DAY));
+  //console.log("days:" + Math.floor((utc2 - utc1) / _MS_PER_DAY));
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
 /**
- * This function calculates the tota; amount of points in the document
+ * This function calculates the total amount of points in the document
  * @param tasks array of tasks state
  * @returns
  */
 export function calcTotalPoints(tasks: Task[]): number {
   // calculates total points in assignment given
   let total = 0;
+  console.log("tasksLength: ", tasks.length);
   for (let i = 0; i < tasks.length; i++) {
-    total += parseInt(tasks[i].points, 10);
+    total += parseInt(tasks[i].points);
+    console.log("added ", parseInt(tasks[i].points), " to total");
   }
-  console.log("totalPoints:", total);
+  //console.log("totalPoints:", total);
   return total;
 }
 
@@ -39,23 +43,21 @@ export function calcTotalPoints(tasks: Task[]): number {
  * @param totalDays totalDays given
  * @param totalPoints totalPoints calculated
  * @returns
+ * // TODO: Add a running total if the points of that task are not greater than or equal to the pointsPerDay
  */
  export function calcDays(
     tasks: Task[],
     index: number,
+    dayCounter: number,
+    pointSum: number,
     totalDays: number,
-    totalPoints: number
-  ): string {
-    let dayCount: number = 1;
-    let daySum: number = 0;
-    let pointsperDay: number = Math.ceil(totalPoints / totalDays);
-    let dayArray: number[] = [...tasks].map((task) => task.points).map(Number);
-    for (let i = 0; i <= index; i++) {
-      daySum += dayArray[i];
-      if (daySum >= pointsperDay) {
-        dayCount++;
-        daySum = 0;
-      }
-    }
-    return "Day " + dayCount.toString();
+    totalPoints: number,
+    startDate: Date
+  ): { date: Date, updateCounter: boolean, updateSum: number } {
+    const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
+    pointSum += +tasks[index].points;
+    const surpassedPoints = pointSum >= pointsPerDay;
+    const dayAssigned = (startDate.getDate() + (surpassedPoints ? dayCounter++ : dayCounter));
+    const newDate = new Date(startDate.getFullYear(), startDate.getMonth(), dayAssigned);
+    return { date: newDate, updateCounter: surpassedPoints, updateSum: pointSum };
   }

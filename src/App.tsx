@@ -31,8 +31,17 @@ function App() {
         taskArray={taskArray}
         setTaskArray={(dates) => setTaskArray(dates)}
         fileImported={fileImported}
-        setFileImported={(dates) => setFileImported(dates)}
+        setFileImported={(dates)=>setFileImported(dates)}
+        startDate={startDate}
+        endDate={endDate}
         setDocXML={setDocXML}
+      />
+      <Timeline        
+        taskArray={taskArray}
+        setTaskArray={(dates)=>setTaskArray(dates)}
+        fileImported={fileImported}
+        startDate={startDate}
+        endDate={endDate}   
       />
 
       <Row>
