@@ -8,6 +8,11 @@ import { FileImport } from "./components/FileImport";
 import { DocViewer } from "./components/document-viewer/DocViewer";
 import { Row, Col } from "react-bootstrap";
 
+/**
+ * Root component
+ * 
+ * @returns {JSX.Element} Main app component
+ */
 function App() {
 	//State
 	const [startDate, setStartDate] = useState<Date>(new Date());

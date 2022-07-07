@@ -47,11 +47,15 @@ export function EditTask({
 	const [pointsField, setPointsField] = useState<string>(
 		taskArray[index].points,
 	);
-	//const [dueDateMode, setDueDateMode] = useState<boolean>(false);
 	const [dueDateField, setDueDateField] = useState<Date>(
 		taskArray[index].dueDate,
 	);
 
+	/**
+	 * Updates the modifiedTasks array
+	 * 
+	 * @param {number} index The index of the task in the modifiedTasks array
+	 */
 	function updateTasks(index: number) {
 		const modifiedTasks = [...taskArray].map((task: Task) => {
 			return { ...task };
