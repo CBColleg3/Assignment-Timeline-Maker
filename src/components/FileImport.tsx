@@ -1,5 +1,5 @@
 import React from "react";
-import JSZip from "jszip";
+import JSZip, { file } from "jszip";
 import { Form } from "react-bootstrap";
 import type { Task } from "../interfaces/task";
 
@@ -23,6 +23,10 @@ type FileImportProps = {
 	 * Sets whether the file was imported or not
 	 */
 	setFileImported: (imported: boolean) => void;
+  /**
+   * Sets document XML
+   */
+  setDocXML: (xml: Document) => void;
 };
 
 /**
@@ -36,6 +40,7 @@ export function FileImport({
 	setTaskArray,
 	fileImported,
 	setFileImported,
+  setDocXML,
 }: FileImportProps): JSX.Element {
 	/**
 	 * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -44,7 +49,8 @@ export function FileImport({
 	 */
 	function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
 		if (event.target.files && event.target.files.length) {
-			const points = findPoints(findParts(readFile(event.target.files)));
+			const fileContent = readFile(event.target.files);
+      const points = findPoints(findParts(fileContent));
 			setFileImported(true);
 			console.log(points);
 		}
@@ -74,6 +80,7 @@ export function FileImport({
 		return fileText.then((txt) => {
 			const parser = new DOMParser();
 			const textDoc = parser.parseFromString(txt, "text/xml");
+      setDocXML(textDoc);
 			const textArray = textDoc.getElementsByTagName("w:t");
 			let total = "";
 			for (let i = 0; i < textArray.length; i++) {

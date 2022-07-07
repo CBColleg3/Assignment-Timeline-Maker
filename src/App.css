@@ -32,3 +32,24 @@
   background-color: #E5EAF8;
   text-align: center;
 }
+
+.doc-viewer-page {
+  background-color: #ffffff;
+  padding-top: calc(12vmin);
+  padding-bottom: calc(12vmin);
+}
+
+.doc-viewer-content {
+  margin-left: calc(16vmin);
+  margin-right: calc(16vmin);
+  text-align:left;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
