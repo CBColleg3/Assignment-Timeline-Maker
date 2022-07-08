@@ -9,7 +9,6 @@ import {
 } from "react-beautiful-dnd";
 import type { Task } from "../templates/task";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
-import utils from "./utils";
 
 /**
  * Props for the TimelineDragDrop component

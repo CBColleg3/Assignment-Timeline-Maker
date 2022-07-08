@@ -5,10 +5,8 @@ import { calcTotalPoints } from "./calcTotalPoints";
 /**
  * Base export, default exports all utility functions
  */
-const baseExport = {
+export const baseExport = {
 	calcDays,
 	calcDiffInDays,
 	calcTotalPoints,
 };
-
-export default baseExport;
