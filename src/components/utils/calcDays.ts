@@ -14,19 +14,21 @@ import type { Task } from "../../templates/task";
 export function calcDays(
 	tasks: Task[],
 	index: number,
+	dayCounter: number,
+	pointSum: number,
 	totalDays: number,
 	totalPoints: number,
-): string {
-	let dayCount = 1;
-	let daySum = 0;
-	const pointsPerDay = Math.ceil(totalPoints / totalDays);
-	const dayArray: number[] = tasks.map((task) => +task.points);
-	for (let i = 0; i <= index; i++) {
-		daySum += dayArray[i];
-		if (daySum >= pointsPerDay) {
-			dayCount++;
-			daySum = 0;
-		}
-	}
-	return "Day " + dayCount.toString();
+	startDate: Date,
+): { date: Date; updateCounter: boolean; updateSum: number } {
+	const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
+	pointSum += +tasks[index].points;
+	const surpassedPoints = pointSum >= pointsPerDay;
+	const dayAssigned =
+		startDate.getDate() + (surpassedPoints ? dayCounter++ : dayCounter);
+	const newDate = new Date(
+		startDate.getFullYear(),
+		startDate.getMonth(),
+		dayAssigned,
+	);
+	return { date: newDate, updateCounter: surpassedPoints, updateSum: pointSum };
 }

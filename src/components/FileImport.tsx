@@ -2,12 +2,9 @@ import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import type { Task } from "../templates/task";
-import {
-	calcDays,
-	calcTotalPoints,
-	dateDiffInDays,
-} from "./utils/timelineUtils";
-
+import {calcDays} from "./utils/calcDays";
+import {calcTotalPoints} from "./utils/calcTotalPoints";
+import {calcDiffInDays} from "./utils/calcDiffInDays";
 /**
  * Props for the FileImport component
  */
@@ -54,7 +51,7 @@ export function FileImport({
 
 	/**
 	 * This function finds the amount of points, and parts of a document that it reads via the readFile function
-	 * 
+	 *
 	 * @param {React.ChangeEvent<HTMLInputElement>} event React import file event
 	 * @returns {void}
 	 */
@@ -68,26 +65,29 @@ export function FileImport({
 
 	/**
 	 * This function loads in the document via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
-	 * 
+	 *
 	 * @param {HTMLInputElement} fileList fileList to read from
 	 * @returns {Promise<any>} Promise of zip decompress result
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
-		if (fileList) {
-			const myFile: File = fileList[0];
-			const jsZip = new JSZip();
+		//const stringText = "";
+		// accepts list of files from event
+		// returns string of word/document.xml file
+		const myFile: File = fileList![0];
+		const jsZip = new JSZip();
 
-			return jsZip.loadAsync(myFile).then((zip) => {
-				return zip.files["word/document.xml"].async("string");
-			});
-		}
-		return new Promise(undefined);
+		console.log(fileList);
+		return jsZip.loadAsync(myFile).then((zip) => {
+			console.log(zip);
+
+			return zip.files["word/document.xml"].async("string");
+		});
 	}
 
 	/**
 	 * accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
-	 * 
+	 *
 	 * @param {Promise<any>} fileText documentText used for finding parts
 	 * @returns {Promise<any>} A promise of any type
 	 */
@@ -95,7 +95,6 @@ export function FileImport({
 	function findParts(fileText: Promise<any>): Promise<any> {
 		//
 		return fileText.then((txt) => {
-
 			const parser = new DOMParser();
 			const textDoc = parser.parseFromString(txt, "text/xml");
 			setDocXML(textDoc);
@@ -115,7 +114,7 @@ export function FileImport({
 	 * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the
 	 * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
 	 * Once we find all of this we put it into a taskArray by adding each element of the captured document.
-	 * 
+	 *
 	 * @param {Promise<any>} cleanedText documentText used for finding points
 	 * @returns {void}
 	 */
@@ -147,10 +146,9 @@ export function FileImport({
 			for (const elem of resultsArray) {
 				if (elem !== null && reNum !== null) {
 					const num = new RegExp("(points?|pts?)");
-					const pointsResult = reNum.exec(elem)[0].replace(num, "");
-					const colorResult = parseInt(reNum.exec(elem)[0]) * 5;
+					const pointsResult = reNum.exec(elem)![0].replace(num, "");
+					const colorResult = parseInt(reNum.exec(elem)![0]) * 5;
 					if (pointsResult && colorResult) {
-
 						tasks.push({
 							name: "Finish Task " + (taskIndex + 1),
 							id: taskIndex + 1,
@@ -162,7 +160,6 @@ export function FileImport({
 						});
 						taskIndex++;
 					}
-
 				}
 			}
 			console.log("resultsArray", resultsArray);
@@ -181,7 +178,7 @@ export function FileImport({
 	 */
 	function UpdateDueDates(tasks: Task[]): void {
 		const totalPoints = calcTotalPoints(tasks);
-		const dateDiff = dateDiffInDays(startDate, endDate);
+		const dateDiff = calcDiffInDays(startDate, endDate);
 		let updateDayCounter = dayCounter;
 		let updatePointSum = pointSum;
 		const modifiedTasks = [...tasks].map((task: Task, index: number) => {
