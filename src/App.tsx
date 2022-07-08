@@ -10,7 +10,7 @@ import { Row, Col } from "react-bootstrap";
 
 /**
  * Root component
- * 
+ *
  * @returns {JSX.Element} Main app component
  */
 function App() {
@@ -51,7 +51,7 @@ function App() {
 						endDate={endDate}
 					/>
 				</Col>
-				<Col column-width="15px">
+				<Col lg={5}>
 					<DocViewer docXML={docXML} fileImported={fileImported} />{" "}
 				</Col>
 			</Row>
