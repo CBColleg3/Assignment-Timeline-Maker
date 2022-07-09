@@ -6,7 +6,6 @@ import { SetDateTime } from "./components/Date/SetDateTime";
 import { FileImport } from "./components/FileImport";
 import { DocViewer } from "./components/document-viewer/DocViewer";
 import { Row, Col } from "react-bootstrap";
-import styles from "./App.module.css";
 import AppHeader from "./components/App/AppHeader";
 
 /**
