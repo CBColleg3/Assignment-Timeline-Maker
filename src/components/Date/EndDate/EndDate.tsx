@@ -24,8 +24,8 @@ type EndDateProps = {
  * @returns {JSX.Element} The datetime component to gather and update the end date
  */
 export const EndDate = ({ date, setDate }: EndDateProps): JSX.Element => (
-	<div className="w-25 mx-auto d-flex flex-column">
-		<span className="my-2 fw-bolder fs-5">{"End Date"}</span>
+	<div className="w-25 mx-auto d-flex flex-column react-datepicker-container">
+		<span className="my-2 fw-bolder fs-5 text-center">{"End Date"}</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"

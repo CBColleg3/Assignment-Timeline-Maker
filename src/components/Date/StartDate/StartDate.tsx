@@ -24,8 +24,8 @@ type StartDateProps = {
  * @returns {JSX.Element} The datepicker to update the start date
  */
 export const StartDate = ({ date, setDate }: StartDateProps): JSX.Element => (
-	<div className="w-25 mx-auto d-flex flex-column">
-		<span className="my-2 fw-bolder fs-5">{"Start Date"}</span>
+	<div className={"w-25 mx-auto d-flex flex-column react-datepicker-container"}>
+		<span className="my-2 fw-bolder fs-5 text-center">{"Start Date"}</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"
