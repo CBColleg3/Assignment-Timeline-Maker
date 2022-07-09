@@ -23,21 +23,21 @@ const App = (): JSX.Element => {
 	return (
 		<div className="Timeline-site">
 			<AppHeader />
+			<SetDateTime
+				endDate={endDate}
+				setEndDate={(dates): void => setEndDate(dates)}
+				setStartDate={(dates): void => setStartDate(dates)}
+				startDate={startDate}
+			/>
+			<FileImport
+				endDate={endDate}
+				setDocXML={setDocXML}
+				setFileImported={(dates): void => setFileImported(dates)}
+				setTaskArray={(dates): void => setTaskArray(dates)}
+				startDate={startDate}
+			/>
 			<div className="d-flex flex-row mt-3">
 				<Col>
-					<SetDateTime
-						endDate={endDate}
-						setEndDate={(dates): void => setEndDate(dates)}
-						setStartDate={(dates): void => setStartDate(dates)}
-						startDate={startDate}
-					/>
-					<FileImport
-						endDate={endDate}
-						setDocXML={setDocXML}
-						setFileImported={(dates): void => setFileImported(dates)}
-						setTaskArray={(dates): void => setTaskArray(dates)}
-						startDate={startDate}
-					/>
 					<Timeline
 						endDate={endDate}
 						fileImported={fileImported}
