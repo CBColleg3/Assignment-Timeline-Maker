@@ -52,7 +52,7 @@ export const FileImport = ({
 		const MIN_FILE_LENGTH = 0;
 		if (result && result > MIN_FILE_LENGTH) {
 			const fileContent = readFile(event.target.files);
-			await findParts(fileContent as Promise<string>);
+			await findPoints(findParts(fileContent as Promise<string>));
 			setFileImported(true);
 		}
 	};
