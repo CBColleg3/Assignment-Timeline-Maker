@@ -1,4 +1,4 @@
-export interface Task {
+export type Task = {
 	name: string;
 	id: number;
 	document: string;
@@ -6,4 +6,4 @@ export interface Task {
 	color: number;
 	dueDate: Date;
 	autoDueDate: boolean;
-}
+};

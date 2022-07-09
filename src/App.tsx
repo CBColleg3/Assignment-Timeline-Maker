@@ -13,7 +13,7 @@ import AppHeader from "./components/App/AppHeader";
  *
  * @returns Main application component
  */
-function App(): JSX.Element {
+const App = (): JSX.Element => {
 	const [startDate, setStartDate] = React.useState<Date>(new Date());
 	const [endDate, setEndDate] = React.useState<Date>(new Date());
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
@@ -26,26 +26,24 @@ function App(): JSX.Element {
 			<div className="d-flex flex-row mt-3">
 				<Col>
 					<SetDateTime
-						startDate={startDate}
-						setStartDate={(dates) => setStartDate(dates)}
 						endDate={endDate}
-						setEndDate={(dates) => setEndDate(dates)}
+						setEndDate={(dates): void => setEndDate(dates)}
+						setStartDate={(dates): void => setStartDate(dates)}
+						startDate={startDate}
 					/>
 					<FileImport
-						taskArray={taskArray}
-						setTaskArray={(dates) => setTaskArray(dates)}
-						fileImported={fileImported}
-						setFileImported={(dates) => setFileImported(dates)}
-						startDate={startDate}
 						endDate={endDate}
 						setDocXML={setDocXML}
+						setFileImported={(dates): void => setFileImported(dates)}
+						setTaskArray={(dates): void => setTaskArray(dates)}
+						startDate={startDate}
 					/>
 					<Timeline
-						taskArray={taskArray}
-						setTaskArray={(dates) => setTaskArray(dates)}
-						fileImported={fileImported}
-						startDate={startDate}
 						endDate={endDate}
+						fileImported={fileImported}
+						setTaskArray={(dates): void => setTaskArray(dates)}
+						startDate={startDate}
+						taskArray={taskArray}
 					/>
 				</Col>
 				<Col lg={5}>
@@ -54,5 +52,5 @@ function App(): JSX.Element {
 			</div>
 		</div>
 	);
-}
+};
 export default App;

@@ -26,26 +26,30 @@ type AddRemoveTaskProps = {
  * @param {AddRemoveTaskProps} props The properties of the component
  * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
-export function AddRemoveTask({
+export const AddRemoveTask = ({
 	taskArray,
 	setTaskArray,
 	index,
-}: AddRemoveTaskProps): JSX.Element {
+}: AddRemoveTaskProps): JSX.Element => {
+	const IND_INC = 1;
+	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
+	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
+
 	/**
 	 * This function adds a part right below the task you've selected.
 	 *
-	 * @param {number} index current task index in the array of tasks
+	 * @param ind current task index in the array of tasks
 	 */
-	function AddPart(index: number) {
+	function addPart(ind: number): void {
 		const modifiedTaskArr = [...taskArray];
-		modifiedTaskArr.splice(index + 1, 0, {
-			name: "Swag",
-			id: index + 1,
-			document: "Uh Oh",
-			points: "0",
-			color: 0,
-			dueDate: new Date(),
+		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
+			color: 0,
+			document: "Uh Oh",
+			dueDate: new Date(),
+			id: ind + IND_INC,
+			name: "Swag",
+			points: "0",
 		});
 		setTaskArray(modifiedTaskArr);
 	}
@@ -53,18 +57,18 @@ export function AddRemoveTask({
 	/**
 	 * This function removes the current task you're on.
 	 *
-	 * @param {number} index current task index in the array of tasks
+	 * @param {number} ind current task index in the array of tasks
 	 */
-	function RemovePart(index: number) {
+	function removePart(ind: number): void {
 		const modifiedPtsArr = [...taskArray];
-		modifiedPtsArr.splice(index, 1);
+		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
 		setTaskArray(modifiedPtsArr);
 	}
 
 	return (
 		<div>
-			<Button onClick={() => AddPart(index)}>Add Part</Button>
-			<Button onClick={() => RemovePart(index)}>Remove Part</Button>
+			<Button onClick={(): void => addPart(index)}>{"Add Part"}</Button>
+			<Button onClick={(): void => removePart(index)}>{"Remove Part"}</Button>
 		</div>
 	);
-}
+};

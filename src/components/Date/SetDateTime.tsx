@@ -35,11 +35,9 @@ export const SetDateTime = ({
 	setStartDate,
 	endDate,
 	setEndDate,
-}: SetDateTimeProps): JSX.Element => {
-	return (
-		<span className="d-flex flex-row justify-content-between w-50 mx-auto my-3 pb-3">
-			<StartDate date={startDate} setDate={setStartDate} />
-			<EndDate date={endDate} setDate={setEndDate} />
-		</span>
-	);
-};
+}: SetDateTimeProps): JSX.Element => (
+	<span className="d-flex flex-row justify-content-between w-50 mx-auto my-3 pb-3">
+		<StartDate date={startDate} setDate={setStartDate} />
+		<EndDate date={endDate} setDate={setEndDate} />
+	</span>
+);
