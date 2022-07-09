@@ -10,17 +10,9 @@ import { calcDiffInDays } from "./utils/calcDiffInDays";
  */
 type FileImportProps = {
 	/**
-	 * Tasks in the document
-	 */
-	taskArray: Task[];
-	/**
 	 * Setter for updating tasks in the document
 	 */
 	setTaskArray: (tasks: Task[]) => void;
-	/**
-	 * Indicates whether the file was imported or not
-	 */
-	fileImported: boolean;
 	/**
 	 * Sets whether the file was imported or not
 	 */
@@ -37,17 +29,15 @@ type FileImportProps = {
  * @param {FileImportProps} props The properties of the FileImport component
  * @returns {JSX.Element} FileImport component, houses logic for adding file
  */
-export function FileImport({
-	taskArray,
+export const FileImport = ({
 	setTaskArray,
-	fileImported,
 	setFileImported,
 	startDate,
 	endDate,
 	setDocXML,
-}: FileImportProps): JSX.Element {
-	const [dayCounter] = React.useState<number>(0);
-	const [pointSum] = React.useState<number>(0);
+}: FileImportProps): JSX.Element => {
+	const dayCounter = 0;
+	const pointSum = 0;
 
 	/**
 	 * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -55,13 +45,17 @@ export function FileImport({
 	 * @param {React.ChangeEvent<HTMLInputElement>} event React import file event
 	 * @returns {void}
 	 */
-	function handleFileInput(event: React.ChangeEvent<HTMLInputElement>) {
-		if (event.target.files && event.target.files.length) {
+	const handleFileInput = async (
+		event: React.ChangeEvent<HTMLInputElement>,
+	): Promise<void> => {
+		const result = event?.target?.files?.length;
+		const MIN_FILE_LENGTH = 0;
+		if (result && result > MIN_FILE_LENGTH) {
 			const fileContent = readFile(event.target.files);
-			findPoints(findParts(fileContent));
+			await findParts(fileContent as Promise<string>);
 			setFileImported(true);
 		}
-	}
+	};
 
 	/**
 	 * This function loads in the document via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
@@ -69,70 +63,70 @@ export function FileImport({
 	 * @param {HTMLInputElement} fileList fileList to read from
 	 * @returns {Promise<any>} Promise of zip decompress result
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function readFile(fileList: HTMLInputElement["files"]): Promise<any> {
-		//const stringText = "";
-		// accepts list of files from event
-		// returns string of word/document.xml file
+	const readFile = async (
+		fileList: HTMLInputElement["files"],
+	): Promise<string | undefined> => {
+		const MY_FILE_INDEX = 0;
 		if (fileList) {
-			const myFile: File = fileList[0];
+			const myFile: File = fileList[MY_FILE_INDEX];
 			const jsZip = new JSZip();
-			return jsZip.loadAsync(myFile).then((zip) => {
-				return zip.files["word/document.xml"].async("string");
-			});
+			const loadResult = await jsZip
+				.loadAsync(myFile)
+				.then(async (zip) => zip.files["word/document.xml"].async("string"));
+			return loadResult;
 		}
-		return new Promise((res, rej) => undefined);
-	}
+		return undefined;
+	};
 
 	/**
-	 * accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
+	 * Accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
 	 *
-	 * @param {Promise<any>} fileText documentText used for finding parts
+	 * @param {Promise<any>} fileText DocumentText used for finding parts
 	 * @returns {Promise<any>} A promise of any type
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function findParts(fileText: Promise<any>): Promise<any> {
-		//
-		return fileText.then((txt) => {
+	const findParts = async (fileText: Promise<string>): Promise<string> => {
+		const CHILD_NODES_INDEX = 0;
+		const result = await fileText.then((txt) => {
 			const parser = new DOMParser();
 			const textDoc = parser.parseFromString(txt, "text/xml");
 			setDocXML(textDoc);
 
 			const textArray = textDoc.getElementsByTagName("w:t");
 			let total = "";
-			for (let i = 0; i < textArray.length; i++) {
-				total += textArray[i].childNodes[0].nodeValue;
+			for (const eachText of textArray) {
+				total += eachText.childNodes[CHILD_NODES_INDEX].nodeValue;
 			}
 			return total;
 		});
-	}
+		return result;
+	};
 
 	/**
-	 * this function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon,
+	 * This function uses regex to first find a sentence or phrase that starts and ends with a period, a comma, or a semicolon,
 	 * it then finds two or more numbers followed by the word point, pt, points, or pts shortly after the number and then ends with a
 	 * period, comma, or a semicolon to capture that part of the document. The full phrase is given via the document field of the
 	 * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
 	 * Once we find all of this we put it into a taskArray by adding each element of the captured document.
 	 *
-	 * @param {Promise<any>} cleanedText documentText used for finding points
+	 * @param {Promise<string>} cleanedText documentText used for finding points
 	 * @returns {void}
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function findPoints(cleanedText: Promise<any>): void {
-		// accepts string of text from document.xml
-		// returns array of point values found in document
+	const findPoints = async (cleanedText: Promise<string>): Promise<void> => {
 		const tasks: Task[] = [];
-		let tempArray;
 		const resultsArray: string[] = [];
-		const re = new RegExp(
-			"[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)",
-			"g",
-		);
-		const reNum = new RegExp("\\d+\\s?(points?|pts?)");
-		cleanedText.then((txt) => {
-			tempArray = re.exec(txt);
+		const re = /[^.,;]*\\d\\d?\\s?(?<pts>points?|pts?)[^.,;]*(?<punc>\\.|,|;)/gu;
+		const reNum = /\\d+\\s?(?<pts>points?|pts?)/u;
+
+		const TEMP_ARRAY_INDEX = 0;
+		const RE_NUM_INDEX = 0;
+		const RE_NUM_RESULT_MIN_LENGTH = 0;
+		const COLOR_RESULT_MULTIPLIER = 5;
+		const TASK_INDEX_INC = 1;
+
+		await cleanedText.then((txt) => {
+			let tempArray = re.exec(txt);
 			while (tempArray !== null) {
-				const tempArrayResult = tempArray[0];
+				const tempArrayResult = tempArray[TEMP_ARRAY_INDEX];
 				if (tempArrayResult) {
 					resultsArray.push(tempArrayResult);
 					tempArray = re.exec(txt);
@@ -141,29 +135,30 @@ export function FileImport({
 			let taskIndex = 0;
 			for (const elem of resultsArray) {
 				if (elem !== null && reNum !== null) {
-					const num = new RegExp("(points?|pts?)");
+					const num = /(?<pts>points?|pts?)/u;
 					const reNumResult = reNum.exec(elem);
-					if (reNumResult && reNumResult.length > 0) {
-						const pointsResult = reNumResult[0].replace(num, "");
-						const colorResult = parseInt(reNumResult[0]) * 5;
+					if (reNumResult && reNumResult.length > RE_NUM_RESULT_MIN_LENGTH) {
+						const pointsResult = reNumResult[RE_NUM_INDEX].replace(num, "");
+						const colorResult =
+							parseInt(reNumResult[RE_NUM_INDEX], 10) * COLOR_RESULT_MULTIPLIER;
 						if (pointsResult && colorResult) {
 							tasks.push({
-								name: "Finish Task " + (taskIndex + 1),
-								id: taskIndex + 1,
-								document: elem.toString(),
-								points: pointsResult,
-								color: colorResult,
-								dueDate: new Date(),
 								autoDueDate: true,
+								color: colorResult,
+								document: elem.toString(),
+								dueDate: new Date(),
+								id: taskIndex + TASK_INDEX_INC,
+								name: `${"Finish Task"}  ${taskIndex + TASK_INDEX_INC}`,
+								points: pointsResult,
 							});
-							taskIndex++;
+							taskIndex += TASK_INDEX_INC;
 						}
 					}
 				}
 			}
-			UpdateDueDates(tasks);
+			updateDueDates(tasks);
 		});
-	}
+	};
 
 	/**
 	 * Updates the due dates for all task objects, first it deep clones the original task array then it passes it into a helper function which returns
@@ -173,7 +168,10 @@ export function FileImport({
 	 * @param {Task[]} tasks The task objects
 	 * @returns {void}
 	 */
-	function UpdateDueDates(tasks: Task[]): void {
+	function updateDueDates(tasks: Task[]): void {
+		const UPDATE_POINT_SUM_VAL = 0;
+		const UPDATE_DAY_COUNTER_INC = 1;
+
 		const totalPoints = calcTotalPoints(tasks);
 		const dateDiff = calcDiffInDays(startDate, endDate);
 		let updateDayCounter = dayCounter;
@@ -189,8 +187,8 @@ export function FileImport({
 				startDate,
 			);
 			if (newDate.updateCounter) {
-				updateDayCounter++;
-				updatePointSum = 0;
+				updateDayCounter += UPDATE_DAY_COUNTER_INC;
+				updatePointSum = UPDATE_POINT_SUM_VAL;
 			} else {
 				updatePointSum = newDate.updateSum;
 			}
@@ -210,15 +208,21 @@ export function FileImport({
 					<Form.Group controlId="exampleForm">
 						<h2>
 							{" "}
-							<Form.Label>Upload a document</Form.Label>
+							<Form.Label>{"Upload a document"}</Form.Label>
 						</h2>
 
 						<p>
-							<Form.Control type="file" onChange={handleFileInput} />{" "}
+							<Form.Control
+								// eslint-disable-next-line @typescript-eslint/no-misused-promises -- keep Promise<void> as return value
+								onChange={async (
+									event: React.ChangeEvent<HTMLInputElement>,
+								): Promise<void> => handleFileInput(event)}
+								type="file"
+							/>{" "}
 						</p>
 					</Form.Group>
 				</p>
 			</div>
 		</div>
 	);
-}
+};

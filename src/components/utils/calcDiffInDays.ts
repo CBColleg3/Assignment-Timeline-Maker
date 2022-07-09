@@ -1,11 +1,32 @@
 /**
+ * Milliseconds per second
+ */
+const MS_PER_SECOND = 1000;
+
+/**
+ * Seconds per minute
+ */
+const SECONDS_PER_MINUTES = 60;
+
+/**
+ * Minutes per hour
+ */
+const MINUTES_PER_HOURS = 60;
+
+/**
+ * Hours per day
+ */
+const HOURS_PER_DAY = 24;
+
+/**
  * Milliseconds per day
  */
-const MS_PER_DAY = 1000 * 60 * 60 * 24;
+const MS_PER_DAY =
+	MS_PER_SECOND * SECONDS_PER_MINUTES * MINUTES_PER_HOURS * HOURS_PER_DAY;
 
 /**
  * This function calculates the numerical difference between date 1 and date 2
- * 
+ *
  * @param {Date} date1 first day, usually the Start Date
  * @param {Date} date2 second day, usually the End Date
  * @returns {number} The difference in days between the two dates, floored.

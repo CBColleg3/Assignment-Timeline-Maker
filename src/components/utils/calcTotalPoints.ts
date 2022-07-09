@@ -8,8 +8,8 @@ import type { Task } from "../../templates/task";
  */
 export function calcTotalPoints(tasks: Task[]): number {
 	let total = 0;
-	for (let i = 0; i < tasks.length; i++) {
-		total += parseInt(tasks[i].points, 10);
+	for (const task of tasks) {
+		total += parseInt(task.points, 10);
 	}
 	return total;
 }

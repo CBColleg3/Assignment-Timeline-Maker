@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
  * Overrides React.ChangeEvent with specific values
  */
 type TaskChangeEvent = React.ChangeEvent<
-	HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement
+	HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 >;
 
 /**
@@ -34,11 +34,11 @@ type EditTaskProps = {
  * @param {EditTaskProps} props The props passed into the EditTask component
  * @returns {JSX.Element} The EditTask component
  */
-export function EditTask({
+export const EditTask = ({
 	taskArray,
 	setTaskArray,
 	index,
-}: EditTaskProps): JSX.Element {
+}: EditTaskProps): JSX.Element => {
 	const [editMode, setEditMode] = useState<boolean>(false);
 	const [nameField, setNameField] = useState<string>(taskArray[index].name);
 	const [documentField, setDocumentField] = useState<string>(
@@ -53,17 +53,15 @@ export function EditTask({
 
 	/**
 	 * Updates the modifiedTasks array
-	 * 
-	 * @param {number} index The index of the task in the modifiedTasks array
+	 *
+	 * @param {number} ind The index of the task in the modifiedTasks array
 	 */
-	function updateTasks(index: number) {
-		const modifiedTasks = [...taskArray].map((task: Task) => {
-			return { ...task };
-		});
-		modifiedTasks[index].name = nameField;
-		modifiedTasks[index].document = documentField;
-		modifiedTasks[index].points = pointsField;
-		modifiedTasks[index].dueDate = dueDateField;
+	function updateTasks(ind: number): void {
+		const modifiedTasks = [...taskArray].map((task: Task) => ({ ...task }));
+		modifiedTasks[ind].name = nameField;
+		modifiedTasks[ind].document = documentField;
+		modifiedTasks[ind].points = pointsField;
+		modifiedTasks[ind].dueDate = dueDateField;
 		setTaskArray(modifiedTasks);
 	}
 	/**
@@ -71,7 +69,7 @@ export function EditTask({
 	 *
 	 * @param {TaskChangeEvent} event The change event that happens when a user interacts with a form
 	 */
-	function updateNameField(event: TaskChangeEvent) {
+	function updateNameField(event: TaskChangeEvent): void {
 		setNameField(event.target.value);
 	}
 
@@ -80,7 +78,7 @@ export function EditTask({
 	 *
 	 * @param {TaskChangeEvent} event The change event that happens when a user interacts with a form
 	 */
-	function updateDocumentField(event: TaskChangeEvent) {
+	function updateDocumentField(event: TaskChangeEvent): void {
 		setDocumentField(event.target.value);
 	}
 
@@ -89,16 +87,12 @@ export function EditTask({
 	 *
 	 * @param {TaskChangeEvent} event The change event that happens when a user interacts with a form
 	 */
-	function updatePointsField(event: TaskChangeEvent) {
+	function updatePointsField(event: TaskChangeEvent): void {
 		setPointsField(event.target.value);
 	}
 	return (
 		<div>
-			<Button
-				onClick={() => {
-					setEditMode(!editMode);
-				}}
-			>
+			<Button onClick={(): void => setEditMode(!editMode)}>
 				{" "}
 				{!editMode ? "Edit Task" : "Close"}{" "}
 			</Button>
@@ -106,62 +100,62 @@ export function EditTask({
 				<div>
 					<Form.Group as={Row}>
 						<Col>
-							<p style={{ marginBottom: "0px" }}>Task Name</p>
+							<p style={{ marginBottom: "0px" }}>{"Task Name"}</p>
 						</Col>
 						<Col>
 							<Form.Control
 								data-testId="change-name-field-box"
+								onChange={(ev): void => updateNameField(ev)}
 								value={nameField}
-								onChange={updateNameField}
-							></Form.Control>
+							/>
 						</Col>
 					</Form.Group>
 					<Form.Group as={Row}>
 						<Col>
-							<p style={{ marginBottom: "0px" }}>Task Document Part</p>
+							<p style={{ marginBottom: "0px" }}>{"Task Document Part"}</p>
 						</Col>
 						<Col>
 							<Form.Control
 								data-testId="change-document-part-box"
+								onChange={(ev): void => updateDocumentField(ev)}
 								value={documentField}
-								onChange={updateDocumentField}
-							></Form.Control>
+							/>
 						</Col>
 					</Form.Group>
 					<Form.Group as={Row}>
 						<Col>
-							<p style={{ marginBottom: "0px" }}>Task Points</p>
+							<p style={{ marginBottom: "0px" }}>{"Task Points"}</p>
 						</Col>
 						<Col>
 							<Form.Control
 								data-testId="change-task-points-box"
+								onChange={(ev): void => updatePointsField(ev)}
 								type="number"
-								value={parseInt(pointsField)}
-								onChange={updatePointsField}
-							></Form.Control>
+								value={parseInt(pointsField, 10)}
+							/>
 						</Col>
 					</Form.Group>
 					<Form.Group as={Row}>
 						<Col>
 							<DatePicker
-								showTimeSelect
 								dateFormat="Pp"
+								onChange={(date: Date): void => setDueDateField(date)}
 								selected={dueDateField}
-								onChange={(date: Date) => setDueDateField(date)}
+								showTimeSelect
 							/>
 						</Col>
 					</Form.Group>
 
 					<Button
-						onClick={() => {
+						onClick={(): void => {
 							updateTasks(index);
 							setEditMode(!editMode);
 						}}
 					>
-						Save Changes
+						{"Save Changes"}
 					</Button>
 				</div>
 			)}
 		</div>
 	);
-}
+};

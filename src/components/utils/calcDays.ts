@@ -1,5 +1,9 @@
 import type { Task } from "../../templates/task";
 
+const IS_SURPASSED_INC = 1;
+
+const IS_NOT_SURPASSED_INC = 0;
+
 /**
  * This function calculates the day that a task should be completed on and returns a string
  * It calculates it by counting up until the index number given, and adding the sum for each arrayValue
@@ -23,15 +27,24 @@ export function calcDays(
 	totalPoints: number,
 	startDate: Date,
 ): { date: Date; updateCounter: boolean; updateSum: number } {
+	const newPointSum = pointSum + +tasks[index].points;
+
 	const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
-	pointSum += +tasks[index].points;
-	const surpassedPoints = pointSum >= pointsPerDay;
-	const dayAssigned =
-		startDate.getDate() + (surpassedPoints ? dayCounter++ : dayCounter);
+	const overPoints = newPointSum >= pointsPerDay;
+
+	const newDayCounter =
+		dayCounter +
+		(overPoints ? dayCounter + IS_SURPASSED_INC : IS_NOT_SURPASSED_INC);
+	const dayAssigned = startDate.getDate() + newDayCounter;
+
 	const newDate = new Date(
 		startDate.getFullYear(),
 		startDate.getMonth(),
 		dayAssigned,
 	);
-	return { date: newDate, updateCounter: surpassedPoints, updateSum: pointSum };
+	return {
+		date: newDate,
+		updateCounter: overPoints,
+		updateSum: newPointSum,
+	};
 }

@@ -5,12 +5,12 @@ import type { Task } from "./templates/task";
 import { SetDateTime } from "./components/Date/SetDateTime";
 import { FileImport } from "./components/FileImport";
 import { DocViewer } from "./components/document-viewer/DocViewer";
-import { Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import AppHeader from "./components/App/AppHeader";
 
 /**
  * Root component
- * 
+ *
  * @returns Main application component
  */
 function App(): JSX.Element {
@@ -23,7 +23,7 @@ function App(): JSX.Element {
 	return (
 		<div className="Timeline-site">
 			<AppHeader />
-			<Row className="pt-4">
+			<div className="d-flex flex-row mt-3">
 				<Col>
 					<SetDateTime
 						startDate={startDate}
@@ -51,7 +51,7 @@ function App(): JSX.Element {
 				<Col lg={5}>
 					<DocViewer docXML={docXML} fileImported={fileImported} />{" "}
 				</Col>
-			</Row>
+			</div>
 		</div>
 	);
 }

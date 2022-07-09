@@ -6,7 +6,6 @@ import {
 import type { Task } from "../templates/task";
 import "react-vertical-timeline-component/style.min.css";
 import { TimelineDragDrop } from "./TimelineDragDrop";
-import { Container, Col, Row } from "react-bootstrap";
 
 /**
  * Props for the Timeline component
@@ -25,69 +24,66 @@ type TimelineProps = {
  * @param {TimelineProps} props The passed in props for the Timeline component
  * @returns {JSX.Element} The Timeline component
  */
-export function Timeline({
+export const Timeline = ({
 	taskArray,
 	setTaskArray,
 	fileImported,
 	startDate,
 	endDate,
-}: TimelineProps): JSX.Element {
-	return (
-		<>
-			{fileImported && (
-				<>
-					<div>
-						<VerticalTimeline layout="2-columns">
-							<VerticalTimelineElement
-								className="vertical-timeline-element--work"
-								contentStyle={{
-									background: "rgb(160, 16, 82)",
-									color: "#fff",
-								}}
-								contentArrowStyle={{
-									borderRight: "7px solid  rgb(160, 16, 82)",
-								}}
-								iconStyle={{
-									background: "rgb(160, 16, 82)",
-									color: "#fff",
-								}}
-							>
-								<h3 className="vertical-timeline-element-title">
-									Lets start the Assignment!
-								</h3>
-								<h4 className="vertical-timeline-element-title">
-									Due Date: {endDate.toLocaleDateString()}{" "}
-									{endDate.toLocaleTimeString([], {
-										hour: "2-digit",
-										minute: "2-digit",
-									})}{" "}
-								</h4>
-							</VerticalTimelineElement>
-							<TimelineDragDrop
-								taskArray={taskArray}
-								setTaskArray={setTaskArray}
-								startDate={startDate}
-								endDate={endDate}
-							></TimelineDragDrop>
-							<VerticalTimelineElement
-								iconStyle={{
-									background: "rgb(33, 150, 243)",
-									color: "#fff",
-								}}
-								contentStyle={{
-									background: "rgb(33, 150, 243)",
-									color: "#fff",
-								}}
-								contentArrowStyle={{
-									borderRight: "7px solid  rgb(33, 150, 243)",
-								}}
-							>
-								<h3>Assignment Completed!</h3>
-							</VerticalTimelineElement>
-						</VerticalTimeline>
-					</div>
-				</>
-			)}
-		</>
-	);
-}
+}: TimelineProps): JSX.Element => (
+	<>
+		{fileImported && (
+			<div>
+				<VerticalTimeline layout="2-columns">
+					<VerticalTimelineElement
+						className="vertical-timeline-element--work"
+						contentArrowStyle={{
+							borderRight: "7px solid  rgb(160, 16, 82)",
+						}}
+						contentStyle={{
+							background: "rgb(160, 16, 82)",
+							color: "#fff",
+						}}
+						iconStyle={{
+							background: "rgb(160, 16, 82)",
+							color: "#fff",
+						}}
+					>
+						<h3 className="vertical-timeline-element-title">
+							{"Lets start the Assignment!"}
+						</h3>
+						<h4 className="vertical-timeline-element-title">
+							{"Due Date: "}
+							{endDate.toLocaleDateString()}{" "}
+							{endDate.toLocaleTimeString([], {
+								hour: "2-digit",
+								minute: "2-digit",
+							})}{" "}
+						</h4>
+					</VerticalTimelineElement>
+					<TimelineDragDrop
+						endDate={endDate}
+						setTaskArray={setTaskArray}
+						startDate={startDate}
+						taskArray={taskArray}
+					/>
+					<VerticalTimelineElement
+						contentArrowStyle={{
+							borderRight: "7px solid  rgb(33, 150, 243)",
+						}}
+						contentStyle={{
+							background: "rgb(33, 150, 243)",
+							color: "#fff",
+						}}
+						iconStyle={{
+							background: "rgb(33, 150, 243)",
+							color: "#fff",
+						}}
+					>
+						<h3>{"Assignment Completed!"}</h3>
+					</VerticalTimelineElement>
+				</VerticalTimeline>
+			</div>
+		)}
+	</>
+);
