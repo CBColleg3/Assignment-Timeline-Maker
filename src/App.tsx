@@ -10,7 +10,7 @@ import { Row, Col } from "react-bootstrap";
 
 /**
  * Root component
- * 
+ *
  * @returns {JSX.Element} Main app component
  */
 function App() {
@@ -26,23 +26,23 @@ function App() {
 			<header className="App-header">
 				<p>Assignment Timeline Maker</p>
 			</header>
+			<SetDateTime
+				startDate={startDate}
+				setStartDate={(dates) => setStartDate(dates)}
+				endDate={endDate}
+				setEndDate={(dates) => setEndDate(dates)}
+			/>
+			<FileImport
+				taskArray={taskArray}
+				setTaskArray={(dates) => setTaskArray(dates)}
+				fileImported={fileImported}
+				setFileImported={(dates) => setFileImported(dates)}
+				startDate={startDate}
+				endDate={endDate}
+				setDocXML={setDocXML}
+			/>
 			<Row>
 				<Col>
-					<SetDateTime
-						startDate={startDate}
-						setStartDate={(dates) => setStartDate(dates)}
-						endDate={endDate}
-						setEndDate={(dates) => setEndDate(dates)}
-					/>
-					<FileImport
-						taskArray={taskArray}
-						setTaskArray={(dates) => setTaskArray(dates)}
-						fileImported={fileImported}
-						setFileImported={(dates) => setFileImported(dates)}
-						startDate={startDate}
-						endDate={endDate}
-						setDocXML={setDocXML}
-					/>
 					<Timeline
 						taskArray={taskArray}
 						setTaskArray={(dates) => setTaskArray(dates)}
@@ -51,7 +51,7 @@ function App() {
 						endDate={endDate}
 					/>
 				</Col>
-				<Col column-width="15px">
+				<Col lg={5}>
 					<DocViewer docXML={docXML} fileImported={fileImported} />{" "}
 				</Col>
 			</Row>
