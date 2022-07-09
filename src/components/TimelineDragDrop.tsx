@@ -60,11 +60,7 @@ export function TimelineDragDrop({
 		<DragDropContext onDragEnd={OnDragEnd}>
 			<Droppable droppableId="vertical-timeline-element--work">
 				{(provided) => (
-					<div
-						className="vertical-timeline-element--work"
-						{...provided.droppableProps}
-						ref={provided.innerRef}
-					>
+					<div {...provided.droppableProps} ref={provided.innerRef}>
 						{taskArray.map((task, index) => {
 							return (
 								<Draggable key={task.id} draggableId={task.id.toString()} index={index}>

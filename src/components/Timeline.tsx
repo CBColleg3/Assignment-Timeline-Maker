@@ -6,7 +6,6 @@ import {
 import type { Task } from "../templates/task";
 import "react-vertical-timeline-component/style.min.css";
 import { TimelineDragDrop } from "./TimelineDragDrop";
-import { Container, Col, Row } from "react-bootstrap";
 
 /**
  * Props for the Timeline component
@@ -37,7 +36,7 @@ export function Timeline({
 			{fileImported && (
 				<>
 					<div>
-						<VerticalTimeline layout="2-columns">
+						<VerticalTimeline layout="1-column">
 							<VerticalTimelineElement
 								className="vertical-timeline-element--work"
 								contentStyle={{
