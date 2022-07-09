@@ -14,6 +14,8 @@ function extractParagraphs(docXML: Document | undefined): Element[] {
 
 function convertTextChunk(textChunk: Element): JSX.Element {
 	let output;
+	const style: Record<string, string> = {};
+
 	const textArray = Array.from(textChunk.getElementsByTagName("w:t"));
 
 	if (textArray.length === 0) {
@@ -22,14 +24,36 @@ function convertTextChunk(textChunk: Element): JSX.Element {
 		output = textArray[0].childNodes[0].nodeValue;
 	}
 
-	if (textChunk.getElementsByTagName("w:b").length === 0)
-		output = <b>{output}</b>;
+	if (textChunk.getElementsByTagName("w:b").length !== 0)
+		style["font-weight"] = "bold";
 
-	if (textChunk.getElementsByTagName("").length === 0) {
-		output;
+	if (textChunk.getElementsByTagName("w:i").length !== 0) {
+		style["font-style"] = "italic";
 	}
 
-	return <span>{output}</span>;
+	if (textChunk.getElementsByTagName("w:u").length !== 0) {
+		style["text-decoration"] = "underline";
+	}
+
+	if (textChunk.getElementsByTagName("w:strike").length !== 0) {
+		if (style["text-decoration"] !== undefined) {
+			style["text-decoration"] += " line-through";
+		} else {
+			style["text-decoration"] = "line-through";
+		}
+	}
+
+	if (textChunk.getElementsByTagName("w:color").length !== 0) {
+		const color = textChunk
+			.getElementsByTagName("w:color")[0]
+			.getAttribute("w:val");
+		console.log(color);
+		if (color !== null) {
+			style["color"] = "#" + color;
+		}
+	}
+
+	return <span style={style}>{output}</span>;
 }
 
 /**
