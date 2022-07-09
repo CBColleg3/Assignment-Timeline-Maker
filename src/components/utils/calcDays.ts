@@ -7,8 +7,11 @@ import type { Task } from "../../templates/task";
  *
  * @param {Task[]} tasks array of tasks
  * @param {number} index current task function is on
+ * @param {number} dayCounter Counter for days
+ * @param {number} pointSum Summation of points
  * @param { number} totalDays totalDays given
  * @param {number} totalPoints totalPoints calculated
+ * @param {Date} startDate The start date
  * @returns {string} The day that a task should be completed on
  */
 export function calcDays(

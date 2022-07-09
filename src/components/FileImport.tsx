@@ -2,9 +2,9 @@ import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
 import type { Task } from "../templates/task";
-import {calcDays} from "./utils/calcDays";
-import {calcTotalPoints} from "./utils/calcTotalPoints";
-import {calcDiffInDays} from "./utils/calcDiffInDays";
+import { calcDays } from "./utils/calcDays";
+import { calcTotalPoints } from "./utils/calcTotalPoints";
+import { calcDiffInDays } from "./utils/calcDiffInDays";
 /**
  * Props for the FileImport component
  */
@@ -74,15 +74,14 @@ export function FileImport({
 		//const stringText = "";
 		// accepts list of files from event
 		// returns string of word/document.xml file
-		const myFile: File = fileList![0];
-		const jsZip = new JSZip();
-
-		console.log(fileList);
-		return jsZip.loadAsync(myFile).then((zip) => {
-			console.log(zip);
-
-			return zip.files["word/document.xml"].async("string");
-		});
+		if (fileList) {
+			const myFile: File = fileList[0];
+			const jsZip = new JSZip();
+			return jsZip.loadAsync(myFile).then((zip) => {
+				return zip.files["word/document.xml"].async("string");
+			});
+		}
+		return new Promise((res, rej) => undefined);
 	}
 
 	/**
@@ -124,17 +123,14 @@ export function FileImport({
 		// returns array of point values found in document
 		const tasks: Task[] = [];
 		let tempArray;
-		//let ptsArrayClone: string[] = [];
 		const resultsArray: string[] = [];
 		const re = new RegExp(
 			"[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)",
 			"g",
-		); //(?!\\.|,|;).*\\d\\d?\\s?(points?|pts?)*?(?<!\\.|,|;)  (?!\.|,|;).*?(?<!\.|,|;)\d\d?\s?(points?|pts?)
+		);
 		const reNum = new RegExp("\\d+\\s?(points?|pts?)");
-		// const reDoc = new RegExp("[^.,;]*\\d\\d?\\s?(points?|pts?)[^.,;]*(\\.|,|;)", "g");
 		cleanedText.then((txt) => {
 			tempArray = re.exec(txt);
-			//  console.log(tempArray);
 			while (tempArray !== null) {
 				const tempArrayResult = tempArray[0];
 				if (tempArrayResult) {
@@ -146,24 +142,25 @@ export function FileImport({
 			for (const elem of resultsArray) {
 				if (elem !== null && reNum !== null) {
 					const num = new RegExp("(points?|pts?)");
-					const pointsResult = reNum.exec(elem)![0].replace(num, "");
-					const colorResult = parseInt(reNum.exec(elem)![0]) * 5;
-					if (pointsResult && colorResult) {
-						tasks.push({
-							name: "Finish Task " + (taskIndex + 1),
-							id: taskIndex + 1,
-							document: elem.toString(),
-							points: pointsResult,
-							color: colorResult,
-							dueDate: new Date(),
-							autoDueDate: true,
-						});
-						taskIndex++;
+					const reNumResult = reNum.exec(elem);
+					if (reNumResult && reNumResult.length > 0) {
+						const pointsResult = reNumResult[0].replace(num, "");
+						const colorResult = parseInt(reNumResult[0]) * 5;
+						if (pointsResult && colorResult) {
+							tasks.push({
+								name: "Finish Task " + (taskIndex + 1),
+								id: taskIndex + 1,
+								document: elem.toString(),
+								points: pointsResult,
+								color: colorResult,
+								dueDate: new Date(),
+								autoDueDate: true,
+							});
+							taskIndex++;
+						}
 					}
 				}
 			}
-			console.log("resultsArray", resultsArray);
-			//setTaskArray(tasks);
 			UpdateDueDates(tasks);
 		});
 	}
@@ -182,16 +179,6 @@ export function FileImport({
 		let updateDayCounter = dayCounter;
 		let updatePointSum = pointSum;
 		const modifiedTasks = [...tasks].map((task: Task, index: number) => {
-			console.log(
-				`state: ${JSON.stringify({
-					index,
-					updateDayCounter,
-					updatePointSum,
-					dateDiff,
-					totalPoints,
-					startDate,
-				})}`,
-			);
 			const newDate = calcDays(
 				tasks,
 				index,
@@ -208,15 +195,12 @@ export function FileImport({
 				updatePointSum = newDate.updateSum;
 			}
 
-			console.log("newDate = ", newDate);
 			return {
 				...task,
 				dueDate: newDate.date,
 			};
 		});
 		setTaskArray(modifiedTasks);
-		// console.log("taskArray", taskArray);
-		// console.log("taskArrayLength", taskArray.length);
 	}
 
 	return (
