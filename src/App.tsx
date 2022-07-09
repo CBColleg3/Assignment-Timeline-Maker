@@ -11,10 +11,10 @@ import AppHeader from "./components/App/AppHeader";
 
 /**
  * Root component
- *
- * @returns {JSX.Element} Main app component
+ * 
+ * @returns Main application component
  */
-function App() {
+function App(): JSX.Element {
 	const [startDate, setStartDate] = React.useState<Date>(new Date());
 	const [endDate, setEndDate] = React.useState<Date>(new Date());
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);

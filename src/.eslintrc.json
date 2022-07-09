@@ -43,6 +43,7 @@
         "no-unreachable": "error",
         "import/no-unresolved": 0,
         "@typescript-eslint/consistent-type-imports": "error",
-        "jsdoc/no-undefined-types": 0
+        "jsdoc/no-undefined-types": 0,
+        "jsdoc/require-returns-type": 0
     }
 }
