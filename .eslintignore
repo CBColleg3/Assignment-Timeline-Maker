@@ -1,0 +1,6 @@
+data/*
+public/*
+node_modules/*
+build/*
+.github/*
+.git/*
