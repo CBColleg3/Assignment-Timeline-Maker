@@ -1,13 +1,13 @@
 import React from "react";
-import { AddRemoveTask } from "./AddRemoveTask";
-import { EditTask } from "./EditTask";
+import { AddRemoveTask } from "../Task/AddRemove/AddRemoveTask";
+import { EditTask } from "../Task/Edit/EditTask";
 import {
 	DragDropContext,
 	Droppable,
 	Draggable,
 	type DropResult,
 } from "react-beautiful-dnd";
-import type { Task } from "../templates/task";
+import type { Task } from "../../@types/Task";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 
 const SPLICE_OP_NO_DELETE = 0;

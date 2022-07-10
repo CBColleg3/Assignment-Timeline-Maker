@@ -1,21 +1,22 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Timeline } from "./components/Timeline";
-import type { Task } from "./templates/task";
-import { SetDateTime } from "./components/Date/SetDateTime";
-import FileImport from "./components/FileImport";
-import { DocViewer } from "./components/DocViewer/DocViewer";
+import { Timeline } from "../Timeline";
+import type { Task } from "../../@types/Task";
+import { SetDateTime } from "../Date/SetDateTime";
+import FileImport from "../FileImport";
+import { DocViewer } from "../DocViewer/DocViewer";
 import { Col } from "react-bootstrap";
-import AppHeader from "./components/App/AppHeader";
+import AppHeader from "./AppHeader";
+import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
+import { UpdateDateType } from "../../@types/AssignmentDate/UpdateDateType";
 
 /**
  * Root component
  *
  * @returns Main application component
  */
-const App = (): JSX.Element => {
-	const [startDate, setStartDate] = React.useState<Date>(new Date());
-	const [endDate, setEndDate] = React.useState<Date>(new Date());
+export const App = (): JSX.Element => {
+	const [dates, setDates] = React.useState<AssignmentDate>();
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
 	const [fileImported, setFileImported] = React.useState<boolean>(false);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
@@ -59,4 +60,3 @@ const App = (): JSX.Element => {
 		</div>
 	);
 };
-export default App;

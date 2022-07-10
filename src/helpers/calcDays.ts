@@ -1,4 +1,4 @@
-import type { Task } from "../../templates/task";
+import type { Task } from "../@types/Task";
 
 const IS_SURPASSED_INC = 1;
 

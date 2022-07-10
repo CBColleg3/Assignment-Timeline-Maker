@@ -3,9 +3,9 @@ import {
 	VerticalTimeline,
 	VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import type { Task } from "../templates/task";
+import type { Task } from "../@types/Task";
 import "react-vertical-timeline-component/style.min.css";
-import { TimelineDragDrop } from "./TimelineDragDrop";
+import { TimelineDragDrop } from "./DragDrop/TimelineDragDrop";
 
 /**
  * Props for the Timeline component

@@ -1,8 +1,8 @@
 import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
-import type { Task } from "../../templates/task";
-import { calcDays } from "../utils/calcDays";
+import type { Task } from "../../@types/Task";
+import { calcDays } from "../../helpers/calcDays";
 import { calcTotalPoints } from "../utils/calcTotalPoints";
 import { calcDiffInDays } from "../utils/calcDiffInDays";
 /**

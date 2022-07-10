@@ -1,8 +1,8 @@
-import type { Task } from "../../templates/task";
+import type { Task } from "../@types/Task";
 
 /**
  * This function calculates the total amount of points in the document
- * 
+ *
  * @param {Task[]} tasks array of tasks state
  * @returns {number} total points in the document
  */
