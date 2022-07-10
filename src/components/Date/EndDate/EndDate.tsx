@@ -24,28 +24,30 @@ type EndDateProps = {
  * @returns {JSX.Element} The datetime component to gather and update the end date
  */
 export const EndDate = ({ endDate, update }: EndDateProps): JSX.Element => (
-	<div className="w-25 mx-auto d-flex flex-column react-datepicker-container">
-		<span className="my-2 fw-bolder fs-5 text-center">{"End Date"}</span>
-		<ReactDatePicker
-			closeOnScroll
-			dateFormat="Pp"
-			onChange={update}
-			peekNextMonth
-			required
-			selected={endDate}
-			selectsEnd
-			shouldCloseOnSelect
-			showTimeSelect
-			todayButton={
-				<Button
-					className={`${styles.today_button}`}
-					size="sm"
-					variant="outline-primary"
-				>
-					{"Today"}
-				</Button>
-			}
-			useWeekdaysShort
-		/>
+	<div className="me-auto d-flex flex-row">
+		<span className="fw-bolder fs-6 text-start text-nowrap my-auto">{"End Date"}</span>
+		<span className="my-auto ms-2">
+			<ReactDatePicker
+				closeOnScroll
+				dateFormat="Pp"
+				onChange={update}
+				peekNextMonth
+				required
+				selected={endDate}
+				selectsEnd
+				shouldCloseOnSelect
+				showTimeSelect
+				todayButton={
+					<Button
+						className={`${styles.today_button}`}
+						size="sm"
+						variant="outline-primary"
+					>
+						{"Today"}
+					</Button>
+				}
+				useWeekdaysShort
+			/>
+		</span>
 	</div>
 );

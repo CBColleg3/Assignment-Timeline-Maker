@@ -62,7 +62,7 @@ export const SetDateTime = ({ update }: SetDateTimeProps): JSX.Element => {
 	};
 
 	return (
-		<span className="d-flex flex-row justify-content-between w-50 mx-auto my-3 pb-3">
+		<span className="d-flex flex-column mt-4">
 			<StartDate
 				startDate={dates.start}
 				update={(value: Date): void => updateDate("start", value)}

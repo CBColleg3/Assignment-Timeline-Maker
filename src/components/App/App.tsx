@@ -23,7 +23,7 @@ export const App = (): JSX.Element => {
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-between">
+			<div className="d-flex flex-row justify-content-around">
 				<span>
 					<SetDateTime update={(theDates: AssignmentDate): void => setDates(theDates)} />
 				</span>
