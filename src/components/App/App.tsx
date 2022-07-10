@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Timeline } from "../Timeline";
+import { Timeline } from "../Timeline/Timeline";
 import type { Task } from "../../@types/Task";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
