@@ -1,4 +1,5 @@
 import React from "react";
+import { colorHexs } from "./colorMap";
 
 /**
  * Takes a Document file of XML content and extracts paragraph information
@@ -15,6 +16,10 @@ function extractParagraphs(docXML: Document | undefined): Element[] {
 function convertTextChunk(textChunk: Element): JSX.Element {
 	let output;
 	const style: Record<string, string> = {};
+	const highlightStyle: Record<string, string> = {};
+	const backgroundStyle: Record<string, string> = {};
+
+	style["opacity"] = "1";
 
 	const textArray = Array.from(textChunk.getElementsByTagName("w:t"));
 
@@ -53,7 +58,38 @@ function convertTextChunk(textChunk: Element): JSX.Element {
 		}
 	}
 
-	return <span style={style}>{output}</span>;
+	if (textChunk.getElementsByTagName("w:highlight").length !== 0) {
+		const colorName = textChunk
+			.getElementsByTagName("w:highlight")[0]
+			.getAttribute("w:val");
+
+		if (colorName !== null) {
+			if (colorHexs[colorName] !== undefined) {
+				const _opacity = Math.round(Math.min(Math.max(0.5 || 1, 0), 1) * 255);
+				highlightStyle["background-color"] =
+					colorHexs[colorName] + _opacity.toString(16).toUpperCase();
+			}
+		}
+	}
+
+	if (textChunk.getElementsByTagName("w:shd").length !== 0) {
+		const color = textChunk
+			.getElementsByTagName("w:shd")[0]
+			.getAttribute("w:fill");
+
+		if (color !== null) {
+			console.log("works");
+			backgroundStyle["background-color"] = "#" + color;
+		}
+	}
+
+	return (
+		<span style={backgroundStyle}>
+			<span style={highlightStyle}>
+				<span style={style}>{output}</span>
+			</span>
+		</span>
+	);
 }
 
 /**
