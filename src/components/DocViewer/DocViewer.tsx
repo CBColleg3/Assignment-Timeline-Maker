@@ -1,5 +1,5 @@
 import React from "react";
-import { extractParagraphs, convertXML2HTML } from "./docUtils";
+import { extractParagraphs, convertXML2HTML } from "src/helpers";
 
 /**
  * Props for the DocViewer component

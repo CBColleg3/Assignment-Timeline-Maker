@@ -10,29 +10,29 @@ type EndDateProps = {
 	/**
 	 * The current end date
 	 */
-	date: Date;
+	endDate: Date;
 	/**
 	 * The function to update the end date
 	 */
-	setDate: (theDate: Date) => void;
+	update: (theDate: Date) => void;
 };
 
 /**
  * EndDate component, which houses all the logic for gathering and updating the end date
- * 
+ *
  * @param {EndDateProps} props The props passed into the component
  * @returns {JSX.Element} The datetime component to gather and update the end date
  */
-export const EndDate = ({ date, setDate }: EndDateProps): JSX.Element => (
+export const EndDate = ({ endDate, update }: EndDateProps): JSX.Element => (
 	<div className="w-25 mx-auto d-flex flex-column react-datepicker-container">
 		<span className="my-2 fw-bolder fs-5 text-center">{"End Date"}</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"
-			onChange={setDate}
+			onChange={update}
 			peekNextMonth
 			required
-			selected={date}
+			selected={endDate}
 			selectsEnd
 			shouldCloseOnSelect
 			showTimeSelect

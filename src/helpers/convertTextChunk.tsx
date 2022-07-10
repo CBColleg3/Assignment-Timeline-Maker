@@ -2,22 +2,12 @@ import React from "react";
 import { colorHex } from "./colorMap";
 
 /**
- * Takes a Document file of XML content and extracts paragraph information
- *
- * @param {Document | undefined} docXML Document file containing XML elements of the uploaded DOCX file
- * @returns {Element[]} Array of Elements representing each paragraph in the DOCX
- */
-function extractParagraphs(docXML: Document | undefined): Element[] {
-	return docXML ? Array.from(docXML.getElementsByTagName("w:p")) : [];
-}
-
-/**
  * Utility function parses an XML element into an HTML element
- * 
- * @param textChunk XML element that will be parsed for text styles 
+ *
+ * @param textChunk XML element that will be parsed for text styles
  * @returns JSX Element of parsed XML element
  */
-function convertTextChunk(textChunk: Element): JSX.Element {
+export const convertTextChunk = (textChunk: Element): JSX.Element => {
 	const OUTPUT_INDEX = 0;
 	const MIN_TEXT_ARRAY_LENGTH = 0;
 	const MIN_TAGNAME_ARRAY_LENGTH = 0;
@@ -35,7 +25,6 @@ function convertTextChunk(textChunk: Element): JSX.Element {
 		return <span>{output}</span>;
 	}
 	output = textArray[OUTPUT_INDEX].childNodes[OUTPUT_INDEX].nodeValue;
-	
 
 	if (textChunk.getElementsByTagName("w:b").length !== MIN_TAGNAME_ARRAY_LENGTH) {
 		style["font-weight"] = "bold";
@@ -58,33 +47,26 @@ function convertTextChunk(textChunk: Element): JSX.Element {
 	}
 
 	if (textChunk.getElementsByTagName("w:color").length !== MIN_TAGNAME_ARRAY_LENGTH) {
-		const color = textChunk
-			.getElementsByTagName("w:color")[TAGNAME_ARRAY_INDEX]
-			.getAttribute("w:val");
+		const color = textChunk.getElementsByTagName("w:color")[TAGNAME_ARRAY_INDEX].getAttribute("w:val");
 		if (color !== null) {
 			style.color = `#${color}`;
 		}
 	}
 
 	if (textChunk.getElementsByTagName("w:highlight").length !== MIN_TAGNAME_ARRAY_LENGTH) {
-		const colorName = textChunk
-			.getElementsByTagName("w:highlight")[TAGNAME_ARRAY_INDEX]
-			.getAttribute("w:val");
+		const colorName = textChunk.getElementsByTagName("w:highlight")[TAGNAME_ARRAY_INDEX].getAttribute("w:val");
 
 		if (colorName !== null) {
 			if (colorHex[colorName] !== undefined) {
 				// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- provide context on magic numbers used below
 				const _opacity = Math.round(Math.min(Math.max(0.5 || 1, 0), 1) * 255);
-				highlightStyle["background-color"] =
-					colorHex[colorName] + _opacity.toString(HEX_RADIX).toUpperCase();
+				highlightStyle["background-color"] = colorHex[colorName] + _opacity.toString(HEX_RADIX).toUpperCase();
 			}
 		}
 	}
 
 	if (textChunk.getElementsByTagName("w:shd").length !== MIN_TAGNAME_ARRAY_LENGTH) {
-		const color = textChunk
-			.getElementsByTagName("w:shd")[TAGNAME_ARRAY_INDEX]
-			.getAttribute("w:fill");
+		const color = textChunk.getElementsByTagName("w:shd")[TAGNAME_ARRAY_INDEX].getAttribute("w:fill");
 
 		if (color !== null) {
 			backgroundStyle["background-color"] = `#${color}`;
@@ -98,24 +80,4 @@ function convertTextChunk(textChunk: Element): JSX.Element {
 			</span>
 		</span>
 	);
-}
-
-/**
- * Takes an Element containing 'w:p' xml tag information and extracts the text information from it
- *
- * @param {Element} par xml element representing a 'w:p' xml tag
- * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
- */
-function convertXML2HTML(par: Element): JSX.Element {
-	const textChunks = Array.from(par.getElementsByTagName("w:r"));
-
-	return (
-		<p>
-			{textChunks.map(
-				(textChunk: Element): JSX.Element => convertTextChunk(textChunk),
-			)}
-		</p>
-	);
-}
-
-export { extractParagraphs, convertXML2HTML };
+};

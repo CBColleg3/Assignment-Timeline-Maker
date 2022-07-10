@@ -1,12 +1,20 @@
 import { calcDays } from "./calcDays";
 import { calcDiffInDays } from "./calcDiffInDays";
 import { calcTotalPoints } from "./calcTotalPoints";
+import { colorHex } from "./colorMap";
+import { convertTextChunk } from "./convertTextChunk";
+import { convertXML2HTML } from "./convertXML2HTML";
+import { extractParagraphs } from "./extractParagraphs";
 
 /**
- * Base export, default exports all utility functions
+ * Base export, exports all utility functions in one object
  */
-export const baseExport = {
+export {
 	calcDays,
 	calcDiffInDays,
 	calcTotalPoints,
+	colorHex,
+	convertTextChunk,
+	convertXML2HTML,
+	extractParagraphs,
 };

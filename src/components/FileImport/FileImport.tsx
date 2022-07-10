@@ -1,10 +1,10 @@
 import React from "react";
 import JSZip from "jszip";
 import { Form } from "react-bootstrap";
-import type { Task } from "../../@types/Task";
-import { calcDays } from "../../helpers/calcDays";
-import { calcTotalPoints } from "../utils/calcTotalPoints";
-import { calcDiffInDays } from "../utils/calcDiffInDays";
+import type { Task } from "src/@types/Task";
+import { calcDays, calcTotalPoints, calcDiffInDays } from "src/helpers";
+import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
+
 /**
  * Props for the FileImport component
  */
@@ -18,8 +18,8 @@ type FileImportProps = {
 	 */
 	setFileImported: (imported: boolean) => void;
 
-	startDate: Date;
-	endDate: Date;
+	assignmentDate: AssignmentDate;
+
 	setDocXML: (xml: Document) => void;
 };
 
@@ -32,8 +32,7 @@ type FileImportProps = {
 export const FileImport = ({
 	setTaskArray,
 	setFileImported,
-	startDate,
-	endDate,
+	assignmentDate,
 	setDocXML,
 }: FileImportProps): JSX.Element => {
 	const dayCounter = 0;
@@ -45,9 +44,7 @@ export const FileImport = ({
 	 * @param {React.ChangeEvent<HTMLInputElement>} event React import file event
 	 * @returns {void}
 	 */
-	const handleFileInput = async (
-		event: React.ChangeEvent<HTMLInputElement>,
-	): Promise<void> => {
+	const handleFileInput = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const result = event?.target?.files?.length;
 		const MIN_FILE_LENGTH = 0;
 		if (result && result > MIN_FILE_LENGTH) {
@@ -63,9 +60,7 @@ export const FileImport = ({
 	 * @param {HTMLInputElement} fileList fileList to read from
 	 * @returns {Promise<any>} Promise of zip decompress result
 	 */
-	const readFile = async (
-		fileList: HTMLInputElement["files"],
-	): Promise<string | undefined> => {
+	const readFile = async (fileList: HTMLInputElement["files"]): Promise<string | undefined> => {
 		const MY_FILE_INDEX = 0;
 		if (fileList) {
 			const myFile: File = fileList[MY_FILE_INDEX];
@@ -139,8 +134,7 @@ export const FileImport = ({
 					const reNumResult = reNum.exec(elem);
 					if (reNumResult && reNumResult.length > RE_NUM_RESULT_MIN_LENGTH) {
 						const pointsResult = reNumResult[RE_NUM_INDEX].replace(num, "");
-						const colorResult =
-							parseInt(reNumResult[RE_NUM_INDEX], 10) * COLOR_RESULT_MULTIPLIER;
+						const colorResult = parseInt(reNumResult[RE_NUM_INDEX], 10) * COLOR_RESULT_MULTIPLIER;
 						if (pointsResult && colorResult) {
 							tasks.push({
 								autoDueDate: true,
@@ -173,7 +167,7 @@ export const FileImport = ({
 		const UPDATE_DAY_COUNTER_INC = 1;
 
 		const totalPoints = calcTotalPoints(tasks);
-		const dateDiff = calcDiffInDays(startDate, endDate);
+		const dateDiff = calcDiffInDays(assignmentDate.start, assignmentDate.end);
 		let updateDayCounter = dayCounter;
 		let updatePointSum = pointSum;
 		const modifiedTasks = [...tasks].map((task: Task, index: number) => {
@@ -184,7 +178,7 @@ export const FileImport = ({
 				updatePointSum,
 				dateDiff,
 				totalPoints,
-				startDate,
+				assignmentDate.start,
 			);
 			if (newDate.updateCounter) {
 				updateDayCounter += UPDATE_DAY_COUNTER_INC;
@@ -214,9 +208,7 @@ export const FileImport = ({
 						<p>
 							<Form.Control
 								// eslint-disable-next-line @typescript-eslint/no-misused-promises -- keep Promise<void> as return value
-								onChange={async (
-									event: React.ChangeEvent<HTMLInputElement>,
-								): Promise<void> => handleFileInput(event)}
+								onChange={async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => handleFileInput(event)}
 								type="file"
 							/>{" "}
 						</p>

@@ -1,5 +1,14 @@
 import type { Task } from "../@types/Task";
 
+/**
+ * Specifies the return value of the calcDays function
+ */
+type CalcDaysReturn = {
+	date: Date;
+	updateCounter: boolean;
+	updateSum: number;
+};
+
 const IS_SURPASSED_INC = 1;
 
 const IS_NOT_SURPASSED_INC = 0;
@@ -18,7 +27,7 @@ const IS_NOT_SURPASSED_INC = 0;
  * @param {Date} startDate The start date
  * @returns {string} The day that a task should be completed on
  */
-export function calcDays(
+export const calcDays = (
 	tasks: Task[],
 	index: number,
 	dayCounter: number,
@@ -26,7 +35,7 @@ export function calcDays(
 	totalDays: number,
 	totalPoints: number,
 	startDate: Date,
-): { date: Date; updateCounter: boolean; updateSum: number } {
+): CalcDaysReturn => {
 	const newPointSum = pointSum + +tasks[index].points;
 
 	const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
@@ -47,4 +56,4 @@ export function calcDays(
 		updateCounter: overPoints,
 		updateSum: newPointSum,
 	};
-}
+};

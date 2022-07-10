@@ -8,7 +8,6 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
-import { UpdateDateType } from "../../@types/AssignmentDate/UpdateDateType";
 
 /**
  * Root component
@@ -16,7 +15,7 @@ import { UpdateDateType } from "../../@types/AssignmentDate/UpdateDateType";
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [dates, setDates] = React.useState<AssignmentDate>();
+	const [dates, setDates] = React.useState<AssignmentDate>({ end: new Date(), start: new Date() });
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
 	const [fileImported, setFileImported] = React.useState<boolean>(false);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
@@ -26,35 +25,31 @@ export const App = (): JSX.Element => {
 			<AppHeader />
 			<div className="d-flex flex-row justify-content-between">
 				<span>
-					<SetDateTime
-						endDate={endDate}
-						setEndDate={(dates: Date): void => setEndDate(dates)}
-						setStartDate={(dates: Date): void => setStartDate(dates)}
-						startDate={startDate}
-					/>
+					<SetDateTime update={(theDates: AssignmentDate): void => setDates(theDates)} />
 				</span>
 				<span>
 					<FileImport
-						endDate={endDate}
+						assignmentDate={dates}
 						setDocXML={setDocXML}
-						setFileImported={(dates: boolean): void => setFileImported(dates)}
-						setTaskArray={(dates: Task[]): void => setTaskArray(dates)}
-						startDate={startDate}
+						setFileImported={(isImported: boolean): void => setFileImported(isImported)}
+						setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
 					/>
 				</span>
 			</div>
 			<div className="d-flex flex-row mt-3">
 				<Col>
 					<Timeline
-						endDate={endDate}
+						assignmentDate={dates}
 						fileImported={fileImported}
-						setTaskArray={(dates: Task[]): void => setTaskArray(dates)}
-						startDate={startDate}
+						setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
 						taskArray={taskArray}
 					/>
 				</Col>
 				<Col lg={5}>
-					<DocViewer docXML={docXML} fileImported={fileImported} />{" "}
+					<DocViewer
+						docXML={docXML}
+						fileImported={fileImported}
+					/>{" "}
 				</Col>
 			</div>
 		</div>
