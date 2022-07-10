@@ -21,7 +21,7 @@ const App = (): JSX.Element => {
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 
 	return (
-		<div className="Timeline-site">
+		<div>
 			<AppHeader />
 			<SetDateTime
 				endDate={endDate}
