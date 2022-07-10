@@ -350,7 +350,7 @@
         "max-statements": [
             "error",
             {
-                "max": 30
+                "max": 40
             }
         ],
         "max-statements-per-line": [
@@ -526,10 +526,6 @@
             }
         ],
         "@typescript-eslint/class-literal-property-style": "error",
-        "@typescript-eslint/consistent-indexed-object-style": [
-            "error",
-            "index-signature"
-        ],
         "@typescript-eslint/consistent-type-assertions": "error",
         "@typescript-eslint/consistent-type-exports": "error",
         "@typescript-eslint/consistent-type-definitions": [
