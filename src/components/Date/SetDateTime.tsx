@@ -1,13 +1,17 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
 import type { UpdateDateType } from "../../@types/AssignmentDate/UpdateDateType";
-import EndDate from "./EndDate";
-import StartDate from "./StartDate";
+import DateModal from "./DateModal";
 
 /**
  * Types of props for SetDateTime component
  */
 type SetDateTimeProps = {
+	/**
+	 * The current assignment date for the timeline
+	 */
+	assignmentDate: AssignmentDate;
 	/**
 	 * Propagates the local changes to the parent component
 	 */
@@ -20,12 +24,10 @@ type SetDateTimeProps = {
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-export const SetDateTime = ({ update }: SetDateTimeProps): JSX.Element => {
+export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.Element => {
 	const [confirm, setConfirm] = React.useState<boolean>(false);
-	const [dates, setDates] = React.useState<AssignmentDate>({
-		end: new Date(),
-		start: new Date(),
-	});
+	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
+	const [displayModal, setDisplayModal] = React.useState(false);
 
 	/**
 	 * Triggers when dates/confirm is updated
@@ -62,15 +64,37 @@ export const SetDateTime = ({ update }: SetDateTimeProps): JSX.Element => {
 	};
 
 	return (
-		<span className="d-flex flex-column mt-4">
-			<StartDate
-				startDate={dates.start}
-				update={(value: Date): void => updateDate("start", value)}
+		<>
+			<span className="d-flex flex-column mt-4">
+				<span className="mb-2">
+					<span className="fw-bold">{"Start Date:  "}</span>
+					{`${assignmentDate.start.toLocaleDateString()}  ${dates.start.toLocaleTimeString()}`}
+				</span>
+				<span>
+					<span className="fw-bold">{"End Date:  "}</span>
+					{`${assignmentDate.end.toLocaleDateString()}  ${dates.end.toLocaleTimeString()}`}
+				</span>
+				<span className="mt-2">
+					<Button
+						className="w-100"
+						onClick={(): void => {
+							setDisplayModal(true);
+						}}
+						size="sm"
+						variant="outline-primary"
+					>
+						{"Update dates"}
+					</Button>
+				</span>
+			</span>
+			<DateModal
+				assignmentDate={dates}
+				isShowing={displayModal}
+				onClose={(): void => setDisplayModal(false)}
+				title="Set Start &amp; End Dates"
+				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
+				updateDates={updateDate}
 			/>
-			<EndDate
-				endDate={dates.end}
-				update={(value: Date): void => updateDate("end", value)}
-			/>
-		</span>
+		</>
 	);
 };

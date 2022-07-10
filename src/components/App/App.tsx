@@ -25,7 +25,10 @@ export const App = (): JSX.Element => {
 			<AppHeader />
 			<div className="d-flex flex-row justify-content-around">
 				<span>
-					<SetDateTime update={(theDates: AssignmentDate): void => setDates(theDates)} />
+					<SetDateTime
+						assignmentDate={dates}
+						update={(theDates: AssignmentDate): void => setDates(theDates)}
+					/>
 				</span>
 				<span>
 					<FileImport

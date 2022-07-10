@@ -24,7 +24,7 @@ type EndDateProps = {
  * @returns {JSX.Element} The datetime component to gather and update the end date
  */
 export const EndDate = ({ endDate, update }: EndDateProps): JSX.Element => (
-	<div className="me-auto d-flex flex-row">
+	<div className="d-flex flex-row">
 		<span className="fw-bolder fs-6 text-start text-nowrap my-auto">{"End Date"}</span>
 		<span className="my-auto ms-2">
 			<ReactDatePicker
