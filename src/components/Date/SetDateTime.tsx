@@ -68,11 +68,11 @@ export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.E
 			<span className="d-flex flex-column mt-4">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start Date:  "}</span>
-					{`${assignmentDate.start.toLocaleDateString()}  ${dates.start.toLocaleTimeString()}`}
+					{`${assignmentDate.start.toLocaleDateString()}  ${assignmentDate.start.toLocaleTimeString()}`}
 				</span>
 				<span>
 					<span className="fw-bold">{"End Date:  "}</span>
-					{`${assignmentDate.end.toLocaleDateString()}  ${dates.end.toLocaleTimeString()}`}
+					{`${assignmentDate.end.toLocaleDateString()}  ${assignmentDate.end.toLocaleTimeString()}`}
 				</span>
 				<span className="mt-2">
 					<Button

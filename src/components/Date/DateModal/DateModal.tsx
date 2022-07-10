@@ -53,6 +53,7 @@ export const DateModal = ({
 						if (modalConfirm) {
 							updateConfirm(true);
 							onClose();
+							setModalConfirm(false);
 						} else {
 							setModalConfirm(true);
 						}
