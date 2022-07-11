@@ -21,6 +21,10 @@ function App() {
 	const [fileImported, setFileImported] = useState<boolean>(false);
 	const [docXML, setDocXML] = useState<Document | undefined>(undefined);
 
+	const [showMessage, setShowMessage] = useState<boolean>(false);
+	const [modalMessage, setModalMessage] = useState<string>("");
+	const [modalHeader, setModalHeader] = useState<string>("");
+
 	return (
 		<div className="Timeline-site">
 			<header className="App-header">

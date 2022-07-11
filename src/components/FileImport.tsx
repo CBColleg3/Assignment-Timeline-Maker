@@ -46,9 +46,9 @@ export function FileImport({
 	endDate,
 	setDocXML,
 }: FileImportProps): JSX.Element {
-	const [dayCounter] = React.useState<number>(0);
-	const [pointSum] = React.useState<number>(0);
-	const [color] = React.useState<string>(Math.random().toString(16).substr(-6));
+	const dayCounter = 0;
+	const pointSum = 0;
+	const color = "0000";
 
 	/**
 	 * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -183,6 +183,7 @@ export function FileImport({
 			const newDate = calcDays(
 				tasks,
 				index,
+				updateColor,
 				updateDayCounter,
 				updatePointSum,
 				dateDiff,
@@ -190,17 +191,18 @@ export function FileImport({
 				startDate,
 			);
 			if (newDate.updateCounter) {
+				console.log("Day Counter increased");
 				updateDayCounter++;
-				updatePointSum = 0;
-				updateColor = Math.random().toString(16).substr(-6);
+				updatePointSum = 0;	
 			} else {
 				updatePointSum = newDate.updateSum;
 			}
+			updateColor = newDate.color;
 
 			return {
 				...task,
 				dueDate: newDate.date,
-				color: updateColor
+				color: newDate.color
 			};
 		});
 		setTaskArray(modifiedTasks);

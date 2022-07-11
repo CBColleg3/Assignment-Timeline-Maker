@@ -7,6 +7,7 @@ import type { Task } from "../../templates/task";
  *
  * @param {Task[]} tasks array of tasks
  * @param {number} index current task function is on
+ * @param color
  * @param {number} dayCounter Counter for days
  * @param {number} pointSum Summation of points
  * @param { number} totalDays totalDays given
@@ -17,12 +18,13 @@ import type { Task } from "../../templates/task";
 export function calcDays(
 	tasks: Task[],
 	index: number,
+	color: string,
 	dayCounter: number,
 	pointSum: number,
 	totalDays: number,
 	totalPoints: number,
 	startDate: Date,
-): { date: Date; updateCounter: boolean; updateSum: number } {
+): { date: Date; color: string; updateCounter: boolean; updateSum: number } {
 	const pointsPerDay: number = Math.ceil(totalPoints / totalDays);
 	pointSum += +tasks[index].points;
 	const surpassedPoints = pointSum >= pointsPerDay;
@@ -33,5 +35,6 @@ export function calcDays(
 		startDate.getMonth(),
 		dayAssigned,
 	);
-	return { date: newDate, updateCounter: surpassedPoints, updateSum: pointSum };
+	const newColor = (surpassedPoints ? Math.random().toString(16).substr(-6): color);
+	return { date: newDate, color: newColor, updateCounter: surpassedPoints, updateSum: pointSum };
 }
