@@ -17,8 +17,15 @@ import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate"
 export const App = (): JSX.Element => {
 	const [dates, setDates] = React.useState<AssignmentDate>({ end: new Date(), start: new Date() });
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
+	const [file, setFile] = React.useState<Document | undefined>(undefined);
 	const [fileImported, setFileImported] = React.useState<boolean>(false);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
+
+	React.useEffect(() => {
+		if (file) {
+			setDocXML(file);
+		}
+	}, [file]);
 
 	return (
 		<div className="d-flex flex-column">
@@ -30,14 +37,13 @@ export const App = (): JSX.Element => {
 						update={(theDates: AssignmentDate): void => setDates(theDates)}
 					/>
 				</span>
-				<span>
-					<FileImport
-						assignmentDate={dates}
-						setDocXML={setDocXML}
-						setFileImported={(isImported: boolean): void => setFileImported(isImported)}
-						setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-					/>
-				</span>
+				<span className="mt-4">{"File Selected"}</span>
+				<FileImport
+					assignmentDate={dates}
+					setDocXML={setDocXML}
+					setFileImported={(isImported: boolean): void => setFileImported(isImported)}
+					setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+				/>
 			</div>
 			<div className="d-flex flex-row mt-3">
 				<Col>

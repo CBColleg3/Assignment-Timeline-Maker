@@ -245,7 +245,7 @@
         "no-shadow": "error",
         "no-shadow-restricted-names": "error",
         "no-undef-init": "error",
-        "no-unused-vars": "error",
+        "no-unused-vars": "warn",
         "no-use-before-define": "error",
         "array-bracket-newline": [
             "error",
@@ -639,7 +639,7 @@
         "@typescript-eslint/no-throw-literal": "error",
         "@typescript-eslint/no-unused-expressions": "error",
         "@typescript-eslint/no-unused-vars": [
-            "error",
+            "warn",
             {
                 "ignoreRestSiblings": true
             }

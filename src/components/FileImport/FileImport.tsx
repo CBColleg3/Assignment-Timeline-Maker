@@ -2,7 +2,15 @@ import React from "react";
 import type { Task } from "src/@types/Task";
 import { calcDays, calcTotalPoints, calcDiffInDays, readFile } from "src/helpers";
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
-import { Form } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import styles from "./FileImport.module.css";
+
+const initialValues = {
+	dragging: 0,
+};
+
+const DRAGGING_NUM_CONST = 1;
 
 /**
  * Props for the FileImport component
@@ -34,6 +42,7 @@ export const FileImport = ({
 	assignmentDate,
 	setDocXML,
 }: FileImportProps): JSX.Element => {
+	const [dragging, setDragging] = React.useState(initialValues.dragging);
 	const dayCounter = 0;
 	const pointSum = 0;
 
@@ -179,18 +188,45 @@ export const FileImport = ({
 	}
 
 	return (
-		<Form.Group controlId="exampleForm">
-			<h2>
-				{" "}
-				<Form.Label>{"Upload a document"}</Form.Label>
-			</h2>
-
-			<p>
-				<Form.Control
-					onChange={async (event): Promise<void> => handleFileInput(event)}
-					type="file"
-				/>{" "}
-			</p>
-		</Form.Group>
+		<span
+			className={`mt-4 ${dragging !== initialValues.dragging ? styles.drag_area_on : styles.drag_area_off}`}
+			onDragEnter={(): void => setDragging((oldValue) => oldValue + DRAGGING_NUM_CONST)}
+			onDragLeave={(): void => setDragging((oldValue) => oldValue - DRAGGING_NUM_CONST)}
+			onDragOver={(event): void => event.preventDefault()}
+			onDrop={(event): void => {
+				event.preventDefault();
+				setDragging(initialValues.dragging);
+			}}
+		>
+			<input
+				className={styles.invisible_form}
+				data-multiple-caption="{count} files selected"
+				id="assignment_import"
+				multiple
+				onChange={(event): void => {
+					if (event.target.files) {
+						console.log(event.target.files);
+					}
+				}}
+				type="file"
+			/>
+			<div className="p-5 d-flex flex-column border border-info border-opacity-50 rounded">
+				<span className="mx-auto">
+					<FontAwesomeIcon
+						icon={faFileArrowUp}
+						size="lg"
+					/>
+				</span>
+				<span>
+					<label
+						className={`me-1 fw-bolder ${styles.choose_a_file}`}
+						htmlFor="assignment_import"
+					>
+						{"Choose a file"}
+					</label>
+					<span>{"or drag it here"}</span>
+				</span>
+			</div>
+		</span>
 	);
 };

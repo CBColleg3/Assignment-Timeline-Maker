@@ -65,7 +65,7 @@ export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.E
 
 	return (
 		<>
-			<span className="d-flex flex-column mt-4">
+			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start:  "}</span>
 					{`${assignmentDate.start.toLocaleDateString()}  ${assignmentDate.start.toLocaleTimeString()}`}

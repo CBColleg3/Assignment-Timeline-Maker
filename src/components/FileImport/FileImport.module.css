@@ -1,0 +1,67 @@
+@keyframes choose_a_file_anim {
+    from {
+        border-bottom: 0px solid transparent;
+    }
+
+    to {
+        border-bottom: 1px solid black;
+    }
+}
+
+@keyframes drag_area_on_anim {
+    from {
+        background-color: transparent;
+    }
+
+    to {
+        background-color: rgb(203, 222, 255);
+    }
+}
+
+@keyframes drag_area_off_anim {
+    from {
+        background-color: rgb(203, 222, 255);
+    }
+
+    to {
+        background-color: transparent;
+    }
+}
+
+.choose_a_file:hover {
+    animation-name: choose_a_file_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.choose_a_file {
+    cursor: pointer;
+}
+
+.drag_area_on {
+    animation-name: drag_area_on_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.drag_area_off {
+    animation-name: drag_area_off_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.invisible_form:before {
+    opacity: 0;
+}
+
+.invisible_form {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
