@@ -73,8 +73,11 @@ export function TimelineDragDrop({
 											<VerticalTimelineElement
 												className="vertical-timeline-element--work"
 												iconStyle={{
-													background: `rgb(${task.color + 100},100,150)`,
+													background: "#" + task.color,
 													color: "#fff",
+												}}
+												contentStyle={{
+													color: "#" + task.color,
 												}}
 											>
 												<h3 className="vertical-timeline-element-title">{task.name}</h3>

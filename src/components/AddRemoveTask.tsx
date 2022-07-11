@@ -37,13 +37,15 @@ export function AddRemoveTask({
 	 * @param {number} index current task index in the array of tasks
 	 */
 	function AddPart(index: number) {
-		const modifiedTaskArr = [...taskArray];
+		const modifiedTaskArr = [...taskArray].map((task: Task) => {
+			return { ...task };
+		});
 		modifiedTaskArr.splice(index + 1, 0, {
 			name: "Swag",
 			id: index + 1,
 			document: "Uh Oh",
 			points: "0",
-			color: 0,
+			color: Math.random().toString(16).substr(-6),
 			dueDate: new Date(),
 			autoDueDate: false,
 		});
@@ -56,7 +58,9 @@ export function AddRemoveTask({
 	 * @param {number} index current task index in the array of tasks
 	 */
 	function RemovePart(index: number) {
-		const modifiedPtsArr = [...taskArray];
+		const modifiedPtsArr = [...taskArray].map((task: Task) => {
+			return { ...task };
+		});
 		modifiedPtsArr.splice(index, 1);
 		setTaskArray(modifiedPtsArr);
 	}
