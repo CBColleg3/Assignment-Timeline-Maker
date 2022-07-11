@@ -7,7 +7,7 @@ import type { Task } from "../../templates/task";
  *
  * @param {Task[]} tasks array of tasks
  * @param {number} index current task function is on
- * @param color
+ * @param {string} color current color of each task
  * @param {number} dayCounter Counter for days
  * @param {number} pointSum Summation of points
  * @param { number} totalDays totalDays given
@@ -35,6 +35,6 @@ export function calcDays(
 		startDate.getMonth(),
 		dayAssigned,
 	);
-	const newColor = (surpassedPoints ? Math.random().toString(16).substr(-6): color);
+	const newColor = (surpassedPoints ? color: color);
 	return { date: newDate, color: newColor, updateCounter: surpassedPoints, updateSum: pointSum };
 }

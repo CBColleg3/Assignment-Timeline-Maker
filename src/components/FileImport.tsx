@@ -48,7 +48,7 @@ export function FileImport({
 }: FileImportProps): JSX.Element {
 	const dayCounter = 0;
 	const pointSum = 0;
-	const color = "0000";
+	const color = Math.random().toString(16).substr(-6);
 
 	/**
 	 * This function finds the amount of points, and parts of a document that it reads via the readFile function
@@ -194,10 +194,11 @@ export function FileImport({
 				console.log("Day Counter increased");
 				updateDayCounter++;
 				updatePointSum = 0;	
+				updateColor = Math.random().toString(16).substr(-6);
 			} else {
 				updatePointSum = newDate.updateSum;
 			}
-			updateColor = newDate.color;
+			//updateColor = newDate.color;
 
 			return {
 				...task,
