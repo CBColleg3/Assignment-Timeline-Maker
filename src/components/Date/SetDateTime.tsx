@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
-import type { UpdateDateType } from "../../@types/AssignmentDate/UpdateDateType";
+import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
+import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
 import DateModal from "./DateModal";
 
 /**
@@ -67,11 +67,11 @@ export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.E
 		<>
 			<span className="d-flex flex-column mt-4">
 				<span className="mb-2">
-					<span className="fw-bold">{"Start Date:  "}</span>
+					<span className="fw-bold">{"Start:  "}</span>
 					{`${assignmentDate.start.toLocaleDateString()}  ${assignmentDate.start.toLocaleTimeString()}`}
 				</span>
 				<span>
-					<span className="fw-bold">{"End Date:  "}</span>
+					<span className="fw-bold">{"End:  "}</span>
 					{`${assignmentDate.end.toLocaleDateString()}  ${assignmentDate.end.toLocaleTimeString()}`}
 				</span>
 				<span className="mt-2">
@@ -83,7 +83,7 @@ export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.E
 						size="sm"
 						variant="outline-primary"
 					>
-						{"Update dates"}
+						{"Update"}
 					</Button>
 				</span>
 			</span>
