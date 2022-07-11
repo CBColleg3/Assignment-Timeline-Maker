@@ -1,9 +1,8 @@
 import React from "react";
-import JSZip from "jszip";
-import { Form } from "react-bootstrap";
 import type { Task } from "src/@types/Task";
-import { calcDays, calcTotalPoints, calcDiffInDays } from "src/helpers";
+import { calcDays, calcTotalPoints, calcDiffInDays, readFile } from "src/helpers";
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
+import { Form } from "react-bootstrap";
 
 /**
  * Props for the FileImport component
@@ -44,7 +43,10 @@ export const FileImport = ({
 	 * @param {React.ChangeEvent<HTMLInputElement>} event React import file event
 	 * @returns {void}
 	 */
-	const handleFileInput = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+	const handleFileInput = async (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		event: any,
+	): Promise<void> => {
 		const result = event?.target?.files?.length;
 		const MIN_FILE_LENGTH = 0;
 		if (result && result > MIN_FILE_LENGTH) {
@@ -52,25 +54,6 @@ export const FileImport = ({
 			await findPoints(findParts(fileContent as Promise<string>));
 			setFileImported(true);
 		}
-	};
-
-	/**
-	 * This function loads in the document via jsZip, it takes in a fileList and then loads it into jsZip to turn it into a readable string
-	 *
-	 * @param {HTMLInputElement} fileList fileList to read from
-	 * @returns {Promise<any>} Promise of zip decompress result
-	 */
-	const readFile = async (fileList: HTMLInputElement["files"]): Promise<string | undefined> => {
-		const MY_FILE_INDEX = 0;
-		if (fileList) {
-			const myFile: File = fileList[MY_FILE_INDEX];
-			const jsZip = new JSZip();
-			const loadResult = await jsZip
-				.loadAsync(myFile)
-				.then(async (zip) => zip.files["word/document.xml"].async("string"));
-			return loadResult;
-		}
-		return undefined;
 	};
 
 	/**
@@ -196,25 +179,18 @@ export const FileImport = ({
 	}
 
 	return (
-		<div>
-			<div>
-				<p>
-					<Form.Group controlId="exampleForm">
-						<h2>
-							{" "}
-							<Form.Label>{"Upload a document"}</Form.Label>
-						</h2>
+		<Form.Group controlId="exampleForm">
+			<h2>
+				{" "}
+				<Form.Label>{"Upload a document"}</Form.Label>
+			</h2>
 
-						<p>
-							<Form.Control
-								// eslint-disable-next-line @typescript-eslint/no-misused-promises -- keep Promise<void> as return value
-								onChange={async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => handleFileInput(event)}
-								type="file"
-							/>{" "}
-						</p>
-					</Form.Group>
-				</p>
-			</div>
-		</div>
+			<p>
+				<Form.Control
+					onChange={async (event): Promise<void> => handleFileInput(event)}
+					type="file"
+				/>{" "}
+			</p>
+		</Form.Group>
 	);
 };

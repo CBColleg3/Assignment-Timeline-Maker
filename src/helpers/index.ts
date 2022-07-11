@@ -5,6 +5,7 @@ import { colorHex } from "./colorMap";
 import { convertTextChunk } from "./convertTextChunk";
 import { convertXML2HTML } from "./convertXML2HTML";
 import { extractParagraphs } from "./extractParagraphs";
+import { readFile } from "./readFile";
 
 /**
  * Base export, exports all utility functions in one object
@@ -17,4 +18,5 @@ export {
 	convertTextChunk,
 	convertXML2HTML,
 	extractParagraphs,
+	readFile,
 };
