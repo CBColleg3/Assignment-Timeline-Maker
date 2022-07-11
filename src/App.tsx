@@ -52,7 +52,11 @@ function App() {
 					/>
 				</Col>
 				<Col lg={5}>
-					<DocViewer docXML={docXML} fileImported={fileImported} />{" "}
+					<DocViewer
+						docXML={docXML}
+						fileImported={fileImported}
+						taskArray={taskArray}
+					/>{" "}
 				</Col>
 			</Row>
 		</div>
