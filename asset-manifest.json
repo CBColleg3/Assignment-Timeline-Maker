@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Assignment-Timeline-Maker/static/css/main.f0cf589a.css",
-    "main.js": "/Assignment-Timeline-Maker/static/js/main.bc287d04.js",
+    "main.css": "/Assignment-Timeline-Maker/static/css/main.5aaa294d.css",
+    "main.js": "/Assignment-Timeline-Maker/static/js/main.1389d979.js",
     "index.html": "/Assignment-Timeline-Maker/index.html",
-    "main.f0cf589a.css.map": "/Assignment-Timeline-Maker/static/css/main.f0cf589a.css.map",
-    "main.bc287d04.js.map": "/Assignment-Timeline-Maker/static/js/main.bc287d04.js.map"
+    "main.5aaa294d.css.map": "/Assignment-Timeline-Maker/static/css/main.5aaa294d.css.map",
+    "main.1389d979.js.map": "/Assignment-Timeline-Maker/static/js/main.1389d979.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0cf589a.css",
-    "static/js/main.bc287d04.js"
+    "static/css/main.5aaa294d.css",
+    "static/js/main.1389d979.js"
   ]
 }
