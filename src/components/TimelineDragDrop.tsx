@@ -1,6 +1,6 @@
 import React from "react";
 import { AddRemoveTask } from "./AddRemoveTask";
-import { EditTask } from "./EditTask";
+import "./TimelineDragDrop.css";
 import {
 	DragDropContext,
 	Droppable,
@@ -9,6 +9,7 @@ import {
 } from "react-beautiful-dnd";
 import type { Task } from "../templates/task";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
+import { TaskInfo } from "./TaskInfo";
 
 /**
  * Props for the TimelineDragDrop component
@@ -73,24 +74,23 @@ export function TimelineDragDrop({
 											<VerticalTimelineElement
 												className="vertical-timeline-element--work"
 												iconStyle={{
-													background: `rgb(${task.color + 100},100,150)`,
+													background: "#" + task.color,
 													color: "#fff",
 												}}
+												contentStyle={{
+													color: "#" + task.color,
+												}}
 											>
-												<h3 className="vertical-timeline-element-title">{task.name}</h3>
-												<h5>{task.document}</h5>
-												<h4>{task.points} Points</h4>
-												<h5>{task.dueDate.toDateString()}</h5>
+												<TaskInfo
+													taskArray={taskArray}
+													setTaskArray={(tasks) => setTaskArray(tasks)}
+													index={index}
+												></TaskInfo>
 												<AddRemoveTask
 													taskArray={taskArray}
 													setTaskArray={(tasks) => setTaskArray(tasks)}
 													index={index}
 												></AddRemoveTask>
-												<EditTask
-													taskArray={taskArray}
-													setTaskArray={(tasks) => setTaskArray(tasks)}
-													index={index}
-												/>
 											</VerticalTimelineElement>
 										</span>
 									)}

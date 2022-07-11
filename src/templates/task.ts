@@ -6,7 +6,7 @@ export interface Task {
     id: number;
     document: string;
     points: string;
-    color: number;
+    color: string;
     dueDate: Date;
     autoDueDate: boolean;
 }

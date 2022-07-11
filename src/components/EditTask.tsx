@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 import type { Task } from "../templates/task";
 import DatePicker from "react-datepicker";
 
@@ -26,6 +26,10 @@ type EditTaskProps = {
 	 * The index of where the current task is in the array of tasks
 	 */
 	index: number;
+
+	editMode: boolean;
+
+	setEditMode: (editMode: boolean) => void;
 };
 
 /**
@@ -38,8 +42,9 @@ export function EditTask({
 	taskArray,
 	setTaskArray,
 	index,
+	editMode,
+	setEditMode,
 }: EditTaskProps): JSX.Element {
-	const [editMode, setEditMode] = useState<boolean>(false);
 	const [nameField, setNameField] = useState<string>(taskArray[index].name);
 	const [documentField, setDocumentField] = useState<string>(
 		taskArray[index].document,
@@ -53,7 +58,7 @@ export function EditTask({
 
 	/**
 	 * Updates the modifiedTasks array
-	 * 
+	 *
 	 * @param {number} index The index of the task in the modifiedTasks array
 	 */
 	function updateTasks(index: number) {
@@ -94,16 +99,16 @@ export function EditTask({
 	}
 	return (
 		<div>
-			<Button
-				onClick={() => {
-					setEditMode(!editMode);
-				}}
+			<Modal
+				show={editMode}
+				onHide={() => setEditMode(false)}
+				animation={true}
+				data-testId="message-modal"
 			>
-				{" "}
-				{!editMode ? "Edit Task" : "Close"}{" "}
-			</Button>
-			{editMode && (
-				<div>
+				<Modal.Header closeButton>
+					<Modal.Title>Test</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
 					<Form.Group as={Row}>
 						<Col>
 							<p style={{ marginBottom: "0px" }}>Task Name</p>
@@ -143,6 +148,9 @@ export function EditTask({
 					</Form.Group>
 					<Form.Group as={Row}>
 						<Col>
+							<p style={{ marginBottom: "0px" }}>Task Due Date</p>
+						</Col>
+						<Col>
 							<DatePicker
 								showTimeSelect
 								dateFormat="Pp"
@@ -151,17 +159,23 @@ export function EditTask({
 							/>
 						</Col>
 					</Form.Group>
-
-					<Button
-						onClick={() => {
-							updateTasks(index);
-							setEditMode(!editMode);
-						}}
-					>
-						Save Changes
-					</Button>
-				</div>
-			)}
+					<br></br>
+					<br></br>
+					<div style={{ textAlign: "right" }}>
+						<Button
+							onClick={() => {
+								updateTasks(index);
+								setEditMode(!editMode);
+							}}
+						>
+							Save Changes
+						</Button>
+						<Button onClick={() => setEditMode(false)} data-testId="close-modal-button">
+							Close
+						</Button>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</div>
 	);
 }
