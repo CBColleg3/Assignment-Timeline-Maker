@@ -5,6 +5,7 @@ import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
 import type { Error } from "src/@types/Errors/Error";
 import type { ERROR_OPS } from "src/@types/Errors/Errors";
 import type { ToastPayload } from "src/@types/Toast/ToastPayload";
+import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
 /**
@@ -26,7 +27,7 @@ type SetDateTimeProps = {
 	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
-	addError: (error: Error, operation: ERROR_OPS) => void;
+	addError: (error: Error | undefined, operation: ERROR_OPS) => void;
 };
 
 /**
@@ -54,10 +55,13 @@ export const SetDateTime = ({
 		if (confirm) {
 			update(dates);
 			setConfirm(false);
-			if (dates.start.getTime() > dates.end.getTime()) {
-				const notification = { header: "Date Error", message: "Start must be earlier then end" };
-				addError({ ...notification }, "add");
-				addNotification({ ...notification, variant: "danger" });
+			const error = validateSetDateTimeInput(dates);
+			console.log("error = ", error);
+			if (error) {
+				addError({ ...error }, "add");
+				addNotification({ ...error, variant: "danger" });
+			} else {
+				addError(undefined, "delete");
 			}
 		}
 	}, [dates, confirm, update, addError, addNotification]);

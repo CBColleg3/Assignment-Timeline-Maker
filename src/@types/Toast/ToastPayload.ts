@@ -1,4 +1,4 @@
-import type { AVAILABLE_VARIANTS } from "src/helpers/generateToast";
+import type { AVAILABLE_VARIANTS } from "src/helpers/GeneratedToast";
 
 /**
  * Type of object that will be passed when rendering an notification

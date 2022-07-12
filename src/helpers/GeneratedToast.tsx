@@ -41,7 +41,14 @@ const GeneratedToast = ({ message, header, variant, delay }: GeneratedToastPropT
 			onClose={(): void => setShow(false)}
 			show={show}
 		>
-			{header && <Toast.Header closeButton>{header}</Toast.Header>}
+			{header && (
+				<Toast.Header
+					className="d-flex flex-row justify-content-between"
+					closeButton
+				>
+					{header}
+				</Toast.Header>
+			)}
 			<Toast.Body>{message ?? "No message supplied"}</Toast.Body>
 		</Toast>
 	);

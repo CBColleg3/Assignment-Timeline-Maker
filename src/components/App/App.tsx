@@ -5,7 +5,7 @@ import type { Task } from "../../@types/Task";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Col, ToastContainer } from "react-bootstrap";
+import { Alert, Col, ToastContainer } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
 import FileDisplay from "../FileDisplay";
@@ -18,7 +18,7 @@ import {
 	NOTIFICATION_DEFAULT_DELAY,
 	NOTIFICATION_MIN_LENGTH,
 	TOAST_CONTAINER_POSITION,
-} from "src/helpers/generateToast";
+} from "src/helpers/GeneratedToast";
 import type { Errors, ERROR_OPS, ERROR_TYPES } from "src/@types/Errors/Errors";
 import type { Error } from "src/@types/Errors/Error";
 
@@ -43,7 +43,7 @@ export const App = (): JSX.Element => {
 	 * @param theType The type of error to append/delete with the errors state
 	 * @param operation The type of operation the user is executing
 	 */
-	const updateErrors = (error: Error, theType: ERROR_TYPES, operation: ERROR_OPS): void => {
+	const updateErrors = (theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
 		switch (theType) {
 			case "date": {
 				setErrors({ ...errors, date: operation === "delete" ? undefined : error });
@@ -145,7 +145,9 @@ export const App = (): JSX.Element => {
 				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
 					<span>
 						<SetDateTime
-							addError={(error: Error, operation: ERROR_OPS): void => updateErrors(error, "date", operation)}
+							addError={(error: Error | undefined, operation: ERROR_OPS): void =>
+								updateErrors("date", operation, error)
+							}
 							addNotification={addNotification}
 							assignmentDate={dates}
 							update={(theDates: AssignmentDate): void => setDates(theDates)}
@@ -164,26 +166,41 @@ export const App = (): JSX.Element => {
 						update={(theFiles: File[]): void => setFiles(theFiles)}
 					/>
 				</div>
-				<div className="d-flex flex-row mt-3">
-					<Col>
-						{files && (
-							<Timeline
-								assignmentDate={dates}
-								fileImported={files.length > MIN_FILES_LENGTH}
-								setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-								taskArray={taskArray}
-							/>
-						)}
-					</Col>
-					<Col lg={5}>
-						{files && (
-							<DocViewer
-								docXML={docXML}
-								fileImported={files.length > MIN_FILES_LENGTH}
-							/>
-						)}{" "}
-					</Col>
-				</div>
+				{!errors.date && !errors.file ? (
+					<div className="d-flex flex-row mt-3">
+						<Col>
+							{files && (
+								<Timeline
+									assignmentDate={dates}
+									fileImported={files.length > MIN_FILES_LENGTH}
+									setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+									taskArray={taskArray}
+								/>
+							)}
+						</Col>
+						<Col lg={5}>
+							{files && (
+								<DocViewer
+									docXML={docXML}
+									fileImported={files.length > MIN_FILES_LENGTH}
+								/>
+							)}{" "}
+						</Col>
+					</div>
+				) : (
+					<Alert
+						className="w-75 mt-4 mx-auto d-flex flex-column text-center"
+						variant="danger"
+					>
+						<span className="fw-bolder">{"Cannot render Timeline"}</span>
+						<span className="mx-auto mt-2">
+							<ul>
+								{errors.date && <li>{errors.date.message}</li>}
+								{errors.file && <li>{errors.file.message}</li>}
+							</ul>
+						</span>
+					</Alert>
+				)}
 			</div>
 		</>
 	);

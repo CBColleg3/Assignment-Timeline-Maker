@@ -13,6 +13,7 @@ import { REGEX_EXPRESSIONS } from "./regexExpressions";
 import { findPoints } from "./findPoints";
 import { regexFilterTags } from "./regexFilterTags";
 import { updateDueDates } from "./updateDueDates";
+import { validateSetDateTimeInput } from "./validateSetDateTimeInput";
 
 /**
  * Base export, exports all utility functions in one object
@@ -35,4 +36,5 @@ export {
 	findPoints,
 	regexFilterTags,
 	updateDueDates,
+	validateSetDateTimeInput,
 };
