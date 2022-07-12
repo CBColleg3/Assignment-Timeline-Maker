@@ -2,104 +2,11 @@
 > timeline-maker@0.1.0 test
 > react-scripts test "--coverage"
 
-  console.error
-    Warning: validateDOMNesting(...): <h2> cannot appear as a descendant of <p>.
-        at h2
-        at div
-        at /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/node_modules/react-bootstrap/cjs/FormGroup.js:19:3
-        at p
-        at div
-        at div
-        at FileImport (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/components/FileImport.tsx:41:2)
-        at div
-        at App (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/App.tsx:18:36)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at validateDOMNesting (node_modules/react-dom/cjs/react-dom.development.js:10083:7)
-      at createInstance (node_modules/react-dom/cjs/react-dom.development.js:10181:5)
-      at completeWork (node_modules/react-dom/cjs/react-dom.development.js:19464:28)
-      at completeUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22812:16)
-      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22787:5)
-
-  console.error
-    Warning: validateDOMNesting(...): <p> cannot appear as a descendant of <p>.
-        at p
-        at div
-        at /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/node_modules/react-bootstrap/cjs/FormGroup.js:19:3
-        at p
-        at div
-        at div
-        at FileImport (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/components/FileImport.tsx:41:2)
-        at div
-        at App (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/App.tsx:18:36)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at validateDOMNesting (node_modules/react-dom/cjs/react-dom.development.js:10083:7)
-      at createInstance (node_modules/react-dom/cjs/react-dom.development.js:10181:5)
-      at completeWork (node_modules/react-dom/cjs/react-dom.development.js:19464:28)
-      at completeUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22812:16)
-      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22787:5)
-
-  console.error
-    Warning: validateDOMNesting(...): <div> cannot appear as a descendant of <p>.
-        at div
-        at /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/node_modules/react-bootstrap/cjs/FormGroup.js:19:3
-        at p
-        at div
-        at div
-        at FileImport (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/components/FileImport.tsx:41:2)
-        at div
-        at App (/home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/App.tsx:18:36)
-
-      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:67:30)
-      at error (node_modules/react-dom/cjs/react-dom.development.js:43:5)
-      at validateDOMNesting (node_modules/react-dom/cjs/react-dom.development.js:10083:7)
-      at createInstance (node_modules/react-dom/cjs/react-dom.development.js:10181:5)
-      at completeWork (node_modules/react-dom/cjs/react-dom.development.js:19464:28)
-      at completeUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22812:16)
-      at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22787:5)
-
-PASS src/App.test.tsx
-  ✓ Title displays on screen (125 ms)
-
---------------------------------|---------|----------|---------|---------|-------------------
-File                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
---------------------------------|---------|----------|---------|---------|-------------------
-All files                       |    9.05 |     3.61 |   10.29 |    9.21 |                   
- src                            |      50 |      100 |   16.66 |      50 |                   
-  App.tsx                       |   54.54 |      100 |   16.66 |   54.54 | 31-48             
-  index.tsx                     |       0 |      100 |     100 |       0 | 6                 
- src/components                 |    4.27 |     4.16 |    4.65 |    4.38 |                   
-  AddRemoveTask.tsx             |       0 |      100 |       0 |       0 | 40-71             
-  EditTask.tsx                  |       0 |      100 |       0 |       0 | 48-173            
-  FileImport.tsx                |    6.34 |        0 |    9.09 |    6.55 | 60-211            
-  TaskInfo.tsx                  |       0 |      100 |       0 |       0 | 24-63             
-  Timeline.tsx                  |     100 |       50 |     100 |     100 | 36                
-  TimelineDragDrop.tsx          |       0 |        0 |       0 |       0 | 48-91             
- src/components/Date            |     100 |      100 |     100 |     100 |                   
-  SetDateTime.tsx               |     100 |      100 |     100 |     100 |                   
- src/components/Date/EndDate    |     100 |      100 |     100 |     100 |                   
-  EndDate.tsx                   |     100 |      100 |     100 |     100 |                   
-  index.ts                      |       0 |        0 |       0 |       0 |                   
- src/components/Date/StartDate  |     100 |      100 |     100 |     100 |                   
-  StartDate.tsx                 |     100 |      100 |     100 |     100 |                   
-  index.ts                      |       0 |        0 |       0 |       0 |                   
- src/components/document-viewer |    3.75 |     3.63 |    7.69 |    3.75 |                   
-  DocViewer.tsx                 |      40 |       50 |      50 |      40 | 28-35             
-  colorMap.tsx                  |     100 |      100 |     100 |     100 |                   
-  docUtils.tsx                  |       0 |        0 |       0 |       0 | 12-245            
- src/components/utils           |    5.88 |        0 |       0 |    6.25 |                   
-  calcDays.ts                   |       0 |        0 |       0 |       0 | 28-39             
-  calcDiffInDays.ts             |      25 |      100 |       0 |      25 | 14-16             
-  calcTotalPoints.ts            |       0 |      100 |       0 |       0 | 10-14             
-  index.ts                      |       0 |      100 |     100 |       0 | 8                 
- src/templates                  |       0 |        0 |       0 |       0 |                   
-  task.ts                       |       0 |        0 |       0 |       0 |                   
---------------------------------|---------|----------|---------|---------|-------------------
-Test Suites: 1 passed, 1 total
-Tests:       1 passed, 1 total
-Snapshots:   0 total
-Time:        2.67 s
-Ran all test suites.
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker
+  54 files checked.
+  testMatch: /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/**/__tests__/**/*.{js,jsx,ts,tsx}, /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/**/*.{spec,test}.{js,jsx,ts,tsx} - 0 matches
+  testPathIgnorePatterns: /node_modules/ - 54 matches
+  testRegex:  - 0 matches
+Pattern:  - 0 matches
