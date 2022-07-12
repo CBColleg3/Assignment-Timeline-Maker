@@ -12,7 +12,9 @@ export const highlightTask = (textContent: string, taskArray: Task[]): Record<st
 
 	const task = taskArray.find((eachTask: Task): boolean => eachTask.document.includes(textContent));
 	if (task !== undefined) {
-		style["background-color"] = `rgb(${parseInt(task.color.substring(0, 2), 16) + 100},100,150)`;
+		style["background-color"] = `rgb(${
+			parseInt(task.color ? task.color.substring(0, 2) : "ff", 16) + 100
+		},100,150)`;
 	}
 
 	return style;
