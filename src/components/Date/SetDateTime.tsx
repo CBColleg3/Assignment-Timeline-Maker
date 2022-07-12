@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS, ToastPayload } from "src/@types";
+import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS } from "src/@types";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
@@ -17,10 +17,6 @@ type SetDateTimeProps = {
 	 */
 	update: (dates: AssignmentDate) => void;
 	/**
-	 * Adds notification to the stack
-	 */
-	addNotification: (payload: ToastPayload) => void;
-	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
 	addError: (error: Error | undefined, operation: ERROR_OPS) => void;
@@ -34,12 +30,7 @@ const END_DAY_INIT_INCREMENT = 172800000;
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-const SetDateTime = ({
-	update,
-	assignmentDate,
-	addError,
-	addNotification,
-}: SetDateTimeProps): JSX.Element => {
+const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JSX.Element => {
 	const [confirm, setConfirm] = React.useState<boolean>(false);
 	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
 	const [displayModal, setDisplayModal] = React.useState(false);
@@ -56,12 +47,11 @@ const SetDateTime = ({
 			const error = validateSetDateTimeInput(dates);
 			if (error) {
 				addError({ ...error }, "add");
-				addNotification({ ...error, variant: "danger" });
 			} else {
 				addError(undefined, "delete");
 			}
 		}
-	}, [dates, confirm, update, addError, addNotification]);
+	}, [dates, confirm, update, addError]);
 
 	/**
 	 * Helper function to update the start/end date
