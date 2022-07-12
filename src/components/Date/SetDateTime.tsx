@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
+import type { Error } from "src/@types/Errors/Error";
 import type { ToastPayload } from "src/@types/Toast/ToastPayload";
 import DateModal from "./DateModal";
 
@@ -21,6 +22,10 @@ type SetDateTimeProps = {
 	 * Adds notification to the stack
 	 */
 	addNotification: (payload: ToastPayload) => void;
+	/**
+	 * Adds an error to the stack, disabling user from rendering website
+	 */
+	addError: (error: Error) => void;
 };
 
 /**
@@ -29,7 +34,12 @@ type SetDateTimeProps = {
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-export const SetDateTime = ({ update, assignmentDate, addNotification }: SetDateTimeProps): JSX.Element => {
+export const SetDateTime = ({
+	update,
+	assignmentDate,
+	addError,
+	addNotification,
+}: SetDateTimeProps): JSX.Element => {
 	const [confirm, setConfirm] = React.useState<boolean>(false);
 	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
 	const [displayModal, setDisplayModal] = React.useState(false);
@@ -43,8 +53,13 @@ export const SetDateTime = ({ update, assignmentDate, addNotification }: SetDate
 		if (confirm) {
 			update(dates);
 			setConfirm(false);
+			if (dates.start.getTime() > dates.end.getTime()) {
+				const notification = { header: "Date Error", message: "Start must be earlier then end" };
+				addError({ ...notification });
+				addNotification({ ...notification, variant: "danger" });
+			}
 		}
-	}, [dates, confirm, update]);
+	}, [dates, confirm, update, addError, addNotification]);
 
 	/**
 	 * Helper function to update the start/end date

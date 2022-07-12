@@ -6,6 +6,6 @@ import type { AVAILABLE_VARIANTS } from "src/helpers/generateToast";
 export type ToastPayload = {
 	message: string;
 	header?: string;
-	variant?: AVAILABLE_VARIANTS;
+	variant: AVAILABLE_VARIANTS;
 	delay?: number;
 };

@@ -13,8 +13,14 @@ import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 import type { ToastPayload } from "src/@types/Toast/ToastPayload";
-import { generateToast, NOTIFICATION_MIN_LENGTH, TOAST_CONTAINER_POSITION } from "src/helpers/generateToast";
+import {
+	GeneratedToast,
+	NOTIFICATION_DEFAULT_DELAY,
+	NOTIFICATION_MIN_LENGTH,
+	TOAST_CONTAINER_POSITION,
+} from "src/helpers/generateToast";
 import type { Errors } from "src/@types/Errors/Errors";
+import type { Error } from "src/@types/Errors/Error";
 
 /**
  * Root component
@@ -41,6 +47,25 @@ export const App = (): JSX.Element => {
 	};
 
 	/**
+	 * Utility function for removing the notification from the history of notifications
+	 *
+	 * @param payload The payload to remove from the notifications
+	 */
+	const removeNotification = (payload: ToastPayload): void => {
+		const clonedToastMessages = [...toastMessages].map((eachToast) => ({ ...eachToast }));
+		const payloadFoundIndexes = clonedToastMessages
+			.map((eachMessage, index) => (eachMessage.message !== payload.message ? undefined : index))
+			.filter((elem) => elem !== undefined);
+		// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- not a magic number
+		const lastIndex = payloadFoundIndexes[payloadFoundIndexes.length - 1];
+		if (lastIndex) {
+			// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- not a magic number
+			clonedToastMessages.splice(lastIndex, 1);
+			setToastMessages(clonedToastMessages);
+		}
+	};
+
+	/**
 	 * Utility function for adding notifications to the stack
 	 *
 	 * @param payload The new message being added to the notification stack
@@ -48,6 +73,9 @@ export const App = (): JSX.Element => {
 	const addNotification = (payload: ToastPayload): void => {
 		const toastMessagesClone = [...[...toastMessages].map((eachMessage) => ({ ...eachMessage })), payload];
 		setToastMessages(toastMessagesClone);
+		setTimeout(() => {
+			removeNotification(payload);
+		}, payload.delay ?? NOTIFICATION_DEFAULT_DELAY);
 	};
 
 	/**
@@ -91,7 +119,12 @@ export const App = (): JSX.Element => {
 		<>
 			{toastMessages && toastMessages.length > NOTIFICATION_MIN_LENGTH && (
 				<ToastContainer position={TOAST_CONTAINER_POSITION}>
-					{toastMessages.map((eachPayload) => generateToast({ ...eachPayload }))}
+					{toastMessages.map((eachPayload, index) => (
+						<GeneratedToast
+							key={`toast-${index}-${eachPayload.message}`}
+							{...eachPayload}
+						/>
+					))}
 				</ToastContainer>
 			)}
 			<div className="d-flex flex-column">

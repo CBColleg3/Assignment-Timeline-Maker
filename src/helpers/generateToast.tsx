@@ -1,9 +1,7 @@
 import React from "react";
 import { Toast } from "react-bootstrap";
 
-const CONSTANTS = {
-	DEFAULT_DELAY: 3000,
-};
+const NOTIFICATION_DEFAULT_DELAY = 3000;
 
 const NOTIFICATION_MIN_LENGTH = 0;
 
@@ -19,7 +17,7 @@ type AVAILABLE_VARIANTS =
 	| "success"
 	| "warning";
 
-type generateToastParamTypes = {
+type GeneratedToastPropTypes = {
 	message: string;
 	header?: string;
 	variant?: AVAILABLE_VARIANTS;
@@ -32,17 +30,33 @@ type generateToastParamTypes = {
  * @param {generateToastParamTypes} args The arguments that constitute the toast
  * @returns The rendered Toast
  */
-const generateToast = ({ message, header, variant, delay }: generateToastParamTypes): JSX.Element => (
-	<Toast
-		animation
-		autohide
-		bg={variant ?? "primary"}
-		delay={delay ?? CONSTANTS.DEFAULT_DELAY}
-		show
-	>
-		{header && <Toast.Header closeButton>{header}</Toast.Header>}
-		<Toast.Body>{message ?? "No message supplied"}</Toast.Body>
-	</Toast>
-);
+const GeneratedToast = ({ message, header, variant, delay }: GeneratedToastPropTypes): JSX.Element => {
+	const [show, setShow] = React.useState<boolean>(true);
+	return (
+		<Toast
+			animation
+			autohide
+			bg={variant ?? "primary"}
+			delay={delay ?? NOTIFICATION_DEFAULT_DELAY}
+			onClose={(): void => setShow(false)}
+			show={show}
+		>
+			{header && <Toast.Header closeButton>{header}</Toast.Header>}
+			<Toast.Body>{message ?? "No message supplied"}</Toast.Body>
+		</Toast>
+	);
+};
 
-export { generateToast, type AVAILABLE_VARIANTS, NOTIFICATION_MIN_LENGTH, TOAST_CONTAINER_POSITION };
+GeneratedToast.defaultProps = {
+	delay: NOTIFICATION_DEFAULT_DELAY,
+	header: undefined,
+	variant: "primary",
+};
+
+export {
+	GeneratedToast,
+	type AVAILABLE_VARIANTS,
+	NOTIFICATION_MIN_LENGTH,
+	TOAST_CONTAINER_POSITION,
+	NOTIFICATION_DEFAULT_DELAY,
+};
