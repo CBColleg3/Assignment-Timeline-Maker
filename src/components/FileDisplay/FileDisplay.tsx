@@ -9,9 +9,10 @@ import { displayFileWithSize } from "src/helpers";
  * Props for the FileDisplay component
  */
 type FileDisplayProps = {
+	currentSelection: number | undefined;
 	files: File[] | undefined;
 	updateFiles: (type: UpdateType, idx: number) => void;
-	currentSelection: number | undefined;
+	updateCurrentSelection: (ind: number) => void;
 };
 
 /**
@@ -25,7 +26,12 @@ const MIN_FILES_LENGTH = 0;
  * @param {FileDisplayProps} props The passed in properties, used to display the current files and also update them as well with deleting
  * @returns A component which displays the files supplied to it, and allows for adding and deleting of files
  */
-const FileDisplay = ({ files, updateFiles, currentSelection }: FileDisplayProps): JSX.Element => (
+const FileDisplay = ({
+	files,
+	updateFiles,
+	currentSelection,
+	updateCurrentSelection,
+}: FileDisplayProps): JSX.Element => (
 	<>
 		{files && files.length > MIN_FILES_LENGTH ? (
 			<ListGroup>
@@ -38,21 +44,44 @@ const FileDisplay = ({ files, updateFiles, currentSelection }: FileDisplayProps)
 								eventKey={`file-${eachFile.name}`}
 								key={`file-${eachFile.name}`}
 							>
-								{displayFileWithSize(eachFile)}
-								<FontAwesomeIcon icon={faEraser} />
-								{currentSelection === index ? (
-									<FontAwesomeIcon icon={faCircleCheck} />
-								) : (
-									<FontAwesomeIcon icon={faCircle} />
-								)}
+								<span className="me-3">{displayFileWithSize(eachFile)}</span>
+								<span className="ms-2">
+									<FontAwesomeIcon
+										className="mx-1"
+										icon={faEraser}
+									/>
+									{currentSelection === index ? (
+										<FontAwesomeIcon
+											className="ms-1"
+											icon={faCircleCheck}
+										/>
+									) : (
+										<FontAwesomeIcon
+											className="ms-1"
+											icon={faCircle}
+										/>
+									)}
+								</span>
 							</ListGroup.Item>
 						) : (
 							<ListGroup.Item
 								action
+								className="d-flex flex-row justify-content-between"
 								eventKey={`file-${eachFile.name}`}
 								key={`file-${eachFile.name}`}
+								onClick={(): void => updateCurrentSelection(index)}
 							>
-								{displayFileWithSize(eachFile)}
+								<span className="me-3">{displayFileWithSize(eachFile)}</span>
+								<span className="ms-2">
+									<FontAwesomeIcon
+										className="mx-1"
+										icon={faEraser}
+									/>
+									<FontAwesomeIcon
+										className="ms-1"
+										icon={faCircle}
+									/>
+								</span>
 							</ListGroup.Item>
 						)}
 					</>

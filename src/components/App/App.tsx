@@ -65,6 +65,7 @@ export const App = (): JSX.Element => {
 					<FileDisplay
 						currentSelection={fileSelected}
 						files={files}
+						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
 						updateFiles={updateFiles}
 					/>
 				</span>
