@@ -5,20 +5,15 @@ import type { Task } from "../../@types/Task";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Col } from "react-bootstrap";
+import { Col, ToastContainer } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
 import FileDisplay from "../FileDisplay";
 import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
-
-/**
- * Constants for App component
- */
-const CONSTANTS = {
-	MIN_TASK_ARRAY_LENGTH: 0,
-};
+import type { ToastPayload } from "src/@types/Toast/ToastPayload";
+import { generateToast, NOTIFICATION_MIN_LENGTH, TOAST_CONTAINER_POSITION } from "src/helpers/generateToast";
 
 /**
  * Root component
@@ -31,6 +26,17 @@ export const App = (): JSX.Element => {
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
+	const [toastMessages, setToastMessages] = React.useState<ToastPayload[]>([]);
+
+	/**
+	 * Utility function for adding notifications to the stack
+	 *
+	 * @param payload The new message being added to the notification stack
+	 */
+	const addNotification = (payload: ToastPayload): void => {
+		const toastMessagesClone = [...[...toastMessages].map((eachMessage) => ({ ...eachMessage })), payload];
+		setToastMessages(toastMessagesClone);
+	};
 
 	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
@@ -70,48 +76,55 @@ export const App = (): JSX.Element => {
 	}, [files, fileSelected, dates]);
 
 	return (
-		<div className="d-flex flex-column">
-			<AppHeader />
-			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
-				<span>
-					<SetDateTime
-						assignmentDate={dates}
-						update={(theDates: AssignmentDate): void => setDates(theDates)}
-					/>
-				</span>
-				<span className="my-auto">
-					<FileDisplay
-						currentSelection={fileSelected}
-						files={files}
-						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
-						updateFiles={updateFiles}
-					/>
-				</span>
-				<FileImport
-					files={files}
-					update={(theFiles: File[]): void => setFiles(theFiles)}
-				/>
-			</div>
-			<div className="d-flex flex-row mt-3">
-				<Col>
-					{files && (
-						<Timeline
+		<>
+			{toastMessages && toastMessages.length > NOTIFICATION_MIN_LENGTH && (
+				<ToastContainer position={TOAST_CONTAINER_POSITION}>
+					{toastMessages.map((eachPayload) => generateToast({ ...eachPayload }))}
+				</ToastContainer>
+			)}
+			<div className="d-flex flex-column">
+				<AppHeader />
+				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
+					<span>
+						<SetDateTime
 							assignmentDate={dates}
-							fileImported={files.length > MIN_FILES_LENGTH}
-							setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-							taskArray={taskArray}
+							update={(theDates: AssignmentDate): void => setDates(theDates)}
 						/>
-					)}
-				</Col>
-				<Col lg={5}>
-					{files && (
-						<DocViewer
-							docXML={docXML}
-							fileImported={files.length > MIN_FILES_LENGTH}
+					</span>
+					<span className="my-auto">
+						<FileDisplay
+							currentSelection={fileSelected}
+							files={files}
+							updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
+							updateFiles={updateFiles}
 						/>
-					)}{" "}
-				</Col>
+					</span>
+					<FileImport
+						files={files}
+						update={(theFiles: File[]): void => setFiles(theFiles)}
+					/>
+				</div>
+				<div className="d-flex flex-row mt-3">
+					<Col>
+						{files && (
+							<Timeline
+								assignmentDate={dates}
+								fileImported={files.length > MIN_FILES_LENGTH}
+								setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+								taskArray={taskArray}
+							/>
+						)}
+					</Col>
+					<Col lg={5}>
+						{files && (
+							<DocViewer
+								docXML={docXML}
+								fileImported={files.length > MIN_FILES_LENGTH}
+							/>
+						)}{" "}
+					</Col>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
