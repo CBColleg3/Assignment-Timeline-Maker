@@ -1,12 +1,8 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
 import { AddRemoveTask } from "../Task/AddRemove/AddRemoveTask";
 import { EditTask } from "../Task/Edit/EditTask";
-import {
-	DragDropContext,
-	Droppable,
-	Draggable,
-	type DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
 import type { Task } from "../../@types/Task";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 
@@ -45,10 +41,7 @@ type TimelineDragDropProps = {
  * @param {TimelineDragDropProps} props Passed in props for the TimelineDragDrop component
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({
-	taskArray,
-	setTaskArray,
-}: TimelineDragDropProps): JSX.Element => {
+export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropProps): JSX.Element => {
 	/**
 	 * This function processes the drop operation when moving nodes around the tree
 	 *
@@ -91,8 +84,11 @@ export const TimelineDragDrop = ({
 										<VerticalTimelineElement
 											className="vertical-timeline-element--work"
 											iconStyle={{
-												background: `rgb(${parseInt(task.color, 16) + TASK_COLOR_INC},100,150)`,
-												color: "#fff",
+												background: `rgb(${parseInt(task.color.substring(1, 3), 16)},${parseInt(
+													task.color.substring(3, 5),
+													16,
+												)},${parseInt(task.color.substring(5), 16)})`,
+												color: "fff",
 											}}
 										>
 											<h3 className="vertical-timeline-element-title">{task.name}</h3>

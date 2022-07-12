@@ -85,17 +85,20 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 	for (let i = 0; i < taskClone.length; i += CONSTANTS.UPDATE_LOOP_INC) {
 		const eachTask = taskClone[i];
 		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay, runningTotal });
-		if (response.incrementDate) {
+		if (response.incrementDate && currentDay.getDay() <= assignmentDate.end.getDay()) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
-			console.log("Incrementing currentDay");
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
 		}
 		taskClone = [...taskClone].map((eTask, ind) => {
 			if (ind === i) {
-				return { ...eTask, color: currentColor, dueDate: currentDay };
+				return { ...eTask, color: currentColor, dueDate: new Date(currentDay.getTime()) };
 			}
 			return { ...eTask, color: currentColor };
 		});
+		console.log(
+			"colors = ",
+			taskClone.map((each) => each.color),
+		);
 		runningTotal = response.updatedTotal;
 	}
 	return taskClone;

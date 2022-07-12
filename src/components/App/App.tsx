@@ -2,7 +2,7 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
 import type { Task } from "../../@types/Task";
-import { SetDateTime } from "../Date/SetDateTime";
+import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col, ToastContainer } from "react-bootstrap";
@@ -30,7 +30,10 @@ import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-i
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [dates, setDates] = React.useState<AssignmentDate>({ end: new Date(), start: new Date() });
+	const [dates, setDates] = React.useState<AssignmentDate>({
+		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
+		start: new Date(),
+	});
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
@@ -170,7 +173,7 @@ export const App = (): JSX.Element => {
 				</div>
 				{!errors.date && !errors.file ? (
 					<>
-						{fileSelected ? (
+						{fileSelected !== undefined ? (
 							<div className="d-flex flex-row mt-3">
 								<Col>
 									{files && (

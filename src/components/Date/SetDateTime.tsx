@@ -30,13 +30,15 @@ type SetDateTimeProps = {
 	addError: (error: Error | undefined, operation: ERROR_OPS) => void;
 };
 
+const END_DAY_INIT_INCREMENT = 172800000;
+
 /**
  * Set Date and Time components on the timeline
  *
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-export const SetDateTime = ({
+const SetDateTime = ({
 	update,
 	assignmentDate,
 	addError,
@@ -123,3 +125,5 @@ export const SetDateTime = ({
 		</>
 	);
 };
+
+export { SetDateTime, END_DAY_INIT_INCREMENT };
