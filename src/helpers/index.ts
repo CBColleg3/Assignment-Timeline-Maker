@@ -14,6 +14,11 @@ import { findPoints } from "./findPoints";
 import { regexFilterTags } from "./regexFilterTags";
 import { updateDueDates } from "./updateDueDates";
 import { validateSetDateTimeInput } from "./validateSetDateTimeInput";
+import { getHighlightStyle } from "./getHighlightStyle";
+import { getTextStyle } from "./getTextStyle";
+import { getBackgroundStyle } from "./getBackgroundStyle";
+import { highlightTask } from "./highlightTask";
+import { styleContent } from "./styleContent";
 
 /**
  * Base export, exports all utility functions in one object
@@ -37,4 +42,9 @@ export {
 	regexFilterTags,
 	updateDueDates,
 	validateSetDateTimeInput,
+	getHighlightStyle,
+	getTextStyle,
+	getBackgroundStyle,
+	highlightTask,
+	styleContent,
 };
