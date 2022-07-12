@@ -1,9 +1,15 @@
+import type { Error } from "./Error";
+
+type ERROR_TYPES = "date" | "file";
+
+type ERROR_OPS = "add" | "delete";
+
 /**
  * Contains all anticipated errors throughout the use of the application
  */
-export type Errors = {
+type Errors = {
 	date?: Error;
 	file?: Error;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- for unanticipated errors
-	misc?: any;
 };
+
+export type { Errors, ERROR_TYPES, ERROR_OPS };

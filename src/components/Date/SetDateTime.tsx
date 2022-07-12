@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
 import type { Error } from "src/@types/Errors/Error";
+import type { ERROR_OPS } from "src/@types/Errors/Errors";
 import type { ToastPayload } from "src/@types/Toast/ToastPayload";
 import DateModal from "./DateModal";
 
@@ -25,7 +26,7 @@ type SetDateTimeProps = {
 	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
-	addError: (error: Error) => void;
+	addError: (error: Error, operation: ERROR_OPS) => void;
 };
 
 /**
@@ -55,7 +56,7 @@ export const SetDateTime = ({
 			setConfirm(false);
 			if (dates.start.getTime() > dates.end.getTime()) {
 				const notification = { header: "Date Error", message: "Start must be earlier then end" };
-				addError({ ...notification });
+				addError({ ...notification }, "add");
 				addNotification({ ...notification, variant: "danger" });
 			}
 		}

@@ -19,7 +19,7 @@ import {
 	NOTIFICATION_MIN_LENGTH,
 	TOAST_CONTAINER_POSITION,
 } from "src/helpers/generateToast";
-import type { Errors } from "src/@types/Errors/Errors";
+import type { Errors, ERROR_OPS, ERROR_TYPES } from "src/@types/Errors/Errors";
 import type { Error } from "src/@types/Errors/Error";
 
 /**
@@ -39,11 +39,23 @@ export const App = (): JSX.Element => {
 	/**
 	 * Utility function for updating the errors object via Error object
 	 *
-	 * @param error The error to add to the errors state
+	 * @param error The error to add to the errors state if add operation is selected
+	 * @param theType The type of error to append/delete with the errors state
+	 * @param operation The type of operation the user is executing
 	 */
-	const updateError = (error: Error): void => {
-		const clonedErrors = { ...errors, error };
-		setErrors(clonedErrors);
+	const updateErrors = (error: Error, theType: ERROR_TYPES, operation: ERROR_OPS): void => {
+		switch (theType) {
+			case "date": {
+				setErrors({ ...errors, date: operation === "delete" ? undefined : error });
+				break;
+			}
+			case "file": {
+				setErrors({ ...errors, file: operation === "delete" ? undefined : error });
+				break;
+			}
+			default:
+				break;
+		}
 	};
 
 	/**
@@ -133,7 +145,7 @@ export const App = (): JSX.Element => {
 				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
 					<span>
 						<SetDateTime
-							addError={(error: Error): void => updateError(error)}
+							addError={(error: Error, operation: ERROR_OPS): void => updateErrors(error, "date", operation)}
 							addNotification={addNotification}
 							assignmentDate={dates}
 							update={(theDates: AssignmentDate): void => setDates(theDates)}
