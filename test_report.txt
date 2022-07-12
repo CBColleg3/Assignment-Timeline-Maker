@@ -62,19 +62,19 @@
       at performUnitOfWork (node_modules/react-dom/cjs/react-dom.development.js:22787:5)
 
 PASS src/App.test.tsx
-  ✓ Title displays on screen (116 ms)
+  ✓ Title displays on screen (125 ms)
 
 --------------------------------|---------|----------|---------|---------|-------------------
 File                            | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 --------------------------------|---------|----------|---------|---------|-------------------
-All files                       |   12.42 |     8.82 |   11.66 |   12.73 |                   
+All files                       |    9.05 |     3.61 |   10.29 |    9.21 |                   
  src                            |      50 |      100 |   16.66 |      50 |                   
   App.tsx                       |   54.54 |      100 |   16.66 |   54.54 | 31-48             
   index.tsx                     |       0 |      100 |     100 |       0 | 6                 
- src/components                 |    4.31 |     4.16 |    4.65 |    4.42 |                   
+ src/components                 |    4.27 |     4.16 |    4.65 |    4.38 |                   
   AddRemoveTask.tsx             |       0 |      100 |       0 |       0 | 40-71             
   EditTask.tsx                  |       0 |      100 |       0 |       0 | 48-173            
-  FileImport.tsx                |    6.45 |        0 |    9.09 |    6.66 | 60-209            
+  FileImport.tsx                |    6.34 |        0 |    9.09 |    6.55 | 60-211            
   TaskInfo.tsx                  |       0 |      100 |       0 |       0 | 24-63             
   Timeline.tsx                  |     100 |       50 |     100 |     100 | 36                
   TimelineDragDrop.tsx          |       0 |        0 |       0 |       0 | 48-91             
@@ -86,9 +86,10 @@ All files                       |   12.42 |     8.82 |   11.66 |   12.73 |
  src/components/Date/StartDate  |     100 |      100 |     100 |     100 |                   
   StartDate.tsx                 |     100 |      100 |     100 |     100 |                   
   index.ts                      |       0 |        0 |       0 |       0 |                   
- src/components/document-viewer |      20 |    33.33 |      20 |      20 |                   
-  DocViewer.tsx                 |      40 |       50 |      50 |      40 | 25-31             
-  docUtils.tsx                  |       0 |        0 |       0 |       0 | 11-31             
+ src/components/document-viewer |    3.75 |     3.63 |    7.69 |    3.75 |                   
+  DocViewer.tsx                 |      40 |       50 |      50 |      40 | 28-35             
+  colorMap.tsx                  |     100 |      100 |     100 |     100 |                   
+  docUtils.tsx                  |       0 |        0 |       0 |       0 | 12-245            
  src/components/utils           |    5.88 |        0 |       0 |    6.25 |                   
   calcDays.ts                   |       0 |        0 |       0 |       0 | 28-39             
   calcDiffInDays.ts             |      25 |      100 |       0 |      25 | 14-16             
@@ -100,5 +101,5 @@ All files                       |   12.42 |     8.82 |   11.66 |   12.73 |
 Test Suites: 1 passed, 1 total
 Tests:       1 passed, 1 total
 Snapshots:   0 total
-Time:        2.671 s
+Time:        2.67 s
 Ran all test suites.
