@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
+import type { ToastPayload } from "src/@types/Toast/ToastPayload";
 import DateModal from "./DateModal";
 
 /**
@@ -16,6 +17,10 @@ type SetDateTimeProps = {
 	 * Propagates the local changes to the parent component
 	 */
 	update: (dates: AssignmentDate) => void;
+	/**
+	 * Adds notification to the stack
+	 */
+	addNotification: (payload: ToastPayload) => void;
 };
 
 /**
@@ -24,7 +29,7 @@ type SetDateTimeProps = {
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-export const SetDateTime = ({ update, assignmentDate }: SetDateTimeProps): JSX.Element => {
+export const SetDateTime = ({ update, assignmentDate, addNotification }: SetDateTimeProps): JSX.Element => {
 	const [confirm, setConfirm] = React.useState<boolean>(false);
 	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
 	const [displayModal, setDisplayModal] = React.useState(false);

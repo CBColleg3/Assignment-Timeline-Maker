@@ -14,6 +14,7 @@ import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 import type { ToastPayload } from "src/@types/Toast/ToastPayload";
 import { generateToast, NOTIFICATION_MIN_LENGTH, TOAST_CONTAINER_POSITION } from "src/helpers/generateToast";
+import type { Errors } from "src/@types/Errors/Errors";
 
 /**
  * Root component
@@ -27,6 +28,17 @@ export const App = (): JSX.Element => {
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [toastMessages, setToastMessages] = React.useState<ToastPayload[]>([]);
+	const [errors, setErrors] = React.useState<Errors>({});
+
+	/**
+	 * Utility function for updating the errors object via Error object
+	 *
+	 * @param error The error to add to the errors state
+	 */
+	const updateError = (error: Error): void => {
+		const clonedErrors = { ...errors, error };
+		setErrors(clonedErrors);
+	};
 
 	/**
 	 * Utility function for adding notifications to the stack
@@ -87,6 +99,8 @@ export const App = (): JSX.Element => {
 				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
 					<span>
 						<SetDateTime
+							addError={(error: Error): void => updateError(error)}
+							addNotification={addNotification}
 							assignmentDate={dates}
 							update={(theDates: AssignmentDate): void => setDates(theDates)}
 						/>
