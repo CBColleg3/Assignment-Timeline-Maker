@@ -21,6 +21,8 @@ import {
 } from "src/helpers/GeneratedToast";
 import type { Errors, ERROR_OPS, ERROR_TYPES } from "src/@types/Errors/Errors";
 import type { Error } from "src/@types/Errors/Error";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Root component
@@ -167,31 +169,67 @@ export const App = (): JSX.Element => {
 					/>
 				</div>
 				{!errors.date && !errors.file ? (
-					<div className="d-flex flex-row mt-3">
-						<Col>
-							{files && (
-								<Timeline
-									assignmentDate={dates}
-									fileImported={files.length > MIN_FILES_LENGTH}
-									setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-									taskArray={taskArray}
-								/>
-							)}
-						</Col>
-						<Col lg={5}>
-							{files && (
-								<DocViewer
-									docXML={docXML}
-									fileImported={files.length > MIN_FILES_LENGTH}
-								/>
-							)}{" "}
-						</Col>
-					</div>
+					<>
+						{fileSelected ? (
+							<div className="d-flex flex-row mt-3">
+								<Col>
+									{files && (
+										<Timeline
+											assignmentDate={dates}
+											fileImported={files.length > MIN_FILES_LENGTH}
+											setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+											taskArray={taskArray}
+										/>
+									)}
+								</Col>
+								<Col lg={5}>
+									{files && (
+										<DocViewer
+											docXML={docXML}
+											fileImported={files.length > MIN_FILES_LENGTH}
+										/>
+									)}{" "}
+								</Col>
+							</div>
+						) : (
+							<>
+								{files && files.length > MIN_FILES_LENGTH ? (
+									<Alert
+										className="w-75 mt-4 mx-auto text-center"
+										variant="info"
+									>
+										<FontAwesomeIcon
+											className="me-2"
+											icon={faCircleInfo}
+										/>
+										{"Must select a file from the above list to begin timeline generation"}
+									</Alert>
+								) : (
+									<Alert
+										className="w-75 mt-4 mx-auto text-center"
+										variant="info"
+									>
+										<FontAwesomeIcon
+											className="me-2"
+											icon={faCircleInfo}
+										/>
+										{"Select file(s) from the link "}
+										<span className="fw-bold">{" Choose a file "}</span>
+										{" or drag-and-drop files into the outlined box to begin timeline generation"}
+									</Alert>
+								)}
+							</>
+						)}
+					</>
 				) : (
 					<Alert
 						className="w-75 mt-4 mx-auto d-flex flex-column text-center"
 						variant="danger"
 					>
+						<FontAwesomeIcon
+							className="me-2"
+							icon={faCircleExclamation}
+						/>
 						<span className="fw-bolder">{"Cannot render Timeline"}</span>
 						<span className="mx-auto mt-2">
 							<ul>
