@@ -6,6 +6,8 @@ import { convertTextChunk } from "./convertTextChunk";
 import { convertXML2HTML } from "./convertXML2HTML";
 import { extractParagraphs } from "./extractParagraphs";
 import { readFile } from "./readFile";
+import { displayFileWithSize } from "./displayFileWithSize";
+import { parseFileTextToXML } from "./parseFileTextToXML";
 
 /**
  * Base export, exports all utility functions in one object
@@ -19,4 +21,6 @@ export {
 	convertXML2HTML,
 	extractParagraphs,
 	readFile,
+	displayFileWithSize,
+	parseFileTextToXML,
 };

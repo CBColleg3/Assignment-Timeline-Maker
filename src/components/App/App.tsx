@@ -8,6 +8,9 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
+import FileDisplay from "../FileDisplay";
+import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
+import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 
 /**
  * Root component
@@ -17,15 +20,35 @@ import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate"
 export const App = (): JSX.Element => {
 	const [dates, setDates] = React.useState<AssignmentDate>({ end: new Date(), start: new Date() });
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
-	const [file, setFile] = React.useState<Document | undefined>(undefined);
-	const [fileImported, setFileImported] = React.useState<boolean>(false);
+	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 
-	React.useEffect(() => {
-		if (file) {
-			setDocXML(file);
+	/**
+	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
+	 *
+	 * @param type The type of operation to be performed on the files state
+	 * @param index The index of the file to operate upon
+	 */
+	const updateFiles = (type: UpdateType, index: number): void => {
+		if (files) {
+			switch (type) {
+				case "delete": {
+					const filesClone = [...files].filter((_, ind) => ind !== index);
+					setFiles(filesClone);
+					break;
+				}
+				default: {
+					break;
+				}
+			}
 		}
-	}, [file]);
+	};
+
+	React.useEffect(() => {
+		if (files) {
+			console.log("files = ", files);
+		}
+	}, [files]);
 
 	return (
 		<div className="d-flex flex-column">
@@ -37,28 +60,36 @@ export const App = (): JSX.Element => {
 						update={(theDates: AssignmentDate): void => setDates(theDates)}
 					/>
 				</span>
-				<span className="mt-4">{"File Selected"}</span>
+				<span className="my-auto">
+					<FileDisplay
+						fileSizeSpec="mb"
+						files={files}
+						updateFiles={updateFiles}
+					/>
+				</span>
 				<FileImport
-					assignmentDate={dates}
-					setDocXML={setDocXML}
-					setFileImported={(isImported: boolean): void => setFileImported(isImported)}
-					setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+					update={(theFiles: File[]) => setFiles(theFiles)}
+					files={files}
 				/>
 			</div>
 			<div className="d-flex flex-row mt-3">
 				<Col>
-					<Timeline
-						assignmentDate={dates}
-						fileImported={fileImported}
-						setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-						taskArray={taskArray}
-					/>
+					{files && (
+						<Timeline
+							assignmentDate={dates}
+							fileImported={files.length > MIN_FILES_LENGTH}
+							setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+							taskArray={taskArray}
+						/>
+					)}
 				</Col>
 				<Col lg={5}>
-					<DocViewer
-						docXML={docXML}
-						fileImported={fileImported}
-					/>{" "}
+					{files && (
+						<DocViewer
+							docXML={docXML}
+							fileImported={files.length > MIN_FILES_LENGTH}
+						/>
+					)}{" "}
 				</Col>
 			</div>
 		</div>

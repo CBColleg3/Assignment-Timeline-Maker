@@ -380,7 +380,6 @@
                 "maxEOF": 0
             }
         ],
-        "no-nested-ternary": "error",
         "no-new-object": "error",
         "no-plusplus": "error",
         "no-restricted-syntax": [
