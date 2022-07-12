@@ -140,7 +140,7 @@ export const App = (): JSX.Element => {
 	}, [files, fileSelected, dates]);
 
 	return (
-		<>
+		<div>
 			{toastMessages && toastMessages.length > NOTIFICATION_MIN_LENGTH && (
 				<ToastContainer position={TOAST_CONTAINER_POSITION}>
 					{toastMessages.map((eachPayload, index) => (
@@ -178,7 +178,7 @@ export const App = (): JSX.Element => {
 					/>
 				</div>
 				{!errors.date && !errors.file ? (
-					<>
+					<div className="timeline_site">
 						{fileSelected !== undefined ? (
 							<div className="d-flex flex-row mt-3">
 								<Col>
@@ -229,7 +229,7 @@ export const App = (): JSX.Element => {
 								)}
 							</>
 						)}
-					</>
+					</div>
 				) : (
 					<Alert
 						className="w-75 mt-4 mx-auto d-flex flex-column text-center"
@@ -249,6 +249,6 @@ export const App = (): JSX.Element => {
 					</Alert>
 				)}
 			</div>
-		</>
+		</div>
 	);
 };
