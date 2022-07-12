@@ -196,6 +196,7 @@ export const App = (): JSX.Element => {
 										<DocViewer
 											docXML={docXML}
 											fileImported={files.length > MIN_FILES_LENGTH}
+											tasks={taskArray}
 										/>
 									)}{" "}
 								</Col>
