@@ -95,8 +95,10 @@ export function FileImport({
 	function findParts(fileText: Promise<any>): Promise<any> {
 		//
 		return fileText.then((txt) => {
+			console.log(txt);
 			const parser = new DOMParser();
 			const textDoc = parser.parseFromString(txt, "text/xml");
+			// console.log(textDoc);
 			setDocXML(textDoc);
 
 			const textArray = textDoc.getElementsByTagName("w:t");
