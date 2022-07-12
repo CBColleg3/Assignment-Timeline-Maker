@@ -22,6 +22,7 @@ export const App = (): JSX.Element => {
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
+	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 
 	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
@@ -53,7 +54,7 @@ export const App = (): JSX.Element => {
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-around">
+			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
 				<span>
 					<SetDateTime
 						assignmentDate={dates}
@@ -62,14 +63,14 @@ export const App = (): JSX.Element => {
 				</span>
 				<span className="my-auto">
 					<FileDisplay
-						fileSizeSpec="mb"
+						currentSelection={fileSelected}
 						files={files}
 						updateFiles={updateFiles}
 					/>
 				</span>
 				<FileImport
-					update={(theFiles: File[]) => setFiles(theFiles)}
 					files={files}
+					update={(theFiles: File[]): void => setFiles(theFiles)}
 				/>
 			</div>
 			<div className="d-flex flex-row mt-3">
