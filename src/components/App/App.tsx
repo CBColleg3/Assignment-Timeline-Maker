@@ -47,7 +47,7 @@ export const App = (): JSX.Element => {
 
 	React.useEffect(() => {
 		if (files) {
-			console.log("files = ", files);
+			console.log("files = ", Object.values(files));
 		}
 	}, [files]);
 

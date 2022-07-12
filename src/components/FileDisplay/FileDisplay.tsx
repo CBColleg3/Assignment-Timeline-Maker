@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key -- index aids in unique keys */
 import { faCircle, faCircleCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -37,12 +38,14 @@ const FileDisplay = ({
 			<ListGroup>
 				{files.map((eachFile, index) => (
 					<>
-						{currentSelection ? (
+						{currentSelection !== undefined ? (
 							<ListGroup.Item
 								action
 								className="d-flex flex-row justify-content-between"
-								eventKey={`file-${eachFile.name}`}
-								key={`file-${eachFile.name}`}
+								eventKey={`${index}-file-${eachFile.name}-currSelection`}
+								key={`${index}-currSelection`}
+								onClick={(): void => updateCurrentSelection(index)}
+								variant={index === currentSelection ? "primary" : "light"}
 							>
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>
 								<span className="ms-2">
@@ -67,8 +70,8 @@ const FileDisplay = ({
 							<ListGroup.Item
 								action
 								className="d-flex flex-row justify-content-between"
-								eventKey={`file-${eachFile.name}`}
-								key={`file-${eachFile.name}`}
+								eventKey={`${index}-file-${eachFile.name}-nonCurrSelection`}
+								key={`${index}`}
 								onClick={(): void => updateCurrentSelection(index)}
 							>
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>
