@@ -1,5 +1,5 @@
 import React from "react";
-import { convertTextChunk } from "./convertTextChunk";
+import { convertTextChunk } from "src/helpers";
 
 /**
  * Takes an Element containing 'w:p' xml tag information and extracts the text information from it

@@ -1,5 +1,5 @@
 import type { Task } from "src/@types/Task";
-import { REGEX_EXPRESSIONS } from "./regexExpressions";
+import { REGEX_EXPRESSIONS } from "src/helpers";
 
 /**
  * Constants for the function

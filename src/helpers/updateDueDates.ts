@@ -2,8 +2,13 @@
 /* eslint-disable no-loop-func -- no invalid practices being used*/
 import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import type { Task } from "src/@types/Task";
-import { calcTotalPoints, calcDiffInDays, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
-import { calcDays } from "./calcDays";
+import {
+	calcTotalPoints,
+	calcDiffInDays,
+	COLOR_HEX_ARRAY,
+	COLOR_HEX_ARRAY_LENGTH,
+	calcDays,
+} from "src/helpers";
 
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
