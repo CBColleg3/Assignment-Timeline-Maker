@@ -48,6 +48,7 @@ export const App = (): JSX.Element => {
 
 	/**
 	 * Utility function for removing the notification from the history of notifications
+	 * - The reason for the extra implementation is we want to remove the notification from the last of the stack as that is the notification that was just rendered
 	 *
 	 * @param payload The payload to remove from the notifications
 	 */
