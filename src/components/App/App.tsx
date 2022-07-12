@@ -1,32 +1,17 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type {
-	Task,
-	AssignmentDate,
-	UpdateType,
-	ToastPayload,
-	Error,
-	Errors,
-	ERROR_OPS,
-	ERROR_TYPES,
-} from "src/@types";
+import type { Task, AssignmentDate, UpdateType, Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Alert, Col, ToastContainer } from "react-bootstrap";
+import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
-import {
-	GeneratedToast,
-	NOTIFICATION_DEFAULT_DELAY,
-	NOTIFICATION_MIN_LENGTH,
-	TOAST_CONTAINER_POSITION,
-} from "src/helpers/GeneratedToast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
@@ -44,7 +29,6 @@ export const App = (): JSX.Element => {
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
-	const [toastMessages, setToastMessages] = React.useState<ToastPayload[]>([]);
 	const [errors, setErrors] = React.useState<Errors>({});
 
 	/**
@@ -67,39 +51,6 @@ export const App = (): JSX.Element => {
 			default:
 				break;
 		}
-	};
-
-	/**
-	 * Utility function for removing the notification from the history of notifications
-	 * - The reason for the extra implementation is we want to remove the notification from the last of the stack as that is the notification that was just rendered
-	 *
-	 * @param payload The payload to remove from the notifications
-	 */
-	const removeNotification = (payload: ToastPayload): void => {
-		const clonedToastMessages = [...toastMessages].map((eachToast) => ({ ...eachToast }));
-		const payloadFoundIndexes = clonedToastMessages
-			.map((eachMessage, index) => (eachMessage.message !== payload.message ? undefined : index))
-			.filter((elem) => elem !== undefined);
-		// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- not a magic number
-		const lastIndex = payloadFoundIndexes[payloadFoundIndexes.length - 1];
-		if (lastIndex) {
-			// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- not a magic number
-			clonedToastMessages.splice(lastIndex, 1);
-			setToastMessages(clonedToastMessages);
-		}
-	};
-
-	/**
-	 * Utility function for adding notifications to the stack
-	 *
-	 * @param payload The new message being added to the notification stack
-	 */
-	const addNotification = (payload: ToastPayload): void => {
-		const toastMessagesClone = [...[...toastMessages].map((eachMessage) => ({ ...eachMessage })), payload];
-		setToastMessages(toastMessagesClone);
-		setTimeout(() => {
-			removeNotification(payload);
-		}, payload.delay ?? NOTIFICATION_DEFAULT_DELAY);
 	};
 
 	/**
@@ -140,116 +91,103 @@ export const App = (): JSX.Element => {
 	}, [files, fileSelected, dates]);
 
 	return (
-		<>
-			{toastMessages && toastMessages.length > NOTIFICATION_MIN_LENGTH && (
-				<ToastContainer position={TOAST_CONTAINER_POSITION}>
-					{toastMessages.map((eachPayload, index) => (
-						<GeneratedToast
-							key={`toast-${index}-${eachPayload.message}`}
-							{...eachPayload}
-						/>
-					))}
-				</ToastContainer>
-			)}
-			<div className="d-flex flex-column">
-				<AppHeader />
-				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
-					<span>
-						<SetDateTime
-							addError={(error: Error | undefined, operation: ERROR_OPS): void =>
-								updateErrors("date", operation, error)
-							}
-							addNotification={addNotification}
-							assignmentDate={dates}
-							update={(theDates: AssignmentDate): void => setDates(theDates)}
-						/>
-					</span>
-					<span className="my-auto">
-						<FileDisplay
-							currentSelection={fileSelected}
-							files={files}
-							updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
-							updateFiles={updateFiles}
-						/>
-					</span>
-					<FileImport
-						files={files}
-						update={(theFiles: File[]): void => setFiles(theFiles)}
+		<div className="d-flex flex-column">
+			<AppHeader />
+			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
+				<span>
+					<SetDateTime
+						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
+							updateErrors("date", operation, error)
+						}
+						assignmentDate={dates}
+						update={(theDates: AssignmentDate): void => setDates(theDates)}
 					/>
-				</div>
-				{!errors.date && !errors.file ? (
-					<>
-						{fileSelected !== undefined ? (
-							<div className="d-flex flex-row mt-3">
-								<Col>
-									{files && (
-										<Timeline
-											assignmentDate={dates}
-											fileImported={files.length > MIN_FILES_LENGTH}
-											setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-											taskArray={taskArray}
-										/>
-									)}
-								</Col>
-								<Col lg={5}>
-									{files && (
-										<DocViewer
-											docXML={docXML}
-											fileImported={files.length > MIN_FILES_LENGTH}
-											tasks={taskArray}
-										/>
-									)}{" "}
-								</Col>
-							</div>
-						) : (
-							<>
-								{files && files.length > MIN_FILES_LENGTH ? (
-									<Alert
-										className="w-75 mt-4 mx-auto text-center"
-										variant="info"
-									>
-										<FontAwesomeIcon
-											className="me-2"
-											icon={faCircleInfo}
-										/>
-										{"Must select a file from the above list to begin timeline generation"}
-									</Alert>
-								) : (
-									<Alert
-										className="w-75 mt-4 mx-auto text-center"
-										variant="info"
-									>
-										<FontAwesomeIcon
-											className="me-2"
-											icon={faCircleInfo}
-										/>
-										{"Select file(s) from the link "}
-										<span className="fw-bold">{" Choose a file "}</span>
-										{" or drag-and-drop files into the outlined box to begin timeline generation"}
-									</Alert>
-								)}
-							</>
-						)}
-					</>
-				) : (
-					<Alert
-						className="w-75 mt-4 mx-auto d-flex flex-column text-center"
-						variant="danger"
-					>
-						<FontAwesomeIcon
-							className="me-2"
-							icon={faCircleExclamation}
-						/>
-						<span className="fw-bolder">{"Cannot render Timeline"}</span>
-						<span className="mx-auto mt-2">
-							<ul>
-								{errors.date && <li>{errors.date.message}</li>}
-								{errors.file && <li>{errors.file.message}</li>}
-							</ul>
-						</span>
-					</Alert>
-				)}
+				</span>
+				<span className="my-auto">
+					<FileDisplay
+						currentSelection={fileSelected}
+						files={files}
+						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
+						updateFiles={updateFiles}
+					/>
+				</span>
+				<FileImport
+					files={files}
+					update={(theFiles: File[]): void => setFiles(theFiles)}
+				/>
 			</div>
-		</>
+			{!errors.date && !errors.file ? (
+				<>
+					{fileSelected !== undefined ? (
+						<div className="d-flex flex-row mt-3">
+							<Col>
+								{files && (
+									<Timeline
+										assignmentDate={dates}
+										fileImported={files.length > MIN_FILES_LENGTH}
+										setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
+										taskArray={taskArray}
+									/>
+								)}
+							</Col>
+							<Col lg={5}>
+								{files && (
+									<DocViewer
+										docXML={docXML}
+										fileImported={files.length > MIN_FILES_LENGTH}
+										tasks={taskArray}
+									/>
+								)}{" "}
+							</Col>
+						</div>
+					) : (
+						<>
+							{files && files.length > MIN_FILES_LENGTH ? (
+								<Alert
+									className="w-75 mt-4 mx-auto text-center"
+									variant="info"
+								>
+									<FontAwesomeIcon
+										className="me-2"
+										icon={faCircleInfo}
+									/>
+									{"Must select a file from the above list to begin timeline generation"}
+								</Alert>
+							) : (
+								<Alert
+									className="w-75 mt-4 mx-auto text-center"
+									variant="info"
+								>
+									<FontAwesomeIcon
+										className="me-2"
+										icon={faCircleInfo}
+									/>
+									{"Select file(s) from the link "}
+									<span className="fw-bold">{" Choose a file "}</span>
+									{" or drag-and-drop files into the outlined box to begin timeline generation"}
+								</Alert>
+							)}
+						</>
+					)}
+				</>
+			) : (
+				<Alert
+					className="w-75 mt-4 mx-auto d-flex flex-column text-center"
+					variant="danger"
+				>
+					<FontAwesomeIcon
+						className="me-2"
+						icon={faCircleExclamation}
+					/>
+					<span className="fw-bolder">{"Cannot render Timeline"}</span>
+					<span className="mx-auto mt-2">
+						<ul>
+							{errors.date && <li>{errors.date.message}</li>}
+							{errors.file && <li>{errors.file.message}</li>}
+						</ul>
+					</span>
+				</Alert>
+			)}
+		</div>
 	);
 };
