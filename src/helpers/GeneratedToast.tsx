@@ -1,5 +1,6 @@
 import React from "react";
 import { Toast } from "react-bootstrap";
+// TODO: To be removed in future versions
 
 const NOTIFICATION_DEFAULT_DELAY = 3000;
 
