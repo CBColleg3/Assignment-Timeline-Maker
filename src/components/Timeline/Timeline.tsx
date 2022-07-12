@@ -1,9 +1,8 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
-import type { Task } from "../../@types/Task";
+import type { AssignmentDate, Task } from "src/@types";
 import TimelineDragDrop from "src/components/DragDrop";
-import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 
 /**
  * Props for the Timeline component

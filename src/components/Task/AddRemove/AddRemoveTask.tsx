@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { Task } from "../../../@types/Task";
+import type { Task } from "src/@types";
 
 /**
  * Props for the AddRemoveTask component

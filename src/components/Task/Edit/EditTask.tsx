@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import type { Task } from "../../../@types/Task";
+import type { Task } from "src/@types";
 import DatePicker from "react-datepicker";
 
 /**

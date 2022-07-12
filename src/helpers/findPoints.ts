@@ -1,4 +1,4 @@
-import type { Task } from "src/@types/Task";
+import type { Task } from "src/@types";
 import { REGEX_EXPRESSIONS } from "src/helpers";
 
 /**

@@ -1,26 +1,32 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type { Task } from "../../@types/Task";
+import type {
+	Task,
+	AssignmentDate,
+	UpdateType,
+	ToastPayload,
+	Error,
+	Errors,
+	ERROR_OPS,
+	ERROR_TYPES,
+} from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col, ToastContainer } from "react-bootstrap";
 import AppHeader from "./AppHeader";
-import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate";
 import FileDisplay from "../FileDisplay";
-import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
+
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
-import type { ToastPayload } from "src/@types/Toast/ToastPayload";
+
 import {
 	GeneratedToast,
 	NOTIFICATION_DEFAULT_DELAY,
 	NOTIFICATION_MIN_LENGTH,
 	TOAST_CONTAINER_POSITION,
 } from "src/helpers/GeneratedToast";
-import type { Errors, ERROR_OPS, ERROR_TYPES } from "src/@types/Errors/Errors";
-import type { Error } from "src/@types/Errors/Error";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
@@ -44,9 +50,9 @@ export const App = (): JSX.Element => {
 	/**
 	 * Utility function for updating the errors object via Error object
 	 *
-	 * @param error The error to add to the errors state if add operation is selected
 	 * @param theType The type of error to append/delete with the errors state
 	 * @param operation The type of operation the user is executing
+	 * @param error The error to add to the errors state if add operation is selected
 	 */
 	const updateErrors = (theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
 		switch (theType) {

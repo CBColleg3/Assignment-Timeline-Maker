@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
-import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
+import type { AssignmentDate, UpdateDateType } from "src/@types";
 import EndDate from "../EndDate";
 import StartDate from "../StartDate";
 

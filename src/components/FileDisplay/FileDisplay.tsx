@@ -3,7 +3,7 @@ import React from "react";
 import { faCircle, faCircleCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, ListGroup } from "react-bootstrap";
-import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
+import type { UpdateType } from "src/@types";
 import { displayFileWithSize } from "src/helpers";
 import styles from "./FileDisplay.module.css";
 

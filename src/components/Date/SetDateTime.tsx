@@ -1,10 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
-import type { UpdateDateType } from "src/@types/AssignmentDate/UpdateDateType";
-import type { Error } from "src/@types/Errors/Error";
-import type { ERROR_OPS } from "src/@types/Errors/Errors";
-import type { ToastPayload } from "src/@types/Toast/ToastPayload";
+import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS, ToastPayload } from "src/@types";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
@@ -58,7 +54,6 @@ const SetDateTime = ({
 			update(dates);
 			setConfirm(false);
 			const error = validateSetDateTimeInput(dates);
-			console.log("error = ", error);
 			if (error) {
 				addError({ ...error }, "add");
 				addNotification({ ...error, variant: "danger" });

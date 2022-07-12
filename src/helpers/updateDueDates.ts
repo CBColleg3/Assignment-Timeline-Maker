@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-loop-func -- no invalid practices being used*/
 /* eslint-disable no-loop-func -- no invalid practices being used*/
-import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
-import type { Task } from "src/@types/Task";
+import type { AssignmentDate, Task } from "src/@types";
 import {
 	calcTotalPoints,
 	calcDiffInDays,

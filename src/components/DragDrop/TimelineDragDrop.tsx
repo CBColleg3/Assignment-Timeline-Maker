@@ -3,12 +3,10 @@ import React from "react";
 import { AddRemoveTask } from "../Task/AddRemove/AddRemoveTask";
 import { EditTask } from "../Task/Edit/EditTask";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
-import type { Task } from "../../@types/Task";
+import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 
 const SPLICE_OP_NO_DELETE = 0;
-
-const TASK_COLOR_INC = 100;
 
 /**
  * Props for the TimelineDragDrop component

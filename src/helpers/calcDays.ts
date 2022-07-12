@@ -1,4 +1,4 @@
-import type { Task } from "../@types/Task";
+import type { Task } from "src/@types";
 import type { CalculateDayPayload, CalculateDayResponse } from "./updateDueDates";
 
 /**

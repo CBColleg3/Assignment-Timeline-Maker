@@ -1,4 +1,4 @@
-import type { Task } from "src/@types/Task";
+import type { Task } from "src/@types";
 
 /**
  * This function calculates the total amount of points in the document

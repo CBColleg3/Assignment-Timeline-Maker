@@ -1,5 +1,4 @@
-import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
-import type { Error } from "src/@types/Errors/Error";
+import type { Error, AssignmentDate } from "src/@types";
 
 /**
  * Validates the date input, and returns error if error is detected, else undefined
