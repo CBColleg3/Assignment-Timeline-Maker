@@ -44,7 +44,7 @@ export const AddRemoveTask = ({
 		const modifiedTaskArr = [...taskArray];
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
-			color: 0,
+			color: "0000",
 			document: "Uh Oh",
 			dueDate: new Date(),
 			id: ind + IND_INC,

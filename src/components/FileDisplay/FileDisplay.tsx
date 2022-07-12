@@ -1,10 +1,11 @@
 /* eslint-disable react/no-array-index-key -- index aids in unique keys */
+import React from "react";
 import { faCircle, faCircleCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
 import { Alert, ListGroup } from "react-bootstrap";
 import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
 import { displayFileWithSize } from "src/helpers";
+import styles from "./FileDisplay.module.css";
 
 /**
  * Props for the FileDisplay component
@@ -50,17 +51,18 @@ const FileDisplay = ({
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>
 								<span className="ms-2">
 									<FontAwesomeIcon
-										className="mx-1"
+										className={`${styles.list_icon} p-1 rounded`}
 										icon={faEraser}
+										onClick={(): void => updateFiles("delete", index)}
 									/>
 									{currentSelection === index ? (
 										<FontAwesomeIcon
-											className="ms-1"
+											className="p-1 rounded"
 											icon={faCircleCheck}
 										/>
 									) : (
 										<FontAwesomeIcon
-											className="ms-1"
+											className="p-1 rounded"
 											icon={faCircle}
 										/>
 									)}
@@ -77,11 +79,12 @@ const FileDisplay = ({
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>
 								<span className="ms-2">
 									<FontAwesomeIcon
-										className="mx-1"
+										className={`${styles.list_icon} p-1 rounded`}
 										icon={faEraser}
+										onClick={(): void => updateFiles("delete", index)}
 									/>
 									<FontAwesomeIcon
-										className="ms-1"
+										className="p-1 rounded"
 										icon={faCircle}
 									/>
 								</span>

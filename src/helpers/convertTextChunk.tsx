@@ -1,5 +1,5 @@
 import React from "react";
-import { colorHex } from "./colorMap";
+import { colorHex } from "./colorHex";
 
 /**
  * Utility function parses an XML element into an HTML element
