@@ -15,10 +15,11 @@ function extractParagraphs(docXML: Document | undefined): Element[] {
 }
 
 /**
+ *Insert text chunk description here
  *
- * @param textChunk
- * @param globalStyleChunk
- * @returns
+ * @param {Element} textChunk TODO: Description
+ * @param {Element[]} globalStyleChunk TODO: description
+ * @returns {JSX.Element} TODO: description
  */
 function convertTextChunk(
 	textChunk: Element,
@@ -44,9 +45,10 @@ function convertTextChunk(
 }
 
 /**
- *
- * @param textChunk
- * @returns
+ * TODO: getTextStyle Documentation
+ * 
+ * @param {Element} textChunk TODO: Description
+ * @returns {Record<string, string>} TODO: Description
  */
 function getTextStyle(textChunk: Element): Record<string, string> {
 	const style: Record<string, string> = {};
@@ -84,9 +86,10 @@ function getTextStyle(textChunk: Element): Record<string, string> {
 }
 
 /**
- *
- * @param textChunk
- * @returns
+ * TODO: getHighlightStyle documentation
+ * 
+ * @param {Element} textChunk TODO: param description
+ * @returns {Record<string, string>} TODO: return description 
  */
 function getHighlightStyle(textChunk: Element): Record<string, string> {
 	const highlightStyle: Record<string, string> = {};
@@ -118,9 +121,10 @@ function getHighlightStyle(textChunk: Element): Record<string, string> {
 }
 
 /**
+ *TODO: getBACKGROUND STYLE NEEDED
  *
- * @param globalStyleChunks
- * @returns
+ * @param {Element[]} globalStyleChunks TODO: globalStyleChunks
+ * @returns {Record<string, string>} TODO: Return Description
  */
 function getBackgroundStyle(
 	globalStyleChunks: Element[],
@@ -148,11 +152,12 @@ function getBackgroundStyle(
 	return backgroundStyle;
 }
 
-/**
+/** 
+ * TODO: document function
  *
- * @param formattedContent
- * @param globalStyleChunk
- * @returns
+ * @param {JSX.Element[]} formattedContent document param
+ * @param {Element[]} globalStyleChunk document param
+ * @returns {JSX.Element | JSX.Element[]} document return statement
  */
 function styleContent(
 	formattedContent: JSX.Element[],
@@ -191,10 +196,11 @@ function styleContent(
 }
 
 /**
+ * Document function
  *
  * @param {string} textContent textContent of the entire paragraph
- * @param {Task[]} taskArray
- * @returns
+ * @param {Task[]} taskArray document param
+ * @returns {Record<string,string>} document return statement
  */
 function highlightTask(
 	textContent: string,
@@ -217,6 +223,7 @@ function highlightTask(
  * Takes an Element containg 'w:p' xml tag information and extracts the text information from it
  *
  * @param {Element} par xml element representing a 'w:p' xml tag
+ * @param {Task[]} taskArray task array
  * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
  */
 function convertXML2HTML(par: Element, taskArray: Task[]): JSX.Element {

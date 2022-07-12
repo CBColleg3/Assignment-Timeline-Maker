@@ -1,6 +1,6 @@
 import React from "react";
 import "../../App.css";
-import { Task } from "../../templates/task";
+import type { Task } from "../../templates/task";
 import { extractParagraphs, convertXML2HTML } from "./docUtils";
 
 /**
