@@ -10,44 +10,44 @@ type StartDateProps = {
 	/**
 	 * The current start date
 	 */
-	date: Date;
+	startDate: Date;
 	/**
 	 * The function to update the start date
 	 */
-	setDate: (theDate: Date) => void;
+	update: (theDate: Date) => void;
 };
 
 /**
  * StartDate is a component which houses the logic to update the start date, and set it as well.
- * 
+ *
  * @param {StartDateProps} props The properties passed into the StartDate component
  * @returns {JSX.Element} The datepicker to update the start date
  */
-export const StartDate = ({ date, setDate }: StartDateProps) => {
-	return (
-		<div className="w-25 mx-auto d-flex flex-column">
-			<span className="my-2 fw-bolder fs-5">Start Date</span>
+export const StartDate = ({ startDate, update }: StartDateProps): JSX.Element => (
+	<div className={"mx-auto d-flex flex-row mb-3"}>
+		<span className="fw-bolder fs-6 text-start text-nowrap my-auto">{"Start Date"}</span>
+		<span className="my-auto ms-3">
 			<ReactDatePicker
-				dateFormat="Pp"
 				closeOnScroll
+				dateFormat="Pp"
+				onChange={update}
 				peekNextMonth
 				required
+				selected={startDate}
 				selectsEnd
 				shouldCloseOnSelect
-				useWeekdaysShort
+				showTimeSelect
 				todayButton={
 					<Button
 						className={`${styles.today_button}`}
-						variant="outline-primary"
 						size="sm"
+						variant="outline-primary"
 					>
-						Today
+						{"Today"}
 					</Button>
 				}
-				showTimeSelect
-				selected={date}
-				onChange={setDate}
+				useWeekdaysShort
 			/>
-		</div>
-	);
-};
+		</span>
+	</div>
+);

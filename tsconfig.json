@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es5",
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "composite": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -22,5 +25,8 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "data"
   ]
 }
