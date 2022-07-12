@@ -100,6 +100,7 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 		if (response.incrementDate && currentDay.getDay() <= clonedAssignmentDate.end.getDay()) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
+			console.log("currColor = ", currentColor);
 		}
 		taskClone = [...taskClone].map((eTask, ind) => {
 			if (ind === i) {
