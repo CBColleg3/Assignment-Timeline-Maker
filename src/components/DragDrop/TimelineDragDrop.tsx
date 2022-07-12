@@ -83,6 +83,12 @@ export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropPr
 									>
 										<VerticalTimelineElement
 											className="vertical-timeline-element--work"
+											contentStyle={{
+												color: `rgb(${parseInt(task.color.substring(1, 3), 16)},${parseInt(
+													task.color.substring(3, 5),
+													16,
+												)},${parseInt(task.color.substring(5), 16)})`,
+											}}
 											iconStyle={{
 												background: `rgb(${parseInt(task.color.substring(1, 3), 16)},${parseInt(
 													task.color.substring(3, 5),
