@@ -4,10 +4,10 @@ import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import type { Task } from "src/@types/Task";
 import { calcTotalPoints, calcDiffInDays, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 import { calcDays } from "./calcDays";
-import { randomInt } from "crypto";
 
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
+	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
 	UPDATE_DAY_COUNTER_INC: 1,
 	UPDATE_LOOP_INC: 1,
 	UPDATE_POINT_SUM_VAL: 0,
@@ -23,6 +23,16 @@ type CalculateDayPayload = {
 	pointsPerDay: number;
 	currentDay: Date;
 };
+
+/**
+ * Used to generate random indexes for the color of the documents
+ *
+ * @param min The minimum value
+ * @param max The maximum value
+ * @returns Randomized value
+ */
+const randomInt = (min: number, max: number): number =>
+	Math.floor(Math.random() * (max - min + CONSTANTS.RANDOM_NUMBER_FORMULA_CONSTANT_INC) + min);
 
 /**
  * Fetches a random color from the color hex library using the crypto randomInt function to get a secure random number
@@ -60,7 +70,7 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
  * @param {AssignmentDate} assignmentDate The assignment date
  * @returns {void}
  */
-const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): void => {
+const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] => {
 	let taskClone = [...tasks].map((eachTask) => ({ ...eachTask }));
 	let runningTotal = 0;
 	let currentColor = fetchRandomColor();
@@ -77,6 +87,7 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): void => 
 		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay, runningTotal });
 		if (response.incrementDate) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
+			console.log("Incrementing currentDay");
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
 		}
 		taskClone = [...taskClone].map((eTask, ind) => {
@@ -87,6 +98,7 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): void => 
 		});
 		runningTotal = response.updatedTotal;
 	}
+	return taskClone;
 };
 
 export { updateDueDates, type CalculateDayPayload, type CalculateDayResponse };

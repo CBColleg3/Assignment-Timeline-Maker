@@ -23,11 +23,14 @@ const CONSTANTS = {
  * @param {Promise<string>} text documentText used for finding points
  * @returns {void}
  */
-export const findPoints = async (text: Promise<string>): Promise<Task[]> => {
+export const findPoints = async (text: Promise<string | undefined>): Promise<Task[]> => {
 	const tasks: Task[] = [];
 	const fileText = await text;
+	if (!fileText) {
+		return [];
+	}
 
-	const results = fileText.match(REGEX_EXPRESSIONS.POINTS_AMT_EXPR);
+	const results = fileText.match(REGEX_EXPRESSIONS.TASK_EXPR);
 	let taskIndex = 0;
 
 	if (results) {
@@ -36,7 +39,6 @@ export const findPoints = async (text: Promise<string>): Promise<Task[]> => {
 			if (pointSectionResult && pointSectionResult.length > CONSTANTS.RE_NUM_RESULT_MIN_LENGTH) {
 				const points = pointSectionResult[CONSTANTS.RE_NUM_INDEX];
 				const parsedPoints = points.replace(REGEX_EXPRESSIONS.POINTS_EXPR, "");
-
 				if (parsedPoints) {
 					tasks.push({
 						autoDueDate: true,

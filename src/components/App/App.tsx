@@ -11,6 +11,14 @@ import type { AssignmentDate } from "../../@types/AssignmentDate/AssignmentDate"
 import FileDisplay from "../FileDisplay";
 import type { UpdateType } from "src/@types/FileDisplay/UpdateType";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
+import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
+
+/**
+ * Constants for App component
+ */
+const CONSTANTS = {
+	MIN_TASK_ARRAY_LENGTH: 0,
+};
 
 /**
  * Root component
@@ -46,10 +54,20 @@ export const App = (): JSX.Element => {
 	};
 
 	React.useEffect(() => {
-		if (files) {
-			console.log("files = ", Object.values(files));
+		if (files && fileSelected !== undefined) {
+			const currentFile = files[fileSelected];
+			const readText = readFile(currentFile);
+			parseFileTextToXML(readText)
+				.then((result) => setDocXML(result))
+				// eslint-disable-next-line no-console -- no logger present yet
+				.catch((error) => console.error(error));
+			const parts = findParts(readText);
+			findPoints(parts)
+				.then((tasks) => setTaskArray(updateDueDates(tasks, dates)))
+				// eslint-disable-next-line no-console -- no logger present yet
+				.catch((err) => console.error(err));
 		}
-	}, [files]);
+	}, [files, fileSelected, dates]);
 
 	return (
 		<div className="d-flex flex-column">

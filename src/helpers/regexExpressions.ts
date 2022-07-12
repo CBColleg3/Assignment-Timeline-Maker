@@ -2,7 +2,7 @@
 
 const TASK_EXPR = /[^.,;]*\d\d?\s?(points?|pts?)[^.,;]*(\.|,|;)/gu;
 
-const POINTS_AMT_EXPR = /\\d+\\s?(?<pts>points?|pts?)/gu;
+const POINTS_AMT_EXPR = /\d+\s?(?<pts>points?|pts?)/gu;
 
 const POINTS_EXPR = /(points?|pts?)/gu;
 

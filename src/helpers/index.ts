@@ -10,6 +10,9 @@ import { displayFileWithSize } from "./displayFileWithSize";
 import { parseFileTextToXML } from "./parseFileTextToXML";
 import { findParts } from "./findParts";
 import { REGEX_EXPRESSIONS } from "./regexExpressions";
+import { findPoints } from "./findPoints";
+import { regexFilterTags } from "./regexFilterTags";
+import { updateDueDates } from "./updateDueDates";
 
 /**
  * Base export, exports all utility functions in one object
@@ -29,4 +32,7 @@ export {
 	parseFileTextToXML,
 	findParts,
 	REGEX_EXPRESSIONS,
+	findPoints,
+	regexFilterTags,
+	updateDueDates,
 };

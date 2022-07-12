@@ -77,7 +77,11 @@ export const TimelineDragDrop = ({
 						ref={provided.innerRef}
 					>
 						{taskArray.map((task, index) => (
-							<Draggable draggableId={task.id.toString()} index={index} key={task.id}>
+							<Draggable
+								draggableId={task.id.toString()}
+								index={index}
+								key={task.id}
+							>
 								{(innerProvided): JSX.Element => (
 									<span
 										ref={innerProvided.innerRef}
@@ -87,7 +91,7 @@ export const TimelineDragDrop = ({
 										<VerticalTimelineElement
 											className="vertical-timeline-element--work"
 											iconStyle={{
-												background: `rgb(${task.color + TASK_COLOR_INC},100,150)`,
+												background: `rgb(${parseInt(task.color, 16) + TASK_COLOR_INC},100,150)`,
 												color: "#fff",
 											}}
 										>
