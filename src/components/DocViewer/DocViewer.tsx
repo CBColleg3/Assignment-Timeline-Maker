@@ -25,7 +25,9 @@ export const DocViewer = ({
 		return (
 			<div className="doc-viewer-page">
 				<div className="doc-viewer-content">
-					{paragraphs.map((par: Element): JSX.Element => convertXML2HTML(par))}
+					{paragraphs.map(
+						(par: Element): JSX.Element => convertXML2HTML(par),
+					)}
 				</div>
 			</div>
 		);

@@ -26,12 +26,12 @@ export const Timeline = ({
 	fileImported,
 	assignmentDate,
 }: TimelineProps): JSX.Element => {
-	const { start, end } = assignmentDate;
+	const { end } = assignmentDate;
 	return (
 		<>
 			{fileImported && (
 				<div>
-					<VerticalTimeline layout="2-columns">
+					<VerticalTimeline layout="1-column">
 						<VerticalTimelineElement
 							className="vertical-timeline-element--work"
 							contentArrowStyle={{
@@ -50,16 +50,14 @@ export const Timeline = ({
 							<h4 className="vertical-timeline-element-title">
 								{"Due Date: "}
 								{end.toLocaleDateString()}{" "}
-								{end.toLocaleTimeString(undefined, {
+								{end.toLocaleTimeString([], {
 									hour: "2-digit",
 									minute: "2-digit",
 								})}{" "}
 							</h4>
 						</VerticalTimelineElement>
 						<TimelineDragDrop
-							endDate={end}
 							setTaskArray={setTaskArray}
-							startDate={start}
 							taskArray={taskArray}
 						/>
 						<VerticalTimelineElement

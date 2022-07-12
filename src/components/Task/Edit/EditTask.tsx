@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 import type { Task } from "src/@types";
 import DatePicker from "react-datepicker";
 
 /**
  * Overrides React.ChangeEvent with specific values
  */
-type TaskChangeEvent = React.ChangeEvent<
-	HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
->;
+type TaskChangeEvent = React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 
 /**
  * Props of the EditTask component
@@ -26,6 +24,10 @@ type EditTaskProps = {
 	 * The index of where the current task is in the array of tasks
 	 */
 	index: number;
+
+	editMode: boolean;
+
+	setEditMode: (editMode: boolean) => void;
 };
 
 /**
@@ -38,18 +40,13 @@ export const EditTask = ({
 	taskArray,
 	setTaskArray,
 	index,
+	editMode,
+	setEditMode,
 }: EditTaskProps): JSX.Element => {
-	const [editMode, setEditMode] = useState<boolean>(false);
 	const [nameField, setNameField] = useState<string>(taskArray[index].name);
-	const [documentField, setDocumentField] = useState<string>(
-		taskArray[index].document,
-	);
-	const [pointsField, setPointsField] = useState<string>(
-		taskArray[index].points,
-	);
-	const [dueDateField, setDueDateField] = useState<Date>(
-		taskArray[index].dueDate,
-	);
+	const [documentField, setDocumentField] = useState<string>(taskArray[index].document);
+	const [pointsField, setPointsField] = useState<string>(taskArray[index].points);
+	const [dueDateField, setDueDateField] = useState<Date>(taskArray[index].dueDate);
 
 	/**
 	 * Updates the modifiedTasks array
@@ -57,7 +54,10 @@ export const EditTask = ({
 	 * @param {number} ind The index of the task in the modifiedTasks array
 	 */
 	function updateTasks(ind: number): void {
-		const modifiedTasks = [...taskArray].map((task: Task) => ({ ...task }));
+		const modifiedTasks = [...taskArray].map((task: Task) => ({
+			...task,
+			dueDate: new Date(task.dueDate.getTime()),
+		}));
 		modifiedTasks[ind].name = nameField;
 		modifiedTasks[ind].document = documentField;
 		modifiedTasks[ind].points = pointsField;
@@ -92,12 +92,16 @@ export const EditTask = ({
 	}
 	return (
 		<div>
-			<Button onClick={(): void => setEditMode(!editMode)}>
-				{" "}
-				{!editMode ? "Edit Task" : "Close"}{" "}
-			</Button>
-			{editMode && (
-				<div>
+			<Modal
+				animation
+				data-testId="message-modal"
+				onHide={(): void => setEditMode(false)}
+				show={editMode}
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>{"Test"}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
 					<Form.Group as={Row}>
 						<Col>
 							<p style={{ marginBottom: "0px" }}>{"Task Name"}</p>
@@ -137,6 +141,9 @@ export const EditTask = ({
 					</Form.Group>
 					<Form.Group as={Row}>
 						<Col>
+							<p style={{ marginBottom: "0px" }}>{"Task Due Date"}</p>
+						</Col>
+						<Col>
 							<DatePicker
 								dateFormat="Pp"
 								onChange={(date: Date): void => setDueDateField(date)}
@@ -145,17 +152,26 @@ export const EditTask = ({
 							/>
 						</Col>
 					</Form.Group>
-
-					<Button
-						onClick={(): void => {
-							updateTasks(index);
-							setEditMode(!editMode);
-						}}
-					>
-						{"Save Changes"}
-					</Button>
-				</div>
-			)}
+					<br />
+					<br />
+					<div style={{ textAlign: "right" }}>
+						<Button
+							onClick={(): void => {
+								updateTasks(index);
+								setEditMode(!editMode);
+							}}
+						>
+							{"Save Changes"}
+						</Button>
+						<Button
+							data-testId="close-modal-button"
+							onClick={(): void => setEditMode(false)}
+						>
+							{"Close"}
+						</Button>
+					</div>
+				</Modal.Body>
+			</Modal>
 		</div>
 	);
 };

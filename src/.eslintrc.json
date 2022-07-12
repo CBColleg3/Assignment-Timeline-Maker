@@ -28,7 +28,8 @@
     "rules": {
         "indent": [
             "error",
-            "tab", { "SwitchCase": 1 }
+            "tab",
+            { "SwitchCase": 1 }
         ],
         "quotes": [
             "error",

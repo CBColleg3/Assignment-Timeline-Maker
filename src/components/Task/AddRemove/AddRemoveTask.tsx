@@ -26,11 +26,7 @@ type AddRemoveTaskProps = {
  * @param {AddRemoveTaskProps} props The properties of the component
  * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
-export const AddRemoveTask = ({
-	taskArray,
-	setTaskArray,
-	index,
-}: AddRemoveTaskProps): JSX.Element => {
+export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskProps): JSX.Element => {
 	const IND_INC = 1;
 	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
 	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
@@ -41,7 +37,10 @@ export const AddRemoveTask = ({
 	 * @param ind current task index in the array of tasks
 	 */
 	function addPart(ind: number): void {
-		const modifiedTaskArr = [...taskArray];
+		const modifiedTaskArr: Task[] = [...taskArray].map((eachTask) => ({
+			...eachTask,
+			dueDate: new Date(eachTask.dueDate.getTime()),
+		}));
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
 			color: "0000",
@@ -60,7 +59,10 @@ export const AddRemoveTask = ({
 	 * @param {number} ind current task index in the array of tasks
 	 */
 	function removePart(ind: number): void {
-		const modifiedPtsArr = [...taskArray];
+		const modifiedPtsArr = [...taskArray].map((eachTask) => ({
+			...eachTask,
+			dueDate: new Date(eachTask.dueDate.getTime()),
+		}));
 		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
 		setTaskArray(modifiedPtsArr);
 	}
