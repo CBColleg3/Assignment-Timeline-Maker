@@ -17,7 +17,7 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col, ToastContainer } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-
+import styles from "./App.module.css";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
@@ -140,7 +140,7 @@ export const App = (): JSX.Element => {
 	}, [files, fileSelected, dates]);
 
 	return (
-		<div>
+		<div className="vh-200">
 			{toastMessages && toastMessages.length > NOTIFICATION_MIN_LENGTH && (
 				<ToastContainer position={TOAST_CONTAINER_POSITION}>
 					{toastMessages.map((eachPayload, index) => (
@@ -151,7 +151,7 @@ export const App = (): JSX.Element => {
 					))}
 				</ToastContainer>
 			)}
-			<div className="d-flex flex-column">
+			<div className="d-flex flex-column h-200">
 				<AppHeader />
 				<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
 					<span>
@@ -178,7 +178,7 @@ export const App = (): JSX.Element => {
 					/>
 				</div>
 				{!errors.date && !errors.file ? (
-					<div className="timeline_site">
+					<div className={`${styles.timeline_site} h-200`}>
 						{fileSelected !== undefined ? (
 							<div className="d-flex flex-row mt-3">
 								<Col>
