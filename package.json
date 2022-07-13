@@ -38,6 +38,8 @@
     "react-vertical-timeline-component": "^3.5.2",
     "react-xml-parser": "^1.1.8",
     "typescript": "^4.7.3",
+    "util": "^0.12.4",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

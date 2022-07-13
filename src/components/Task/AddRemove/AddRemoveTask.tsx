@@ -6,6 +6,7 @@ import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
 	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
+	TASK_INDEX_INC: 1,
 	UPDATE_DAY_COUNTER_INC: 1,
 	UPDATE_LOOP_INC: 1,
 	UPDATE_POINT_SUM_VAL: 0,
@@ -73,7 +74,7 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 			color: fetchRandomColor(),
 			document: "Uh Oh",
 			dueDate: new Date(),
-			id: ind + IND_INC,
+			id: modifiedTaskArr.length + CONSTANTS.TASK_INDEX_INC,
 			name: "Swag",
 			points: "0",
 		});
