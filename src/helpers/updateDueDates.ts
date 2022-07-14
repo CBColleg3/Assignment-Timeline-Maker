@@ -77,7 +77,7 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
 const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] => {
 	let taskClone = [...tasks].map((eachTask) => ({
 		...eachTask,
-		dueDate: new Date(eachTask.dueDate.getTime()),
+		dueDate: new Date(eachTask.dueDate),
 	}));
 	let runningTotal = 0;
 	let currentColor = fetchRandomColor();

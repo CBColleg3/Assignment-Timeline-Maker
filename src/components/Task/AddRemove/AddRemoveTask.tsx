@@ -67,7 +67,7 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 	function addPart(ind: number): void {
 		const modifiedTaskArr: Task[] = [...taskArray].map((eachTask) => ({
 			...eachTask,
-			dueDate: new Date(eachTask.dueDate.getTime()),
+			dueDate: new Date(eachTask.dueDate),
 		}));
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
@@ -89,7 +89,7 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 	function removePart(ind: number): void {
 		const modifiedPtsArr = [...taskArray].map((eachTask) => ({
 			...eachTask,
-			dueDate: new Date(eachTask.dueDate.getTime()),
+			dueDate: new Date(eachTask.dueDate),
 		}));
 		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
 		setTaskArray(modifiedPtsArr);

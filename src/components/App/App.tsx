@@ -36,10 +36,12 @@ import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-i
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
+	const MIN_TASK_ARRAY_LENGTH = 0;
 	const [dates, setDates] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
+	const [taskCache, setTaskCache] = React.useState<Record<string, string>>({});
 	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
@@ -123,9 +125,32 @@ export const App = (): JSX.Element => {
 		}
 	};
 
+	const updateCache = React.useCallback((id: string, tasks: Task[]) => {
+		const clonedCache = { ...taskCache };
+		clonedCache[id] = JSON.stringify(tasks);
+		setTaskCache(clonedCache);
+	}, [taskCache]);
+
+	React.useEffect(() => {
+		if (taskArray && taskArray.length > MIN_TASK_ARRAY_LENGTH && files && fileSelected !== undefined) {
+			const currentEntryStringified = JSON.stringify(taskCache[files[fileSelected].name]);
+			if (JSON.stringify(taskArray) !== currentEntryStringified) {
+				updateCache(files[fileSelected].name, taskArray);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps -- linter forces unecessary deps
+	}, [taskArray]);
+
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
-			const currentFile = files[fileSelected];
+			const currentFile: File = files[fileSelected];
+			const fileName = currentFile.name;
+			console.log("taskCache = ", taskCache);
+			if (taskCache[fileName]) {
+				console.log("loading = ", fileName);
+				setTaskArray(JSON.parse(taskCache[fileName]));
+				return;
+			}
 			const readText = readFile(currentFile);
 			parseFileTextToXML(readText)
 				.then((result) => setDocXML(result))
@@ -133,11 +158,15 @@ export const App = (): JSX.Element => {
 				.catch((error) => console.error(error));
 			const parts = findParts(readText);
 			findPoints(parts)
-				.then((tasks) => setTaskArray(updateDueDates(tasks, dates)))
+				.then((tasks) => {
+					const parsedTasks = updateDueDates(tasks, dates);
+					updateCache(fileName, parsedTasks);
+					setTaskArray(parsedTasks);
+				})
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates]);
+	}, [files, fileSelected, dates, updateCache, taskCache]);
 
 	return (
 		<div className="vh-200">

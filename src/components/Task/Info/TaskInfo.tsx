@@ -17,7 +17,6 @@ type TaskInfoProps = {
  */
 export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX.Element => {
 	const [editMode, setEditMode] = React.useState<boolean>(false);
-
 	return (
 		<div>
 			<h3
@@ -50,7 +49,7 @@ export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX
 					setEditMode(!editMode);
 				}}
 			>
-				{taskArray[index].dueDate.toDateString()}
+				{new Date(taskArray[index].dueDate).toDateString()}
 			</h5>
 
 			<EditTask
