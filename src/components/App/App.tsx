@@ -1,7 +1,16 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type { Task, AssignmentDate, UpdateType, Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
+import type {
+	Task,
+	AssignmentDate,
+	UpdateType,
+	Error,
+	Errors,
+	ERROR_OPS,
+	ERROR_TYPES,
+	TaskCollection,
+} from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
@@ -20,13 +29,12 @@ import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-i
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const MIN_TASK_ARRAY_LENGTH = 0;
 	const [dates, setDates] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
 	const [taskCache, setTaskCache] = React.useState<Record<string, string>>({});
-	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
+	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
@@ -35,9 +43,9 @@ export const App = (): JSX.Element => {
 	/**
 	 * Utility function for updating the errors object via Error object
 	 *
-	 * @param theType The type of error to append/delete with the errors state
-	 * @param operation The type of operation the user is executing
-	 * @param error The error to add to the errors state if add operation is selected
+	 * @param theType - The type of error to append/delete with the errors state
+	 * @param operation - The type of operation the user is executing
+	 * @param error - The error to add to the errors state if add operation is selected
 	 */
 	const updateErrors = (theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
 		switch (theType) {
@@ -55,10 +63,25 @@ export const App = (): JSX.Element => {
 	};
 
 	/**
+	 * Utility function to update the current task collection state
+	 *
+	 * @param tasks - The new tasks to update the current task collection with
+	 */
+	const updateTaskCollection = (tasks: Task[]): void => {
+		if (taskCollection) {
+			const newTaskCollection: TaskCollection = {
+				...taskCollection,
+				tasks,
+			};
+			setTaskCollection(newTaskCollection);
+		}
+	};
+
+	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
 	 *
-	 * @param type The type of operation to be performed on the files state
-	 * @param index The index of the file to operate upon
+	 * @param type - The type of operation to be performed on the files state
+	 * @param index - The index of the file to operate upon
 	 */
 	const updateFiles = (type: UpdateType, index: number): void => {
 		if (files) {
@@ -76,6 +99,15 @@ export const App = (): JSX.Element => {
 	};
 
 	React.useEffect(() => {
+		// If tasks are not currently in cache, update cache to contain values
+		if (files && fileSelected && taskCollection?.tasks && !taskCache[taskCollection.id]) {
+			const clonedCache = { ...taskCache };
+			clonedCache[taskCollection.id] = JSON.stringify(taskCollection.tasks);
+			setTaskCache(clonedCache);
+		}
+	}, [files, fileSelected, taskCollection, taskCache]);
+
+	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
 			const readText = readFile(currentFile);
@@ -83,16 +115,21 @@ export const App = (): JSX.Element => {
 				.then((result) => setDocXML(result))
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((error) => console.error(error));
+			if (taskCache[currentFile.name]) {
+				console.log("pulling from cache");
+				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(taskCache[currentFile.name]) });
+				return;
+			}
 			const parts = findParts(readText);
 			findPoints(parts)
 				.then((tasks) => {
 					const parsedTasks = updateDueDates(tasks, dates);
-					setTaskArray(parsedTasks);
+					setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
 				})
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates]);
+	}, [files, fileSelected, dates, taskCache]);
 
 	return (
 		<div className="d-flex flex-column">
@@ -129,8 +166,8 @@ export const App = (): JSX.Element => {
 									<Timeline
 										assignmentDate={dates}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-										taskArray={taskArray}
+										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
+										taskArray={taskCollection?.tasks ?? []}
 									/>
 								)}
 							</Col>
@@ -139,7 +176,7 @@ export const App = (): JSX.Element => {
 									<DocViewer
 										docXML={docXML}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										tasks={taskArray}
+										tasks={taskCollection?.tasks ?? []}
 									/>
 								)}{" "}
 							</Col>
