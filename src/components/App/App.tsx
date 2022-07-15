@@ -2,6 +2,7 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
 import type {
+	DocCollection,
 	Task,
 	AssignmentDate,
 	UpdateType,
@@ -10,6 +11,7 @@ import type {
 	ERROR_OPS,
 	ERROR_TYPES,
 	TaskCollection,
+	TaskCacheEntry,
 } from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
@@ -33,10 +35,10 @@ export const App = (): JSX.Element => {
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [taskCache, setTaskCache] = React.useState<{ [key: string]: string }>({});
+	const [taskCache, setTaskCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
-	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
+	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
 
@@ -106,11 +108,25 @@ export const App = (): JSX.Element => {
 		if (taskCollection) {
 			const id = taskCollection?.id;
 			setTaskCache((cache) => {
-				cache[id] = JSON.stringify(taskCollection.tasks);
+				cache[id] = { tasks: JSON.stringify(taskCollection.tasks), xml: cache[id]?.xml };
 				return cache;
 			});
 		}
 	}, [taskCollection]);
+
+	/**
+	 * Triggers when docCollection is edited or initialized (aka the document is changed), and updates the cache
+	 * to have an entry with filename --> document
+	 */
+	React.useEffect(() => {
+		if (docCollection) {
+			const id = docCollection.id;
+			setTaskCache((cache) => {
+				cache[id] = { tasks: cache[id]?.tasks, xml: docCollection.doc };
+				return cache;
+			});
+		}
+	}, [docCollection]);
 
 	/**
 	 * Triggers when files, fileSelected, dates, or taskCache are changed
@@ -122,15 +138,16 @@ export const App = (): JSX.Element => {
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
-			const readText = readFile(currentFile);
-			parseFileTextToXML(readText)
-				.then((result) => setDocXML(result))
-				// eslint-disable-next-line no-console -- no logger present yet
-				.catch((error) => console.error(error));
 			if (taskCache[currentFile.name]) {
-				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(taskCache[currentFile.name]) });
+				setDocCollection({ doc: taskCache[currentFile.name].xml, id: currentFile.name });
+				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(taskCache[currentFile.name].tasks) });
 				return;
 			}
+			const readText = readFile(currentFile);
+			parseFileTextToXML(readText)
+				.then((result) => setDocCollection({ doc: result, id: currentFile.name }))
+				// eslint-disable-next-line no-console -- no logger present yet
+				.catch((error) => console.error(error));
 			const parts = findParts(readText);
 			findPoints(parts)
 				.then((tasks) => {
@@ -183,9 +200,9 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && (
+								{files && docCollection && (
 									<DocViewer
-										docXML={docXML}
+										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
 										tasks={taskCollection?.tasks ?? []}
 									/>
