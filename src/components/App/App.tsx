@@ -35,7 +35,7 @@ export const App = (): JSX.Element => {
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [taskCache, setTaskCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
+	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
@@ -107,7 +107,7 @@ export const App = (): JSX.Element => {
 	React.useEffect(() => {
 		if (taskCollection) {
 			const id = taskCollection?.id;
-			setTaskCache((cache) => {
+			setAssignmentCache((cache) => {
 				cache[id] = { tasks: JSON.stringify(taskCollection.tasks), xml: cache[id]?.xml };
 				return cache;
 			});
@@ -121,7 +121,7 @@ export const App = (): JSX.Element => {
 	React.useEffect(() => {
 		if (docCollection) {
 			const id = docCollection.id;
-			setTaskCache((cache) => {
+			setAssignmentCache((cache) => {
 				cache[id] = { tasks: cache[id]?.tasks, xml: docCollection.doc };
 				return cache;
 			});
@@ -138,9 +138,9 @@ export const App = (): JSX.Element => {
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
-			if (taskCache[currentFile.name]) {
-				setDocCollection({ doc: taskCache[currentFile.name].xml, id: currentFile.name });
-				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(taskCache[currentFile.name].tasks) });
+			if (assignmentCache[currentFile.name]) {
+				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
+				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(assignmentCache[currentFile.name].tasks) });
 				return;
 			}
 			const readText = readFile(currentFile);
@@ -157,7 +157,7 @@ export const App = (): JSX.Element => {
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates, taskCache]);
+	}, [files, fileSelected, dates, assignmentCache]);
 
 	return (
 		<div className="d-flex flex-column">
