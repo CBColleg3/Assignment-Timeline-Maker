@@ -8,7 +8,6 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-import styles from "./App.module.css";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
@@ -76,32 +75,9 @@ export const App = (): JSX.Element => {
 		}
 	};
 
-	const updateCache = React.useCallback((id: string, tasks: Task[]) => {
-		const clonedCache = { ...taskCache };
-		clonedCache[id] = JSON.stringify(tasks);
-		setTaskCache(clonedCache);
-	}, [taskCache]);
-
-	React.useEffect(() => {
-		if (taskArray && taskArray.length > MIN_TASK_ARRAY_LENGTH && files && fileSelected !== undefined) {
-			const currentEntryStringified = JSON.stringify(taskCache[files[fileSelected].name]);
-			if (JSON.stringify(taskArray) !== currentEntryStringified) {
-				updateCache(files[fileSelected].name, taskArray);
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps -- linter forces unecessary deps
-	}, [taskArray]);
-
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
-			const fileName = currentFile.name;
-			console.log("taskCache = ", taskCache);
-			if (taskCache[fileName]) {
-				console.log("loading = ", fileName);
-				setTaskArray(JSON.parse(taskCache[fileName]));
-				return;
-			}
 			const readText = readFile(currentFile);
 			parseFileTextToXML(readText)
 				.then((result) => setDocXML(result))
@@ -111,13 +87,12 @@ export const App = (): JSX.Element => {
 			findPoints(parts)
 				.then((tasks) => {
 					const parsedTasks = updateDueDates(tasks, dates);
-					updateCache(fileName, parsedTasks);
 					setTaskArray(parsedTasks);
 				})
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates, updateCache, taskCache]);
+	}, [files, fileSelected, dates]);
 
 	return (
 		<div className="d-flex flex-column">
