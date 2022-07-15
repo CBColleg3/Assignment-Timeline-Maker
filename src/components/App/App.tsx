@@ -98,6 +98,10 @@ export const App = (): JSX.Element => {
 		}
 	};
 
+	/**
+	 * Triggers when taskCollection is edited or initialized (aka the tasks are changed), and updates the taskCache
+	 * to have an entry with filename --> stringified tasks
+	 */
 	React.useEffect(() => {
 		if (taskCollection) {
 			const id = taskCollection?.id;
@@ -108,6 +112,13 @@ export const App = (): JSX.Element => {
 		}
 	}, [taskCollection]);
 
+	/**
+	 * Triggers when files, fileSelected, dates, or taskCache are changed
+	 * - updates docXML data via parsing the file (document editing is not yet supported)
+	 * - checks if the cache contains an entry to the current file name (which serves as the key)
+	 *   - if it **does** contain an entry, it pulls the data from the cache and sets the task array to that entry, without parsing the document or anything
+	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
+	 */
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
