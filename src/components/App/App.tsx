@@ -137,7 +137,7 @@ export const App = (): JSX.Element => {
 	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
 	 */
 	React.useEffect(() => {
-		if (files && fileSelected !== undefined) {
+		if (files && files.length > MIN_FILES_LENGTH && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
 			if (assignmentCache[currentFile.name]) {
 				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
@@ -188,10 +188,10 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected !== undefined ? (
+					{fileSelected !== undefined && files && files.length > MIN_FILES_LENGTH ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{files && taskCollection ? (
+								{taskCollection ? (
 									<Timeline
 										assignmentDate={dates}
 										fileImported={files.length > MIN_FILES_LENGTH}
@@ -215,7 +215,7 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && docCollection ? (
+								{docCollection ? (
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
