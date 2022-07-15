@@ -16,7 +16,7 @@ import type {
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Alert, Col, Spinner } from "react-bootstrap";
+import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
@@ -24,6 +24,7 @@ import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } f
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 
 /**
  * Root component
@@ -200,11 +201,15 @@ export const App = (): JSX.Element => {
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
-											<span className="text-muted fs-6 text-wrap my-3">{"Generating Timeline"}</span>
-											<Spinner
-												animation="border"
-												className="mx-auto"
-											/>
+											<span className="text-dark fw-bold text-opacity-75 fs-6 text-wrap my-3">
+												{"Generating Timeline"}
+											</span>
+											<span className="mx-auto">
+												<ClockLoader
+													color="#000000"
+													loading
+												/>
+											</span>
 										</span>
 									</div>
 								)}
@@ -219,11 +224,15 @@ export const App = (): JSX.Element => {
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
-											<span className="text-muted fs-6 text-wrap my-3">{"Generating Document View"}</span>
-											<Spinner
-												animation="border"
-												className="mx-auto"
-											/>
+											<span className="text-primary fw-bold text-opacity-75 fs-6 text-wrap my-3">
+												{"Generating Document View"}
+											</span>
+											<span className="mx-auto">
+												<ClimbingBoxLoader
+													color="#5050F1"
+													loading
+												/>
+											</span>
 										</span>
 									</div>
 								)}{" "}
