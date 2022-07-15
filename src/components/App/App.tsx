@@ -16,7 +16,7 @@ import type {
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Alert, Col } from "react-bootstrap";
+import { Alert, Col, Spinner } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
@@ -41,7 +41,6 @@ export const App = (): JSX.Element => {
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
-	const [loading, setLoading] = React.useState(false);
 
 	/**
 	 * Utility function for updating the errors object via Error object
@@ -191,22 +190,42 @@ export const App = (): JSX.Element => {
 					{fileSelected !== undefined ? (
 						<div className="d-flex flex-row mt-3">
 							<Col>
-								{files && taskCollection && (
+								{files && taskCollection ? (
 									<Timeline
 										assignmentDate={dates}
 										fileImported={files.length > MIN_FILES_LENGTH}
 										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
 										taskArray={taskCollection.tasks}
 									/>
+								) : (
+									<div className="w-100 d-flex flex-row justify-content-center">
+										<span className="d-flex flex-column">
+											<span className="text-muted fs-6 text-wrap my-3">{"Generating Timeline"}</span>
+											<Spinner
+												animation="border"
+												className="mx-auto"
+											/>
+										</span>
+									</div>
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && docCollection && (
+								{files && docCollection ? (
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
 										tasks={taskCollection?.tasks ?? []}
 									/>
+								) : (
+									<div className="w-100 d-flex flex-row justify-content-center">
+										<span className="d-flex flex-column">
+											<span className="text-muted fs-6 text-wrap my-3">{"Generating Document View"}</span>
+											<Spinner
+												animation="border"
+												className="mx-auto"
+											/>
+										</span>
+									</div>
 								)}{" "}
 							</Col>
 						</div>
