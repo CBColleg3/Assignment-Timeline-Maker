@@ -163,7 +163,7 @@ export const App = (): JSX.Element => {
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
+			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5 shadow-lg">
 				<span>
 					<SetDateTime
 						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
@@ -189,7 +189,7 @@ export const App = (): JSX.Element => {
 			{!errors.date && !errors.file ? (
 				<>
 					{fileSelected !== undefined ? (
-						<div className="d-flex flex-row mt-3">
+						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{files && taskCollection ? (
 									<Timeline
