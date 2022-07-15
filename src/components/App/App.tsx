@@ -33,7 +33,7 @@ export const App = (): JSX.Element => {
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [taskCache, setTaskCache] = React.useState<Record<string, string>>({});
+	const [taskCache, setTaskCache] = React.useState<{ [key: string]: string }>({});
 	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
@@ -99,13 +99,14 @@ export const App = (): JSX.Element => {
 	};
 
 	React.useEffect(() => {
-		// If tasks are not currently in cache, update cache to contain values
-		if (files && fileSelected && taskCollection?.tasks && !taskCache[taskCollection.id]) {
-			const clonedCache = { ...taskCache };
-			clonedCache[taskCollection.id] = JSON.stringify(taskCollection.tasks);
-			setTaskCache(clonedCache);
+		if (taskCollection) {
+			const id = taskCollection?.id;
+			setTaskCache((cache) => {
+				cache[id] = JSON.stringify(taskCollection.tasks);
+				return cache;
+			});
 		}
-	}, [files, fileSelected, taskCollection, taskCache]);
+	}, [taskCollection]);
 
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
@@ -116,7 +117,6 @@ export const App = (): JSX.Element => {
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((error) => console.error(error));
 			if (taskCache[currentFile.name]) {
-				console.log("pulling from cache");
 				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(taskCache[currentFile.name]) });
 				return;
 			}
