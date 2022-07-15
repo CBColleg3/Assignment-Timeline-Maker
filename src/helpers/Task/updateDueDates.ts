@@ -91,13 +91,18 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 	const dateDiff = calcDiffInDays(clonedAssignmentDate.start, clonedAssignmentDate.end);
 	const pointsPerDay = Math.ceil(totalPoints / dateDiff);
 
-	const currentDay = clonedAssignmentDate.start;
+
+	const currentDay = new Date(clonedAssignmentDate.start.getTime());
 
 	const usedColors = [currentColor];
+
 	for (let i = 0; i < taskClone.length; i += CONSTANTS.UPDATE_LOOP_INC) {
 		const eachTask = taskClone[i];
 		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay, runningTotal });
-		if (response.incrementDate && currentDay.getDay() <= clonedAssignmentDate.end.getDay()) {
+		if (
+			response.incrementDate &&
+			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime()
+		) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
 		}
