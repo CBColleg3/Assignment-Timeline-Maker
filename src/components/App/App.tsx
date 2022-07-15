@@ -41,6 +41,7 @@ export const App = (): JSX.Element => {
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
+	const [loading, setLoading] = React.useState(false);
 
 	/**
 	 * Utility function for updating the errors object via Error object
@@ -190,12 +191,12 @@ export const App = (): JSX.Element => {
 					{fileSelected !== undefined ? (
 						<div className="d-flex flex-row mt-3">
 							<Col>
-								{files && (
+								{files && taskCollection && (
 									<Timeline
 										assignmentDate={dates}
 										fileImported={files.length > MIN_FILES_LENGTH}
 										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
-										taskArray={taskCollection?.tasks ?? []}
+										taskArray={taskCollection.tasks}
 									/>
 								)}
 							</Col>
