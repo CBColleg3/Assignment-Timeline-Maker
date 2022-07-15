@@ -33,6 +33,10 @@ CLASSES
   color: black;
 }
 
+.timeline_site {
+  background-color: #E5EAF8;
+}
+
 .author_link:hover {
   animation-name: author_link_anim;
   animation-duration: 1s;

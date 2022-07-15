@@ -1,19 +1,30 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type { Task, AssignmentDate, UpdateType, Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
+import type {
+	DocCollection,
+	Task,
+	AssignmentDate,
+	UpdateType,
+	Error,
+	Errors,
+	ERROR_OPS,
+	ERROR_TYPES,
+	TaskCollection,
+	TaskCacheEntry,
+} from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-
 import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 
 /**
  * Root component
@@ -25,18 +36,19 @@ export const App = (): JSX.Element => {
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [taskArray, setTaskArray] = React.useState<Task[]>([]);
+	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
+	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
-	const [docXML, setDocXML] = React.useState<Document | undefined>(undefined);
+	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
 
 	/**
 	 * Utility function for updating the errors object via Error object
 	 *
-	 * @param theType The type of error to append/delete with the errors state
-	 * @param operation The type of operation the user is executing
-	 * @param error The error to add to the errors state if add operation is selected
+	 * @param theType - The type of error to append/delete with the errors state
+	 * @param operation - The type of operation the user is executing
+	 * @param error - The error to add to the errors state if add operation is selected
 	 */
 	const updateErrors = (theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
 		switch (theType) {
@@ -54,10 +66,25 @@ export const App = (): JSX.Element => {
 	};
 
 	/**
+	 * Utility function to update the current task collection state
+	 *
+	 * @param tasks - The new tasks to update the current task collection with
+	 */
+	const updateTaskCollection = (tasks: Task[]): void => {
+		if (taskCollection) {
+			const newTaskCollection: TaskCollection = {
+				...taskCollection,
+				tasks,
+			};
+			setTaskCollection(newTaskCollection);
+		}
+	};
+
+	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
 	 *
-	 * @param type The type of operation to be performed on the files state
-	 * @param index The index of the file to operate upon
+	 * @param type - The type of operation to be performed on the files state
+	 * @param index - The index of the file to operate upon
 	 */
 	const updateFiles = (type: UpdateType, index: number): void => {
 		if (files) {
@@ -74,26 +101,69 @@ export const App = (): JSX.Element => {
 		}
 	};
 
+	/**
+	 * Triggers when taskCollection is edited or initialized (aka the tasks are changed), and updates the taskCache
+	 * to have an entry with filename --> stringified tasks
+	 */
+	React.useEffect(() => {
+		if (taskCollection) {
+			const id = taskCollection?.id;
+			setAssignmentCache((cache) => {
+				cache[id] = { tasks: JSON.stringify(taskCollection.tasks), xml: cache[id]?.xml };
+				return cache;
+			});
+		}
+	}, [taskCollection]);
+
+	/**
+	 * Triggers when docCollection is edited or initialized (aka the document is changed), and updates the cache
+	 * to have an entry with filename --> document
+	 */
+	React.useEffect(() => {
+		if (docCollection) {
+			const id = docCollection.id;
+			setAssignmentCache((cache) => {
+				cache[id] = { tasks: cache[id]?.tasks, xml: docCollection.doc };
+				return cache;
+			});
+		}
+	}, [docCollection]);
+
+	/**
+	 * Triggers when files, fileSelected, dates, or taskCache are changed
+	 * - updates docXML data via parsing the file (document editing is not yet supported)
+	 * - checks if the cache contains an entry to the current file name (which serves as the key)
+	 *   - if it **does** contain an entry, it pulls the data from the cache and sets the task array to that entry, without parsing the document or anything
+	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
+	 */
 	React.useEffect(() => {
 		if (files && fileSelected !== undefined) {
-			const currentFile = files[fileSelected];
+			const currentFile: File = files[fileSelected];
+			if (assignmentCache[currentFile.name]) {
+				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
+				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(assignmentCache[currentFile.name].tasks) });
+				return;
+			}
 			const readText = readFile(currentFile);
 			parseFileTextToXML(readText)
-				.then((result) => setDocXML(result))
+				.then((result) => setDocCollection({ doc: result, id: currentFile.name }))
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((error) => console.error(error));
 			const parts = findParts(readText);
 			findPoints(parts)
-				.then((tasks) => setTaskArray(updateDueDates(tasks, dates)))
+				.then((tasks) => {
+					const parsedTasks = updateDueDates(tasks, dates);
+					setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
+				})
 				// eslint-disable-next-line no-console -- no logger present yet
 				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates]);
+	}, [files, fileSelected, dates, assignmentCache]);
 
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5">
+			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5 shadow-lg">
 				<span>
 					<SetDateTime
 						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
@@ -119,24 +189,52 @@ export const App = (): JSX.Element => {
 			{!errors.date && !errors.file ? (
 				<>
 					{fileSelected !== undefined ? (
-						<div className="d-flex flex-row mt-3">
+						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{files && (
+								{files && taskCollection ? (
 									<Timeline
 										assignmentDate={dates}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-										taskArray={taskArray}
+										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
+										taskArray={taskCollection.tasks}
 									/>
+								) : (
+									<div className="w-100 d-flex flex-row justify-content-center">
+										<span className="d-flex flex-column">
+											<span className="text-dark fw-bold text-opacity-75 fs-6 text-wrap my-3">
+												{"Generating Timeline"}
+											</span>
+											<span className="mx-auto">
+												<ClockLoader
+													color="#000000"
+													loading
+												/>
+											</span>
+										</span>
+									</div>
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && (
+								{files && docCollection ? (
 									<DocViewer
-										docXML={docXML}
+										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										tasks={taskArray}
+										tasks={taskCollection?.tasks ?? []}
 									/>
+								) : (
+									<div className="w-100 d-flex flex-row justify-content-center">
+										<span className="d-flex flex-column">
+											<span className="text-primary fw-bold text-opacity-75 fs-6 text-wrap my-3">
+												{"Generating Document View"}
+											</span>
+											<span className="mx-auto">
+												<ClimbingBoxLoader
+													color="#5050F1"
+													loading
+												/>
+											</span>
+										</span>
+									</div>
 								)}{" "}
 							</Col>
 						</div>
