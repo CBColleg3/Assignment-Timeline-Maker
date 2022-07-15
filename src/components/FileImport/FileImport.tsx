@@ -34,6 +34,7 @@ type FileImportProps = {
  */
 export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 	const [dragging, setDragging] = React.useState(initialValues.dragging);
+	const fileRef = React.createRef<HTMLInputElement>();
 
 	/**
 	 * Filters the current files against the files added, and only returns the files that are not already currently imported
@@ -65,6 +66,9 @@ export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 						update(filteredFiles);
 					}
 				}
+				if (fileRef.current) {
+					fileRef.current.value = "";
+				}
 				setDragging(initialValues.dragging);
 			}}
 		>
@@ -80,7 +84,11 @@ export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 							update(filteredFiles);
 						}
 					}
+					if (fileRef.current) {
+						fileRef.current.value = "";
+					}
 				}}
+				ref={fileRef}
 				type="file"
 			/>
 			<div className="p-5 d-flex flex-column border border-info border-opacity-50 rounded">

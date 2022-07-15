@@ -92,6 +92,10 @@ export const App = (): JSX.Element => {
 				case "delete": {
 					const filesClone = [...files].filter((_, ind) => ind !== index);
 					setFiles(filesClone);
+					if (filesClone.length === MIN_FILES_LENGTH) {
+						console.log("setting fileselected to undefined");
+						setFileSelected(undefined);
+					}
 					break;
 				}
 				default: {
