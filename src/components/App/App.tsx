@@ -68,21 +68,6 @@ export const App = (): JSX.Element => {
 	};
 
 	/**
-	 * Utility function to update the current task collection state
-	 *
-	 * @param tasks - The new tasks to update the current task collection with
-	 */
-	const updateTaskCollection = (tasks: Task[]): void => {
-		if (taskCollection) {
-			const newTaskCollection: TaskCollection = {
-				...taskCollection,
-				tasks,
-			};
-			setTaskCollection(newTaskCollection);
-		}
-	};
-
-	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
 	 *
 	 * @param type - The type of operation to be performed on the files state

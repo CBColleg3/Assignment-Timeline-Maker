@@ -31,9 +31,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	const { setTasks, tasks } = useTaskContext();
 
 	/**
-	 * Updates the modifiedTasks array
-	 *
-	 * @param {number} ind The index of the task in the modifiedTasks array
+	 * Updates the TaskContext's tasks
 	 */
 	function updateTasks(): void {
 		const newTask = { ...task, document, dueDate, name, points };

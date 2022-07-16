@@ -11,7 +11,6 @@ import { useTaskContext } from "src/context";
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- * @param {TimelineDragDropProps} props Passed in props for the TimelineDragDrop component
  * @returns {JSX.Element} A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
