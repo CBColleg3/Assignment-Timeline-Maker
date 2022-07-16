@@ -12,6 +12,7 @@ import type {
 	ERROR_TYPES,
 	TaskCollection,
 	TaskCacheEntry,
+	iTaskContext,
 } from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
@@ -25,6 +26,7 @@ import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
+import { TaskContext } from "src/context";
 
 /**
  * Root component
@@ -160,6 +162,30 @@ export const App = (): JSX.Element => {
 		}
 	}, [files, fileSelected, dates, assignmentCache]);
 
+	/**
+	 * Memoized context value, specifies that it will only change value when the taskCollection changes
+	 *
+	 * useMemo returns a callback, that recognizes that if the input is the same value, it doesn't redo any computations, but returns the saved value
+	 * This simply makes sure that we only generate a new context if the taskCollection.tasks changes, and if it doesn't and we re-render, we don't perform the computation again
+	 * Also, putting rendering conditionally on an object is a major performance hit, because objects change every re-render due to changing of their location in memory a la similar
+	 * to functions signatures, and why if you pass a function directly into state it is required to wrap it in a useCallback to avoid that same trap of re-rendering due to
+	 * memory location being different every re-render
+	 */
+	const taskMemo = React.useMemo(
+		() => (): iTaskContext => ({
+			setTasks: (newTasks: Task[]) =>
+				setTaskCollection((oldCollection) => {
+					const oldCollectionTasks = oldCollection?.tasks;
+					if (oldCollectionTasks) {
+						return { ...oldCollection, tasks: newTasks };
+					}
+					return oldCollection;
+				}),
+			tasks: taskCollection?.tasks ?? [],
+		}),
+		[taskCollection?.tasks],
+	);
+
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
@@ -191,13 +217,12 @@ export const App = (): JSX.Element => {
 					{fileSelected !== undefined ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{files && taskCollection ? (
-									<Timeline
-										assignmentDate={dates}
-										fileImported={files.length > MIN_FILES_LENGTH}
-										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
-										taskArray={taskCollection.tasks}
-									/>
+								{files && files.length > MIN_FILES_LENGTH && taskCollection ? (
+									<TaskContext.Provider value={taskMemo()}>
+										<Timeline
+											assignmentDate={dates}
+										/>
+									</TaskContext.Provider>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">

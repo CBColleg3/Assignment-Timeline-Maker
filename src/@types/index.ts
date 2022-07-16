@@ -7,12 +7,14 @@ import type { UpdateType } from "./FileDisplay/UpdateType";
 import type { TaskCollection } from "./Task/TaskCollection";
 import type { TaskCacheEntry } from "./Task/TaskCacheEntry";
 import type { DocCollection } from "./Doc/DocCollection";
+import type { iTaskContext } from "./Task/iTaskContext";
 
 export type {
 	DocCollection,
 	Task,
 	TaskCollection,
 	TaskCacheEntry,
+	iTaskContext,
 	Error,
 	Errors,
 	ERROR_OPS,
