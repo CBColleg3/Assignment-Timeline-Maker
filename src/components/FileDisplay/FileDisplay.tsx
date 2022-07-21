@@ -23,6 +23,11 @@ type FileDisplayProps = {
 const MIN_FILES_LENGTH = 0;
 
 /**
+ * Value file select is decremented if out of bounds
+ */
+const FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL = 1;
+
+/**
  * This component houses the logic for adding, deleting files from the imported file list
  *
  * @param {FileDisplayProps} props The passed in properties, used to display the current files and also update them as well with deleting
@@ -104,4 +109,4 @@ const FileDisplay = ({
 	</>
 );
 
-export { MIN_FILES_LENGTH, FileDisplay };
+export { MIN_FILES_LENGTH, FileDisplay, FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL };

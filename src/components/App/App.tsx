@@ -20,9 +20,7 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-import {
-	MIN_FILES_LENGTH,
-} from "../FileDisplay/FileDisplay";
+import { FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL, MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -83,6 +81,10 @@ export const App = (): JSX.Element => {
 					setFiles(filesClone);
 					if (filesClone.length === MIN_FILES_LENGTH) {
 						setFileSelected(undefined);
+					} else if (filesClone.length === index) {
+						setFileSelected((oldFileSelected) =>
+							oldFileSelected ? oldFileSelected - FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL : undefined,
+						);
 					}
 					break;
 				}
@@ -232,7 +234,6 @@ export const App = (): JSX.Element => {
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										tasks={taskCollection?.tasks ?? []}
 									/>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">

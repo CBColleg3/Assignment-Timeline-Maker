@@ -8,6 +8,8 @@ import type { TaskCollection } from "./Task/TaskCollection";
 import type { TaskCacheEntry } from "./Task/TaskCacheEntry";
 import type { DocCollection } from "./Doc/DocCollection";
 import type { iTaskContext } from "./Task/iTaskContext";
+import type { XMLStyleElement } from "./Doc/XMLStyleElement";
+import type { HTMLStyle } from "./Doc/HTMLStyle";
 
 export type {
 	DocCollection,
@@ -22,4 +24,6 @@ export type {
 	AssignmentDate,
 	UpdateDateType,
 	UpdateType,
+	XMLStyleElement,
+	HTMLStyle,
 };
