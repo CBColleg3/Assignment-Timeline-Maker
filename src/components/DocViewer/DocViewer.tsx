@@ -29,5 +29,5 @@ export const DocViewer = ({ docXML, fileImported, tasks }: DocViewerProps): JSX.
 			</div>
 		);
 	}
-	return <div>{"Import a file to start!"}</div>;
+	return <span />;
 };

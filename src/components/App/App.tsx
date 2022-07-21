@@ -21,9 +21,7 @@ import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 import {
-	INVALID_FILE_SELECTED,
 	MIN_FILES_LENGTH,
-	VALID_FILE_SELECTED_RANGE_START,
 } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
@@ -46,7 +44,7 @@ export const App = (): JSX.Element => {
 	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
-	const [fileSelected, setFileSelected] = React.useState<number>(INVALID_FILE_SELECTED);
+	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
 
 	/**
@@ -83,6 +81,10 @@ export const App = (): JSX.Element => {
 				case "delete": {
 					const filesClone = [...files].filter((_, ind) => ind !== index);
 					setFiles(filesClone);
+					if (filesClone.length === MIN_FILES_LENGTH) {
+						console.log("setting fileselected to undefined");
+						setFileSelected(undefined);
+					}
 					break;
 				}
 				default: {
@@ -91,28 +93,6 @@ export const App = (): JSX.Element => {
 			}
 		}
 	};
-
-	/**
-	 * Triggers when files changes, and checks if the files array is empty (meaning the user deleted the last file), if that is so, then it sets fileSelected to the
-	 * appropriate invalid value to display the correct conditionally rendered components that display when fileSelected is invalid.
-	 *
-	 * - Checks if files is a truthy value
-	 * - checks length of files array, if length is = MIN_FILES_LENGTH (0), then it sets file selected to invalid value
-	 * - if length is valid, then does not set any state
-	 */
-	React.useEffect(() => {
-		if (files) {
-			switch (files.length) {
-				case MIN_FILES_LENGTH: {
-					setFileSelected(INVALID_FILE_SELECTED);
-					break;
-				}
-				default: {
-					break;
-				}
-			}
-		}
-	}, [files]);
 
 	/**
 	 * Triggers when taskCollection is edited or initialized (aka the tasks are changed), and updates the taskCache
@@ -150,7 +130,7 @@ export const App = (): JSX.Element => {
 	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
 	 */
 	React.useEffect(() => {
-		if (files && files.length > MIN_FILES_LENGTH && fileSelected >= VALID_FILE_SELECTED_RANGE_START) {
+		if (files && files.length > MIN_FILES_LENGTH && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
 			if (assignmentCache[currentFile.name]) {
 				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
@@ -225,10 +205,10 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected >= VALID_FILE_SELECTED_RANGE_START ? (
+					{fileSelected !== undefined && files && files.length > MIN_FILES_LENGTH ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{files && files.length > MIN_FILES_LENGTH && taskCollection ? (
+								{taskCollection ? (
 									<TaskContext.Provider value={taskMemo()}>
 										<Timeline assignmentDate={dates} />
 									</TaskContext.Provider>
@@ -249,7 +229,7 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && files.length > MIN_FILES_LENGTH && docCollection ? (
+								{docCollection ? (
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
