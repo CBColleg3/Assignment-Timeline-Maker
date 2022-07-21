@@ -23,16 +23,6 @@ type FileDisplayProps = {
 const MIN_FILES_LENGTH = 0;
 
 /**
- * Invalid identifier for file selected
- */
-const INVALID_FILE_SELECTED = -1;
-
-/**
- * Beginning of range of valid file selected values
- */
-const VALID_FILE_SELECTED_RANGE_START = 0;
-
-/**
  * This component houses the logic for adding, deleting files from the imported file list
  *
  * @param {FileDisplayProps} props The passed in properties, used to display the current files and also update them as well with deleting
@@ -114,4 +104,4 @@ const FileDisplay = ({
 	</>
 );
 
-export { MIN_FILES_LENGTH, FileDisplay, INVALID_FILE_SELECTED, VALID_FILE_SELECTED_RANGE_START };
+export { MIN_FILES_LENGTH, FileDisplay };
