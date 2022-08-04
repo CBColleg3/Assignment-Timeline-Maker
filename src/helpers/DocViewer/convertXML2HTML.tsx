@@ -19,6 +19,7 @@ export const convertXML2HTML = (par: Element, taskArray: Task[]): JSX.Element =>
 		(content: string, element: Element) => `${content}${element.childNodes[0].nodeValue ?? ""}`,
 		"",
 	);
+	
 
 	const formattedContent = textChunks.map((textChunk: Element): JSX.Element => convertTextChunk(textChunk));
 

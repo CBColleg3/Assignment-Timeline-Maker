@@ -183,7 +183,7 @@ const COLOR_HEX_ARRAY = [
 	"696969",
 	"1e90ff",
 	"b22222",
-	"fffaf0",
+	"f5c86e",
 	"228b22",
 	"ff00ff",
 	"dcdcdc",
