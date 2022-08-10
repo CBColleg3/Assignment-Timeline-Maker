@@ -14,51 +14,51 @@ export const translateXMLElementStyling = (xmlElementName: string, attribute: HT
 	if (xmlElementName) {
 		if (xmlElementName === "w:spacing") {
 			if (attribute.name === "w:before") {
-				return { name: "margin-start", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
+				return { name: "marginStart", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			} else if (attribute.name === "w:after") {
-				return { name: "margin-end", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
+				return { name: "marginEnd", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			} else if (attribute.name === "w:line") {
-				return { name: "margin-bottom", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
+				return { name: "marginBottom", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			}
 		} else if (xmlElementName === "w:ind") {
 			if (attribute.name === "w:right") {
-				return { name: "padding-end", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
+				return { name: "paddingEnd", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			} else if (attribute.name === "w:left") {
-				return { name: "padding-start", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
+				return { name: "paddingStart", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			} else if (attribute.name === "w:firstLine" && attribute.value === "1") {
-				return { name: "padding-start", value: "20px" };
+				return { name: "paddingStart", value: "20px" };
 			}
 		} else if (xmlElementName === "w:jc") {
-			return { name: "text-align", value: attribute.value };
+			return { name: "textAlign", value: attribute.value };
 		} else if (xmlElementName === "w:rFonts") {
-			return { name: "font-family", value: attribute.value };
+			return { name: "fontFamily", value: attribute.value };
 		} else if (xmlElementName === "w:b") {
-			return { name: "font-weight", value: "bold" };
+			return { name: "fontWeight", value: "bold" };
 		} else if (xmlElementName === "w:color") {
 			return {
 				name: "color",
 				value: attribute.value === "auto" ? attribute.value : `#${attribute.value}`,
 			};
 		} else if (xmlElementName === "w:position" && attribute.value === "1") {
-			return { name: "padding-bottom", value: "20px" };
+			return { name: "paddingBottom", value: "20px" };
 		} else if (xmlElementName === "w:sz") {
-			return { name: "font-size", value: `${parseInt(attribute.value, 10) / FONT_SIZE_DIVISOR}px` };
+			return { name: "fontSize", value: `${parseInt(attribute.value, 10) / FONT_SIZE_DIVISOR}px` };
 		} else if (xmlElementName === "w:u") {
-			return { name: "text-decoration", value: "underline" };
+			return { name: "textDecoration", value: "underline" };
 		} else if (xmlElementName === "w:shd") {
 			if (attribute.name === "w:fill") {
 				return {
-					name: "background-color",
+					name: "backgroundColor",
 					value: attribute.value === "auto" ? attribute.value : `#${attribute.value}`,
 				};
 			}
 		} else if (xmlElementName === "w:i") {
-			return { name: "font-style", value: "italic" };
+			return { name: "fontStyle", value: "italic" };
 		} else if (xmlElementName === "w:strike") {
 			if (attribute.name === "w:val" && attribute.value === "true") {
-				return { name: "text-decoration", value: "line-through" };
+				return { name: "textDecoration", value: "line-through" };
 			}
 		}
 	}
-	return { name: "", value: "" };
+	return { name: xmlElementName, value: "" };
 };

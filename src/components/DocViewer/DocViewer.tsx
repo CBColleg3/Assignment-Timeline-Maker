@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
 import { extractParagraphs, convertXML2HTML } from "src/helpers";
 

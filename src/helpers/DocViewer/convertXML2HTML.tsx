@@ -1,57 +1,49 @@
 import React from "react";
-import type { HTMLStyle, XMLStyleElement } from "src/@types";
+import type { HTMLStyle } from "src/@types";
 import { translateXMLElementStyling } from "./translateXMLElementStyling";
 
 const MIN_PARAGRAPH_CHILD_LENGTH = 1;
 const BASE_INDEX = 0;
 const UPPER_CHILD_INDEX = 1;
+const FLAT_DIMENSION = 2;
+const CONTENT_INDEX = 0;
 
 /**
- * Recursive function to traverse the entire XML element handed to it,
- * and return an array of tags and their associated attributes
+ * Utility function for determining whether an element is a space
  *
- * @param element The child node to traverse, and gather all attributes from
- * @returns All tags in the initially given element, and their associated attributes
+ * @param childrenAmount The amount of children in the node
+ * @returns Whether the children amount designates a space
  */
-const gatherStyleElements = (element: ChildNode): XMLStyleElement[] => {
+const isSpace = (childrenAmount: number): boolean => childrenAmount === MIN_PARAGRAPH_CHILD_LENGTH;
+
+/**
+ * Traverses an xml element recursively and returns all elements
+ *
+ * @param element The current element we are traversing through
+ * @param elements The stack of elements initialized at the root level
+ * @returns All the elements within the element
+ */
+const traverseXmlTree = (element: Element, elements: Element[] = []): Element[] => {
 	if (!element) {
-		return [];
-	} else if (element.nodeName === "w:t") {
-		return [{ attributes: [{ name: "w:text", value: element.textContent ?? "" }], elemName: "w:t" }];
+		return elements;
 	}
-	const children = [...element.childNodes];
-	const values: XMLStyleElement[] = [];
-	let extraValues: XMLStyleElement[] = [];
-	for (const node of children) {
-		const nodeName = node.nodeName;
-		if (nodeName === "w:rPr") {
-			extraValues = gatherStyleElements(node);
-			break;
-		}
-		const foundValue = values.find((eachValue) => eachValue.elemName === nodeName);
-		if (!foundValue) {
-			const newAttributes: HTMLStyle[] = [];
-			const nodeElement = node as Element;
-			if (nodeElement.hasAttributes()) {
-				const nodeAttributes = [...nodeElement.attributes];
-				nodeAttributes.forEach((eachAttribute) => {
-					newAttributes.push({ name: eachAttribute.name, value: eachAttribute.nodeValue ?? "" });
-				});
-				values.push({ attributes: newAttributes, elemName: nodeName });
-			}
-		} else {
-			const nodeElement = node as Element;
-			if (nodeElement.hasAttributes()) {
-				const nodeAttributes = [...nodeElement.attributes];
-				nodeAttributes.forEach((eachAttribute) => {
-					if (!foundValue.attributes?.find((eachAttr) => eachAttr.name === eachAttribute.name)) {
-						foundValue.attributes?.push({ name: eachAttribute.name, value: eachAttribute.value });
-					}
-				});
-			}
-		}
-	}
-	return [...values, ...extraValues];
+	const rootElements = [
+		...elements,
+		element,
+		...[...element.children].map((eachChild) => traverseXmlTree(eachChild, elements)).flat(FLAT_DIMENSION),
+	];
+	return [...rootElements];
+};
+
+/**
+ * Utility function for generating an html style from a node attribute
+ *
+ * @param attribute The attribute to convert to HTML style
+ * @returns The HTML stylized attribute
+ */
+const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
+	const { name, value } = attribute;
+	return { name, value };
 };
 
 /**
@@ -61,44 +53,56 @@ const gatherStyleElements = (element: ChildNode): XMLStyleElement[] => {
  * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
  */
 export const convertXML2HTML = (par: Element): JSX.Element => {
-	const parChildren = [...par.childNodes];
-	if (parChildren.length === MIN_PARAGRAPH_CHILD_LENGTH) {
-		// Is a space
+	const htmlElement = par as HTMLElement;
+	const parChildren = [...htmlElement.children];
+	if (isSpace(parChildren.length)) {
 		return <p />;
 	}
-	const globalStyles = gatherStyleElements(parChildren[BASE_INDEX]);
 
-	const contentChildren = [...parChildren[UPPER_CHILD_INDEX].childNodes];
-	const contentStyles = gatherStyleElements(contentChildren[BASE_INDEX]);
-	const content = par.getElementsByTagName("w:t")[BASE_INDEX]?.innerHTML;
-
+	// Initialize css object
 	const globalCSS: { [key: string]: string } = { width: "fit-content" };
 	const contentCSS: { [key: string]: string } = { width: "fit-content" };
 
-	for (const eachStyle of globalStyles) {
-		if (eachStyle.attributes) {
-			for (const eachAttribute of eachStyle.attributes) {
-				const translatedStyle = translateXMLElementStyling(eachStyle.elemName ?? "", eachAttribute);
-				globalCSS[translatedStyle.name] = translatedStyle.value;
-			}
-		}
-	}
+	// Gather nested elements from xml element
+	const globalElements = traverseXmlTree(parChildren[BASE_INDEX]);
+	const contentElements = traverseXmlTree(parChildren[UPPER_CHILD_INDEX]);
 
-	for (const eachStyle of contentStyles) {
-		if (eachStyle.attributes) {
-			for (const eachAttribute of eachStyle.attributes) {
-				const translatedStyle = translateXMLElementStyling(eachStyle.elemName ?? "", eachAttribute);
-				contentCSS[translatedStyle.name] = translatedStyle.value;
-			}
-		}
-	}
+	// Get text content from node
+	const content = par.getElementsByTagName("w:t")[CONTENT_INDEX].innerHTML;
 
-	// eslint-disable-next-line no-console -- here for demo purposes
-	console.log({ content, contentCSS, contentStyles, globalCSS, globalStyles });
+	// Gather all css styling from all global elements
+	const globalStyles = globalElements
+		.map((eachElement) =>
+			[...eachElement.attributes].map((eachAttribute) =>
+				translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
+			),
+		)
+		.flat(FLAT_DIMENSION)
+		.filter((elem) => elem.value !== "");
+
+	// Gather all css styling from all content elements
+	const contentStyles = contentElements
+		.map((eachElement) =>
+			[...eachElement.attributes].map((eachAttribute) =>
+				translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
+			),
+		)
+		.flat(FLAT_DIMENSION)
+		.filter((elem) => elem.value !== "");
+
+	// Setting content CSS with styles extracted from content elements
+	contentStyles.forEach((eachStyle) => {
+		contentCSS[eachStyle.name] = eachStyle.value;
+	});
+
+	// Setting global CSS with styles extracted from global elements
+	globalStyles.forEach((eachStyle) => {
+		globalCSS[eachStyle.name] = eachStyle.value;
+	});
 
 	return (
-		<p style={globalCSS}>
+		<span style={globalCSS}>
 			<span style={contentCSS}>{content}</span>
-		</p>
+		</span>
 	);
 };
