@@ -12,6 +12,7 @@ import type {
 	ERROR_TYPES,
 	TaskCollection,
 	TaskCacheEntry,
+	iTaskContext,
 } from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
@@ -19,12 +20,13 @@ import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-import { MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
+import { FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL, MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
+import { TaskContext } from "src/context";
 
 /**
  * Root component
@@ -66,21 +68,6 @@ export const App = (): JSX.Element => {
 	};
 
 	/**
-	 * Utility function to update the current task collection state
-	 *
-	 * @param tasks - The new tasks to update the current task collection with
-	 */
-	const updateTaskCollection = (tasks: Task[]): void => {
-		if (taskCollection) {
-			const newTaskCollection: TaskCollection = {
-				...taskCollection,
-				tasks,
-			};
-			setTaskCollection(newTaskCollection);
-		}
-	};
-
-	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
 	 *
 	 * @param type - The type of operation to be performed on the files state
@@ -92,6 +79,13 @@ export const App = (): JSX.Element => {
 				case "delete": {
 					const filesClone = [...files].filter((_, ind) => ind !== index);
 					setFiles(filesClone);
+					if (filesClone.length === MIN_FILES_LENGTH) {
+						setFileSelected(undefined);
+					} else if (filesClone.length === index) {
+						setFileSelected((oldFileSelected) =>
+							oldFileSelected ? oldFileSelected - FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL : undefined,
+						);
+					}
 					break;
 				}
 				default: {
@@ -137,7 +131,7 @@ export const App = (): JSX.Element => {
 	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
 	 */
 	React.useEffect(() => {
-		if (files && fileSelected !== undefined) {
+		if (files && files.length > MIN_FILES_LENGTH && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
 			if (assignmentCache[currentFile.name]) {
 				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
@@ -159,6 +153,30 @@ export const App = (): JSX.Element => {
 				.catch((err) => console.error(err));
 		}
 	}, [files, fileSelected, dates, assignmentCache]);
+
+	/**
+	 * Memoized context value, specifies that it will only change value when the taskCollection changes
+	 *
+	 * useMemo returns a callback, that recognizes that if the input is the same value, it doesn't redo any computations, but returns the saved value
+	 * This simply makes sure that we only generate a new context if the taskCollection.tasks changes, and if it doesn't and we re-render, we don't perform the computation again
+	 * Also, putting rendering conditionally on an object is a major performance hit, because objects change every re-render due to changing of their location in memory a la similar
+	 * to functions signatures, and why if you pass a function directly into state it is required to wrap it in a useCallback to avoid that same trap of re-rendering due to
+	 * memory location being different every re-render
+	 */
+	const taskMemo = React.useMemo(
+		() => (): iTaskContext => ({
+			setTasks: (newTasks: Task[]) =>
+				setTaskCollection((oldCollection) => {
+					const oldCollectionTasks = oldCollection?.tasks;
+					if (oldCollectionTasks) {
+						return { ...oldCollection, tasks: newTasks };
+					}
+					return oldCollection;
+				}),
+			tasks: taskCollection?.tasks ?? [],
+		}),
+		[taskCollection?.tasks],
+	);
 
 	return (
 		<div className="d-flex flex-column">
@@ -188,16 +206,13 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected !== undefined ? (
+					{fileSelected !== undefined && files && files.length > MIN_FILES_LENGTH ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{files && taskCollection ? (
-									<Timeline
-										assignmentDate={dates}
-										fileImported={files.length > MIN_FILES_LENGTH}
-										setTaskArray={(tasks: Task[]): void => updateTaskCollection(tasks)}
-										taskArray={taskCollection.tasks}
-									/>
+								{taskCollection ? (
+									<TaskContext.Provider value={taskMemo()}>
+										<Timeline assignmentDate={dates} />
+									</TaskContext.Provider>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
@@ -215,11 +230,10 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{files && docCollection ? (
+								{docCollection ? (
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										tasks={taskCollection?.tasks ?? []}
 									/>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">

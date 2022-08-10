@@ -6,28 +6,15 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from "react-be
 import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
-
-/**
- * Props for the TimelineDragDrop component
- */
-type TimelineDragDropProps = {
-	/**
-	 * Tasks in the document
-	 */
-	taskArray: Task[];
-	/**
-	 * Setter for updating the tasks in the document
-	 */
-	setTaskArray: (tasks: Task[]) => void;
-};
+import { useTaskContext } from "src/context";
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- * @param {TimelineDragDropProps} props Passed in props for the TimelineDragDrop component
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropProps): JSX.Element => {
+export const TimelineDragDrop = (): JSX.Element => {
+	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
 	 *
@@ -39,10 +26,10 @@ export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropPr
 			return;
 		}
 
-		const movedTasks = [...taskArray].map((task: Task) => ({ ...task }));
+		const movedTasks = [...tasks].map((task: Task) => ({ ...task }));
 		const [newOrder] = movedTasks.splice(source.index, 1);
 		movedTasks.splice(destination.index, 0, newOrder);
-		setTaskArray(movedTasks);
+		setTasks(movedTasks);
 	};
 
 	return (
@@ -53,7 +40,7 @@ export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropPr
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						{taskArray.map((task, index) => (
+						{tasks.map((task, index) => (
 							<Draggable
 								draggableId={task.id.toString()}
 								index={index}
@@ -77,14 +64,9 @@ export const TimelineDragDrop = ({ taskArray, setTaskArray }: TimelineDragDropPr
 										>
 											<TaskInfo
 												index={index}
-												setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-												taskArray={taskArray}
+												task={task}
 											/>
-											<AddRemoveTask
-												index={index}
-												setTaskArray={(tasks: Task[]): void => setTaskArray(tasks)}
-												taskArray={taskArray}
-											/>
+											<AddRemoveTask index={index} />
 										</VerticalTimelineElement>
 									</span>
 								)}

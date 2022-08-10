@@ -3,8 +3,7 @@ import type { Task } from "src/@types";
 import { EditTask } from "src/components/Task/Edit/EditTask";
 
 type TaskInfoProps = {
-	taskArray: Task[];
-	setTaskArray: (taskArray: Task[]) => void;
+	task: Task;
 	index: number;
 };
 
@@ -15,7 +14,7 @@ type TaskInfoProps = {
  * @param {TaskInfoProps} props Passed in props from TaskInfo Component
  * @returns {JSX.Element} Info displayed for the user about each task
  */
-export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX.Element => {
+export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 	const [editMode, setEditMode] = React.useState<boolean>(false);
 	return (
 		<div>
@@ -25,7 +24,7 @@ export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX
 					setEditMode(!editMode);
 				}}
 			>
-				{taskArray[index].name}
+				{task.name}
 			</h3>
 			<h5
 				className="clickable_text"
@@ -33,7 +32,7 @@ export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX
 					setEditMode(!editMode);
 				}}
 			>
-				{taskArray[index].document}
+				{task.document}
 			</h5>
 			<h4
 				className="clickable_text"
@@ -41,7 +40,7 @@ export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX
 					setEditMode(!editMode);
 				}}
 			>
-				{taskArray[index].points} {"Points"}
+				{task.points} {"Points"}
 			</h4>
 			<h5
 				className="clickable_text"
@@ -49,15 +48,14 @@ export const TaskInfo = ({ taskArray, setTaskArray, index }: TaskInfoProps): JSX
 					setEditMode(!editMode);
 				}}
 			>
-				{new Date(taskArray[index].dueDate).toDateString()}
+				{new Date(task.dueDate).toDateString()}
 			</h5>
 
 			<EditTask
 				editMode={editMode}
 				index={index}
 				setEditMode={setEditMode}
-				setTaskArray={(tasks): void => setTaskArray(tasks)}
-				taskArray={taskArray}
+				task={task}
 			/>
 		</div>
 	);

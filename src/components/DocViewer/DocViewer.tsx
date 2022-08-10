@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
-import type { Task } from "src/@types";
 import { extractParagraphs, convertXML2HTML } from "src/helpers";
 
 /**
@@ -8,7 +8,6 @@ import { extractParagraphs, convertXML2HTML } from "src/helpers";
 type DocViewerProps = {
 	docXML: Document | undefined;
 	fileImported: boolean;
-	tasks: Task[];
 };
 
 /**
@@ -17,17 +16,21 @@ type DocViewerProps = {
  * @param {DocViewerProps} props `docXML`: the document, `fileImported`: Whether a file has been imported or not
  * @returns {JSX.Element} DocViewer component
  */
-export const DocViewer = ({ docXML, fileImported, tasks }: DocViewerProps): JSX.Element => {
+export const DocViewer = ({ docXML, fileImported }: DocViewerProps): JSX.Element => {
 	if (fileImported && docXML) {
 		const paragraphs = extractParagraphs(docXML);
-
+		console.log(docXML);
 		return (
 			<div className="doc-viewer-page">
 				<div className="doc-viewer-content">
-					{paragraphs.map((par: Element): JSX.Element => convertXML2HTML(par, tasks))}
+					{paragraphs.map(
+						(par: Element, _parIndex: number): JSX.Element => (
+							<span key={`xml-par-${_parIndex}`}>{convertXML2HTML(par)}</span>
+						),
+					)}
 				</div>
 			</div>
 		);
 	}
-	return <div>{"Import a file to start!"}</div>;
+	return <span />;
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import type { Task } from "src/@types";
+import { useTaskContext } from "src/context";
 import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 
 const CONSTANTS = {
@@ -17,14 +18,6 @@ const CONSTANTS = {
  */
 type AddRemoveTaskProps = {
 	/**
-	 * Tasks in the document
-	 */
-	taskArray: Task[];
-	/**
-	 * Set the tasks in the document
-	 */
-	setTaskArray: (tasks: Task[]) => void;
-	/**
 	 * Current task index in the array of tasks
 	 */
 	index: number;
@@ -36,7 +29,8 @@ type AddRemoveTaskProps = {
  * @param {AddRemoveTaskProps} props The properties of the component
  * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
-export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskProps): JSX.Element => {
+export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
+	const { tasks, setTasks } = useTaskContext();
 	const IND_INC = 1;
 	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
 	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
@@ -65,7 +59,7 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 	 * @param ind current task index in the array of tasks
 	 */
 	function addPart(ind: number): void {
-		const modifiedTaskArr: Task[] = [...taskArray].map((eachTask) => ({
+		const modifiedTaskArr: Task[] = [...tasks].map((eachTask) => ({
 			...eachTask,
 			dueDate: new Date(eachTask.dueDate),
 		}));
@@ -78,7 +72,7 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 			name: "Swag",
 			points: "0",
 		});
-		setTaskArray(modifiedTaskArr);
+		setTasks(modifiedTaskArr);
 	}
 
 	/**
@@ -87,12 +81,12 @@ export const AddRemoveTask = ({ taskArray, setTaskArray, index }: AddRemoveTaskP
 	 * @param {number} ind current task index in the array of tasks
 	 */
 	function removePart(ind: number): void {
-		const modifiedPtsArr = [...taskArray].map((eachTask) => ({
+		const modifiedPtsArr = [...tasks].map((eachTask) => ({
 			...eachTask,
 			dueDate: new Date(eachTask.dueDate),
 		}));
 		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
-		setTaskArray(modifiedPtsArr);
+		setTasks(modifiedPtsArr);
 	}
 
 	return (
