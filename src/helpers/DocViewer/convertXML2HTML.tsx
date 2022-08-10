@@ -4,9 +4,9 @@ import { translateXMLElementStyling } from "./translateXMLElementStyling";
 
 const MIN_PARAGRAPH_CHILD_LENGTH = 1;
 const BASE_INDEX = 0;
-const UPPER_CHILD_INDEX = 1;
 const FLAT_DIMENSION = 2;
-const CONTENT_INDEX = 0;
+const CONTENT_SLICE_INDEX = 1;
+const MIN_ATTRIBUTE_LENGTH = 0;
 
 /**
  * Utility function for determining whether an element is a space
@@ -65,10 +65,17 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 
 	// Gather nested elements from xml element
 	const globalElements = traverseXmlTree(parChildren[BASE_INDEX]);
-	const contentElements = traverseXmlTree(parChildren[UPPER_CHILD_INDEX]);
+	const contentElements = parChildren
+		.slice(CONTENT_SLICE_INDEX)
+		.map((eachElement) => traverseXmlTree(eachElement))
+		.flat(FLAT_DIMENSION);
 
 	// Get text content from node
-	const content = par.getElementsByTagName("w:t")[CONTENT_INDEX]?.innerHTML;
+	const content = [...par.getElementsByTagName("w:t")]
+		.map((eachContentElement) => eachContentElement.innerHTML)
+		.join("")
+		.replaceAll("&gt;", ">")
+		.replaceAll("&lt;", "<");
 
 	// Gather all css styling from all global elements
 	const globalStyles = globalElements
@@ -82,11 +89,14 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 
 	// Gather all css styling from all content elements
 	const contentStyles = contentElements
-		.map((eachElement) =>
-			[...eachElement.attributes].map((eachAttribute) =>
-				translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
-			),
-		)
+		.map((eachElement) => {
+			if (eachElement.attributes.length > MIN_ATTRIBUTE_LENGTH) {
+				return [...eachElement.attributes].map((eachAttribute) =>
+					translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
+				);
+			}
+			return translateXMLElementStyling(eachElement.tagName, { name: "", value: "" });
+		})
 		.flat(FLAT_DIMENSION)
 		.filter((elem) => elem.value !== "");
 

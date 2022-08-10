@@ -19,11 +19,14 @@ type DocViewerProps = {
 export const DocViewer = ({ docXML, fileImported }: DocViewerProps): JSX.Element => {
 	if (fileImported && docXML) {
 		const paragraphs = extractParagraphs(docXML);
-
 		return (
 			<div className="doc-viewer-page">
 				<div className="doc-viewer-content">
-					{paragraphs.map((par: Element): JSX.Element => convertXML2HTML(par))}
+					{paragraphs.map(
+						(par: Element, _parIndex: number): JSX.Element => (
+							<span key={`xml-par-${_parIndex}`}>{convertXML2HTML(par)}</span>
+						),
+					)}
 				</div>
 			</div>
 		);
