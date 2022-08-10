@@ -7,6 +7,7 @@ const BASE_INDEX = 0;
 const FLAT_DIMENSION = 2;
 const CONTENT_SLICE_INDEX = 1;
 const MIN_ATTRIBUTE_LENGTH = 0;
+const LIST_ELEMENT_DOES_NOT_EXIST = -1;
 
 /**
  * Utility function for determining whether an element is a space
@@ -110,9 +111,23 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 		globalCSS[eachStyle.name] = eachStyle.value;
 	});
 
+	const isListElementPresent = globalElements.findIndex((eachElement) =>
+		eachElement.tagName.includes("w:numPr"),
+	);
+
 	return (
 		<div style={globalCSS}>
-			<span style={contentCSS}>{content}</span>
+			<span>
+				{isListElementPresent !== LIST_ELEMENT_DOES_NOT_EXIST ? (
+					<ul>
+						<li>
+							<span style={contentCSS}>{content}</span>
+						</li>
+					</ul>
+				) : (
+					<span style={contentCSS}>{content}</span>
+				)}
+			</span>
 		</div>
 	);
 };

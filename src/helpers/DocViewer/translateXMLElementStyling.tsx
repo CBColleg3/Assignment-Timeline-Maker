@@ -27,6 +27,8 @@ export const translateXMLElementStyling = (xmlElementName: string, attribute: HT
 				return { name: "paddingStart", value: `${parseInt(attribute.value, 10) / COMMON_DIVISOR}px` };
 			} else if (attribute.name === "w:firstLine" && attribute.value === "1") {
 				return { name: "paddingStart", value: "20px" };
+			} else if (attribute.name === "w:hanging") {
+				return { name: "paddingStart", value: `${parseInt(attribute.value, 10)}px` };
 			}
 		} else if (xmlElementName === "w:jc") {
 			return { name: "textAlign", value: attribute.value };
@@ -58,6 +60,8 @@ export const translateXMLElementStyling = (xmlElementName: string, attribute: HT
 			if (attribute.name === "w:val" && attribute.value === "true") {
 				return { name: "textDecoration", value: "line-through" };
 			}
+		} else if (xmlElementName === "w:numPr") {
+			return { name: "listStyle", value: "disc inside" };
 		}
 	}
 	return { name: xmlElementName, value: "" };

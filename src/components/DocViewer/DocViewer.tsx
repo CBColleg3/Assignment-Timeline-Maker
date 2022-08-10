@@ -19,7 +19,7 @@ type DocViewerProps = {
 export const DocViewer = ({ docXML, fileImported }: DocViewerProps): JSX.Element => {
 	if (fileImported && docXML) {
 		const paragraphs = extractParagraphs(docXML);
-		console.log(docXML);
+		// CONSOLE LOG DOCUMENT: console.log(docXML);
 		return (
 			<div className="doc-viewer-page">
 				<div className="doc-viewer-content">
