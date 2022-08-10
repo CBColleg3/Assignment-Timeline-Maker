@@ -14,7 +14,7 @@ type EditTaskProps = {
 
 	index: number;
 
-	setEditMode: (editMode: boolean) => void;
+	setEditMode: (_editMode: boolean) => void;
 };
 
 /**

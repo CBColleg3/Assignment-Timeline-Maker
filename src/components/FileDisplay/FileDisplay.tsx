@@ -13,8 +13,8 @@ import styles from "./FileDisplay.module.css";
 type FileDisplayProps = {
 	currentSelection: number | undefined;
 	files: File[] | undefined;
-	updateFiles: (type: UpdateType, idx: number) => void;
-	updateCurrentSelection: (ind: number) => void;
+	updateFiles: (_type: UpdateType, _idx: number) => void;
+	updateCurrentSelection: (_ind: number) => void;
 };
 
 /**

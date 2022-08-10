@@ -9,8 +9,8 @@ type DateModalProps = {
 	isShowing: boolean;
 	onClose: () => void;
 	title: string;
-	updateConfirm: (confirmValue: boolean) => void;
-	updateDates: (type: UpdateDateType, value: Date) => void;
+	updateConfirm: (_confirmValue: boolean) => void;
+	updateDates: (_type: UpdateDateType, _value: Date) => void;
 };
 
 /**
