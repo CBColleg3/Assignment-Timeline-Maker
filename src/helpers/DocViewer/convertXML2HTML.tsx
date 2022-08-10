@@ -68,7 +68,7 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 	const contentElements = traverseXmlTree(parChildren[UPPER_CHILD_INDEX]);
 
 	// Get text content from node
-	const content = par.getElementsByTagName("w:t")[CONTENT_INDEX].innerHTML;
+	const content = par.getElementsByTagName("w:t")[CONTENT_INDEX]?.innerHTML;
 
 	// Gather all css styling from all global elements
 	const globalStyles = globalElements
@@ -101,8 +101,8 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 	});
 
 	return (
-		<span style={globalCSS}>
+		<div style={globalCSS}>
 			<span style={contentCSS}>{content}</span>
-		</span>
+		</div>
 	);
 };
