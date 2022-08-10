@@ -60,8 +60,8 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 	}
 
 	// Initialize css object
-	const globalCSS: { [key: string]: string } = { width: "fit-content" };
-	const contentCSS: { [key: string]: string } = { width: "fit-content" };
+	const globalCSS: { [key: string]: string } = {};
+	const contentCSS: { [key: string]: string } = {};
 
 	// Gather nested elements from xml element
 	const globalElements = traverseXmlTree(parChildren[BASE_INDEX]);
