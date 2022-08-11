@@ -15,6 +15,7 @@ import { useTaskContext } from "src/context";
  */
 export const TimelineDragDrop = (): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
+
 	/**
 	 * Handles the drag end operation
 	 *

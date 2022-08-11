@@ -34,7 +34,7 @@ import { TaskContext } from "src/context";
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [dates, setDates] = React.useState<AssignmentDate>({
+	const [assignmentDate, setAssignmentDate] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
@@ -135,24 +135,26 @@ export const App = (): JSX.Element => {
 			const currentFile: File = files[fileSelected];
 			if (assignmentCache[currentFile.name]) {
 				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
-				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(assignmentCache[currentFile.name].tasks) });
-				return;
+
+				const cachedTasks: Task[] = JSON.parse(assignmentCache[currentFile.name].tasks);
+				setTaskCollection({ id: currentFile.name, tasks: updateDueDates(cachedTasks, assignmentDate) });
+			} else {
+				const readText = readFile(currentFile);
+				parseFileTextToXML(readText)
+					.then((result) => setDocCollection({ doc: result, id: currentFile.name }))
+					// eslint-disable-next-line no-console -- no logger present yet
+					.catch((error) => console.error(error));
+				const parts = findParts(readText);
+				findPoints(parts)
+					.then((tasks) => {
+						const parsedTasks = updateDueDates(tasks, assignmentDate);
+						setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
+					})
+					// eslint-disable-next-line no-console -- no logger present yet
+					.catch((err) => console.error(err));
 			}
-			const readText = readFile(currentFile);
-			parseFileTextToXML(readText)
-				.then((result) => setDocCollection({ doc: result, id: currentFile.name }))
-				// eslint-disable-next-line no-console -- no logger present yet
-				.catch((error) => console.error(error));
-			const parts = findParts(readText);
-			findPoints(parts)
-				.then((tasks) => {
-					const parsedTasks = updateDueDates(tasks, dates);
-					setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
-				})
-				// eslint-disable-next-line no-console -- no logger present yet
-				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates, assignmentCache]);
+	}, [files, fileSelected, assignmentDate, assignmentCache]);
 
 	/**
 	 * Memoized context value, specifies that it will only change value when the taskCollection changes
@@ -187,8 +189,8 @@ export const App = (): JSX.Element => {
 						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
 							updateErrors("date", operation, error)
 						}
-						assignmentDate={dates}
-						update={(theDates: AssignmentDate): void => setDates(theDates)}
+						assignmentDate={assignmentDate}
+						update={(theDates: AssignmentDate): void => setAssignmentDate(theDates)}
 					/>
 				</span>
 				<span className="my-auto">
@@ -211,7 +213,7 @@ export const App = (): JSX.Element => {
 							<Col>
 								{taskCollection ? (
 									<TaskContext.Provider value={taskMemo()}>
-										<Timeline assignmentDate={dates} />
+										<Timeline assignmentDate={assignmentDate} />
 									</TaskContext.Provider>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
