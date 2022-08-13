@@ -8,12 +8,16 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 
+type TimelineDragDropProps = {
+	curTaskDate: string;
+};
+
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = (): JSX.Element => {
+export const TimelineDragDrop = ({ curTaskDate }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
@@ -52,22 +56,24 @@ export const TimelineDragDrop = (): JSX.Element => {
 										{...prov.draggableProps}
 										{...prov.dragHandleProps}
 									>
-										<VerticalTimelineElement
-											className="vertical-timeline-element--work"
-											contentStyle={{
-												color: `#${task.color}`,
-											}}
-											iconStyle={{
-												background: `#${task.color}`,
-												color: "#fff",
-											}}
-										>
-											<TaskInfo
-												index={index}
-												task={task}
-											/>
-											<AddRemoveTask index={index} />
-										</VerticalTimelineElement>
+										{task.dueDate.toLocaleDateString() === curTaskDate && (
+											<VerticalTimelineElement
+												className="vertical-timeline-element--work"
+												contentStyle={{
+													color: `#${task.color}`,
+												}}
+												iconStyle={{
+													background: `#${task.color}`,
+													color: "#fff",
+												}}
+											>
+												<TaskInfo
+													index={index}
+													task={task}
+												/>
+												<AddRemoveTask index={index} />
+											</VerticalTimelineElement>
+										)}
 									</span>
 								)}
 							</Draggable>
