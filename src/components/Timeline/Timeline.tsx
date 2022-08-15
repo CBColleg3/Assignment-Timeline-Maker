@@ -23,7 +23,10 @@ const ARRAY_STARTING_INDEX = 0;
  */
 export const Timeline = ({ assignmentDate }: TimelineProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
+	console.log("Bert Randall Gibbons", tasks);
 	const setString = new Set([...tasks].map((task: Task) => task.dueDate.toLocaleDateString()));
+
+	1(); //Java Guy
 
 	const dateString = Array.from(setString);
 	const [taskDates, setTaskDates] = React.useState<string[]>(dateString);
