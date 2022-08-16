@@ -56,7 +56,10 @@ export const Timeline = ({ assignmentDate }: TimelineProps): JSX.Element => {
 						color: "#fff",
 					}}
 				>
-					<h3 className="vertical-timeline-element-title">{"Lets start the Assignment!"}</h3>
+					<h3 className="vertical-timeline-element-title">
+						{"Lets start the tasks for Day"}{" "}
+						{parseInt(curTaskDate.split("/")[GET_CURRENT_DAY_INDEX], 10) + GET_CURRENT_DAY_INDEX - startDay}
+					</h3>
 					<h4 className="vertical-timeline-element-title">
 						{"Due Date: "}
 						{assignmentDate.end.toLocaleDateString()}{" "}
@@ -80,7 +83,12 @@ export const Timeline = ({ assignmentDate }: TimelineProps): JSX.Element => {
 						color: "#fff",
 					}}
 				>
-					<h3>{"Assignment Completed!"}</h3>
+					<h3>
+						{" "}
+						{"Day "}{" "}
+						{parseInt(curTaskDate.split("/")[GET_CURRENT_DAY_INDEX], 10) + GET_CURRENT_DAY_INDEX - startDay}{" "}
+						{" tasks are now complete!!"}
+					</h3>
 				</VerticalTimelineElement>
 			</VerticalTimeline>
 		</div>
