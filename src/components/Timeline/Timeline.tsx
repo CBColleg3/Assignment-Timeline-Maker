@@ -14,6 +14,7 @@ type TimelineProps = {
 };
 
 const ARRAY_STARTING_INDEX = 0;
+const GET_CURRENT_DAY_INDEX = 1;
 
 /**
  * Generates vertical timeline with tasks and calculates days to complete tasks
@@ -26,15 +27,16 @@ export const Timeline = ({ assignmentDate }: TimelineProps): JSX.Element => {
 	console.log("Bert Randall Gibbons", tasks);
 	const setString = new Set([...tasks].map((task: Task) => task.dueDate.toLocaleDateString()));
 
-	1(); //Java Guy
-
 	const dateString = Array.from(setString);
 	const [taskDates, setTaskDates] = React.useState<string[]>(dateString);
 	const [curTaskDate, setCurTaskDate] = React.useState<string>(dateString[ARRAY_STARTING_INDEX]);
 
+	const startDay = parseInt(assignmentDate.start.toLocaleDateString().split("/")[GET_CURRENT_DAY_INDEX], 10);
+
 	return (
 		<div>
 			<TimelineDates
+				assignmentDate={assignmentDate}
 				curTaskDate={curTaskDate}
 				setCurTaskDate={setCurTaskDate}
 				taskDates={taskDates}
