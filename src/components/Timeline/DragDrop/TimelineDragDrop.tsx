@@ -44,7 +44,7 @@ export const TimelineDragDrop = ({ curTaskDate }: TimelineDragDropProps): JSX.El
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						{tasks.map((task, index) => (
+						{tasks.map((task: Task, index: number) => (
 							<Draggable
 								draggableId={task.id.toString()}
 								index={index}
@@ -56,7 +56,7 @@ export const TimelineDragDrop = ({ curTaskDate }: TimelineDragDropProps): JSX.El
 										{...prov.draggableProps}
 										{...prov.dragHandleProps}
 									>
-										{task.dueDate.toLocaleDateString() === curTaskDate && (
+										{new Date(task.dueDate).toLocaleDateString() === curTaskDate && (
 											<VerticalTimelineElement
 												className="vertical-timeline-element--work"
 												contentStyle={{

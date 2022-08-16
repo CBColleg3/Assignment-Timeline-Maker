@@ -25,7 +25,7 @@ const GET_CURRENT_DAY_INDEX = 1;
 export const Timeline = ({ assignmentDate }: TimelineProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	console.log("Bert Randall Gibbons", tasks);
-	const setString = new Set([...tasks].map((task: Task) => task.dueDate.toLocaleDateString()));
+	const setString = new Set([...tasks].map((task: Task) => new Date(task.dueDate).toLocaleDateString()));
 
 	const dateString = Array.from(setString);
 	const [taskDates, setTaskDates] = React.useState<string[]>(dateString);

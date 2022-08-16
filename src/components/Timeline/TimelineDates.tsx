@@ -35,7 +35,7 @@ export const TimelineDates = ({
 
 	return (
 		<div>
-			<Form.Group controlId="userEmotions">
+			<Form.Group controlId="dateSelect">
 				<Form.Label>{SELECT_DATE_STRING}</Form.Label>
 				<Form.Select
 					onChange={updateTaskDate}
