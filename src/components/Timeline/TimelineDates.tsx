@@ -38,7 +38,9 @@ export const TimelineDates = ({
 			<Form.Group controlId="dateSelect">
 				<Form.Label>{SELECT_DATE_STRING}</Form.Label>
 				<Form.Select
-					onChange={updateTaskDate}
+					onChange={(event): void => {
+						updateTaskDate(event);
+					}}
 					value={curTaskDate}
 				>
 					{taskDates.map(
