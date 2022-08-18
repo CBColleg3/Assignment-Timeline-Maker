@@ -80,7 +80,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 					>
 						<h3>
 							{" "}
-							{"Day "} {currentTaskDate.toDateString()} {" tasks are now complete!!"}
+							{currentTaskDate.toDateString()} {" tasks are now complete!!"}
 						</h3>
 					</VerticalTimelineElement>
 				</VerticalTimeline>
