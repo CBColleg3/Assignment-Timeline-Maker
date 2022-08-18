@@ -5,7 +5,7 @@ import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
-import Accordion from "react-bootstrap/Accordion";
+import { Button } from "react-bootstrap";
 
 /**
  * Props for the Timeline component
@@ -24,6 +24,7 @@ type TimelineProps = {
 export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Element => {
 	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start);
 	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
+	const [openAll, setOpenAll] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
 		if (assignmentDate) {
@@ -33,10 +34,19 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 
 	return (
 		<div>
-			<TimelineDates
-				setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
-				taskDates={taskDates}
-			/>
+			<div className="d-flex flex-row justify-content-around">
+				<TimelineDates
+					setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
+					taskDates={taskDates}
+				/>
+				<Button
+					className="h-50 my-auto"
+					onClick={(): void => setOpenAll((oldValue) => !oldValue)}
+					variant={openAll ? "outline-danger" : "outline-success"}
+				>
+					{openAll ? "Close All Tasks" : "Open All Tasks"}
+				</Button>
+			</div>
 			<span ref={passRef}>
 				<VerticalTimeline layout="1-column">
 					<VerticalTimelineElement
@@ -65,7 +75,10 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 							})}{" "}
 						</h4>
 					</VerticalTimelineElement>
-					<TimelineDragDrop currentTaskDate={currentTaskDate} />
+					<TimelineDragDrop
+						currentTaskDate={currentTaskDate}
+						opened={openAll}
+					/>
 					<VerticalTimelineElement
 						contentArrowStyle={{
 							borderRight: "7px solid  rgb(33, 150, 243)",

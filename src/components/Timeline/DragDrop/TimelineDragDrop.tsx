@@ -12,6 +12,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 type TimelineDragDropProps = {
 	currentTaskDate: Date;
+	opened: boolean;
 };
 
 /**
@@ -20,7 +21,7 @@ type TimelineDragDropProps = {
  * @param {TimelineDragDropProps} props The current task day, which will be used to display specific tasks
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JSX.Element => {
+export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
@@ -56,38 +57,37 @@ export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JS
 										key={task.id}
 									>
 										{(prov): JSX.Element => (
-											<span
+											<Accordion
+												className={`${opened ? "show" : ""}`}
 												ref={prov.innerRef}
 												{...prov.draggableProps}
 												{...prov.dragHandleProps}
 											>
-												<Accordion>
-													<Accordion.Item eventKey={task.id.toString()}>
-														<Accordion.Header>
-															<div
-																className="pe-2"
-																style={{ color: `#${task.color}` }}
-															>
-																{"\u2B24 "}
-															</div>
-															{`${task.name}`}
-														</Accordion.Header>
-														<Accordion.Body>
-															<div className="d-flex flex-column justify-content-around">
-																<span style={{ color: `#${task.color}` }}>
-																	<TaskInfo
-																		index={index}
-																		task={task}
-																	/>
-																</span>
-																<span>
-																	<AddRemoveTask index={index} />
-																</span>
-															</div>
-														</Accordion.Body>
-													</Accordion.Item>
-												</Accordion>
-											</span>
+												<Accordion.Item eventKey={task.id.toString()}>
+													<Accordion.Header>
+														<div
+															className="pe-2"
+															style={{ color: `#${task.color}` }}
+														>
+															{"\u2B24 "}
+														</div>
+														{`${task.name}`}
+													</Accordion.Header>
+													<Accordion.Body>
+														<div className="d-flex flex-column justify-content-around">
+															<span style={{ color: `#${task.color}` }}>
+																<TaskInfo
+																	index={index}
+																	task={task}
+																/>
+															</span>
+															<span>
+																<AddRemoveTask index={index} />
+															</span>
+														</div>
+													</Accordion.Body>
+												</Accordion.Item>
+											</Accordion>
 										)}
 									</Draggable>
 								) : (

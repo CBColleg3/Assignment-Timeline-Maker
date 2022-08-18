@@ -22,7 +22,7 @@ export const TimelineDates = ({ setCurrentTaskDate, taskDates }: TimelineDatesPr
 		<Form.Group controlId="dateSelect">
 			<Form.Label className="text-center w-100">{SELECT_DATE_STRING}</Form.Label>
 			<Form.Select
-				className="w-50 mx-auto mb-3"
+				className="w-100 mx-auto mb-3"
 				onChange={(event): void => {
 					setCurrentTaskDate(new Date(parseInt(event.target.value, BASE_TEN)));
 				}}
