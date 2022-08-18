@@ -8,6 +8,7 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 import { isSameDay } from "src/helpers";
+import Accordion from "react-bootstrap/Accordion";
 
 type TimelineDragDropProps = {
 	currentTaskDate: Date;
@@ -60,22 +61,32 @@ export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JS
 												{...prov.draggableProps}
 												{...prov.dragHandleProps}
 											>
-												<VerticalTimelineElement
-													className="vertical-timeline-element--work"
-													contentStyle={{
-														color: `#${task.color}`,
-													}}
-													iconStyle={{
-														background: `#${task.color}`,
-														color: "#fff",
-													}}
-												>
-													<TaskInfo
-														index={index}
-														task={task}
-													/>
-													<AddRemoveTask index={index} />
-												</VerticalTimelineElement>
+												<Accordion>
+													<Accordion.Item eventKey={task.id.toString()}>
+														<Accordion.Header>
+															<div
+																className="pe-2"
+																style={{ color: `#${task.color}` }}
+															>
+																{"\u2B24 "}
+															</div>
+															{`${task.name}`}
+														</Accordion.Header>
+														<Accordion.Body>
+															<div className="d-flex flex-column justify-content-around">
+																<span style={{ color: `#${task.color}` }}>
+																	<TaskInfo
+																		index={index}
+																		task={task}
+																	/>
+																</span>
+																<span>
+																	<AddRemoveTask index={index} />
+																</span>
+															</div>
+														</Accordion.Body>
+													</Accordion.Item>
+												</Accordion>
 											</span>
 										)}
 									</Draggable>

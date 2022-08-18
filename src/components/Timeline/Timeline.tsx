@@ -5,6 +5,7 @@ import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
+import Accordion from "react-bootstrap/Accordion";
 
 /**
  * Props for the Timeline component
