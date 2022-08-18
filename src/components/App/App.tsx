@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
@@ -27,6 +28,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { TaskContext } from "src/context";
+// eslint-disable-next-line import/no-namespace -- used for html2pdf, since it current does not support typescript types
+import * as html2pdf from "html2pdf.js";
 
 /**
  * Root component
@@ -34,16 +37,18 @@ import { TaskContext } from "src/context";
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
+	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [dates, setDates] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
-	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
-	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
-	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
 	const [errors, setErrors] = React.useState<Errors>({});
+	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
+	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
+	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
+
+	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
 	/**
 	 * Utility function for updating the errors object via Error object
@@ -135,7 +140,11 @@ export const App = (): JSX.Element => {
 			const currentFile: File = files[fileSelected];
 			if (assignmentCache[currentFile.name]) {
 				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
-				setTaskCollection({ id: currentFile.name, tasks: JSON.parse(assignmentCache[currentFile.name].tasks) });
+				const parsedTasks = (JSON.parse(assignmentCache[currentFile.name].tasks) as Task[]).map((eachTask) => ({
+					...eachTask,
+					dueDate: new Date(eachTask.dueDate),
+				}));
+				setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
 				return;
 			}
 			const readText = readFile(currentFile);
@@ -178,6 +187,15 @@ export const App = (): JSX.Element => {
 		[taskCollection?.tasks],
 	);
 
+	/**
+	 * Callback that regenerates when the `timelineRef` ref is changed, used to upload the element as a pdf if the current element being referenced is truthy
+	 */
+	const uploadDocument = React.useCallback(() => {
+		if (timelineRef.current) {
+			html2pdf(timelineRef.current);
+		}
+	}, [timelineRef]);
+
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
@@ -197,6 +215,7 @@ export const App = (): JSX.Element => {
 						files={files}
 						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
 						updateFiles={updateFiles}
+						uploadDocument={uploadDocument}
 					/>
 				</span>
 				<FileImport
@@ -211,7 +230,10 @@ export const App = (): JSX.Element => {
 							<Col>
 								{taskCollection ? (
 									<TaskContext.Provider value={taskMemo()}>
-										<Timeline assignmentDate={dates} />
+										<Timeline
+											assignmentDate={dates}
+											passRef={timelineRef}
+										/>
 									</TaskContext.Provider>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">

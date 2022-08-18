@@ -7,17 +7,19 @@ import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
+import { isSameDay } from "src/helpers";
 
 type TimelineDragDropProps = {
-	curTaskDate: string;
+	currentTaskDate: Date;
 };
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
+ * @param {TimelineDragDropProps} props The current task day, which will be used to display specific tasks
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({ curTaskDate }: TimelineDragDropProps): JSX.Element => {
+export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
@@ -45,38 +47,42 @@ export const TimelineDragDrop = ({ curTaskDate }: TimelineDragDropProps): JSX.El
 						ref={provided.innerRef}
 					>
 						{tasks.map((task: Task, index: number) => (
-							<Draggable
-								draggableId={task.id.toString()}
-								index={index}
-								key={task.id}
-							>
-								{(prov): JSX.Element => (
-									<span
-										ref={prov.innerRef}
-										{...prov.draggableProps}
-										{...prov.dragHandleProps}
+							<>
+								{isSameDay(currentTaskDate, task.dueDate) ? (
+									<Draggable
+										draggableId={task.id.toString()}
+										index={index}
+										key={task.id}
 									>
-										{new Date(task.dueDate).toLocaleDateString() === curTaskDate && (
-											<VerticalTimelineElement
-												className="vertical-timeline-element--work"
-												contentStyle={{
-													color: `#${task.color}`,
-												}}
-												iconStyle={{
-													background: `#${task.color}`,
-													color: "#fff",
-												}}
+										{(prov): JSX.Element => (
+											<span
+												ref={prov.innerRef}
+												{...prov.draggableProps}
+												{...prov.dragHandleProps}
 											>
-												<TaskInfo
-													index={index}
-													task={task}
-												/>
-												<AddRemoveTask index={index} />
-											</VerticalTimelineElement>
+												<VerticalTimelineElement
+													className="vertical-timeline-element--work"
+													contentStyle={{
+														color: `#${task.color}`,
+													}}
+													iconStyle={{
+														background: `#${task.color}`,
+														color: "#fff",
+													}}
+												>
+													<TaskInfo
+														index={index}
+														task={task}
+													/>
+													<AddRemoveTask index={index} />
+												</VerticalTimelineElement>
+											</span>
 										)}
-									</span>
+									</Draggable>
+								) : (
+									<span />
 								)}
-							</Draggable>
+							</>
 						))}
 					</div>
 				)}
