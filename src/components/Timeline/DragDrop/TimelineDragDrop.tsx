@@ -58,7 +58,7 @@ export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropPr
 									>
 										{(prov): JSX.Element => (
 											<Accordion
-												className={`${opened ? "show" : ""}`}
+												className={`${opened ? "show pe-5 ps-3" : "pe-5 ps-3"}`}
 												ref={prov.innerRef}
 												{...prov.draggableProps}
 												{...prov.dragHandleProps}
@@ -72,6 +72,9 @@ export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropPr
 															{"\u2B24 "}
 														</div>
 														{`${task.name}`}
+														<span>
+															<AddRemoveTask index={index} />
+														</span>
 													</Accordion.Header>
 													<Accordion.Body>
 														<div className="d-flex flex-column justify-content-around">
@@ -80,9 +83,6 @@ export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropPr
 																	index={index}
 																	task={task}
 																/>
-															</span>
-															<span>
-																<AddRemoveTask index={index} />
 															</span>
 														</div>
 													</Accordion.Body>
