@@ -48,56 +48,29 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 				</Button>
 			</div>
 			<span ref={passRef}>
-				<VerticalTimeline layout="1-column">
-					<VerticalTimelineElement
-						className="vertical-timeline-element--work"
-						contentArrowStyle={{
-							borderRight: "7px solid  rgb(160, 16, 82)",
-						}}
-						contentStyle={{
-							background: "rgb(160, 16, 82)",
-							color: "#fff",
-						}}
-						iconStyle={{
-							background: "rgb(160, 16, 82)",
-							color: "#fff",
-						}}
+				<div>
+					<div
+						className="d-flex flex-row justify-content-around h-50 square bg-danger rounded-pill p-4 text-light opacity-75 w-75 mx-auto mb-3"
+						style={{ fontWeight: "bold" }}
 					>
-						<h3 className="vertical-timeline-element-title">
-							{"Lets start the tasks for "} {currentTaskDate.toDateString()}
-						</h3>
-						<h4 className="vertical-timeline-element-title">
-							{"Due Date: "}
-							{assignmentDate.end.toLocaleDateString()}{" "}
-							{assignmentDate.end.toLocaleTimeString([], {
-								hour: "2-digit",
-								minute: "2-digit",
-							})}{" "}
-						</h4>
-					</VerticalTimelineElement>
+						{"Lets start the tasks for "} {currentTaskDate.toDateString()} {"\n"}
+						{"Due Date: "} {assignmentDate.end.toLocaleDateString()}{" "}
+						{assignmentDate.end.toLocaleTimeString([], {
+							hour: "2-digit",
+							minute: "2-digit",
+						})}{" "}
+					</div>
 					<TimelineDragDrop
 						currentTaskDate={currentTaskDate}
 						opened={openAll}
 					/>
-					<VerticalTimelineElement
-						contentArrowStyle={{
-							borderRight: "7px solid  rgb(33, 150, 243)",
-						}}
-						contentStyle={{
-							background: "rgb(33, 150, 243)",
-							color: "#fff",
-						}}
-						iconStyle={{
-							background: "rgb(33, 150, 243)",
-							color: "#fff",
-						}}
+					<div
+						className="d-flex flex-row justify-content-around h-50 square bg-primary rounded-pill p-4 text-light opacity-75 w-75 mx-auto mt-3"
+						style={{ fontWeight: "bold" }}
 					>
-						<h3>
-							{" "}
-							{currentTaskDate.toDateString()} {" tasks are now complete!!"}
-						</h3>
-					</VerticalTimelineElement>
-				</VerticalTimeline>
+						{currentTaskDate.toDateString()} {" tasks are now complete!!"}
+					</div>
+				</div>
 			</span>
 		</div>
 	);

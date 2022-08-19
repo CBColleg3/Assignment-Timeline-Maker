@@ -50,7 +50,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 				show={editMode}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>{"Test"}</Modal.Title>
+					<Modal.Title>{"Edit Task"}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form.Group as={Row}>
