@@ -6,6 +6,7 @@ import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
 import { Button } from "react-bootstrap";
+import styles from "./Timeline.module.css";
 
 /**
  * Props for the Timeline component
@@ -50,7 +51,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 			<span ref={passRef}>
 				<div>
 					<div
-						className="d-flex flex-row justify-content-around h-50 square bg-danger rounded-pill p-4 text-light opacity-75 w-75 mx-auto mb-3"
+						className={`d-flex flex-row justify-content-around bg-danger rounded-3 p-4 text-light opacity-75 w-75 mx-auto mb-3 ${styles.start_end_container} ${styles.start_end_text} align-items-center`}
 						style={{ fontWeight: "bold" }}
 					>
 						{"Lets start the tasks for "} {currentTaskDate.toDateString()} {"\n"}
@@ -65,7 +66,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 						opened={openAll}
 					/>
 					<div
-						className="d-flex flex-row justify-content-around h-50 square bg-primary rounded-pill p-4 text-light opacity-75 w-75 mx-auto mt-3"
+						className={`d-flex flex-row justify-content-around bg-primary rounded-3 p-4 text-light opacity-75 w-75 mx-auto mt-3 ${styles.start_end_container} ${styles.start_end_text} align-items-center`}
 						style={{ fontWeight: "bold" }}
 					>
 						{currentTaskDate.toDateString()} {" tasks are now complete!!"}

@@ -9,6 +9,7 @@ import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 import { isSameDay } from "src/helpers";
 import Accordion from "react-bootstrap/Accordion";
+import type { AccordionEventKey } from "react-bootstrap/esm/AccordionContext";
 
 type TimelineDragDropProps = {
 	currentTaskDate: Date;
@@ -23,6 +24,7 @@ type TimelineDragDropProps = {
  */
 export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
+	const [currentActiveKey, setCurrentActiveKey] = React.useState<AccordionEventKey>();
 	/**
 	 * Handles the drag end operation
 	 *
@@ -58,12 +60,15 @@ export const TimelineDragDrop = ({ currentTaskDate, opened }: TimelineDragDropPr
 									>
 										{(prov): JSX.Element => (
 											<Accordion
-												className={`${opened ? "show pe-5 ps-3" : "pe-5 ps-3"}`}
+												activeKey={opened ? "0" : currentActiveKey}
+												alwaysOpen
+												className="show pe-5 ps-3"
 												ref={prov.innerRef}
 												{...prov.draggableProps}
 												{...prov.dragHandleProps}
+												onSelect={(ev): void => setCurrentActiveKey(ev)}
 											>
-												<Accordion.Item eventKey={task.id.toString()}>
+												<Accordion.Item eventKey={`${opened ? "0" : index}`}>
 													<Accordion.Header>
 														<div
 															className="pe-2"
