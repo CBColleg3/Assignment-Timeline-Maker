@@ -1,6 +1,5 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";

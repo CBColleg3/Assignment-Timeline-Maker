@@ -4,7 +4,6 @@ import { AddRemoveTask } from "src/components/Task/AddRemove/AddRemoveTask";
 import "./TimelineDragDrop.css";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
 import type { Task } from "src/@types";
-import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 import { isSameDay } from "src/helpers";
