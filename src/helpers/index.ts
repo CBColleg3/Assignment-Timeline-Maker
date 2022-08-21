@@ -12,12 +12,15 @@ import { REGEX_EXPRESSIONS } from "./shared/regexExpressions";
 import { findPoints } from "./Task/findPoints";
 import { updateDueDates } from "./Task/updateDueDates";
 import { validateSetDateTimeInput } from "./SetDateTime/validateSetDateTimeInput";
+import { calcDayRange } from "./Task/calcDayRange";
+import { isSameDay } from "./Task/isSameDay";
 
 /**
  * Base export, exports all utility functions in one object
  */
 export {
 	calcDays,
+	calcDayRange,
 	calcDiffInDays,
 	calcTotalPoints,
 	colorHex,
@@ -28,6 +31,7 @@ export {
 	displayFileWithSize,
 	findParts,
 	findPoints,
+	isSameDay,
 	parseFileTextToXML,
 	readFile,
 	REGEX_EXPRESSIONS,

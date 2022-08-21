@@ -15,11 +15,11 @@ type SetDateTimeProps = {
 	/**
 	 * Propagates the local changes to the parent component
 	 */
-	update: (dates: AssignmentDate) => void;
+	update: (_dates: AssignmentDate) => void;
 	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
-	addError: (error: Error | undefined, operation: ERROR_OPS) => void;
+	addError: (_error: Error | undefined, _operation: ERROR_OPS) => void;
 };
 
 const END_DAY_INIT_INCREMENT = 172800000;

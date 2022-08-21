@@ -14,7 +14,7 @@ type StartDateProps = {
 	/**
 	 * The function to update the start date
 	 */
-	update: (theDate: Date) => void;
+	update: (_theDate: Date) => void;
 };
 
 /**

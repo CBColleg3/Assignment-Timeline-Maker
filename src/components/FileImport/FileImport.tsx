@@ -23,7 +23,7 @@ const CONSTANTS = {
  */
 type FileImportProps = {
 	files: File[] | undefined;
-	update: (theFiles: File[]) => void;
+	update: (_theFiles: File[]) => void;
 };
 
 /**

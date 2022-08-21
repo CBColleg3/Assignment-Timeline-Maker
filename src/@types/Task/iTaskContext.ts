@@ -5,5 +5,5 @@ import type { Task } from "./Task";
  */
 export type iTaskContext = {
 	tasks: Task[];
-	setTasks: (tasks: Task[]) => void;
+	setTasks: (_tasks: Task[]) => void;
 };
