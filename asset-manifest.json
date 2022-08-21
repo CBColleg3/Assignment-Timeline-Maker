@@ -1,13 +1,17 @@
 {
   "files": {
-    "main.css": "/Assignment-Timeline-Maker/static/css/main.472a2e5c.css",
-    "main.js": "/Assignment-Timeline-Maker/static/js/main.a43cf76a.js",
+    "main.css": "/Assignment-Timeline-Maker/static/css/main.7ad53f3b.css",
+    "main.js": "/Assignment-Timeline-Maker/static/js/main.baca7082.js",
+    "static/js/703.e41f6311.chunk.js": "/Assignment-Timeline-Maker/static/js/703.e41f6311.chunk.js",
+    "static/js/513.a6d99ab9.chunk.js": "/Assignment-Timeline-Maker/static/js/513.a6d99ab9.chunk.js",
     "index.html": "/Assignment-Timeline-Maker/index.html",
-    "main.472a2e5c.css.map": "/Assignment-Timeline-Maker/static/css/main.472a2e5c.css.map",
-    "main.a43cf76a.js.map": "/Assignment-Timeline-Maker/static/js/main.a43cf76a.js.map"
+    "main.7ad53f3b.css.map": "/Assignment-Timeline-Maker/static/css/main.7ad53f3b.css.map",
+    "main.baca7082.js.map": "/Assignment-Timeline-Maker/static/js/main.baca7082.js.map",
+    "703.e41f6311.chunk.js.map": "/Assignment-Timeline-Maker/static/js/703.e41f6311.chunk.js.map",
+    "513.a6d99ab9.chunk.js.map": "/Assignment-Timeline-Maker/static/js/513.a6d99ab9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.472a2e5c.css",
-    "static/js/main.a43cf76a.js"
+    "static/css/main.7ad53f3b.css",
+    "static/js/main.baca7082.js"
   ]
 }
