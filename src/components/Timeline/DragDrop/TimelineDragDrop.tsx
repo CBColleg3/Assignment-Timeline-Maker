@@ -47,42 +47,36 @@ export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JS
 						ref={provided.innerRef}
 					>
 						{tasks.map((task: Task, index: number) => (
-							<>
-								{isSameDay(currentTaskDate, task.dueDate) ? (
-									<Draggable
-										draggableId={task.id.toString()}
-										index={index}
-										key={task.id}
+							<Draggable
+								draggableId={task.id.toString()}
+								index={index}
+								key={task.id}
+							>
+								{(prov): JSX.Element => (
+									<span
+										ref={prov.innerRef}
+										{...prov.draggableProps}
+										{...prov.dragHandleProps}
 									>
-										{(prov): JSX.Element => (
-											<span
-												ref={prov.innerRef}
-												{...prov.draggableProps}
-												{...prov.dragHandleProps}
-											>
-												<VerticalTimelineElement
-													className="vertical-timeline-element--work"
-													contentStyle={{
-														color: `#${task.color}`,
-													}}
-													iconStyle={{
-														background: `#${task.color}`,
-														color: "#fff",
-													}}
-												>
-													<TaskInfo
-														index={index}
-														task={task}
-													/>
-													<AddRemoveTask index={index} />
-												</VerticalTimelineElement>
-											</span>
-										)}
-									</Draggable>
-								) : (
-									<span />
+										<VerticalTimelineElement
+											className="vertical-timeline-element--work"
+											contentStyle={{
+												color: `#${task.color}`,
+											}}
+											iconStyle={{
+												background: `#${task.color}`,
+												color: "#fff",
+											}}
+										>
+											<TaskInfo
+												index={index}
+												task={task}
+											/>
+											<AddRemoveTask index={index} />
+										</VerticalTimelineElement>
+									</span>
 								)}
-							</>
+							</Draggable>
 						))}
 					</div>
 				)}

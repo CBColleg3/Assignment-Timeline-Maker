@@ -32,10 +32,6 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 
 	return (
 		<div>
-			<TimelineDates
-				setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
-				taskDates={taskDates}
-			/>
 			<span ref={passRef}>
 				<VerticalTimeline layout="1-column">
 					<VerticalTimelineElement
@@ -63,6 +59,11 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 								minute: "2-digit",
 							})}{" "}
 						</h4>
+						<TimelineDates
+							currentTaskDate={currentTaskDate}
+							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
+							taskDates={taskDates}
+						/>
 					</VerticalTimelineElement>
 					<TimelineDragDrop currentTaskDate={currentTaskDate} />
 					<VerticalTimelineElement
