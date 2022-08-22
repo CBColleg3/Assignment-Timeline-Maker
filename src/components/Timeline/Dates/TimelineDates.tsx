@@ -34,7 +34,10 @@ export const TimelineDates = ({
 				{taskDates.map(
 					(taskDate: Date, _ind: number): JSX.Element => (
 						<Accordion.Item eventKey={`${taskDate.getTime()}`}>
-							<Accordion.Header key={`${taskDate.getTime()}`}>
+							<Accordion.Header
+								key={`${taskDate.getTime()}`}
+								onClick={setCurrentTaskDate(taskDate)}
+							>
 								{`${DAY_STRING} ${_ind + DAY_IND_INCREMENT} - ${taskDate.toDateString()}`}
 							</Accordion.Header>
 							<Accordion.Body>
