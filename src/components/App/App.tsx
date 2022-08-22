@@ -256,6 +256,7 @@ export const App = (): JSX.Element => {
 									<DocViewer
 										docXML={docCollection.doc}
 										fileImported={files.length > MIN_FILES_LENGTH}
+										taskCollection={taskCollection}
 									/>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">

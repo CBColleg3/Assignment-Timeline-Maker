@@ -3,6 +3,7 @@ import { calcDiffInDays } from "./Task/calcDiffInDays";
 import { calcTotalPoints } from "./Task/calcTotalPoints";
 import { colorHex, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "./shared/colorHex";
 import { convertXML2HTML } from "./DocViewer/convertXML2HTML";
+import { colorHexs } from "./DocViewer/colorMap";
 import { extractParagraphs } from "./DocViewer/extractParagraphs";
 import { readFile } from "./shared/readFile";
 import { displayFileWithSize } from "./FileDisplay/displayFileWithSize";
@@ -37,4 +38,5 @@ export {
 	REGEX_EXPRESSIONS,
 	updateDueDates,
 	validateSetDateTimeInput,
+	colorHexs,
 };

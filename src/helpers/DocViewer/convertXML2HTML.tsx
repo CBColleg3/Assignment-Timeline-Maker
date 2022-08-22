@@ -1,6 +1,16 @@
 import React from "react";
 import type { HTMLStyle, TaskCollection, Task } from "src/@types";
 import { translateXMLElementStyling } from "./translateXMLElementStyling";
+import { colorHexs } from "src/helpers";
+
+const FIRST_ELEMENT_INDEX = 0;
+const EMPTY_ARRAY_LENGTH = 0;
+const HIGHLITER_OPACITY = 0.5;
+const MIN_OPACITY = 0;
+const DEFAULT_OPACITY = 1;
+const COLOR_HEX_MAX = 255;
+const DIGIT_BASE = 16;
+const COLOR_MODIFIER = 100;
 
 /**
  *
@@ -9,17 +19,16 @@ import { translateXMLElementStyling } from "./translateXMLElementStyling";
  * @returns
  */
 function convertTextChunk(textChunk: Element, globalStyleChunk: Element[]): JSX.Element {
-	let output;
 	const style: Record<string, string> = getTextStyle(textChunk);
 	const highlightStyle: Record<string, string> = getHighlightStyle(textChunk);
 
 	const textArray = Array.from(textChunk.getElementsByTagName("w:t"));
 
-	if (textArray.length === 0) {
-		return <span>{output}</span>;
-	} else {
-		output = textArray[0].childNodes[0].nodeValue;
+	if (textArray.length === EMPTY_ARRAY_LENGTH) {
+		return <span />;
 	}
+
+	const output = textArray[FIRST_ELEMENT_INDEX].childNodes[FIRST_ELEMENT_INDEX].nodeValue;
 
 	return (
 		<span style={highlightStyle}>
@@ -36,17 +45,19 @@ function convertTextChunk(textChunk: Element, globalStyleChunk: Element[]): JSX.
 function getTextStyle(textChunk: Element): Record<string, string> {
 	const style: Record<string, string> = {};
 
-	if (textChunk.getElementsByTagName("w:b").length !== 0) style["font-weight"] = "bold";
+	if (textChunk.getElementsByTagName("w:b").length !== EMPTY_ARRAY_LENGTH) {
+		style["font-weight"] = "bold";
+	}
 
-	if (textChunk.getElementsByTagName("w:i").length !== 0) {
+	if (textChunk.getElementsByTagName("w:i").length !== EMPTY_ARRAY_LENGTH) {
 		style["font-style"] = "italic";
 	}
 
-	if (textChunk.getElementsByTagName("w:u").length !== 0) {
+	if (textChunk.getElementsByTagName("w:u").length !== EMPTY_ARRAY_LENGTH) {
 		style["text-decoration"] = "underline";
 	}
 
-	if (textChunk.getElementsByTagName("w:strike").length !== 0) {
+	if (textChunk.getElementsByTagName("w:strike").length !== EMPTY_ARRAY_LENGTH) {
 		if (style["text-decoration"] !== undefined) {
 			style["text-decoration"] += " line-through";
 		} else {
@@ -54,11 +65,11 @@ function getTextStyle(textChunk: Element): Record<string, string> {
 		}
 	}
 
-	if (textChunk.getElementsByTagName("w:color").length !== 0) {
-		const color = textChunk.getElementsByTagName("w:color")[0].getAttribute("w:val");
+	if (textChunk.getElementsByTagName("w:color").length !== EMPTY_ARRAY_LENGTH) {
+		const color = textChunk.getElementsByTagName("w:color")[FIRST_ELEMENT_INDEX].getAttribute("w:val");
 		console.log(color);
 		if (color !== null) {
-			style["color"] = "#" + color;
+			style.color = `#${color}`;
 		}
 	}
 
@@ -73,21 +84,24 @@ function getTextStyle(textChunk: Element): Record<string, string> {
 function getHighlightStyle(textChunk: Element): Record<string, string> {
 	const highlightStyle: Record<string, string> = {};
 
-	if (textChunk.getElementsByTagName("w:highlight").length !== 0) {
-		const colorName = textChunk.getElementsByTagName("w:highlight")[0].getAttribute("w:val");
+	if (textChunk.getElementsByTagName("w:highlight").length !== EMPTY_ARRAY_LENGTH) {
+		const colorName = textChunk.getElementsByTagName("w:highlight")[FIRST_ELEMENT_INDEX].getAttribute("w:val");
 
 		if (colorName !== null) {
 			if (colorHexs[colorName] !== undefined) {
-				const _opacity = Math.round(Math.min(Math.max(0.5 || 1, 0), 1) * 255);
-				highlightStyle["background-color"] = colorHexs[colorName] + _opacity.toString(16).toUpperCase();
+				// Programmtically change opacity to a given highlighter color
+				const _opacity = Math.round(
+					Math.min(Math.max(HIGHLITER_OPACITY || DEFAULT_OPACITY, MIN_OPACITY), DEFAULT_OPACITY) * COLOR_HEX_MAX,
+				);
+				highlightStyle.backgroundColor = colorHexs[colorName] + _opacity.toString(DIGIT_BASE).toUpperCase();
 			}
 		}
-	} else if (textChunk.getElementsByTagName("w:shd").length !== 0) {
-		// highlighting takes precedence over standard color fill
-		const color = textChunk.getElementsByTagName("w:shd")[0].getAttribute("w:fill");
+	} else if (textChunk.getElementsByTagName("w:shd").length !== EMPTY_ARRAY_LENGTH) {
+		// Highlighting takes precedence over standard color fill
+		const color = textChunk.getElementsByTagName("w:shd")[FIRST_ELEMENT_INDEX].getAttribute("w:fill");
 
 		if (color !== null) {
-			highlightStyle["background-color"] = "#" + color;
+			highlightStyle.backgroundColor = `#${color}`;
 		}
 	}
 
@@ -102,18 +116,21 @@ function getHighlightStyle(textChunk: Element): Record<string, string> {
 function getBackgroundStyle(globalStyleChunks: Element[]): Record<string, string> {
 	const backgroundStyle: Record<string, string> = {};
 
-	if (globalStyleChunks.length === 0) {
+	if (globalStyleChunks.length === EMPTY_ARRAY_LENGTH) {
 		return backgroundStyle;
 	}
 
-	const parentTag = globalStyleChunks[0].parentElement?.tagName;
+	const parentTag = globalStyleChunks[FIRST_ELEMENT_INDEX].parentElement?.tagName;
 
 	if (parentTag !== undefined) {
-		if (globalStyleChunks[0].getElementsByTagName("w:shd").length !== 0) {
-			const color = globalStyleChunks[0].getElementsByTagName("w:shd")[0].getAttribute("w:fill");
+		if (globalStyleChunks[FIRST_ELEMENT_INDEX].getElementsByTagName("w:shd").length !== EMPTY_ARRAY_LENGTH) {
+			const color =
+				globalStyleChunks[FIRST_ELEMENT_INDEX].getElementsByTagName("w:shd")[FIRST_ELEMENT_INDEX].getAttribute(
+					"w:fill",
+				);
 
 			if (color !== null) {
-				backgroundStyle["background-color"] = "#" + color;
+				backgroundStyle.backgroundColor = `#${color}`;
 			}
 		}
 	}
@@ -133,11 +150,17 @@ function styleContent(
 ): JSX.Element | JSX.Element[] {
 	const backgroundStyle: Record<string, string> = getBackgroundStyle(globalStyleChunk);
 
-	if (globalStyleChunk.length === 0 || globalStyleChunk[0].getElementsByTagName("w:pStyle").length === 0) {
+	if (
+		globalStyleChunk.length === EMPTY_ARRAY_LENGTH ||
+		globalStyleChunk[FIRST_ELEMENT_INDEX].getElementsByTagName("w:pStyle").length === EMPTY_ARRAY_LENGTH
+	) {
 		return <span style={backgroundStyle}>{formattedContent}</span>;
 	}
 
-	const tag = globalStyleChunk[0].getElementsByTagName("w:pStyle")[0].getAttribute("w:val");
+	const tag =
+		globalStyleChunk[FIRST_ELEMENT_INDEX].getElementsByTagName("w:pStyle")[FIRST_ELEMENT_INDEX].getAttribute(
+			"w:val",
+		);
 
 	if (tag !== undefined) {
 		switch (tag) {
@@ -166,10 +189,10 @@ function styleContent(
 function highlightTask(textContent: string, taskArray: Task[]): Record<string, string> {
 	const style: Record<string, string> = {};
 
-	const task = taskArray.find((task: Task): boolean => task.document.includes(textContent));
-	if (task !== undefined) {
-		console.log("match");
-		style["background-color"] = `rgb(${task.color + 100},100,150)`;
+	const matchedTask = taskArray.find((task: Task): boolean => task.document.includes(textContent));
+	if (matchedTask !== undefined) {
+		console.log(`THE COLOR: ${matchedTask.color}`);
+		style.backgroundColor = `rgb(${parseInt(matchedTask.color, 16)},100,150)`;
 	}
 
 	return style;
@@ -181,13 +204,20 @@ function highlightTask(textContent: string, taskArray: Task[]): Record<string, s
  * @param {Element} par xml element representing a 'w:p' xml tag
  * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
  */
-function convertXML2HTML(par: Element, taskCollection: TaskCollection): JSX.Element {
-	const textChunks = Array.from(par.getElementsByTagName("w:r")); // contains text formatting info
-	const globalStyleChunk = Array.from(par.getElementsByTagName("w:pPr")); // contains additional, more specific styling info for text
+export function convertXML2HTML(par: Element, taskCollection: TaskCollection | undefined): JSX.Element {
+	// Contains text formatting info
+	const textChunks = Array.from(par.getElementsByTagName("w:r"));
+
+	// Contains additional, more specific styling info for text
+	const globalStyleChunk = Array.from(par.getElementsByTagName("w:pPr"));
 	const textArray = Array.from(par.getElementsByTagName("w:t"));
 
 	const textContent = textArray.reduce(
-		(textContent: string, element: Element) => textContent + element.childNodes[0].nodeValue,
+		(textContentElement: string, element: Element) =>
+			textContentElement +
+			(element.childNodes[FIRST_ELEMENT_INDEX].nodeValue !== null
+				? element.childNodes[FIRST_ELEMENT_INDEX].nodeValue
+				: ""),
 		"",
 	);
 
@@ -196,7 +226,7 @@ function convertXML2HTML(par: Element, taskCollection: TaskCollection): JSX.Elem
 	);
 
 	return (
-		<p style={highlightTask(textContent, taskCollection.tasks)}>
+		<p style={highlightTask(textContent, taskCollection !== undefined ? taskCollection.tasks : [])}>
 			{styleContent(formattedContent, globalStyleChunk)}
 		</p>
 	);
