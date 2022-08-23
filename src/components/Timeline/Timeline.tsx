@@ -61,7 +61,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 							taskDates={taskDates}
 						/>
 					</VerticalTimelineElement>
-					<TimelineDragDrop currentTaskDate={currentTaskDate} />
+					<TimelineDragDrop />
 					<VerticalTimelineElement
 						contentArrowStyle={{
 							borderRight: "7px solid  rgb(33, 150, 243)",

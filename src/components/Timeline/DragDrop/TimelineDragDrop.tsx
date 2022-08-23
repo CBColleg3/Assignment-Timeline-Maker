@@ -7,20 +7,14 @@ import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
-import { isSameDay } from "src/helpers";
 import { ChangeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
-
-type TimelineDragDropProps = {
-	currentTaskDate: Date;
-};
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- * @param {TimelineDragDropProps} props The current task day, which will be used to display specific tasks
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JSX.Element => {
+export const TimelineDragDrop = (): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation

@@ -4,9 +4,12 @@ const INDEX_ONE = 1;
 const INDEX_ZERO = 0;
 
 /**
- *
- * @param modifiedTasks
- * @param index
+ * Changes the Color and Due Date of a Task if it's moved near another task with a different due date. It first checks the one above it
+ * but if its at the top it checks the one below it to match its due date and color.
+ * 
+ * @param movedTasks the task array to modify.
+ * @param index the index of the task we've moved.
+ * @returns a modified task array with the due dates and colors updated
  */
 export const ChangeTaskColor = (movedTasks: Task[], index: number): Task[] => {
 	if (
