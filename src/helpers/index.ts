@@ -14,7 +14,8 @@ import { updateDueDates } from "./Task/updateDueDates";
 import { validateSetDateTimeInput } from "./SetDateTime/validateSetDateTimeInput";
 import { calcDayRange } from "./Task/calcDayRange";
 import { isSameDay } from "./Task/isSameDay";
-import { truncateText } from "./shared/trunacteText";
+import { truncateText } from "./shared/truncateText";
+import { isTaskInElement } from "./DocViewer/isTaskInElement";
 
 /**
  * Base export, exports all utility functions in one object
@@ -33,6 +34,7 @@ export {
 	findParts,
 	findPoints,
 	isSameDay,
+	isTaskInElement,
 	parseFileTextToXML,
 	readFile,
 	REGEX_EXPRESSIONS,
