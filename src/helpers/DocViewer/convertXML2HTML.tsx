@@ -13,12 +13,13 @@ const DIGIT_BASE = 16;
 const COLOR_MODIFIER = 100;
 
 /**
+ * Takes a single text chunk in a paragraph (w:r tag) and converts it into a span tag with
+ * appropriate CSS styling
  *
- * @param textChunk
- * @param globalStyleChunk
- * @returns
+ * @param {Element} textChunk w:r element obtained from XML
+ * @returns {JSX.Element} A span tag with appropriate CSS styling
  */
-function convertTextChunk(textChunk: Element, globalStyleChunk: Element[]): JSX.Element {
+function convertTextChunk(textChunk: Element): JSX.Element {
 	const style: Record<string, string> = getTextStyle(textChunk);
 	const highlightStyle: Record<string, string> = getHighlightStyle(textChunk);
 
@@ -38,9 +39,10 @@ function convertTextChunk(textChunk: Element, globalStyleChunk: Element[]): JSX.
 }
 
 /**
+ * Grabs Word doc highlight styling from XML to be put into a textChunk
  *
- * @param textChunk
- * @returns
+ * @param {Element} textChunk w:r element obtained from XML
+ * @returns {Record<string, string>} Styling record with textChunk styling information
  */
 function getTextStyle(textChunk: Element): Record<string, string> {
 	const style: Record<string, string> = {};
@@ -77,9 +79,10 @@ function getTextStyle(textChunk: Element): Record<string, string> {
 }
 
 /**
+ *	Specific function for grabbing Word doc highlight styling from XML to be put into a textChunk
  *
- * @param textChunk
- * @returns
+ * @param {Element} textChunk w:r element obtained from XML
+ * @returns {Record<string, string>} Styling record with highliting information
  */
 function getHighlightStyle(textChunk: Element): Record<string, string> {
 	const highlightStyle: Record<string, string> = {};
@@ -139,10 +142,11 @@ function getBackgroundStyle(globalStyleChunks: Element[]): Record<string, string
 }
 
 /**
+ * Takes all converted w:r tags and surrounds them with a final span tag with global w:pPr styling
  *
- * @param formattedContent
- * @param globalStyleChunk
- * @returns
+ * @param {JSX.Element[]} formattedContent List of all span tags converted from w:r XML tags
+ * @param {Element[]} globalStyleChunk List of all w:pPr global styling tags
+ * @returns {JSX.Element} Span tag with global styling, with span tag children from converted x:r tags
  */
 function styleContent(
 	formattedContent: JSX.Element[],
@@ -181,10 +185,11 @@ function styleContent(
 }
 
 /**
+ * Applies colored highlighting to paragraphs containing the same text found in a generated Task
  *
  * @param {string} textContent textContent of the entire paragraph
- * @param {Task[]} taskArray
- * @returns
+ * @param {Task[]} taskArray Array of tasks generated for the timeline
+ * @returns {Record<string, string>} Styling record containing task highlighting information
  */
 function highlightTask(textContent: string, taskArray: Task[]): Record<string, string> {
 	const style: Record<string, string> = {};
@@ -199,17 +204,23 @@ function highlightTask(textContent: string, taskArray: Task[]): Record<string, s
 }
 
 /**
- * Takes an Element containg 'w:p' xml tag information and extracts the text information from it
+ * Takes an Element containg 'w:p' xml tag information and extracts the text information from it,
+ * including styling
  *
  * @param {Element} par xml element representing a 'w:p' xml tag
  * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
  */
 export function convertXML2HTML(par: Element, taskCollection: TaskCollection | undefined): JSX.Element {
-	// Contains text formatting info
+	// Get all text chunks in the paragraph with individual styling (w:r tags)
 	const textChunks = Array.from(par.getElementsByTagName("w:r"));
 
-	// Contains additional, more specific styling info for text
+	// Grab styling information that pertains to ALL text within the paragraph (w:pPr tags)
 	const globalStyleChunk = Array.from(par.getElementsByTagName("w:pPr"));
+
+	/*
+	 * Grab text separately for text-to-Task substring matching for highlighting,
+	 * then reduce to one string,
+	 */
 	const textArray = Array.from(par.getElementsByTagName("w:t"));
 
 	const textContent = textArray.reduce(
@@ -221,9 +232,8 @@ export function convertXML2HTML(par: Element, taskCollection: TaskCollection | u
 		"",
 	);
 
-	const formattedContent = textChunks.map(
-		(textChunk: Element): JSX.Element => convertTextChunk(textChunk, globalStyleChunk),
-	);
+	//
+	const formattedContent = textChunks.map((textChunk: Element): JSX.Element => convertTextChunk(textChunk));
 
 	return (
 		<p style={highlightTask(textContent, taskCollection !== undefined ? taskCollection.tasks : [])}>
