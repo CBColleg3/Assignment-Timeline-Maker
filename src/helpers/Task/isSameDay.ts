@@ -6,7 +6,6 @@
  * @returns Whether the two dates fall on the same day
  */
 export const isSameDay = (date1: Date, date2: Date): boolean => {
-	console.log("date1: ", date1.getDate(), "date2:", date2.getDay());
 	if (!date1 || !date2) {
 		return false;
 	}

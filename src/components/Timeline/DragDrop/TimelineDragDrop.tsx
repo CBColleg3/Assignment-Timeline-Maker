@@ -8,6 +8,7 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 import { isSameDay } from "src/helpers";
+import { ChangeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 
 type TimelineDragDropProps = {
 	currentTaskDate: Date;
@@ -33,9 +34,11 @@ export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JS
 		}
 
 		const movedTasks = [...tasks].map((task: Task) => ({ ...task }));
+
 		const [newOrder] = movedTasks.splice(source.index, 1);
 		movedTasks.splice(destination.index, 0, newOrder);
-		setTasks(movedTasks);
+		const recoloredTasks = ChangeTaskColor(movedTasks, destination.index);
+		setTasks(recoloredTasks);
 	};
 
 	return (

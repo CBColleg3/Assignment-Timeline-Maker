@@ -65,11 +65,11 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 		}));
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
-			color: fetchRandomColor(),
-			document: "Uh Oh",
-			dueDate: new Date(),
+			color: tasks[index].color,
+			document: "Type Document Text Here.",
+			dueDate: tasks[index].dueDate,
 			id: modifiedTaskArr.length + CONSTANTS.TASK_INDEX_INC,
-			name: "Swag",
+			name: "New Task",
 			points: "0",
 		});
 		setTasks(modifiedTaskArr);
@@ -91,8 +91,18 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 
 	return (
 		<div>
-			<Button onClick={(): void => addPart(index)}>{"Add Part"}</Button>
-			<Button onClick={(): void => removePart(index)}>{"Remove Part"}</Button>
+			<Button
+				className="bg-success mx-auto"
+				onClick={(): void => addPart(index)}
+			>
+				{"Add Task"}
+			</Button>
+			<Button
+				className="bg-danger mx-auto"
+				onClick={(): void => removePart(index)}
+			>
+				{"Remove Task"}
+			</Button>
 		</div>
 	);
 };
