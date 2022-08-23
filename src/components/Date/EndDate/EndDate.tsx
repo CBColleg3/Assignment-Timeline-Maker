@@ -14,7 +14,7 @@ type EndDateProps = {
 	/**
 	 * The function to update the end date
 	 */
-	update: (theDate: Date) => void;
+	update: (_theDate: Date) => void;
 };
 
 /**

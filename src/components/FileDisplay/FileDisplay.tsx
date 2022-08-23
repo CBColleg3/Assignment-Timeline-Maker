@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key -- index aids in unique keys */
 import React from "react";
-import { faCircle, faCircleCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faCircleCheck, faEraser, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, ListGroup } from "react-bootstrap";
 import type { UpdateType } from "src/@types";
@@ -15,6 +15,7 @@ type FileDisplayProps = {
 	files: File[] | undefined;
 	updateFiles: (_type: UpdateType, _idx: number) => void;
 	updateCurrentSelection: (_ind: number) => void;
+	uploadDocument: () => void;
 };
 
 /**
@@ -34,10 +35,11 @@ const FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL = 1;
  * @returns A component which displays the files supplied to it, and allows for adding and deleting of files
  */
 const FileDisplay = ({
-	files,
-	updateFiles,
 	currentSelection,
+	files,
 	updateCurrentSelection,
+	updateFiles,
+	uploadDocument,
 }: FileDisplayProps): JSX.Element => (
 	<>
 		{files && files.length > MIN_FILES_LENGTH ? (
@@ -55,6 +57,13 @@ const FileDisplay = ({
 							>
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>
 								<span className="ms-2">
+									{currentSelection === index && (
+										<FontAwesomeIcon
+											className={`${styles.list_icon} p-1 rounded`}
+											icon={faUpload}
+											onClick={(): void => uploadDocument()}
+										/>
+									)}
 									<FontAwesomeIcon
 										className={`${styles.list_icon} p-1 rounded`}
 										icon={faEraser}

@@ -72,19 +72,18 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	}
 
 	return (
-		<div>
+		<div className="btn float-right ps-5">
 			<Button
+				className="bg-success bg-gradient"
 				onClick={(): void => addPart(index)}
-				variant="outline-primary"
 			>
-				{"Add Part"}
+				{"+"}
 			</Button>
 			<Button
-				className="ms-2"
+				className="bg-danger bg-gradient"
 				onClick={(): void => removePart(index)}
-				variant="outline-primary"
 			>
-				{"Remove Part"}
+				{"- "}
 			</Button>
 		</div>
 	);
