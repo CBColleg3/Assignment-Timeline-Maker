@@ -11,7 +11,7 @@ const INDEX_ZERO = 0;
  * @param index the index of the task we've moved.
  * @returns a modified task array with the due dates and colors updated
  */
-export const ChangeTaskColor = (movedTasks: Task[], index: number): Task[] => {
+export const changeTaskColor = (movedTasks: Task[], index: number): Task[] => {
 	if (
 		movedTasks[index].dueDate.toDateString() !== movedTasks[index - INDEX_ONE].dueDate.toDateString() &&
 		index !== INDEX_ZERO

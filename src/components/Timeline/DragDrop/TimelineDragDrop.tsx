@@ -7,7 +7,7 @@ import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
-import { ChangeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
+import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
@@ -31,7 +31,7 @@ export const TimelineDragDrop = (): JSX.Element => {
 
 		const [newOrder] = movedTasks.splice(source.index, 1);
 		movedTasks.splice(destination.index, 0, newOrder);
-		const recoloredTasks = ChangeTaskColor(movedTasks, destination.index);
+		const recoloredTasks = changeTaskColor(movedTasks, destination.index);
 		setTasks(recoloredTasks);
 	};
 
