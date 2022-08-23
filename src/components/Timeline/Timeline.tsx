@@ -35,7 +35,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 			<span ref={passRef}>
 				<VerticalTimeline layout="1-column">
 					<VerticalTimelineElement
-						className="vertical-timeline-element--work"
+						className="vertical-timeline-element--work rounded-5"
 						contentArrowStyle={{
 							borderRight: "7px solid  rgb(160, 16, 82)",
 						}}
@@ -48,17 +48,13 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 							color: "#fff",
 						}}
 					>
-						<h3 className="vertical-timeline-element-title">
-							{"Lets start the tasks for "} {currentTaskDate.toDateString()}
-						</h3>
-						<h4 className="vertical-timeline-element-title">
-							{"Due Date: "}
-							{assignmentDate.end.toLocaleDateString()}{" "}
-							{assignmentDate.end.toLocaleTimeString([], {
+						<h3 className="text-center text-decoration-underline">{"Task Table of Contents"}</h3>
+						<div className="my-3 fs-6 text-center">
+							{`\u2022 Due: ${assignmentDate.end.toLocaleDateString()} ${assignmentDate.end.toLocaleTimeString([], {
 								hour: "2-digit",
 								minute: "2-digit",
-							})}{" "}
-						</h4>
+							})} \u2022`}
+						</div>
 						<TimelineDates
 							currentTaskDate={currentTaskDate}
 							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}

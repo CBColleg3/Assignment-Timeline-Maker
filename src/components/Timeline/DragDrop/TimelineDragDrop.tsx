@@ -46,38 +46,41 @@ export const TimelineDragDrop = ({ currentTaskDate }: TimelineDragDropProps): JS
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						{tasks.map((task: Task, index: number) => (
-							<Draggable
-								draggableId={task.id.toString()}
-								index={index}
-								key={task.id}
-							>
-								{(prov): JSX.Element => (
-									<span
-										ref={prov.innerRef}
-										{...prov.draggableProps}
-										{...prov.dragHandleProps}
-									>
-										<VerticalTimelineElement
-											className="vertical-timeline-element--work"
-											contentStyle={{
-												color: `#${task.color}`,
-											}}
-											iconStyle={{
-												background: `#${task.color}`,
-												color: "#fff",
-											}}
+						{tasks
+							.filter((eachTask) => isSameDay(eachTask.dueDate, currentTaskDate))
+							.map((task: Task, index: number) => (
+								<Draggable
+									draggableId={task.id.toString()}
+									index={index}
+									key={task.id}
+								>
+									{(prov): JSX.Element => (
+										<span
+											ref={prov.innerRef}
+											{...prov.draggableProps}
+											{...prov.dragHandleProps}
 										>
-											<TaskInfo
-												index={index}
-												task={task}
-											/>
-											<AddRemoveTask index={index} />
-										</VerticalTimelineElement>
-									</span>
-								)}
-							</Draggable>
-						))}
+											<VerticalTimelineElement
+												className="vertical-timeline-element--work"
+												contentStyle={{
+													color: `#${task.color}`,
+												}}
+												iconStyle={{
+													background: `#${task.color}`,
+													color: "#fff",
+												}}
+												id={`${task.name}-${task.id}`}
+											>
+												<TaskInfo
+													index={index}
+													task={task}
+												/>
+												<AddRemoveTask index={index} />
+											</VerticalTimelineElement>
+										</span>
+									)}
+								</Draggable>
+							))}
 					</div>
 				)}
 			</Droppable>

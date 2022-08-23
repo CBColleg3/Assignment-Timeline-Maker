@@ -14,6 +14,7 @@ import { updateDueDates } from "./Task/updateDueDates";
 import { validateSetDateTimeInput } from "./SetDateTime/validateSetDateTimeInput";
 import { calcDayRange } from "./Task/calcDayRange";
 import { isSameDay } from "./Task/isSameDay";
+import { truncateText } from "./shared/trunacteText";
 
 /**
  * Base export, exports all utility functions in one object
@@ -36,5 +37,6 @@ export {
 	readFile,
 	REGEX_EXPRESSIONS,
 	updateDueDates,
+	truncateText,
 	validateSetDateTimeInput,
 };
