@@ -14,7 +14,8 @@ const INDEX_ZERO = 0;
 export const changeTaskColor = (movedTasks: Task[], index: number): Task[] => {
 	if (
 		movedTasks[index].dueDate.toDateString() !== movedTasks[index - INDEX_ONE].dueDate.toDateString() &&
-		index !== INDEX_ZERO
+		index !== INDEX_ZERO && movedTasks[index].dueDate.toDateString() !== movedTasks[index + INDEX_ONE].dueDate.toDateString() && 
+		index !== movedTasks.length - INDEX_ONE
 	) {
 		movedTasks[index].dueDate = movedTasks[index - INDEX_ONE].dueDate;
 		movedTasks[index].color = movedTasks[index - INDEX_ONE].color;
