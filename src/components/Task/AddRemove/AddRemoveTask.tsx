@@ -29,7 +29,7 @@ type AddRemoveTaskProps = {
  * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
 export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
-	const { tasks, setTasks } = useTaskContext();
+	const { tasks, updateTasks } = useTaskContext();
 	const IND_INC = 1;
 	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
 	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
@@ -53,7 +53,7 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 			name: "New Task",
 			points: "0",
 		});
-		setTasks(modifiedTaskArr);
+		updateTasks(modifiedTaskArr);
 	}
 
 	/**
@@ -67,7 +67,7 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 			dueDate: new Date(eachTask.dueDate),
 		}));
 		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
-		setTasks(modifiedPtsArr);
+		updateTasks(modifiedPtsArr);
 	}
 
 	return (

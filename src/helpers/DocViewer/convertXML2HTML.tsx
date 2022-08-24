@@ -12,6 +12,7 @@ const LIST_ELEMENT_DOES_NOT_EXIST = -1;
 const HIGHLIGHT_STYLES = ["backgroundColor", "color"];
 const BORDER_STYLE = "border";
 const BORDER_RADIUS = "borderRadius";
+const BORDER_RADIUS_AMT = 10;
 
 /**
  * Generates a border style for the component
@@ -64,9 +65,10 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
  *
  * @param par xml element representing a 'w:p' xml tag
  * @param tasks The tasks we want to compare the parsed text to, to apply highlighting upon matching
+ * @param startDate
  * @returns <p> html tag containing the text information within the 'w:p' tag
  */
-export const convertXML2HTML = (par: Element, tasks: Task[] = []): JSX.Element => {
+export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): JSX.Element => {
 	const htmlElement = par as HTMLElement;
 	const parChildren = [...htmlElement.children];
 	if (isSpace(parChildren.length)) {
@@ -131,8 +133,9 @@ export const convertXML2HTML = (par: Element, tasks: Task[] = []): JSX.Element =
 	globalStyles.forEach((eachStyle) => {
 		if (HIGHLIGHT_STYLES.includes(eachStyle.name) && containedTask.length) {
 			const [task] = containedTask;
+			const taskStartDiff = task.dueDate.getDate() - startDate.getDate();
 			globalCSS[BORDER_STYLE] = generateBorderStyle(task.color);
-			globalCSS[BORDER_RADIUS] = "10px";
+			globalCSS[BORDER_RADIUS] = `${BORDER_RADIUS_AMT * taskStartDiff}px`;
 		} else {
 			globalCSS[eachStyle.name] = eachStyle.value;
 		}

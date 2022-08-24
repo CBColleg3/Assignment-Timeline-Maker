@@ -28,17 +28,17 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	const [document, setDocument] = useState<string>(task.document);
 	const [points, setPoints] = useState<string>(task.points);
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
-	const { setTasks, tasks } = useTaskContext();
+	const { updateTasks, tasks } = useTaskContext();
 
 	/**
 	 * Updates the TaskContext's tasks
 	 */
-	function updateTasks(): void {
+	function changeTasks(): void {
 		const newTask = { ...task, document, dueDate, name, points };
 		const clonedTasks = [...tasks].map(
 			(_task, ind): Task => (ind === index ? newTask : { ..._task, dueDate: new Date(_task.dueDate.getTime()) }),
 		);
-		setTasks(clonedTasks);
+		updateTasks(clonedTasks);
 	}
 
 	return (
@@ -108,7 +108,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 					<div style={{ textAlign: "right" }}>
 						<Button
 							onClick={(): void => {
-								updateTasks();
+								changeTasks();
 								setEditMode(!editMode);
 							}}
 						>

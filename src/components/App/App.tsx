@@ -3,7 +3,6 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
 import type {
-	DocCollection,
 	Task,
 	AssignmentDate,
 	UpdateType,
@@ -11,9 +10,8 @@ import type {
 	Errors,
 	ERROR_OPS,
 	ERROR_TYPES,
-	TaskCollection,
-	TaskCacheEntry,
 	iTaskContext,
+	DocumentCacheEntry,
 } from "src/@types";
 import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
@@ -37,16 +35,16 @@ import * as html2pdf from "html2pdf.js";
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [dates, setDates] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
 	});
-	const [docCollection, setDocCollection] = React.useState<DocCollection>();
+	const [documentCache, setDocumentCache] = React.useState<DocumentCacheEntry[]>();
+	const [document, setDocument] = React.useState<Document>();
+	const [tasks, setTasks] = React.useState<Task[]>([]);
 	const [errors, setErrors] = React.useState<Errors>({});
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
-	const [taskCollection, setTaskCollection] = React.useState<TaskCollection>();
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
@@ -100,33 +98,10 @@ export const App = (): JSX.Element => {
 		}
 	};
 
-	/**
-	 * Triggers when taskCollection is edited or initialized (aka the tasks are changed), and updates the taskCache
-	 * to have an entry with filename --> stringified tasks
-	 */
-	React.useEffect(() => {
-		if (taskCollection) {
-			const id = taskCollection?.id;
-			setAssignmentCache((cache) => {
-				cache[id] = { tasks: JSON.stringify(taskCollection.tasks), xml: cache[id]?.xml };
-				return cache;
-			});
-		}
-	}, [taskCollection]);
-
-	/**
-	 * Triggers when docCollection is edited or initialized (aka the document is changed), and updates the cache
-	 * to have an entry with filename --> document
-	 */
-	React.useEffect(() => {
-		if (docCollection) {
-			const id = docCollection.id;
-			setAssignmentCache((cache) => {
-				cache[id] = { tasks: cache[id]?.tasks, xml: docCollection.doc };
-				return cache;
-			});
-		}
-	}, [docCollection]);
+	const removeCache = React.useCallback((id: string) => {
+		localStorage.removeItem(id);
+		localStorage.removeItem(`${id}-document`);
+	}, []);
 
 	/**
 	 * Triggers when files, fileSelected, dates, or taskCache are changed
@@ -136,32 +111,46 @@ export const App = (): JSX.Element => {
 	 *   - if it **does not** contain an entry with key filename, then it sets the task collection via parsing the document
 	 */
 	React.useEffect(() => {
-		if (files && files.length > MIN_FILES_LENGTH && fileSelected !== undefined) {
+		if (files?.length && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
-			if (assignmentCache[currentFile.name]) {
-				setDocCollection({ doc: assignmentCache[currentFile.name].xml, id: currentFile.name });
-				const parsedTasks = (JSON.parse(assignmentCache[currentFile.name].tasks) as Task[]).map((eachTask) => ({
-					...eachTask,
-					dueDate: new Date(eachTask.dueDate),
-				}));
-				setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
-				return;
+
+			const index = localStorage.getItem(`${currentFile.name}-document`);
+			const cacheEntry = localStorage.getItem(currentFile.name);
+			if (index && documentCache?.length && cacheEntry) {
+				const { doc: cachedDocument } = documentCache[parseInt(index, 10)];
+				setDocument(cachedDocument);
+				const parsedCachedTasks: Task[] = JSON.parse(cacheEntry);
+				setTasks(
+					[...parsedCachedTasks].map((eachTask) => ({ ...eachTask, dueDate: new Date(eachTask.dueDate) })),
+				);
+			} else {
+				const readText = readFile(currentFile);
+				parseFileTextToXML(readText)
+					.then((result) => {
+						setDocumentCache((oldCache) => {
+							if (oldCache) {
+								localStorage.setItem(`${currentFile.name}-document`, `${oldCache.length}`);
+								return [...oldCache, { doc: result }];
+							}
+							localStorage.setItem(`${currentFile.name}-document`, "0");
+							return [{ doc: result }];
+						});
+						setDocument(result);
+					})
+					// eslint-disable-next-line no-console -- no logger present yet
+					.catch((error) => console.error(error));
+				const parts = findParts(readText);
+				findPoints(parts)
+					.then((newTasks) => {
+						const parsedTasks = updateDueDates(newTasks, dates);
+						setTasks(parsedTasks);
+						localStorage.setItem(currentFile.name, JSON.stringify(parsedTasks));
+					})
+					// eslint-disable-next-line no-console -- no logger present yet
+					.catch((err) => console.error(err));
 			}
-			const readText = readFile(currentFile);
-			parseFileTextToXML(readText)
-				.then((result) => setDocCollection({ doc: result, id: currentFile.name }))
-				// eslint-disable-next-line no-console -- no logger present yet
-				.catch((error) => console.error(error));
-			const parts = findParts(readText);
-			findPoints(parts)
-				.then((tasks) => {
-					const parsedTasks = updateDueDates(tasks, dates);
-					setTaskCollection({ id: currentFile.name, tasks: parsedTasks });
-				})
-				// eslint-disable-next-line no-console -- no logger present yet
-				.catch((err) => console.error(err));
 		}
-	}, [files, fileSelected, dates, assignmentCache]);
+	}, [files, fileSelected, dates, documentCache, removeCache]);
 
 	/**
 	 * Memoized context value, specifies that it will only change value when the taskCollection changes
@@ -174,17 +163,10 @@ export const App = (): JSX.Element => {
 	 */
 	const taskMemo = React.useMemo(
 		() => (): iTaskContext => ({
-			setTasks: (newTasks: Task[]) =>
-				setTaskCollection((oldCollection) => {
-					const oldCollectionTasks = oldCollection?.tasks;
-					if (oldCollectionTasks) {
-						return { ...oldCollection, tasks: newTasks };
-					}
-					return oldCollection;
-				}),
-			tasks: taskCollection?.tasks ?? [],
+			tasks,
+			updateTasks: (newTasks: Task[]) => setTasks(newTasks),
 		}),
-		[taskCollection?.tasks],
+		[tasks],
 	);
 
 	/**
@@ -225,10 +207,10 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected !== undefined && files && files.length > MIN_FILES_LENGTH ? (
+					{fileSelected !== undefined && files?.length ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
-								{taskCollection ? (
+								{tasks?.length ? (
 									<TaskContext.Provider value={taskMemo()}>
 										<Timeline
 											assignmentDate={dates}
@@ -252,11 +234,12 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{docCollection ? (
+								{document ? (
 									<DocViewer
-										docXML={docCollection.doc}
+										docXML={document}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										tasks={taskCollection ? taskCollection.tasks : []}
+										startDate={dates.start}
+										tasks={tasks}
 									/>
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">

@@ -1,7 +1,6 @@
 /**
- * Represents a stored parsed xml document, migrated to DocCollection type to aid with cache implementation
+ * Represents a stored parsed xml document, migrated to DocumentCacheEntry type to aid with cache implementation
  */
-export type DocCollection = {
-	id: string;
+export type DocumentCacheEntry = {
 	doc: Document;
 };

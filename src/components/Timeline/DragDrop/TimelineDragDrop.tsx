@@ -15,7 +15,7 @@ import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
  * @returns {JSX.Element} A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
-	const { tasks, setTasks } = useTaskContext();
+	const { tasks, updateTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
 	 *
@@ -32,7 +32,7 @@ export const TimelineDragDrop = (): JSX.Element => {
 		const [newOrder] = movedTasks.splice(source.index, 1);
 		movedTasks.splice(destination.index, 0, newOrder);
 		const recoloredTasks = changeTaskColor(movedTasks, destination.index);
-		setTasks(recoloredTasks);
+		updateTasks(recoloredTasks);
 	};
 
 	return (
