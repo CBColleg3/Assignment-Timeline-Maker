@@ -62,21 +62,19 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 
 	// Initialize css object
 	const globalCSS: { [key: string]: string } = {};
-	const contentCSS: { [key: string]: string } = {};
+	const contentCSS: { [key: string]: Record<string, string> } = {};
 
 	// Gather nested elements from xml element
 	const globalElements = traverseXmlTree(parChildren[BASE_INDEX]);
 	const contentElements = parChildren
 		.slice(CONTENT_SLICE_INDEX)
-		.map((eachElement) => traverseXmlTree(eachElement))
-		.flat(FLAT_DIMENSION);
+		.map((eachElement) => traverseXmlTree(eachElement));
+	// .flat(FLAT_DIMENSION);
 
-	// Get text content from node
-	const content = [...par.getElementsByTagName("w:t")]
-		.map((eachContentElement) => eachContentElement.innerHTML)
-		.join("")
-		.replaceAll("&gt;", ">")
-		.replaceAll("&lt;", "<");
+	// Get text content chunks from node
+	const content = [...par.getElementsByTagName("w:t")].map((eachContentElement) =>
+		eachContentElement.innerHTML.replaceAll("&gt;", ">").replaceAll("&lt;", "<"),
+	);
 
 	// Gather all css styling from all global elements
 	const globalStyles = globalElements
@@ -88,22 +86,27 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 		.flat(FLAT_DIMENSION)
 		.filter((elem) => elem.value !== "");
 
-	// Gather all css styling from all content elements
-	const contentStyles = contentElements
-		.map((eachElement) => {
-			if (eachElement.attributes.length > MIN_ATTRIBUTE_LENGTH) {
-				return [...eachElement.attributes].map((eachAttribute) =>
-					translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
-				);
-			}
-			return translateXMLElementStyling(eachElement.tagName, { name: "", value: "" });
-		})
-		.flat(FLAT_DIMENSION)
-		.filter((elem) => elem.value !== "");
+	// Gather all css styling from all content elements for each chunk of text
+	const contentStyles = contentElements.map((textChunk) =>
+		textChunk
+			.map((eachElement) => {
+				if (eachElement.attributes.length > MIN_ATTRIBUTE_LENGTH) {
+					return [...eachElement.attributes].map((eachAttribute) =>
+						translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
+					);
+				}
+				return translateXMLElementStyling(eachElement.tagName, { name: "", value: "" });
+			})
+			.flat(FLAT_DIMENSION)
+			.filter((elem) => elem.value !== ""),
+	);
 
-	// Setting content CSS with styles extracted from content elements
-	contentStyles.forEach((eachStyle) => {
-		contentCSS[eachStyle.name] = eachStyle.value;
+	// Setting content CSS with styles extracted from content elements for each chunk of text
+	contentStyles.forEach((textChunk, chunkIndex) => {
+		contentCSS[chunkIndex] = {};
+		textChunk.forEach((eachStyle) => {
+			contentCSS[chunkIndex][eachStyle.name] = eachStyle.value;
+		});
 	});
 
 	// Setting global CSS with styles extracted from global elements
@@ -115,17 +118,25 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 		eachElement.tagName.includes("w:numPr"),
 	);
 
+	// Create a span for each chunk of text with its designated styling
+	const styledContent = content.map((text, index) => (
+		<span
+			key={`textChunk-${index}`}
+			style={contentCSS[index]}
+		>
+			{text}
+		</span>
+	));
+
 	return (
 		<div style={globalCSS}>
 			<span>
 				{isListElementPresent !== LIST_ELEMENT_DOES_NOT_EXIST ? (
 					<ul>
-						<li>
-							<span style={contentCSS}>{content}</span>
-						</li>
+						<li>{styledContent}</li>
 					</ul>
 				) : (
-					<span style={contentCSS}>{content}</span>
+					<span>{styledContent}</span>
 				)}
 			</span>
 		</div>
