@@ -2,7 +2,7 @@ import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Accordion } from "react-bootstrap";
-import type { Task } from "src/@types";
+import type { AssignmentDate, Task } from "src/@types";
 import { useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
 import styles from "./TimelineDates.module.css";
@@ -10,10 +10,12 @@ import styles from "./TimelineDates.module.css";
 const CONSTANTS = {
 	DAY_IND_INCREMENT: 1,
 	DAY_STRING: "Day ",
+	HOUR_STRING: "Hour ",
 	TASK_DESC_LENGTH: 75,
 };
 
 type TimelineDatesProps = {
+	assignmentDate: AssignmentDate;
 	taskDates: Date[];
 	currentTaskDate: Date;
 	setCurrentTaskDate: (_date: Date) => void;
@@ -26,6 +28,7 @@ type TimelineDatesProps = {
  * @returns The timeline date selector
  */
 export const TimelineDates = ({
+	assignmentDate,
 	currentTaskDate,
 	setCurrentTaskDate,
 	taskDates,
@@ -52,9 +55,19 @@ export const TimelineDates = ({
 								}}
 							>
 								<div className="d-flex flex-row">
-									<span className={currentlySelected ? "text-primary fw-bold" : ""}>
-										{`${CONSTANTS.DAY_STRING} ${_ind + CONSTANTS.DAY_IND_INCREMENT} - ${taskDate.toDateString()}`}
-									</span>
+									{assignmentDate.timelineType === "day" && (
+										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
+											{`${CONSTANTS.DAY_STRING} ${_ind + CONSTANTS.DAY_IND_INCREMENT} - ${taskDate.toDateString()}`}
+										</span>
+									)}
+									{assignmentDate.timelineType === "time" && (
+										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
+											{`${CONSTANTS.HOUR_STRING} ${
+												_ind + CONSTANTS.DAY_IND_INCREMENT
+											} -${taskDate.toLocaleDateString()} ${taskDate.toLocaleTimeString()}`}
+										</span>
+									)}
+
 									<div className="ps-2">
 										{currentlySelected ? (
 											<FontAwesomeIcon

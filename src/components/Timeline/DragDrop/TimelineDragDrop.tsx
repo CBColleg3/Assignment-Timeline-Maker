@@ -3,18 +3,26 @@ import React from "react";
 import { AddRemoveTask } from "src/components/Task/AddRemove/AddRemoveTask";
 import "./TimelineDragDrop.css";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
-import type { Task } from "src/@types";
+import type { AssignmentDate, Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
 import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 
 /**
+ * Props of the TimelineDragDrop component
+ */
+type TimelineDragDropProps = {
+	assignmentDate: AssignmentDate;
+};
+
+/**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
+ *@param {TimelineDragDropProps} timeline drag drop props from Timeline
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = (): JSX.Element => {
+export const TimelineDragDrop = ({ assignmentDate }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
@@ -67,6 +75,7 @@ export const TimelineDragDrop = (): JSX.Element => {
 											id={`${task.name}-${task.id}`}
 										>
 											<TaskInfo
+												assignmentDate={assignmentDate}
 												index={index}
 												task={task}
 											/>

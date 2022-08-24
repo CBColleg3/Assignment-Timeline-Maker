@@ -41,6 +41,7 @@ export const App = (): JSX.Element => {
 	const [dates, setDates] = React.useState<AssignmentDate>({
 		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
 		start: new Date(),
+		timelineType: "day",
 	});
 	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [errors, setErrors] = React.useState<Errors>({});

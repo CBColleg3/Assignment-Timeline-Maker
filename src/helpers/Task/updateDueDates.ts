@@ -7,6 +7,7 @@ import {
 	COLOR_HEX_ARRAY,
 	COLOR_HEX_ARRAY_LENGTH,
 	calcDays,
+	calcDiffInHours,
 } from "src/helpers";
 
 const CONSTANTS = {
@@ -89,7 +90,11 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 
 	const totalPoints = calcTotalPoints(tasks);
 	const dateDiff = calcDiffInDays(clonedAssignmentDate.start, clonedAssignmentDate.end);
+	const hourDiff = calcDiffInHours(clonedAssignmentDate.start, clonedAssignmentDate.end);
 	const pointsPerDay = Math.ceil(totalPoints / dateDiff);
+	const pointsPerHour = Math.ceil(totalPoints / hourDiff);
+
+	const pointsPerTimeGiven = assignmentDate.timelineType === "day" ? pointsPerDay : pointsPerHour;
 
 
 	const currentDay = new Date(clonedAssignmentDate.start.getTime());
@@ -98,12 +103,19 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 
 	for (let i = 0; i < taskClone.length; i += CONSTANTS.UPDATE_LOOP_INC) {
 		const eachTask = taskClone[i];
-		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay, runningTotal });
+		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay: pointsPerTimeGiven, runningTotal });
 		if (
 			response.incrementDate &&
-			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime()
+			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() && assignmentDate.timelineType === "day"
 		) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
+			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
+		}
+		if (
+			response.incrementDate &&
+			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() && assignmentDate.timelineType === "time"
+		) {
+			currentDay.setHours(currentDay.getHours() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
 		}
 		taskClone = [...taskClone].map((eTask, ind) => {

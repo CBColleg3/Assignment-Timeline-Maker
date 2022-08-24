@@ -1,1 +1,1 @@
-export type UpdateDateType = "end" | "start";
+export type UpdateDateType = "day" | "end" | "hour" | "start";

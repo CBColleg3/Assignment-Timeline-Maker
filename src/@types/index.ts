@@ -1,5 +1,6 @@
 import type { Task } from "./Task/Task";
 import type { Error } from "./Errors/Error";
+import type { TimelineTypes } from "./AssignmentDate/TimelineType";
 import type { Errors, ERROR_OPS, ERROR_TYPES } from "./Errors/Errors";
 import type { AssignmentDate } from "./AssignmentDate/AssignmentDate";
 import type { UpdateDateType } from "./AssignmentDate/UpdateDateType";
@@ -13,6 +14,7 @@ import type { HTMLStyle } from "./Doc/HTMLStyle";
 
 export type {
 	DocCollection,
+	TimelineTypes,
 	Task,
 	TaskCollection,
 	TaskCacheEntry,

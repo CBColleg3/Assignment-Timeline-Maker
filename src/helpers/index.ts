@@ -1,5 +1,6 @@
 import { calcDays } from "./Task/calcDays";
 import { calcDiffInDays } from "./Task/calcDiffInDays";
+import { calcDiffInHours } from "./Task/calcDiffInHours";
 import { calcTotalPoints } from "./Task/calcTotalPoints";
 import { colorHex, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "./shared/colorHex";
 import { convertXML2HTML } from "./DocViewer/convertXML2HTML";
@@ -13,6 +14,7 @@ import { findPoints } from "./Task/findPoints";
 import { updateDueDates } from "./Task/updateDueDates";
 import { validateSetDateTimeInput } from "./SetDateTime/validateSetDateTimeInput";
 import { calcDayRange } from "./Task/calcDayRange";
+import { calcHourRange } from "./Task/calcHourRange";
 import { isSameDay } from "./Task/isSameDay";
 import { truncateText } from "./shared/truncateText";
 import { isTaskInElement } from "./DocViewer/isTaskInElement";
@@ -23,7 +25,9 @@ import { isTaskInElement } from "./DocViewer/isTaskInElement";
 export {
 	calcDays,
 	calcDayRange,
+	calcHourRange,
 	calcDiffInDays,
+	calcDiffInHours,
 	calcTotalPoints,
 	colorHex,
 	COLOR_HEX_ARRAY,

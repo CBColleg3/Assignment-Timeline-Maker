@@ -1,10 +1,11 @@
 import React from "react";
-import type { Task } from "src/@types";
+import type { AssignmentDate, Task } from "src/@types";
 import { EditTask } from "src/components/Task/Edit/EditTask";
 
 type TaskInfoProps = {
 	task: Task;
 	index: number;
+	assignmentDate: AssignmentDate;
 };
 
 /**
@@ -14,7 +15,7 @@ type TaskInfoProps = {
  * @param {TaskInfoProps} props Passed in props from TaskInfo Component
  * @returns {JSX.Element} Info displayed for the user about each task
  */
-export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
+export const TaskInfo = ({ task, index, assignmentDate }: TaskInfoProps): JSX.Element => {
 	const [editMode, setEditMode] = React.useState<boolean>(false);
 	return (
 		<div>
@@ -48,10 +49,16 @@ export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 					setEditMode(!editMode);
 				}}
 			>
-				{new Date(task.dueDate).toDateString()}
+				{assignmentDate.timelineType === "day" && <span>{new Date(task.dueDate).toDateString()}</span>}
+				{assignmentDate.timelineType === "time" && (
+					<span>
+						{new Date(task.dueDate).toLocaleTimeString()} {new Date(task.dueDate).toLocaleDateString()}
+					</span>
+				)}
 			</h5>
 
 			<EditTask
+				assignmentDate={assignmentDate}
 				editMode={editMode}
 				index={index}
 				setEditMode={setEditMode}

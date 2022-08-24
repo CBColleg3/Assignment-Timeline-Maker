@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Modal } from "react-bootstrap";
-import type { Task } from "src/@types";
+import type { AssignmentDate, Task } from "src/@types";
 import DatePicker from "react-datepicker";
 import { useTaskContext } from "src/context";
 import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 
 const CONSTANTS = {
+	INVALID_DATE_STRING:
+		"Looks like your inputted date is not within the current timeline start and end dates, please change the assignment dates above.",
 	RANDOM_COLOR_BASE_IND: 0,
 	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
 	TASK_INDEX_INC: 1,
@@ -19,7 +21,7 @@ const CONSTANTS = {
  */
 type EditTaskProps = {
 	task: Task;
-
+	assignmentDate: AssignmentDate;
 	editMode: boolean;
 
 	index: number;
@@ -50,13 +52,20 @@ const fetchRandomColor = (): string =>
  * @param {EditTaskProps} props The props passed into the EditTask component
  * @returns {JSX.Element} The EditTask component
  */
-export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
+export const EditTask = ({
+	assignmentDate,
+	task,
+	editMode,
+	index,
+	setEditMode,
+}: EditTaskProps): JSX.Element => {
 	const [name, setName] = useState<string>(task.name);
 	const [document, setDocument] = useState<string>(task.document);
 	const [points, setPoints] = useState<string>(task.points);
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 	const [color, setColor] = useState<string>(task.color);
 	const { setTasks, tasks } = useTaskContext();
+	const [timelineError, setTimelineError] = useState<boolean>(false);
 
 	/**
 	 * Updates the TaskContext's tasks
@@ -84,6 +93,16 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 				taskColor = _task.color;
 			}
 		});
+		setTimelineError(false);
+		console.log(
+			"curDate Time: ",
+			date.getTime(),
+			"assignmentDate start Time: ",
+			assignmentDate.start.getTime(),
+		);
+		if (date.getTime() > assignmentDate.end.getTime() || date.getTime() < assignmentDate.start.getTime()) {
+			setTimelineError(true);
+		}
 		setColor(taskColor);
 	}
 
@@ -149,24 +168,23 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 							/>
 						</Col>
 					</Form.Group>
-					<br />
-					<br />
-					<div style={{ textAlign: "right" }}>
-						<Button
-							onClick={(): void => {
-								updateTasks();
-								setEditMode(!editMode);
-							}}
-						>
-							{"Save Changes"}
-						</Button>
-						<Button
-							data-testId="close-modal-button"
-							onClick={(): void => setEditMode(false)}
-						>
-							{"Close"}
-						</Button>
-					</div>
+					{timelineError && <Form.Group as={Row}>{CONSTANTS.INVALID_DATE_STRING}</Form.Group>}
+					{!timelineError && (
+						<>
+							<br />
+							<br />
+							<div style={{ textAlign: "right" }}>
+								<Button
+									onClick={(): void => {
+										updateTasks();
+										setEditMode(!editMode);
+									}}
+								>
+									{"Save Changes"}
+								</Button>
+							</div>
+						</>
+					)}
 				</Modal.Body>
 			</Modal>
 		</div>
