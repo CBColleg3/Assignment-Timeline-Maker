@@ -1,17 +1,17 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
-import type { AssignmentDate, AssignmentDateRange } from "src/@types";
+import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
 import { calcHourRange } from "src/helpers/Task/calcHourRange";
+import { useAssignmentDateInfoContext } from "src/context";
 
 /**
  * Props for the Timeline component
  */
 type TimelineProps = {
-	assignmentDate: AssignmentDateRange;
 	passRef: React.RefObject<HTMLSpanElement>;
 };
 
@@ -21,19 +21,20 @@ type TimelineProps = {
  * @param {TimelineProps} props The passed in props for the Timeline component
  * @returns {JSX.Element} The Timeline component
  */
-export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Element => {
-	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start.date);
+export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
+	const { end, format, start } = useAssignmentDateInfoContext();
+	const [currentTaskDate, setCurrentTaskDate] = React.useState(start.date);
 	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
 
 	React.useEffect(() => {
-		if (assignmentDate) {
-			if (assignmentDate.timelineType === "day") {
-				setTaskDates(calcDayRange(assignmentDate.start, assignmentDate.end));
+		if (start && end) {
+			if (format === "day") {
+				setTaskDates(calcDayRange(start.date, end.date));
 			} else {
-				setTaskDates(calcHourRange(assignmentDate.start, assignmentDate.end));
+				setTaskDates(calcHourRange(start.date, end.date));
 			}
 		}
-	}, [assignmentDate]);
+	}, [end, start, format]);
 
 	return (
 		<div>
@@ -55,19 +56,18 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 					>
 						<h3 className="text-center text-decoration-underline">{"Task Table of Contents"}</h3>
 						<div className="my-3 fs-6 text-center">
-							{`\u2022 Due: ${assignmentDate.end.date.toLocaleDateString()} ${assignmentDate.end.date.toLocaleTimeString([], {
+							{`\u2022 Due: ${end.date.toLocaleDateString()} ${end.date.toLocaleTimeString([], {
 								hour: "2-digit",
 								minute: "2-digit",
 							})} \u2022`}
 						</div>
 						<TimelineDates
-							assignmentDate={assignmentDate}
 							currentTaskDate={currentTaskDate}
 							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
 							taskDates={taskDates}
 						/>
 					</VerticalTimelineElement>
-					<TimelineDragDrop assignmentDate={assignmentDate} />
+					<TimelineDragDrop />
 					<VerticalTimelineElement
 						contentArrowStyle={{
 							borderRight: "7px solid  rgb(33, 150, 243)",

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Accordion } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
-import { useTaskContext } from "src/context";
+import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
 import styles from "./TimelineDates.module.css";
 
@@ -15,7 +15,6 @@ const CONSTANTS = {
 };
 
 type TimelineDatesProps = {
-	assignmentDate: AssignmentDate;
 	taskDates: Date[];
 	currentTaskDate: Date;
 	setCurrentTaskDate: (_date: Date) => void;
@@ -28,11 +27,11 @@ type TimelineDatesProps = {
  * @returns The timeline date selector
  */
 export const TimelineDates = ({
-	assignmentDate,
 	currentTaskDate,
 	setCurrentTaskDate,
 	taskDates,
 }: TimelineDatesProps): JSX.Element => {
+	const { format } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
 
 	return (
@@ -55,12 +54,12 @@ export const TimelineDates = ({
 								}}
 							>
 								<div className="d-flex flex-row">
-									{assignmentDate.timelineType === "day" && (
+									{format === "day" && (
 										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
 											{`${CONSTANTS.DAY_STRING} ${_ind + CONSTANTS.DAY_IND_INCREMENT} - ${taskDate.toDateString()}`}
 										</span>
 									)}
-									{assignmentDate.timelineType === "time" && (
+									{format === "hour" && (
 										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
 											{`${CONSTANTS.HOUR_STRING} ${
 												_ind + CONSTANTS.DAY_IND_INCREMENT

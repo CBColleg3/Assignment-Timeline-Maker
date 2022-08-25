@@ -10,20 +10,13 @@ import { useTaskContext } from "src/context";
 import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 
 /**
- * Props of the TimelineDragDrop component
- */
-type TimelineDragDropProps = {
-	assignmentDate: AssignmentDate;
-};
-
-/**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
  *@param {TimelineDragDropProps} timeline drag drop props from Timeline
  * @returns {JSX.Element} A drag-droppable timeline element
  */
-export const TimelineDragDrop = ({ assignmentDate }: TimelineDragDropProps): JSX.Element => {
-	const { tasks, setTasks } = useTaskContext();
+export const TimelineDragDrop = (): JSX.Element => {
+	const { tasks, updateTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
 	 *
@@ -75,7 +68,6 @@ export const TimelineDragDrop = ({ assignmentDate }: TimelineDragDropProps): JSX
 											id={`${task.name}-${task.id}`}
 										>
 											<TaskInfo
-												assignmentDate={assignmentDate}
 												index={index}
 												task={task}
 											/>

@@ -1,4 +1,7 @@
-import type { Error, AssignmentDateRange } from "src/@types";
+import type { Error, AssignmentDate } from "src/@types";
+
+const MS_IN_DAY = 86400000;
+const MIN_DAY = 2;
 
 /**
  * Validates the date input, and returns error if error is detected, else undefined
@@ -6,16 +9,17 @@ import type { Error, AssignmentDateRange } from "src/@types";
  * @param assignmentDate The assignment date to validate the input with
  * @returns The error that is generated, undefined if none
  */
-export const validateSetDateTimeInput = (assignmentDate: AssignmentDateRange): Error | undefined => {
-	const { start, end } = assignmentDate;
+export const validateSetDateTimeInput = (start: Date, end: Date): Error | undefined => {
 	if (start && end) {
 		// eslint-disable-next-line no-undef-init -- eslint conflict for this specific case
 		let error = undefined;
 		const header = "Date Error";
-		if (start.date.toUTCString() === end.date.toUTCString()) {
+		if (start.toUTCString() === end.toUTCString()) {
 			error = { header, message: "Dates cannot be the same time" };
-		} else if (start.date.getTime() > end.date.getTime()) {
+		} else if (start.getTime() > end.getTime()) {
 			error = { header, message: "Start date must be less than end date" };
+		} else if (end.getTime() - start.getTime() < MS_IN_DAY * MIN_DAY) {
+			error = { header, message: "Start date must be 2 days away from end date" };
 		}
 		return error;
 	}

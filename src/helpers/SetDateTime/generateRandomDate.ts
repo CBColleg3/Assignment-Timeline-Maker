@@ -9,6 +9,7 @@ import { generateRandomColorHex } from "../shared/generateRandomColorHex";
  * @returns The generated random date
  */
 export const generateRandomDate = (rank: number, date: Date): AssignmentDate => ({
+	cloneDate: () => new Date(date.getTime()),
 	color: generateRandomColorHex(),
 	date,
 	rank,

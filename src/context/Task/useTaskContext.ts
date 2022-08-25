@@ -8,6 +8,11 @@ import { TaskContext } from "./TaskContext";
  * @returns The TaskContext value (tasks, setTasks)
  */
 export const useTaskContext = (): iTaskContext => {
-	const taskContext = React.useContext<iTaskContext>(TaskContext);
-	return taskContext;
+	const taskContext = React.useContext(TaskContext);
+	if (taskContext) {
+		return taskContext;
+	}
+	throw Error(
+		"Invalid usage of useTaskContext (must call it from a component that is a child of TaskContext)",
+	);
 };

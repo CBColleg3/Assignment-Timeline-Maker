@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
 import DatePicker from "react-datepicker";
-import { useTaskContext } from "src/context";
+import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 
 const CONSTANTS = {
@@ -21,11 +21,8 @@ const CONSTANTS = {
  */
 type EditTaskProps = {
 	task: Task;
-	assignmentDate: AssignmentDate;
 	editMode: boolean;
-
 	index: number;
-
 	setEditMode: (_editMode: boolean) => void;
 };
 
@@ -52,31 +49,26 @@ const fetchRandomColor = (): string =>
  * @param {EditTaskProps} props The props passed into the EditTask component
  * @returns {JSX.Element} The EditTask component
  */
-export const EditTask = ({
-	assignmentDate,
-	task,
-	editMode,
-	index,
-	setEditMode,
-}: EditTaskProps): JSX.Element => {
+export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
+	const { end, start } = useAssignmentDateInfoContext();
 	const [name, setName] = useState<string>(task.name);
 	const [document, setDocument] = useState<string>(task.document);
 	const [points, setPoints] = useState<string>(task.points);
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 	const [color, setColor] = useState<string>(task.color);
-	const { setTasks, tasks } = useTaskContext();
+	const { updateTasks, tasks } = useTaskContext();
 	const [timelineError, setTimelineError] = useState<boolean>(false);
 
 	/**
 	 * Updates the TaskContext's tasks
 	 */
-	function updateTasks(): void {
+	function changeTasks(): void {
 		const newTask = { ...task, color, document, dueDate, name, points };
 		const clonedTasks = [...tasks].map(
 			(_task, ind): Task => (ind === index ? newTask : { ..._task, dueDate: new Date(_task.dueDate.getTime()) }),
 		);
 		const sortedTasks = clonedTasks.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
-		setTasks(sortedTasks);
+		updateTasks(sortedTasks);
 	}
 
 	/**
@@ -94,13 +86,7 @@ export const EditTask = ({
 			}
 		});
 		setTimelineError(false);
-		console.log(
-			"curDate Time: ",
-			date.getTime(),
-			"assignmentDate start Time: ",
-			assignmentDate.start.getTime(),
-		);
-		if (date.getTime() > assignmentDate.end.getTime() || date.getTime() < assignmentDate.start.getTime()) {
+		if (date.getTime() > end.date.getTime() || date.getTime() < start.date.getTime()) {
 			setTimelineError(true);
 		}
 		setColor(taskColor);
@@ -176,7 +162,7 @@ export const EditTask = ({
 							<div style={{ textAlign: "right" }}>
 								<Button
 									onClick={(): void => {
-										updateTasks();
+										changeTasks();
 										setEditMode(!editMode);
 									}}
 								>

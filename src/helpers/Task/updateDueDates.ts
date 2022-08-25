@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func -- no invalid practices being used*/
 /* eslint-disable no-loop-func -- no invalid practices being used*/
-import type { AssignmentDate, AssignmentDateRange, Task } from "src/@types";
+import type { AssignmentDate, Task } from "src/@types";
+import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
 import {
 	calcTotalPoints,
 	calcDiffInDays,
@@ -75,7 +76,12 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
  * @param assignmentDateRange The assignment date
  * @returns The updated Tasks
  */
-const updateDueDates = (tasks: Task[], assignmentDateRange: AssignmentDateRange): Task[] => {
+const updateDueDates = (
+	tasks: Task[],
+	end: AssignmentDate,
+	start: AssignmentDate,
+	format: iAssignmentDateInfoContextFormat,
+): Task[] => {
 	let taskClone = [...tasks].map((eachTask) => ({
 		...eachTask,
 		dueDate: new Date(eachTask.dueDate),
@@ -84,8 +90,8 @@ const updateDueDates = (tasks: Task[], assignmentDateRange: AssignmentDateRange)
 	let currentColor = fetchRandomColor();
 
 	const clonedAssignmentDate = {
-		end: new Date(assignmentDateRange.end.date.getTime()),
-		start: new Date(assignmentDateRange.start.date.getTime()),
+		end: new Date(end.date.getTime()),
+		start: new Date(start.date.getTime()),
 	};
 
 	const totalPoints = calcTotalPoints(tasks);
@@ -94,7 +100,7 @@ const updateDueDates = (tasks: Task[], assignmentDateRange: AssignmentDateRange)
 	const pointsPerDay = Math.ceil(totalPoints / dateDiff);
 	const pointsPerHour = Math.ceil(totalPoints / hourDiff);
 
-	const pointsPerTimeGiven = assignmentDate.timelineType === "day" ? pointsPerDay : pointsPerHour;
+	const pointsPerTimeGiven = format === "day" ? pointsPerDay : pointsPerHour;
 
 	const currentDay = new Date(clonedAssignmentDate.start.getTime());
 
@@ -102,17 +108,23 @@ const updateDueDates = (tasks: Task[], assignmentDateRange: AssignmentDateRange)
 
 	for (let i = 0; i < taskClone.length; i += CONSTANTS.UPDATE_LOOP_INC) {
 		const eachTask = taskClone[i];
-		const response: CalculateDayResponse = calcDays(eachTask, { currentDay, pointsPerDay: pointsPerTimeGiven, runningTotal });
+		const response: CalculateDayResponse = calcDays(eachTask, {
+			currentDay,
+			pointsPerDay: pointsPerTimeGiven,
+			runningTotal,
+		});
 		if (
 			response.incrementDate &&
-			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() && assignmentDate.timelineType === "day"
+			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() &&
+			format === "day"
 		) {
 			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
 		}
 		if (
 			response.incrementDate &&
-			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() && assignmentDate.timelineType === "time"
+			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() &&
+			format === "hour"
 		) {
 			currentDay.setHours(currentDay.getHours() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
 			currentColor = fetchRandomColorWithoutDuplicates(usedColors);

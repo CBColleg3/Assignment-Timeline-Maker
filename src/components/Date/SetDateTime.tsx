@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS, AssignmentDateRange } from "src/@types";
+import type { UpdateDateType, Error, ERROR_OPS } from "src/@types";
+import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import { useAssignmentDateInfoContext } from "src/context";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
@@ -8,14 +10,6 @@ import DateModal from "./DateModal";
  * Types of props for SetDateTime component
  */
 type SetDateTimeProps = {
-	/**
-	 * The current assignment date for the timeline
-	 */
-	assignmentDateRange: AssignmentDateRange;
-	/**
-	 * Propagates the local changes to the parent component
-	 */
-	update: (_assignmentDateRange: AssignmentDateRange) => void;
 	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
@@ -30,10 +24,12 @@ const END_DAY_INIT_INCREMENT = 172800000;
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps): JSX.Element => {
+const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
+	const { changeFormat, end, format, setEndDate, setStartDate, start } = useAssignmentDateInfoContext();
 	const [confirm, setConfirm] = React.useState<boolean>(false);
-	const [dates, setDates] = React.useState<AssignmentDateRange>(assignmentDateRange);
 	const [displayModal, setDisplayModal] = React.useState(false);
+	const [tempEnd, setTempEnd] = React.useState(end.date);
+	const [tempStart, setTempStart] = React.useState(start.date);
 
 	/**
 	 * Triggers when dates/confirm is updated
@@ -42,16 +38,17 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 	 */
 	React.useEffect(() => {
 		if (confirm) {
-			update(dates);
+			setStartDate(tempStart);
+			setEndDate(tempEnd);
 			setConfirm(false);
-			const error = validateSetDateTimeInput(dates);
+			const error = validateSetDateTimeInput(tempStart, tempEnd);
 			if (error) {
 				addError({ ...error }, "add");
 			} else {
 				addError(undefined, "delete");
 			}
 		}
-	}, [dates, confirm, update, addError]);
+	}, [addError, confirm, setStartDate, setEndDate, tempStart, tempEnd]);
 
 	/**
 	 * Helper function to update the start/end date
@@ -62,13 +59,15 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 	const updateDate = (type: UpdateDateType, value: Date): void => {
 		switch (type) {
 			case "end": {
-				if (dates.end) {
-					setDates({ ...dates, end: { ...dates.end, date: value } });
+				if (value) {
+					setTempEnd(value);
 				}
 				break;
 			}
 			case "start": {
-				setDates({ ...dates, start: value });
+				if (value) {
+					setTempStart(value);
+				}
 				break;
 			}
 			default: {
@@ -82,14 +81,14 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 	 *
 	 * @param type Which field the user is updating, either `start` or `end`
 	 */
-	const updateTimelineType = (type: UpdateDateType): void => {
+	const updateTimelineType = (type: iAssignmentDateInfoContextFormat): void => {
 		switch (type) {
 			case "day": {
-				setDates({ ...dates, timelineType: "day" });
+				changeFormat("day");
 				break;
 			}
 			case "hour": {
-				setDates({ ...dates, timelineType: "time" });
+				changeFormat("hour");
 				break;
 			}
 			default: {
@@ -103,16 +102,16 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start:  "}</span>
-					{assignmentDate.timelineType === "day" && <span>{`${assignmentDate.start.toLocaleDateString()}`}</span>}
-					{assignmentDate.timelineType === "time" && (
-						<span>{`${assignmentDate.start.toLocaleTimeString()} ${assignmentDate.start.toLocaleDateString()}`}</span>
+					{format === "day" && <span>{`${start.date.toLocaleDateString()}`}</span>}
+					{format === "hour" && (
+						<span>{`${start.date.toLocaleTimeString()} ${start.date.toLocaleDateString()}`}</span>
 					)}
 				</span>
 				<span>
 					<span className="fw-bold">{"End:  "}</span>
-					{assignmentDate.timelineType === "day" && <span>{`${assignmentDate.end.toLocaleDateString()}`}</span>}
-					{assignmentDate.timelineType === "time" && (
-						<span>{`${assignmentDate.end.toLocaleTimeString()}  ${assignmentDate.end.toLocaleDateString()}`}</span>
+					{format === "day" && <span>{`${end.date.toLocaleDateString()}`}</span>}
+					{format === "hour" && (
+						<span>{`${end.date.toLocaleTimeString()}  ${end.date.toLocaleDateString()}`}</span>
 					)}
 				</span>
 
@@ -130,9 +129,11 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 				</span>
 			</span>
 			<DateModal
-				assignmentDateRange={dates}
+				end={end}
+				format={format}
 				isShowing={displayModal}
 				onClose={(): void => setDisplayModal(false)}
+				start={start}
 				title="Set Start &amp; End Dates"
 				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
 				updateDates={updateDate}
