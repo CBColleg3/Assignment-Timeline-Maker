@@ -12,5 +12,5 @@ const CONSTANTS = {
 export const randomInt = (min?: number, max?: number): number => {
 	const minValue = min ?? CONSTANTS.NULL_DEFAULT;
 	const maxValue = max ?? CONSTANTS.NULL_DEFAULT;
-	return Math.random() * (maxValue - minValue) + minValue;
+	return Math.round(Math.random() * (maxValue - minValue) + minValue);
 };

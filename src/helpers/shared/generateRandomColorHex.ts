@@ -12,7 +12,6 @@ const CONSTANTS = {
  */
 export const generateRandomColorHex = (): string => {
 	const values = Object.values(colorHex);
-	return Object.values(colorHex)[
-		randomInt(CONSTANTS.STARTING_INDEX, values.length - CONSTANTS.LENGTH_DECREMENT)
-	];
+	const randomIndex = randomInt(CONSTANTS.STARTING_INDEX, values.length - CONSTANTS.LENGTH_DECREMENT);
+	return Object.values(colorHex)[randomIndex];
 };

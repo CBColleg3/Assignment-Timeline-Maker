@@ -25,10 +25,11 @@ import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 import { FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL, MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 import {
+	assignDatesRank,
 	findParts,
 	findPoints,
 	generateInitialAssignmentDate,
-	generateRandomDate,
+	getIndexOfSelectedDateInDates,
 	parseFileTextToXML,
 	readFile,
 	updateDueDates,
@@ -38,9 +39,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { TaskContext } from "src/context";
-// eslint-disable-next-line import/no-namespace -- used for html2pdf, since it current does not support typescript types
-import * as html2pdf from "html2pdf.js";
 import { generateAssignmentDatesFromStartEnd } from "src/helpers/SetDateTime/generateAssignmentDatesFromStartEnd";
+import { uploadDocument } from "src/helpers/shared/uploadDocument";
+
+const MS_IN_DAY = 86400000;
 
 /**
  * Root component
@@ -62,6 +64,8 @@ export const App = (): JSX.Element => {
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
 	/**
+	 * ERROR MANAGEMENT
+	 *
 	 * Utility function for updating the errors object via Error object
 	 *
 	 * @param theType - The type of error to append/delete with the errors state
@@ -87,6 +91,8 @@ export const App = (): JSX.Element => {
 	);
 
 	/**
+	 * FILE MANAGEMENT
+	 *
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
 	 *
 	 * @param type - The type of operation to be performed on the files state
@@ -118,17 +124,52 @@ export const App = (): JSX.Element => {
 	);
 
 	/**
-	 * Callback function, which is never replaced due to the dependency array being empty (line 155). This callback
-	 * function allows for the updating of the assignmentDateRange state, given a type, which specifies which area to apply
-	 * the change to, and the value which is the date that the user selected from the date dropdown
+	 * DATE MANAGEMENT
+	 *
+	 * Callback function, which is  replaced when assignmentDateRange changes. This callback
+	 * function allows for the updating of the assignmentDateRange state, given the date range the user changed it to.
+	 * It does calculation depending on whether the user chose a shorter date, or a longer date.
+	 * @param dates The dates the user selects via the modal
 	 */
-	const updateDates = React.useCallback((dates: AssignmentDateRange) => {
-		const { start, end } = dates;
-		setAssignmentDateRange((oldAssignmentDateRange) => ({
-			...oldAssignmentDateRange,
-			dates: generateAssignmentDatesFromStartEnd(start, end),
-		}));
-	}, []);
+	const updateDates = React.useCallback(
+		(dates: AssignmentDateRange) => {
+			const { start, end } = dates;
+			if (start.date.getTime() < assignmentDateRange.start.date.getTime()) {
+				const newStartDates = generateAssignmentDatesFromStartEnd(start, assignmentDateRange.start, true);
+				setAssignmentDateRange((oldAssignmentDateRange) => ({
+					...oldAssignmentDateRange,
+					dates: assignDatesRank([...newStartDates, ...oldAssignmentDateRange.dates]),
+					start,
+				}));
+			} else if (end.date.getTime() > assignmentDateRange.end.date.getTime()) {
+				const newEndDates = generateAssignmentDatesFromStartEnd(assignmentDateRange.end, end);
+				setAssignmentDateRange((oldAssignmentDateRange) => ({
+					...oldAssignmentDateRange,
+					dates: assignDatesRank([...oldAssignmentDateRange.dates, ...newEndDates.slice(1)]),
+					end,
+				}));
+			} else if (end.date.getTime() < assignmentDateRange.end.date.getTime()) {
+				const index = getIndexOfSelectedDateInDates(end, assignmentDateRange.dates);
+				if (index !== -1) {
+					setAssignmentDateRange((oldAssignmentDateRange) => ({
+						...oldAssignmentDateRange,
+						dates: assignDatesRank(oldAssignmentDateRange.dates.slice(0, index + 1)),
+						end,
+					}));
+				}
+			} else if (start.date.getTime() > assignmentDateRange.start.date.getTime()) {
+				const index = getIndexOfSelectedDateInDates(start, assignmentDateRange.dates, true);
+				if (index !== -1) {
+					setAssignmentDateRange((oldAssignmentDateRange) => ({
+						...oldAssignmentDateRange,
+						dates: assignDatesRank(oldAssignmentDateRange.dates.slice(index)),
+						start,
+					}));
+				}
+			}
+		},
+		[assignmentDateRange],
+	);
 
 	/**
 	 * Triggers when files, fileSelected, dates, or taskCache are changed
@@ -193,14 +234,9 @@ export const App = (): JSX.Element => {
 		[tasks],
 	);
 
-	/**
-	 * Callback that regenerates when the `timelineRef` ref is changed, used to upload the element as a pdf if the current element being referenced is truthy
-	 */
-	const uploadDocument = React.useCallback(() => {
-		if (timelineRef.current) {
-			html2pdf(timelineRef.current);
-		}
-	}, [timelineRef]);
+	const pdfUpload = React.useCallback((htmlElem: HTMLElement | HTMLSpanElement | null) => {
+		uploadDocument(htmlElem);
+	}, []);
 
 	return (
 		<div className="d-flex flex-column">
@@ -221,7 +257,7 @@ export const App = (): JSX.Element => {
 						files={files}
 						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
 						updateFiles={updateFiles}
-						uploadDocument={uploadDocument}
+						uploadDocument={(): void => pdfUpload(timelineRef.current)}
 					/>
 				</span>
 				<FileImport

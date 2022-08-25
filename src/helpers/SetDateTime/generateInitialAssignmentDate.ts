@@ -4,7 +4,7 @@ import { generateAssignmentDatesFromStartEnd } from "./generateAssignmentDatesFr
 import { generateRandomDate } from "./generateRandomDate";
 
 const CONSTANTS = {
-	INIT_END_RANK: 1,
+	INIT_END_RANK: 2,
 	INIT_START_RANK: 0,
 };
 

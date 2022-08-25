@@ -20,11 +20,14 @@ import { generateRandomColorHex } from "./shared/generateRandomColorHex";
 import { generateRandomDate } from "./SetDateTime/generateRandomDate";
 import { generateInitialAssignmentDate } from "./SetDateTime/generateInitialAssignmentDate";
 import { randomInt } from "./shared/randomInt";
+import { getIndexOfSelectedDateInDates } from "./SetDateTime/getIndexOfSelectedDateInDates";
+import { assignDatesRank } from "./SetDateTime/assignDatesRank";
 
 /**
  * Base export, exports all utility functions in one object
  */
 export {
+	assignDatesRank,
 	calcDays,
 	calcDayRange,
 	calcDiffInDays,
@@ -40,6 +43,7 @@ export {
 	generateInitialAssignmentDate,
 	generateRandomColorHex,
 	generateRandomDate,
+	getIndexOfSelectedDateInDates,
 	isSameDay,
 	isTaskInElement,
 	parseFileTextToXML,
