@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import type { Task } from "src/@types";
 import { useTaskContext } from "src/context";
-import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
 
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
@@ -47,11 +46,11 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 		}));
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
-			color: modifiedTaskArr[ind].color,
-			document: "Uh Oh",
-			dueDate: modifiedTaskArr[ind].dueDate,
+			color: tasks[index].color,
+			document: "Type Document Text Here.",
+			dueDate: tasks[index].dueDate,
 			id: modifiedTaskArr.length + CONSTANTS.TASK_INDEX_INC,
-			name: "Swag",
+			name: "New Task",
 			points: "0",
 		});
 		setTasks(modifiedTaskArr);
@@ -72,18 +71,18 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	}
 
 	return (
-		<div className="btn float-right ps-5">
+		<div>
 			<Button
-				className="bg-success bg-gradient"
+				className="bg-success mx-auto"
 				onClick={(): void => addPart(index)}
 			>
-				{"+"}
+				{"Add Task"}
 			</Button>
 			<Button
-				className="bg-danger bg-gradient"
+				className="bg-danger mx-auto"
 				onClick={(): void => removePart(index)}
 			>
-				{"- "}
+				{"Remove Task"}
 			</Button>
 		</div>
 	);

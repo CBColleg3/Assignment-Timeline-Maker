@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import type { AssignmentDate, UpdateDateType } from "src/@types";
 import EndDate from "../EndDate";
 import StartDate from "../StartDate";
@@ -11,6 +11,7 @@ type DateModalProps = {
 	title: string;
 	updateConfirm: (_confirmValue: boolean) => void;
 	updateDates: (_type: UpdateDateType, _value: Date) => void;
+	updateTimelineType: (_type: UpdateDateType) => void;
 };
 
 /**
@@ -26,8 +27,10 @@ export const DateModal = ({
 	title,
 	updateConfirm,
 	updateDates,
+	updateTimelineType,
 }: DateModalProps): JSX.Element => {
 	const [modalConfirm, setModalConfirm] = React.useState(false);
+
 	return (
 		<Modal
 			onHide={onClose}
@@ -45,6 +48,28 @@ export const DateModal = ({
 					endDate={assignmentDate.end}
 					update={(value: Date): void => updateDates("end", value)}
 				/>
+				<span>
+					<Form.Check
+						checked={assignmentDate.timelineType === "day"}
+						label="Day"
+						name="timelineType"
+						onChange={(): void => {
+							updateTimelineType("day");
+						}}
+						type="radio"
+						value="day"
+					/>
+					<Form.Check
+						checked={assignmentDate.timelineType === "time"}
+						label="Hour"
+						name="timelineType"
+						onChange={(): void => {
+							updateTimelineType("hour");
+						}}
+						type="radio"
+						value="time"
+					/>
+				</span>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
