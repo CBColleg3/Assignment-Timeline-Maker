@@ -1,7 +1,7 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
-import type { AssignmentDate } from "src/@types";
+import type { AssignmentDate, AssignmentDateRange } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
@@ -10,7 +10,7 @@ import { calcDayRange } from "src/helpers";
  * Props for the Timeline component
  */
 type TimelineProps = {
-	assignmentDate: AssignmentDate;
+	assignmentDate: AssignmentDateRange;
 	passRef: React.RefObject<HTMLSpanElement>;
 };
 
@@ -21,12 +21,12 @@ type TimelineProps = {
  * @returns {JSX.Element} The Timeline component
  */
 export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Element => {
-	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start);
+	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start.date);
 	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
 
 	React.useEffect(() => {
 		if (assignmentDate) {
-			setTaskDates(calcDayRange(assignmentDate.start, assignmentDate.end));
+			setTaskDates(calcDayRange(assignmentDate.start.date, assignmentDate.end.date));
 		}
 	}, [assignmentDate]);
 
@@ -50,7 +50,7 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 					>
 						<h3 className="text-center text-decoration-underline">{"Task Table of Contents"}</h3>
 						<div className="my-3 fs-6 text-center">
-							{`\u2022 Due: ${assignmentDate.end.toLocaleDateString()} ${assignmentDate.end.toLocaleTimeString([], {
+							{`\u2022 Due: ${assignmentDate.end.date.toLocaleDateString()} ${assignmentDate.end.date.toLocaleTimeString([], {
 								hour: "2-digit",
 								minute: "2-digit",
 							})} \u2022`}

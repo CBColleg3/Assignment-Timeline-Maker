@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType } from "src/@types";
+import type { AssignmentDateRange, UpdateDateType } from "src/@types";
 import EndDate from "../EndDate";
 import StartDate from "../StartDate";
 
 type DateModalProps = {
-	assignmentDate: AssignmentDate;
+	assignmentDateRange: AssignmentDateRange;
 	isShowing: boolean;
 	onClose: () => void;
 	title: string;
@@ -20,7 +20,7 @@ type DateModalProps = {
  * @returns The Modal used to update the start and end date
  */
 export const DateModal = ({
-	assignmentDate,
+	assignmentDateRange,
 	isShowing,
 	onClose,
 	title,
@@ -37,14 +37,18 @@ export const DateModal = ({
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<StartDate
-					startDate={assignmentDate.start}
-					update={(value: Date): void => updateDates("start", value)}
-				/>
-				<EndDate
-					endDate={assignmentDate.end}
-					update={(value: Date): void => updateDates("end", value)}
-				/>
+				{assignmentDateRange.start && (
+					<StartDate
+						startDate={assignmentDateRange.start.date}
+						update={(value: Date): void => updateDates("start", value)}
+					/>
+				)}
+				{assignmentDateRange.end && (
+					<EndDate
+						endDate={assignmentDateRange.end.date}
+						update={(value: Date): void => updateDates("end", value)}
+					/>
+				)}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button

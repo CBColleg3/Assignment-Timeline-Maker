@@ -1,3 +1,5 @@
+/* eslint-disable no-mixed-spaces-and-tabs -- prettier/eslint conflict */
+/* eslint-disable indent -- prettier/eslint conflict */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,15 +14,25 @@ import type {
 	ERROR_TYPES,
 	iTaskContext,
 	DocumentCacheEntry,
+	AssignmentDateRange,
+	UpdateDateType,
 } from "src/@types";
-import { END_DAY_INIT_INCREMENT, SetDateTime } from "../Date/SetDateTime";
+import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 import { FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL, MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
-import { findParts, findPoints, parseFileTextToXML, readFile, updateDueDates } from "src/helpers";
+import {
+	findParts,
+	findPoints,
+	generateInitialAssignmentDate,
+	generateRandomDate,
+	parseFileTextToXML,
+	readFile,
+	updateDueDates,
+} from "src/helpers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +40,7 @@ import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { TaskContext } from "src/context";
 // eslint-disable-next-line import/no-namespace -- used for html2pdf, since it current does not support typescript types
 import * as html2pdf from "html2pdf.js";
+import { generateAssignmentDatesFromStartEnd } from "src/helpers/SetDateTime/generateAssignmentDatesFromStartEnd";
 
 /**
  * Root component
@@ -35,10 +48,10 @@ import * as html2pdf from "html2pdf.js";
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [dates, setDates] = React.useState<AssignmentDate>({
-		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
-		start: new Date(),
-	});
+	const [assignmentDateRange, setAssignmentDateRange] = React.useState<AssignmentDateRange>(
+		generateInitialAssignmentDate(),
+	);
+
 	const [documentCache, setDocumentCache] = React.useState<DocumentCacheEntry[]>();
 	const [document, setDocument] = React.useState<Document>();
 	const [tasks, setTasks] = React.useState<Task[]>([]);
@@ -55,20 +68,23 @@ export const App = (): JSX.Element => {
 	 * @param operation - The type of operation the user is executing
 	 * @param error - The error to add to the errors state if add operation is selected
 	 */
-	const updateErrors = (theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
-		switch (theType) {
-			case "date": {
-				setErrors({ ...errors, date: operation === "delete" ? undefined : error });
-				break;
+	const updateErrors = React.useCallback(
+		(theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
+			switch (theType) {
+				case "date": {
+					setErrors({ ...errors, date: operation === "delete" ? undefined : error });
+					break;
+				}
+				case "file": {
+					setErrors({ ...errors, file: operation === "delete" ? undefined : error });
+					break;
+				}
+				default:
+					break;
 			}
-			case "file": {
-				setErrors({ ...errors, file: operation === "delete" ? undefined : error });
-				break;
-			}
-			default:
-				break;
-		}
-	};
+		},
+		[errors],
+	);
 
 	/**
 	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
@@ -76,31 +92,42 @@ export const App = (): JSX.Element => {
 	 * @param type - The type of operation to be performed on the files state
 	 * @param index - The index of the file to operate upon
 	 */
-	const updateFiles = (type: UpdateType, index: number): void => {
-		if (files) {
-			switch (type) {
-				case "delete": {
-					const filesClone = [...files].filter((_, ind) => ind !== index);
-					setFiles(filesClone);
-					if (filesClone.length === MIN_FILES_LENGTH) {
-						setFileSelected(undefined);
-					} else if (filesClone.length === index) {
-						setFileSelected((oldFileSelected) =>
-							oldFileSelected ? oldFileSelected - FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL : undefined,
-						);
+	const updateFiles = React.useCallback(
+		(type: UpdateType, index: number): void => {
+			if (files) {
+				switch (type) {
+					case "delete": {
+						const filesClone = [...files].filter((_, ind) => ind !== index);
+						setFiles(filesClone);
+						if (filesClone.length === MIN_FILES_LENGTH) {
+							setFileSelected(undefined);
+						} else if (filesClone.length === index) {
+							setFileSelected((oldFileSelected) =>
+								oldFileSelected ? oldFileSelected - FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL : undefined,
+							);
+						}
+						break;
 					}
-					break;
-				}
-				default: {
-					break;
+					default: {
+						break;
+					}
 				}
 			}
-		}
-	};
+		},
+		[files],
+	);
 
-	const removeCache = React.useCallback((id: string) => {
-		localStorage.removeItem(id);
-		localStorage.removeItem(`${id}-document`);
+	/**
+	 * Callback function, which is never replaced due to the dependency array being empty (line 155). This callback
+	 * function allows for the updating of the assignmentDateRange state, given a type, which specifies which area to apply
+	 * the change to, and the value which is the date that the user selected from the date dropdown
+	 */
+	const updateDates = React.useCallback((dates: AssignmentDateRange) => {
+		const { start, end } = dates;
+		setAssignmentDateRange((oldAssignmentDateRange) => ({
+			...oldAssignmentDateRange,
+			dates: generateAssignmentDatesFromStartEnd(start, end),
+		}));
 	}, []);
 
 	/**
@@ -114,12 +141,11 @@ export const App = (): JSX.Element => {
 		if (files?.length && fileSelected !== undefined) {
 			const currentFile: File = files[fileSelected];
 
-			const index = localStorage.getItem(`${currentFile.name}-document`);
+			const cacheDocument = documentCache?.find((eachEntry) => eachEntry.key === currentFile.name);
 			const cacheEntry = localStorage.getItem(currentFile.name);
-			if (index && documentCache?.length && cacheEntry) {
-				const { doc: cachedDocument } = documentCache[parseInt(index, 10)];
-				setDocument(cachedDocument);
+			if (cacheDocument && cacheEntry) {
 				const parsedCachedTasks: Task[] = JSON.parse(cacheEntry);
+				setDocument(cacheDocument.doc);
 				setTasks(
 					[...parsedCachedTasks].map((eachTask) => ({ ...eachTask, dueDate: new Date(eachTask.dueDate) })),
 				);
@@ -129,11 +155,9 @@ export const App = (): JSX.Element => {
 					.then((result) => {
 						setDocumentCache((oldCache) => {
 							if (oldCache) {
-								localStorage.setItem(`${currentFile.name}-document`, `${oldCache.length}`);
-								return [...oldCache, { doc: result }];
+								return [...oldCache, { doc: result, key: currentFile.name }];
 							}
-							localStorage.setItem(`${currentFile.name}-document`, "0");
-							return [{ doc: result }];
+							return [{ doc: result, key: currentFile.name }];
 						});
 						setDocument(result);
 					})
@@ -142,7 +166,7 @@ export const App = (): JSX.Element => {
 				const parts = findParts(readText);
 				findPoints(parts)
 					.then((newTasks) => {
-						const parsedTasks = updateDueDates(newTasks, dates);
+						const parsedTasks = updateDueDates(newTasks, assignmentDateRange);
 						setTasks(parsedTasks);
 						localStorage.setItem(currentFile.name, JSON.stringify(parsedTasks));
 					})
@@ -150,7 +174,7 @@ export const App = (): JSX.Element => {
 					.catch((err) => console.error(err));
 			}
 		}
-	}, [files, fileSelected, dates, documentCache, removeCache]);
+	}, [files, fileSelected, documentCache, assignmentDateRange]);
 
 	/**
 	 * Memoized context value, specifies that it will only change value when the taskCollection changes
@@ -187,8 +211,8 @@ export const App = (): JSX.Element => {
 						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
 							updateErrors("date", operation, error)
 						}
-						assignmentDate={dates}
-						update={(theDates: AssignmentDate): void => setDates(theDates)}
+						assignmentDateRange={assignmentDateRange}
+						update={(value: AssignmentDateRange): void => updateDates(value)}
 					/>
 				</span>
 				<span className="my-auto">
@@ -213,7 +237,7 @@ export const App = (): JSX.Element => {
 								{tasks?.length ? (
 									<TaskContext.Provider value={taskMemo()}>
 										<Timeline
-											assignmentDate={dates}
+											assignmentDate={assignmentDateRange}
 											passRef={timelineRef}
 										/>
 									</TaskContext.Provider>
@@ -238,7 +262,7 @@ export const App = (): JSX.Element => {
 									<DocViewer
 										docXML={document}
 										fileImported={files.length > MIN_FILES_LENGTH}
-										startDate={dates.start}
+										startDate={assignmentDateRange.start.date}
 										tasks={tasks}
 									/>
 								) : (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS } from "src/@types";
+import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS, AssignmentDateRange } from "src/@types";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
@@ -11,11 +11,11 @@ type SetDateTimeProps = {
 	/**
 	 * The current assignment date for the timeline
 	 */
-	assignmentDate: AssignmentDate;
+	assignmentDateRange: AssignmentDateRange;
 	/**
 	 * Propagates the local changes to the parent component
 	 */
-	update: (_dates: AssignmentDate) => void;
+	update: (_assignmentDateRange: AssignmentDateRange) => void;
 	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
@@ -30,9 +30,9 @@ const END_DAY_INIT_INCREMENT = 172800000;
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JSX.Element => {
+const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps): JSX.Element => {
 	const [confirm, setConfirm] = React.useState<boolean>(false);
-	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
+	const [dates, setDates] = React.useState<AssignmentDateRange>(assignmentDateRange);
 	const [displayModal, setDisplayModal] = React.useState(false);
 
 	/**
@@ -62,11 +62,15 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 	const updateDate = (type: UpdateDateType, value: Date): void => {
 		switch (type) {
 			case "end": {
-				setDates({ ...dates, end: value });
+				if (dates.end) {
+					setDates({ ...dates, end: { ...dates.end, date: value } });
+				}
 				break;
 			}
 			case "start": {
-				setDates({ ...dates, start: value });
+				if (dates.start) {
+					setDates({ ...dates, start: { ...dates.start, date: value } });
+				}
 				break;
 			}
 			default: {
@@ -80,11 +84,11 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start:  "}</span>
-					{`${assignmentDate.start.toLocaleDateString()}  ${assignmentDate.start.toLocaleTimeString()}`}
+					{`${assignmentDateRange.start?.date.toLocaleDateString()}  ${assignmentDateRange.start?.date.toLocaleTimeString()}`}
 				</span>
 				<span>
 					<span className="fw-bold">{"End:  "}</span>
-					{`${assignmentDate.end.toLocaleDateString()}  ${assignmentDate.end.toLocaleTimeString()}`}
+					{`${assignmentDateRange.end?.date.toLocaleDateString()}  ${assignmentDateRange.end?.date.toLocaleTimeString()}`}
 				</span>
 				<span className="mt-2">
 					<Button
@@ -100,7 +104,7 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 				</span>
 			</span>
 			<DateModal
-				assignmentDate={dates}
+				assignmentDateRange={dates}
 				isShowing={displayModal}
 				onClose={(): void => setDisplayModal(false)}
 				title="Set Start &amp; End Dates"

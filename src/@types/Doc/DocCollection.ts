@@ -3,4 +3,5 @@
  */
 export type DocumentCacheEntry = {
 	doc: Document;
+	key: string;
 };

@@ -16,6 +16,10 @@ import { calcDayRange } from "./Task/calcDayRange";
 import { isSameDay } from "./Task/isSameDay";
 import { truncateText } from "./shared/truncateText";
 import { isTaskInElement } from "./DocViewer/isTaskInElement";
+import { generateRandomColorHex } from "./shared/generateRandomColorHex";
+import { generateRandomDate } from "./SetDateTime/generateRandomDate";
+import { generateInitialAssignmentDate } from "./SetDateTime/generateInitialAssignmentDate";
+import { randomInt } from "./shared/randomInt";
 
 /**
  * Base export, exports all utility functions in one object
@@ -33,9 +37,13 @@ export {
 	displayFileWithSize,
 	findParts,
 	findPoints,
+	generateInitialAssignmentDate,
+	generateRandomColorHex,
+	generateRandomDate,
 	isSameDay,
 	isTaskInElement,
 	parseFileTextToXML,
+	randomInt,
 	readFile,
 	REGEX_EXPRESSIONS,
 	updateDueDates,

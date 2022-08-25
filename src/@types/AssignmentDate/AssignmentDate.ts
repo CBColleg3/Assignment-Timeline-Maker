@@ -1,4 +1,5 @@
 export type AssignmentDate = {
-	start: Date;
-	end: Date;
+	rank: number;
+	color: string;
+	date: Date;
 };

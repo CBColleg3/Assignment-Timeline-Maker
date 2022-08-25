@@ -65,7 +65,7 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
  *
  * @param par xml element representing a 'w:p' xml tag
  * @param tasks The tasks we want to compare the parsed text to, to apply highlighting upon matching
- * @param startDate
+ * @param startDate (temp) the start date
  * @returns <p> html tag containing the text information within the 'w:p' tag
  */
 export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): JSX.Element => {

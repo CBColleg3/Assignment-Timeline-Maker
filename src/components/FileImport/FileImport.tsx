@@ -91,7 +91,7 @@ export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 				ref={fileRef}
 				type="file"
 			/>
-			<div className="p-5 d-flex flex-column border border-info border-opacity-50 rounded">
+			<div className="p-5 d-flex flex-column border border-primary border-opacity-50 rounded">
 				<span className="mx-auto">
 					<FontAwesomeIcon
 						icon={faFileArrowUp}

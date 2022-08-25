@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-loop-func -- no invalid practices being used*/
 /* eslint-disable no-loop-func -- no invalid practices being used*/
-import type { AssignmentDate, Task } from "src/@types";
+import type { AssignmentDate, AssignmentDateRange, Task } from "src/@types";
 import {
 	calcTotalPoints,
 	calcDiffInDays,
@@ -70,11 +70,11 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
  * an object with a date, a boolean, and a number. The boolean is for the number of days to complete the task increases while the number is the
  * total number of points before the number of days increases. It then updates all of the tasks dueDate fields and updates TaskArray state.
  *
- * @param {Task[]} tasks The task objects
- * @param {AssignmentDate} assignmentDate The assignment date
- * @returns {void}
+ * @param tasks The task objects
+ * @param assignmentDateRange The assignment date
+ * @returns The updated Tasks
  */
-const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] => {
+const updateDueDates = (tasks: Task[], assignmentDateRange: AssignmentDateRange): Task[] => {
 	let taskClone = [...tasks].map((eachTask) => ({
 		...eachTask,
 		dueDate: new Date(eachTask.dueDate),
@@ -83,14 +83,13 @@ const updateDueDates = (tasks: Task[], assignmentDate: AssignmentDate): Task[] =
 	let currentColor = fetchRandomColor();
 
 	const clonedAssignmentDate = {
-		end: new Date(assignmentDate.end.getTime()),
-		start: new Date(assignmentDate.start.getTime()),
+		end: new Date(assignmentDateRange.end.date.getTime()),
+		start: new Date(assignmentDateRange.start.date.getTime()),
 	};
 
 	const totalPoints = calcTotalPoints(tasks);
 	const dateDiff = calcDiffInDays(clonedAssignmentDate.start, clonedAssignmentDate.end);
 	const pointsPerDay = Math.ceil(totalPoints / dateDiff);
-
 
 	const currentDay = new Date(clonedAssignmentDate.start.getTime());
 
