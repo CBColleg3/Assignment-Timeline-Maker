@@ -24,6 +24,7 @@ type TimelineDragDropProps = {
  */
 export const TimelineDragDrop = ({ assignmentDate }: TimelineDragDropProps): JSX.Element => {
 	const { tasks, setTasks } = useTaskContext();
+	const [currentActiveKey, setCurrentActiveKey] = React.useState<AccordionEventKey>();
 	/**
 	 * Handles the drag end operation
 	 *

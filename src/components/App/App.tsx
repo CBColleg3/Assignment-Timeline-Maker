@@ -206,8 +206,8 @@ export const App = (): JSX.Element => {
 						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
 							updateErrors("date", operation, error)
 						}
-						assignmentDate={dates}
-						update={(theDates: AssignmentDate): void => setDates(theDates)}
+						assignmentDate={assignmentDate}
+						update={(theDates: AssignmentDate): void => setAssignmentDate(theDates)}
 					/>
 				</span>
 				<span className="my-auto">

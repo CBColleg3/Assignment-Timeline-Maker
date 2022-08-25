@@ -1,6 +1,5 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
@@ -24,6 +23,7 @@ type TimelineProps = {
 export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Element => {
 	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start);
 	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
+	const [openAll, setOpenAll] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
 		if (assignmentDate) {
@@ -81,12 +81,9 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 							color: "#fff",
 						}}
 					>
-						<h3>
-							{" "}
-							{currentTaskDate.toDateString()} {" tasks are now complete!!"}
-						</h3>
-					</VerticalTimelineElement>
-				</VerticalTimeline>
+						{currentTaskDate.toDateString()} {" tasks are now complete!!"}
+					</div>
+				</div>
 			</span>
 		</div>
 	);
