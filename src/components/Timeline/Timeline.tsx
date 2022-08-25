@@ -5,6 +5,7 @@ import type { AssignmentDate, AssignmentDateRange } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
+import { calcHourRange } from "src/helpers/Task/calcHourRange";
 
 /**
  * Props for the Timeline component
@@ -26,7 +27,11 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 
 	React.useEffect(() => {
 		if (assignmentDate) {
-			setTaskDates(calcDayRange(assignmentDate.start.date, assignmentDate.end.date));
+			if (assignmentDate.timelineType === "day") {
+				setTaskDates(calcDayRange(assignmentDate.start, assignmentDate.end));
+			} else {
+				setTaskDates(calcHourRange(assignmentDate.start, assignmentDate.end));
+			}
 		}
 	}, [assignmentDate]);
 
@@ -56,12 +61,13 @@ export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Elemen
 							})} \u2022`}
 						</div>
 						<TimelineDates
+							assignmentDate={assignmentDate}
 							currentTaskDate={currentTaskDate}
 							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
 							taskDates={taskDates}
 						/>
 					</VerticalTimelineElement>
-					<TimelineDragDrop />
+					<TimelineDragDrop assignmentDate={assignmentDate} />
 					<VerticalTimelineElement
 						contentArrowStyle={{
 							borderRight: "7px solid  rgb(33, 150, 243)",

@@ -68,9 +68,28 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 				break;
 			}
 			case "start": {
-				if (dates.start) {
-					setDates({ ...dates, start: { ...dates.start, date: value } });
-				}
+				setDates({ ...dates, start: value });
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	};
+
+	/**
+	 * Helper function to update the timelinetype
+	 *
+	 * @param type Which field the user is updating, either `start` or `end`
+	 */
+	const updateTimelineType = (type: UpdateDateType): void => {
+		switch (type) {
+			case "day": {
+				setDates({ ...dates, timelineType: "day" });
+				break;
+			}
+			case "hour": {
+				setDates({ ...dates, timelineType: "time" });
 				break;
 			}
 			default: {
@@ -84,12 +103,19 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start:  "}</span>
-					{`${assignmentDateRange.start?.date.toLocaleDateString()}  ${assignmentDateRange.start?.date.toLocaleTimeString()}`}
+					{assignmentDate.timelineType === "day" && <span>{`${assignmentDate.start.toLocaleDateString()}`}</span>}
+					{assignmentDate.timelineType === "time" && (
+						<span>{`${assignmentDate.start.toLocaleTimeString()} ${assignmentDate.start.toLocaleDateString()}`}</span>
+					)}
 				</span>
 				<span>
 					<span className="fw-bold">{"End:  "}</span>
-					{`${assignmentDateRange.end?.date.toLocaleDateString()}  ${assignmentDateRange.end?.date.toLocaleTimeString()}`}
+					{assignmentDate.timelineType === "day" && <span>{`${assignmentDate.end.toLocaleDateString()}`}</span>}
+					{assignmentDate.timelineType === "time" && (
+						<span>{`${assignmentDate.end.toLocaleTimeString()}  ${assignmentDate.end.toLocaleDateString()}`}</span>
+					)}
 				</span>
+
 				<span className="mt-2">
 					<Button
 						className="w-100"
@@ -110,6 +136,7 @@ const SetDateTime = ({ update, assignmentDateRange, addError }: SetDateTimeProps
 				title="Set Start &amp; End Dates"
 				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
 				updateDates={updateDate}
+				updateTimelineType={updateTimelineType}
 			/>
 		</>
 	);

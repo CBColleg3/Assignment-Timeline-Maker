@@ -50,13 +50,13 @@ const MS_IN_DAY = 86400000;
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const [assignmentDateRange, setAssignmentDateRange] = React.useState<AssignmentDateRange>(
-		generateInitialAssignmentDate(),
-	);
-
-	const [documentCache, setDocumentCache] = React.useState<DocumentCacheEntry[]>();
-	const [document, setDocument] = React.useState<Document>();
-	const [tasks, setTasks] = React.useState<Task[]>([]);
+	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
+	const [dates, setDates] = React.useState<AssignmentDate>({
+		end: new Date(Date.now() + END_DAY_INIT_INCREMENT),
+		start: new Date(),
+		timelineType: "day",
+	});
+	const [docCollection, setDocCollection] = React.useState<DocCollection>();
 	const [errors, setErrors] = React.useState<Errors>({});
 	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
 	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
