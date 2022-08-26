@@ -26,6 +26,7 @@ import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-i
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { uploadDocument } from "src/helpers/shared/uploadDocument";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
+import { useFiles } from "src/hooks";
 
 /**
  * Root component
@@ -35,11 +36,10 @@ import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 export const App = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
+	const { files, selectedFile } = useFiles();
 	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [docCollection, setDocCollection] = React.useState<DocumentCacheEntry[]>();
 	const [errors, setErrors] = React.useState<Errors>({});
-	const [files, setFiles] = React.useState<File[]>([]);
-	const [fileSelected, setFileSelected] = React.useState<File | undefined>(undefined);
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
@@ -124,9 +124,9 @@ export const App = (): JSX.Element => {
 					update={(theFiles: File[]): void => setFiles(theFiles)}
 				/>
 			</div>
-			{/* {!errors.date && !errors.file ? (
+			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected !== undefined && files?.length ? (
+					{fileSelected && files?.length ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{tasks?.length ? (
@@ -219,7 +219,7 @@ export const App = (): JSX.Element => {
 						</ul>
 					</span>
 				</Alert>
-			)} */}
+			)}
 		</div>
 	);
 };
