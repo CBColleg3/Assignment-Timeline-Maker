@@ -4,6 +4,7 @@ import type { AssignmentDate } from "src/@types";
 import type { iAssignmentDateInfoContext } from "src/@types/AssignmentDate/iAssignmentDateInfoContext";
 import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
 import { AssignmentDateInfoContext } from "src/context";
+import { generateInitialAssignmentDateInfoDates } from "src/helpers/AssignmentDateInfo/generateInitialAssignmentDateInfoDates";
 
 type AssignmentInfoProviderProps = {
 	children: ReactNode;
@@ -17,7 +18,7 @@ type AssignmentInfoProviderProps = {
  * @returns Children wrapped with AssignmentDateInfoContext initial value
  */
 export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
-	const [dates, setDates] = React.useState<AssignmentDate[]>([]);
+	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
 
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
@@ -34,7 +35,7 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					oldDates.map((eachDate, dateInd) => (dateInd === ind ? { ...eachDate, ...date } : eachDate)),
 				);
 			},
-			end: dates[dates.length - 1],
+			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
 			format,
 			getEnd: () => dates[dates.length - 1],
 			getStart: () => dates[0],

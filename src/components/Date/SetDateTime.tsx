@@ -16,6 +16,12 @@ type SetDateTimeProps = {
 	addError: (_error: Error | undefined, _operation: ERROR_OPS) => void;
 };
 
+type SetDateTimeState = {
+	format: iAssignmentDateInfoContextFormat;
+	end: Date;
+	start: Date;
+};
+
 const END_DAY_INIT_INCREMENT = 172800000;
 
 /**
@@ -28,8 +34,12 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 	const { changeFormat, end, format, setEndDate, setStartDate, start } = useAssignmentDateInfoContext();
 	const [confirm, setConfirm] = React.useState<boolean>(false);
 	const [displayModal, setDisplayModal] = React.useState(false);
-	const [tempEnd, setTempEnd] = React.useState(end.date);
-	const [tempStart, setTempStart] = React.useState(start.date);
+
+	const [tmpState, setTmpState] = React.useState<SetDateTimeState>({
+		end: end.date,
+		format,
+		start: start.date,
+	});
 
 	/**
 	 * Triggers when dates/confirm is updated
@@ -38,17 +48,20 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 	 */
 	React.useEffect(() => {
 		if (confirm) {
-			setStartDate(tempStart);
-			setEndDate(tempEnd);
+			const { end: newEnd, format: newFormat, start: newStart } = tmpState;
 			setConfirm(false);
-			const error = validateSetDateTimeInput(tempStart, tempEnd);
+			const error = validateSetDateTimeInput(newStart, newEnd);
 			if (error) {
 				addError({ ...error }, "add");
+				setTmpState({ end: end.date, format, start: start.date });
 			} else {
+				setStartDate(newStart);
+				setEndDate(newEnd);
+				changeFormat(newFormat);
 				addError(undefined, "delete");
 			}
 		}
-	}, [addError, confirm, setStartDate, setEndDate, tempStart, tempEnd]);
+	}, [addError, changeFormat, confirm, setEndDate, setStartDate, tmpState, end.date, start.date, format]);
 
 	/**
 	 * Helper function to update the start/end date
@@ -60,13 +73,13 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 		switch (type) {
 			case "end": {
 				if (value) {
-					setTempEnd(value);
+					setTmpState((oldState) => ({ ...oldState, end: value }));
 				}
 				break;
 			}
 			case "start": {
 				if (value) {
-					setTempStart(value);
+					setTmpState((oldState) => ({ ...oldState, start: value }));
 				}
 				break;
 			}
@@ -77,23 +90,13 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 	};
 
 	/**
-	 * Helper function to update the timelinetype
+	 * Helper function to update the format of the internal `dates` array within the date context
 	 *
-	 * @param type Which field the user is updating, either `start` or `end`
+	 * @param newFormat - The new format of the date
 	 */
-	const updateTimelineType = (type: iAssignmentDateInfoContextFormat): void => {
-		switch (type) {
-			case "day": {
-				changeFormat("day");
-				break;
-			}
-			case "hour": {
-				changeFormat("hour");
-				break;
-			}
-			default: {
-				break;
-			}
+	const updateTimelineType = (newFormat: iAssignmentDateInfoContextFormat): void => {
+		if (newFormat) {
+			setTmpState((oldState) => ({ ...oldState, format: newFormat }));
 		}
 	};
 
@@ -129,15 +132,15 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 				</span>
 			</span>
 			<DateModal
-				end={end}
-				format={format}
+				end={tmpState.end}
+				format={tmpState.format}
 				isShowing={displayModal}
 				onClose={(): void => setDisplayModal(false)}
-				start={start}
+				start={tmpState.start}
 				title="Set Start &amp; End Dates"
 				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
-				updateDates={updateDate}
-				updateTimelineType={updateTimelineType}
+				updateDates={(type: UpdateDateType, value: Date): void => updateDate(type, value)}
+				updateTimelineType={(newFormat: iAssignmentDateInfoContextFormat): void => updateTimelineType(newFormat)}
 			/>
 		</>
 	);

@@ -1,16 +1,16 @@
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType } from "src/@types";
+import type { UpdateDateType } from "src/@types";
 import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
 import EndDate from "../EndDate";
 import StartDate from "../StartDate";
 
 type DateModalProps = {
-	end: AssignmentDate;
+	end: Date;
 	format: iAssignmentDateInfoContextFormat;
 	isShowing: boolean;
 	onClose: () => void;
-	start: AssignmentDate;
+	start: Date;
 	title: string;
 	updateConfirm: (_confirmValue: boolean) => void;
 	updateDates: (_type: UpdateDateType, _value: Date) => void;
@@ -38,7 +38,7 @@ export const DateModal = ({
 
 	return (
 		<Modal
-			onHide={onClose}
+			onHide={(): void => onClose()}
 			show={isShowing}
 		>
 			<Modal.Header closeButton>
@@ -46,11 +46,11 @@ export const DateModal = ({
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
-					startDate={start.date}
+					startDate={start}
 					update={(value: Date): void => updateDates("start", value)}
 				/>
 				<EndDate
-					endDate={end.date}
+					endDate={end}
 					update={(value: Date): void => updateDates("end", value)}
 				/>
 				<span>

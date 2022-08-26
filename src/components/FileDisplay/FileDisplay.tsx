@@ -42,7 +42,7 @@ const FileDisplay = ({
 	uploadDocument,
 }: FileDisplayProps): JSX.Element => (
 	<>
-		{files && files.length > MIN_FILES_LENGTH ? (
+		{files?.length ? (
 			<ListGroup>
 				{files.map((eachFile, index) => (
 					<>

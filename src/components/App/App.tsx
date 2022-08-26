@@ -38,10 +38,14 @@ export const App = (): JSX.Element => {
 	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
 	const [docCollection, setDocCollection] = React.useState<DocumentCacheEntry[]>();
 	const [errors, setErrors] = React.useState<Errors>({});
-	const [files, setFiles] = React.useState<File[] | undefined>(undefined);
-	const [fileSelected, setFileSelected] = React.useState<number | undefined>(undefined);
+	const [files, setFiles] = React.useState<File[]>([]);
+	const [fileSelected, setFileSelected] = React.useState<File | undefined>(undefined);
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
+
+	React.useEffect(() => {
+		console.log(files);
+	}, [files]);
 
 	/**
 	 * ERROR MANAGEMENT
@@ -82,13 +86,6 @@ export const App = (): JSX.Element => {
 				case "delete": {
 					const filesClone = [...files].filter((_, ind) => ind !== index);
 					setFiles(filesClone);
-					if (filesClone.length === MIN_FILES_LENGTH) {
-						setFileSelected(undefined);
-					} else if (filesClone.length === index) {
-						setFileSelected((oldFileSelected) =>
-							oldFileSelected ? oldFileSelected - FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL : undefined,
-						);
-					}
 					break;
 				}
 				default: {
@@ -111,10 +108,14 @@ export const App = (): JSX.Element => {
 				</span>
 				<span className="my-auto">
 					<FileDisplay
-						currentSelection={fileSelected}
+						currentSelection={
+							files?.length && fileSelected
+								? files.findIndex((eachFile) => eachFile.name === fileSelected.name)
+								: undefined
+						}
 						files={files}
-						updateCurrentSelection={(ind: number): void => setFileSelected(ind)}
-						updateFiles={updateFiles}
+						updateCurrentSelection={(ind: number): void => setFileSelected(files?.length ? files[ind] : undefined)}
+						updateFiles={(type: UpdateType, ind: number): void => updateFiles(type, ind)}
 						uploadDocument={(): void => uploadDocument(timelineRef.current)}
 					/>
 				</span>
@@ -123,7 +124,7 @@ export const App = (): JSX.Element => {
 					update={(theFiles: File[]): void => setFiles(theFiles)}
 				/>
 			</div>
-			{!errors.date && !errors.file ? (
+			{/* {!errors.date && !errors.file ? (
 				<>
 					{fileSelected !== undefined && files?.length ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
@@ -218,7 +219,7 @@ export const App = (): JSX.Element => {
 						</ul>
 					</span>
 				</Alert>
-			)}
+			)} */}
 		</div>
 	);
 };
