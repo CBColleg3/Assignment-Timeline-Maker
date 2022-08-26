@@ -4,27 +4,17 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type {
-	Error,
-	Errors,
-	ERROR_OPS,
-	ERROR_TYPES,
-	UpdateType,
-	DocumentCacheEntry,
-	TaskCacheEntry,
-} from "src/@types";
+import type { Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Alert, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
-import { FILE_SELECTED_OUT_OF_BOUNDS_DECREMENTAL, MIN_FILES_LENGTH } from "../FileDisplay/FileDisplay";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { uploadDocument } from "src/helpers/shared/uploadDocument";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { useFiles } from "src/hooks";
 
@@ -36,16 +26,10 @@ import { useFiles } from "src/hooks";
 export const App = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
-	const { files, selectedFile } = useFiles();
-	const [assignmentCache, setAssignmentCache] = React.useState<{ [key: string]: TaskCacheEntry }>({});
-	const [docCollection, setDocCollection] = React.useState<DocumentCacheEntry[]>();
+	const { deleteFile, files, isFileSelected, selectedFileIndex, setFiles, setSelectedFileIndex } = useFiles();
 	const [errors, setErrors] = React.useState<Errors>({});
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
-
-	React.useEffect(() => {
-		console.log(files);
-	}, [files]);
 
 	/**
 	 * ERROR MANAGEMENT
@@ -74,27 +58,6 @@ export const App = (): JSX.Element => {
 		[errors],
 	);
 
-	/**
-	 * Utility function to update the files state from the file display, or any other component that utilizes the files state
-	 *
-	 * @param type - The type of operation to be performed on the files state
-	 * @param index - The index of the file to operate upon
-	 */
-	const updateFiles = (type: UpdateType, index: number): void => {
-		if (files) {
-			switch (type) {
-				case "delete": {
-					const filesClone = [...files].filter((_, ind) => ind !== index);
-					setFiles(filesClone);
-					break;
-				}
-				default: {
-					break;
-				}
-			}
-		}
-	};
-
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
@@ -108,15 +71,11 @@ export const App = (): JSX.Element => {
 				</span>
 				<span className="my-auto">
 					<FileDisplay
-						currentSelection={
-							files?.length && fileSelected
-								? files.findIndex((eachFile) => eachFile.name === fileSelected.name)
-								: undefined
-						}
+						deleteFile={(index: number): void => deleteFile(index)}
 						files={files}
-						updateCurrentSelection={(ind: number): void => setFileSelected(files?.length ? files[ind] : undefined)}
-						updateFiles={(type: UpdateType, ind: number): void => updateFiles(type, ind)}
-						uploadDocument={(): void => uploadDocument(timelineRef.current)}
+						selectedFileIndex={selectedFileIndex}
+						updateSelectedFileIndex={(index: number | undefined): void => setSelectedFileIndex(index)}
+						uploadElementRef={timelineRef.current}
 					/>
 				</span>
 				<FileImport
@@ -126,7 +85,7 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{fileSelected && files?.length ? (
+					{isFileSelected && files?.length ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{tasks?.length ? (
@@ -151,7 +110,7 @@ export const App = (): JSX.Element => {
 								{document ? (
 									<DocViewer
 										docXML={document}
-										fileImported={files.length > MIN_FILES_LENGTH}
+										fileImported={isFileSelected}
 										startDate={start.date}
 										tasks={tasks}
 									/>
@@ -174,7 +133,7 @@ export const App = (): JSX.Element => {
 						</div>
 					) : (
 						<>
-							{files && files.length > MIN_FILES_LENGTH ? (
+							{files?.length ? (
 								<Alert
 									className="w-75 mt-4 mx-auto text-center"
 									variant="info"

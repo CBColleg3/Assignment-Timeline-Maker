@@ -39,9 +39,17 @@ type iUseFiles = {
 	 */
 	insertFile: (_file: File, _ind: number) => void;
 	/**
+	 * Whether a file is currently selected or not
+	 */
+	isFileSelected: boolean;
+	/**
 	 * The selected file by the user
 	 */
 	selectedFile: File | undefined;
+	/**
+	 * The selected file's index in regards to it's placement in the internal `files` array
+	 */
+	selectedFileIndex: number | undefined;
 	/**
 	 * Updates the internal `files` array with the passed in File[]
 	 *
@@ -54,15 +62,23 @@ type iUseFiles = {
 	 * @param _file - The new selected file to override the internal `selectedFile` state
 	 */
 	setSelectedFile: (_file: File) => void;
+	/**
+	 * Updates the selected file's index in regards to it's placement in the internal `files` array
+	 *
+	 * @param _selectedFileIndex - The selected file index that will override the current internal `selectedFileIndex` state
+	 */
+	setSelectedFileIndex: (_selectedFileIndex: number | undefined) => void;
 };
 
 /**
+ * Custom hook that eases the management of the file state for the consumer
  *
  * @returns The object with all functions available to mutate and capture the state
  */
 export const useFiles = (): iUseFiles => {
 	const [files, setFiles] = React.useState<File[]>([]);
 	const [selectedFile, setSelectedFile] = React.useState<File | undefined>();
+	const [selectedFileIndex, setSelectedFileIndex] = React.useState<number | undefined>();
 
 	const props: iUseFiles = React.useMemo(
 		() => ({
@@ -75,11 +91,14 @@ export const useFiles = (): iUseFiles => {
 				filesClone.splice(ind, CONSTANTS.SPLICE_IND, file);
 				setFiles(filesClone);
 			},
+			isFileSelected: !selectedFile && !selectedFileIndex,
 			selectedFile,
-			setFiles: (newFiles: File[]) => setFiles(newFiles),
-			setSelectedFile: (newFile: File) => setSelectedFile(newFile),
+			selectedFileIndex,
+			setFiles: (newFiles: File[]): void => setFiles(newFiles),
+			setSelectedFile: (newFile: File): void => setSelectedFile(newFile),
+			setSelectedFileIndex: (index: number | undefined): void => setSelectedFileIndex(index),
 		}),
-		[files, selectedFile],
+		[files, selectedFile, selectedFileIndex],
 	);
 
 	return props;
