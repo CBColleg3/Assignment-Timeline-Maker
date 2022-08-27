@@ -13,8 +13,8 @@ import { uploadDocument } from "src/helpers/shared/uploadDocument";
 type FileDisplayProps = {
 	deleteFile: (_idx: number) => void;
 	files: File[];
+	selectFile: (_idx: number) => void;
 	selectedFileIndex: number | undefined;
-	updateSelectedFileIndex: (_idx: number | undefined) => void;
 	uploadElementRef: HTMLSpanElement | null;
 };
 
@@ -27,8 +27,8 @@ type FileDisplayProps = {
 const FileDisplay = ({
 	deleteFile,
 	files,
+	selectFile,
 	selectedFileIndex,
-	updateSelectedFileIndex,
 	uploadElementRef,
 }: FileDisplayProps): JSX.Element => (
 	<>
@@ -44,7 +44,7 @@ const FileDisplay = ({
 							className="d-flex flex-row justify-content-between"
 							eventKey={`${index}-file-${eachFile.name}${selectedClassName}`}
 							key={`${index}${selectedClassName}`}
-							onClick={(): void => updateSelectedFileIndex(index)}
+							onClick={(): void => selectFile(index)}
 							variant={selectedVariant}
 						>
 							<span className="me-3">{displayFileWithSize(eachFile)}</span>

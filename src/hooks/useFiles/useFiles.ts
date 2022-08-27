@@ -43,6 +43,12 @@ type iUseFiles = {
 	 */
 	isFileSelected: boolean;
 	/**
+	 * Helper function which combines `setSelectedFile`, and `setSelectedFileIndex` into one method, rather then have to call the 2 consecutively to achieve desired effect
+	 *
+	 * @param _ind - The index of the file being selected
+	 */
+	selectFile: (_ind: number) => void;
+	/**
 	 * The selected file by the user
 	 */
 	selectedFile: File | undefined;
@@ -80,7 +86,7 @@ export const useFiles = (): iUseFiles => {
 	const [selectedFile, setSelectedFile] = React.useState<File | undefined>();
 	const [selectedFileIndex, setSelectedFileIndex] = React.useState<number | undefined>();
 
-	const props: iUseFiles = React.useMemo(
+	const memoProps: iUseFiles = React.useMemo(
 		() => ({
 			appendFile: (file: File): void => setFiles((oldFiles) => [...oldFiles, file]),
 			clearFiles: (): void => setFiles([]),
@@ -91,7 +97,11 @@ export const useFiles = (): iUseFiles => {
 				filesClone.splice(ind, CONSTANTS.SPLICE_IND, file);
 				setFiles(filesClone);
 			},
-			isFileSelected: !selectedFile && !selectedFileIndex,
+			isFileSelected: selectedFile !== undefined && selectedFileIndex !== undefined,
+			selectFile: (index: number): void => {
+				setSelectedFileIndex(index);
+				setSelectedFile(files[index]);
+			},
 			selectedFile,
 			selectedFileIndex,
 			setFiles: (newFiles: File[]): void => setFiles(newFiles),
@@ -101,5 +111,5 @@ export const useFiles = (): iUseFiles => {
 		[files, selectedFile, selectedFileIndex],
 	);
 
-	return props;
+	return memoProps;
 };

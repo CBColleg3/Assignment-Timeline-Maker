@@ -8,15 +8,22 @@ import type { Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Alert, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { useFiles } from "src/hooks";
+import { TimelineAlert } from "../TimelineAlert";
+
+const ALERT_CONSTANTS = {
+	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
+	CHOOSE_A_FILE: "Choose a file",
+	NO_FILE_SELECTED: "Must select a file from the above list to begin timeline generation",
+	OR_DRAG_DROP: "or drag-and-drop files into the outlined box to begin timeline generation",
+	SELECT_FILE_FROM_LINK: "Select file(s) from the link",
+};
 
 /**
  * Root component
@@ -26,7 +33,7 @@ import { useFiles } from "src/hooks";
 export const App = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
-	const { deleteFile, files, isFileSelected, selectedFileIndex, setFiles, setSelectedFileIndex } = useFiles();
+	const { deleteFile, files, isFileSelected, selectedFileIndex, setFiles, selectFile } = useFiles();
 	const [errors, setErrors] = React.useState<Errors>({});
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
@@ -73,8 +80,8 @@ export const App = (): JSX.Element => {
 					<FileDisplay
 						deleteFile={(index: number): void => deleteFile(index)}
 						files={files}
+						selectFile={(index: number): void => selectFile(index)}
 						selectedFileIndex={selectedFileIndex}
-						updateSelectedFileIndex={(index: number | undefined): void => setSelectedFileIndex(index)}
 						uploadElementRef={timelineRef.current}
 					/>
 				</span>
@@ -85,7 +92,7 @@ export const App = (): JSX.Element => {
 			</div>
 			{!errors.date && !errors.file ? (
 				<>
-					{isFileSelected && files?.length ? (
+					{isFileSelected ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{tasks?.length ? (
@@ -134,50 +141,41 @@ export const App = (): JSX.Element => {
 					) : (
 						<>
 							{files?.length ? (
-								<Alert
-									className="w-75 mt-4 mx-auto text-center"
+								<TimelineAlert
+									body={ALERT_CONSTANTS.NO_FILE_SELECTED}
+									componentClassName="w-75 mt-4 mx-auto text-center"
 									variant="info"
-								>
-									<FontAwesomeIcon
-										className="me-2"
-										icon={faCircleInfo}
-									/>
-									{"Must select a file from the above list to begin timeline generation"}
-								</Alert>
+								/>
 							) : (
-								<Alert
-									className="w-75 mt-4 mx-auto text-center"
+								<TimelineAlert
+									body={
+										<span>
+											{ALERT_CONSTANTS.SELECT_FILE_FROM_LINK}
+											<span className="fw-bold mx-1">{ALERT_CONSTANTS.CHOOSE_A_FILE}</span>
+											{ALERT_CONSTANTS.OR_DRAG_DROP}
+										</span>
+									}
+									componentClassName="w-75 mt-4 mx-auto text-center"
 									variant="info"
-								>
-									<FontAwesomeIcon
-										className="me-2"
-										icon={faCircleInfo}
-									/>
-									{"Select file(s) from the link "}
-									<span className="fw-bold">{" Choose a file "}</span>
-									{" or drag-and-drop files into the outlined box to begin timeline generation"}
-								</Alert>
+								/>
 							)}
 						</>
 					)}
 				</>
 			) : (
-				<Alert
-					className="w-75 mt-4 mx-auto d-flex flex-column text-center"
+				<TimelineAlert
+					body={
+						<span className="mx-auto mt-2">
+							<ul>
+								{errors.date && <li>{errors.date.message}</li>}
+								{errors.file && <li>{errors.file.message}</li>}
+							</ul>
+						</span>
+					}
+					componentClassName="w-75 mt-4 mx-auto d-flex flex-column text-center"
+					title={<span className="fw-bolder">{ALERT_CONSTANTS.CANNOT_RENDER_TIMELINE}</span>}
 					variant="danger"
-				>
-					<FontAwesomeIcon
-						className="me-2"
-						icon={faCircleExclamation}
-					/>
-					<span className="fw-bolder">{"Cannot render Timeline"}</span>
-					<span className="mx-auto mt-2">
-						<ul>
-							{errors.date && <li>{errors.date.message}</li>}
-							{errors.file && <li>{errors.file.message}</li>}
-						</ul>
-					</span>
-				</Alert>
+				/>
 			)}
 		</div>
 	);

@@ -224,7 +224,10 @@
 		"no-shadow": "error",
 		"no-shadow-restricted-names": "error",
 		"no-undef-init": "error",
-		"no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }],
+		"no-unused-vars": [
+			"warn",
+			{ "argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }
+		],
 		"no-use-before-define": "error",
 		"array-bracket-newline": ["error", "consistent"],
 		"array-bracket-spacing": ["error", "never"],
@@ -638,7 +641,6 @@
 		"react/prefer-stateless-function": "error",
 		"react/prop-types": "error",
 		"react/react-in-jsx-scope": "error",
-		"react/require-default-props": "error",
 		"react/require-optimization": "error",
 		"react/require-render-return": "error",
 		"react/self-closing-comp": "error",
