@@ -1,5 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs -- prettier/eslint conflict */
-/* eslint-disable indent -- prettier/eslint conflict */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
