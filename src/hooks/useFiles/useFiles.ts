@@ -1,4 +1,5 @@
 import React from "react";
+import { readFile } from "src/helpers";
 
 /**
  * Constants for the hook
@@ -57,6 +58,10 @@ type iUseFiles = {
 	 */
 	selectedFileIndex: number | undefined;
 	/**
+	 * The selected file's text, result of calling the `readFile` function when a file is selected
+	 */
+	selectedFileText: string | undefined;
+	/**
 	 * Updates the internal `files` array with the passed in File[]
 	 *
 	 * @param _files - The new files to replace the internal `files` state
@@ -85,7 +90,36 @@ export const useFiles = (): iUseFiles => {
 	const [files, setFiles] = React.useState<File[]>([]);
 	const [selectedFile, setSelectedFile] = React.useState<File | undefined>();
 	const [selectedFileIndex, setSelectedFileIndex] = React.useState<number | undefined>();
+	const [selectedFileText, setSelectedFileText] = React.useState<string | undefined>();
 
+	/**
+	 * Callback function to read the passed in file `file` and set the `selectedFileText` to that read value, returns a void
+	 * promise so that will be ignored as it doesn't produce any values, but rather acts as an intermediary for setting the selectedFileText upon
+	 * file selection. Wrapper in a `useCallback` hook to avoid re-renders, as function expressions receive a new reference on every render, causing
+	 * a ton of unnecessary renders, the dependency argument is empty so theoretically the function should only render once.
+	 */
+	const readSelectedFile = React.useCallback(async (file: File): Promise<void> => {
+		if (file) {
+			const result = await readFile(file);
+			setSelectedFileText(result);
+		}
+	}, []);
+
+	/**
+	 * This useEffect hook triggers mainly when the selectedFile is undefined and has changed, meaning that the user has selected a valid file, if it
+	 * is undefined, then the internal `selectedFileText` is not populated and the `readSelectedFile` function is not executed. If the selected file
+	 * is valid, then the selected file is read, and the internal `selectedFileText` state is populated with the output of `readSelectedFile` function.
+	 */
+	React.useEffect(() => {
+		if (selectedFile) {
+			// eslint-disable-next-line no-console -- Pending creation of logger class, see: pino library
+			readSelectedFile(selectedFile).catch((_err: unknown) => console.error(_err));
+		}
+	}, [selectedFile, readSelectedFile]);
+
+	/**
+	 * Main props, implementation of the `iUseFiles` interface, implements all methods and all properties.
+	 */
 	const memoProps: iUseFiles = React.useMemo(
 		() => ({
 			appendFile: (file: File): void => setFiles((oldFiles) => [...oldFiles, file]),
@@ -104,11 +138,12 @@ export const useFiles = (): iUseFiles => {
 			},
 			selectedFile,
 			selectedFileIndex,
+			selectedFileText,
 			setFiles: (newFiles: File[]): void => setFiles(newFiles),
 			setSelectedFile: (newFile: File): void => setSelectedFile(newFile),
 			setSelectedFileIndex: (index: number | undefined): void => setSelectedFileIndex(index),
 		}),
-		[files, selectedFile, selectedFileIndex],
+		[files, selectedFile, selectedFileText, selectedFileIndex],
 	);
 
 	return memoProps;

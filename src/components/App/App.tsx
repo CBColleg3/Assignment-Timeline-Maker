@@ -12,7 +12,7 @@ import FileDisplay from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { useFiles } from "src/hooks";
+import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
 
 const ALERT_CONSTANTS = {
@@ -31,8 +31,22 @@ const ALERT_CONSTANTS = {
 export const App = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
-	const { deleteFile, files, isFileSelected, selectedFileIndex, setFiles, selectFile } = useFiles();
+	const {
+		deleteFile,
+		files,
+		isFileSelected,
+		selectedFile,
+		selectedFileIndex,
+		selectedFileText,
+		setFiles,
+		selectFile,
+	} = useFiles();
+	const { parsedDocument } = useDocument();
 	const [errors, setErrors] = React.useState<Errors>({});
+
+	React.useEffect(() => {
+		console.log(selectedFileText);
+	}, [selectedFileText]);
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
