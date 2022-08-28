@@ -18,35 +18,53 @@ type TaskProviderProps = {
 export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 	const [tasks, setTasks] = React.useState<Task[]>([]);
 
-	const updateTasks = React.useCallback((newTasks: Task[]) => setTasks(newTasks), []);
-
-	const taskMemo: iTaskContext = React.useMemo(
+	const functionalProps = React.useMemo(
 		() => ({
-			addTask: (task: Task): void => setTasks([...tasks, task]),
+			addTask: (task: Task): void => setTasks((oldTasks) => [...oldTasks, task]),
 			clearTasks: (): void => setTasks([]),
 			deleteTask: (ind: number) => setTasks((oldTasks) => oldTasks.filter((_, i) => i !== ind)),
 			editTask: (task: Partial<Task>, ind: number) =>
 				setTasks((oldTasks) => oldTasks.map((eachTask, i) => (i === ind ? { ...eachTask, ...task } : eachTask))),
 			insertTask: (task: Task, ind: number): void => {
-				const tasksClone = [...tasks];
-				tasksClone.splice(ind, 0, task);
-				setTasks(tasksClone);
+				setTasks((oldTasks) => {
+					if (oldTasks) {
+						const tasksClone = [...oldTasks];
+						tasksClone.splice(ind, 0, task);
+						return tasksClone;
+					}
+					return oldTasks;
+				});
 			},
 			moveTask: (from: number, to: number): void => {
-				const fromTask = tasks[from];
-				const tasksClone = [...tasks];
-				tasksClone.splice(from, 1);
-				if (to < from) {
-					tasksClone.splice(to, 0, fromTask);
-				} else if (to > from) {
-					tasksClone.splice(to - 1, 0, fromTask);
-				}
-				setTasks(tasksClone);
+				setTasks((oldTasks) => {
+					if (oldTasks) {
+						const fromTask = oldTasks[from];
+						const tasksClone = [...oldTasks];
+						tasksClone.splice(from, 1);
+						if (to < from) {
+							tasksClone.splice(to, 0, fromTask);
+						} else if (to > from) {
+							tasksClone.splice(to - 1, 0, fromTask);
+						}
+						return tasksClone;
+					}
+					return oldTasks;
+				});
 			},
+			updateTasks: (newTasks: Task[]) => setTasks(newTasks),
+		}),
+		[],
+	);
+
+	const updateTasks = React.useCallback((newTasks: Task[]) => setTasks(newTasks), []);
+
+	const taskMemo: iTaskContext = React.useMemo(
+		() => ({
+			...functionalProps,
 			tasks,
 			updateTasks,
 		}),
-		[tasks, updateTasks],
+		[functionalProps, tasks, updateTasks],
 	);
 
 	return <TaskContext.Provider value={taskMemo}>{children}</TaskContext.Provider>;

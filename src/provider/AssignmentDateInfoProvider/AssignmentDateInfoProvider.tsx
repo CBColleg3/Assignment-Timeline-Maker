@@ -21,40 +21,44 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
 
-	const memoProps: iAssignmentDateInfoContext = React.useMemo(
+	const functionalProps = React.useMemo(
 		() => ({
 			addDate: (date: AssignmentDate): void => {
 				setDates((oldDates) => [...oldDates, date]);
 			},
 			changeFormat: (fmt: iAssignmentDateInfoContextFormat) => setFormat(fmt),
 			clearDates: () => setDates([]),
-			dates,
 			deleteDate: (ind: number) => setDates((oldDates) => oldDates.filter((_, i) => i !== ind)),
 			editDate: (date: Partial<AssignmentDate>, ind: number): void => {
 				setDates((oldDates) =>
 					oldDates.map((eachDate, dateInd) => (dateInd === ind ? { ...eachDate, ...date } : eachDate)),
 				);
 			},
-			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
-			format,
-			getEnd: () => dates[dates.length - 1],
-			getStart: () => dates[0],
 			insertDate: (date: AssignmentDate, ind: number): void => {
-				const datesClone = [...dates];
-				datesClone.splice(ind, 0, date);
-				setDates(datesClone);
+				setDates((oldDates) => {
+					if (oldDates) {
+						const datesClone = [...oldDates];
+						datesClone.splice(ind, 0, date);
+						return datesClone;
+					}
+					return oldDates;
+				});
 			},
-			isEmpty: () => dates.length === 0,
 			moveDate: (from: number, to: number): void => {
-				const fromDate = dates[from];
-				const datesClone = [...dates];
-				datesClone.splice(from, 1);
-				if (to < from) {
-					datesClone.splice(to, 0, fromDate);
-				} else if (to > from) {
-					datesClone.splice(to - 1, 0, fromDate);
-				}
-				setDates(datesClone);
+				setDates((oldDates) => {
+					if (oldDates) {
+						const fromDate = oldDates[from];
+						const datesClone = [...oldDates];
+						datesClone.splice(from, 1);
+						if (to < from) {
+							datesClone.splice(to, 0, fromDate);
+						} else if (to > from) {
+							datesClone.splice(to - 1, 0, fromDate);
+						}
+						return datesClone;
+					}
+					return oldDates;
+				});
 			},
 			setEnd: (date: AssignmentDate): void => {
 				setDates((oldDates) => [...oldDates.slice(0, oldDates.length - 1), date]);
@@ -70,9 +74,19 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 			setStartDate: (date: Date): void => {
 				setDates((oldDates) => oldDates.map((eachDate, ind) => (ind === 0 ? { ...eachDate, date } : eachDate)));
 			},
+		}),
+		[],
+	);
+
+	const memoProps: iAssignmentDateInfoContext = React.useMemo(
+		() => ({
+			...functionalProps,
+			dates,
+			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
+			format,
 			start: dates[0],
 		}),
-		[dates, format],
+		[dates, format, functionalProps],
 	);
 
 	return <AssignmentDateInfoContext.Provider value={memoProps}>{children}</AssignmentDateInfoContext.Provider>;

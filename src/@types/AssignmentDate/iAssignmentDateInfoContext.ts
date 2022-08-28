@@ -53,18 +53,6 @@ export type iAssignmentDateInfoContext = {
 	 */
 	format: iAssignmentDateInfoContextFormat;
 	/**
-	 * Gets the last date in the `dates` internal state array
-	 *
-	 * @returns The last date in the `dates` internal state array
-	 */
-	getEnd: () => AssignmentDate;
-	/**
-	 * Gets the first date in the `dates` internal state array
-	 *
-	 * @returns The first date in the `dates` internal state array
-	 */
-	getStart: () => AssignmentDate;
-	/**
 	 * Inserts a date `_date` at `_ind`
 	 *
 	 * @param _date - The date to insert
@@ -72,10 +60,6 @@ export type iAssignmentDateInfoContext = {
 	 * @returns void
 	 */
 	insertDate: (_date: AssignmentDate, _ind: number) => void;
-	/**
-	 * Checks if the collection is empty
-	 */
-	isEmpty: () => boolean;
 	/**
 	 * Moves a date in the internal state array from `_from` to `_to`
 	 *
