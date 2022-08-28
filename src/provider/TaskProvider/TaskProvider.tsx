@@ -2,6 +2,7 @@
 import React, { type ReactNode } from "react";
 import type { iTaskContext, Task } from "src/@types";
 import { TaskContext } from "src/context";
+import { findParts, findPoints } from "src/helpers";
 
 type TaskProviderProps = {
 	children: ReactNode;
@@ -16,6 +17,8 @@ type TaskProviderProps = {
  */
 export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 	const [tasks, setTasks] = React.useState<Task[]>([]);
+
+	const updateTasks = React.useCallback((newTasks: Task[]) => setTasks(newTasks), []);
 
 	const taskMemo: iTaskContext = React.useMemo(
 		() => ({
@@ -41,9 +44,9 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 				setTasks(tasksClone);
 			},
 			tasks,
-			updateTasks: (newTasks: Task[]) => setTasks(newTasks),
+			updateTasks,
 		}),
-		[tasks],
+		[tasks, updateTasks],
 	);
 
 	return <TaskContext.Provider value={taskMemo}>{children}</TaskContext.Provider>;

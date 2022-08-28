@@ -14,6 +14,7 @@ import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
+import { findParts, findPoints, updateDueDates } from "src/helpers";
 
 const ALERT_CONSTANTS = {
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
@@ -29,24 +30,26 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const { start } = useAssignmentDateInfoContext();
-	const { tasks } = useTaskContext();
-	const {
-		deleteFile,
-		files,
-		isFileSelected,
-		selectedFile,
-		selectedFileIndex,
-		selectedFileText,
-		setFiles,
-		selectFile,
-	} = useFiles();
-	const { parsedDocument } = useDocument();
+	const { start, end, format } = useAssignmentDateInfoContext();
+	const { updateTasks, tasks } = useTaskContext();
+	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
+		useFiles();
+	const { parsedDocument, parseFileText } = useDocument();
 	const [errors, setErrors] = React.useState<Errors>({});
 
+	const setTasks = React.useMemo(
+		() => (fileText: string) => {
+			updateTasks(updateDueDates(findPoints(findParts(fileText)), end, start, format));
+		},
+		[end, format, start, updateTasks],
+	);
+
 	React.useEffect(() => {
-		console.log(selectedFileText);
-	}, [selectedFileText]);
+		if (selectedFileText) {
+			parseFileText(selectedFileText);
+			setTasks(selectedFileText);
+		}
+	}, [selectedFileText, parseFileText, setTasks]);
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
@@ -126,9 +129,9 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{document ? (
+								{parsedDocument ? (
 									<DocViewer
-										docXML={document}
+										docXML={parsedDocument}
 										fileImported={isFileSelected}
 										startDate={start.date}
 										tasks={tasks}

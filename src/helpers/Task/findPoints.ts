@@ -20,12 +20,11 @@ const CONSTANTS = {
  * task object, and it's further parsed by finding the regex of the number followed by points to get the actual points of the task.
  * Once we find all of this we put it into a taskArray by adding each element of the captured document.
  *
- * @param {Promise<string>} text documentText used for finding points
- * @returns {void}
+ * @param fileText - documentText used for finding points
+ * @returns An array of the parsed tasks
  */
-export const findPoints = async (text: Promise<string | undefined>): Promise<Task[]> => {
+export const findPoints = (fileText: string | undefined): Task[] => {
 	const tasks: Task[] = [];
-	const fileText = await text;
 	if (!fileText) {
 		return [];
 	}
