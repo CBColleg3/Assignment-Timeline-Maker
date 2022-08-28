@@ -4,6 +4,8 @@ import type { AssignmentDate, Task } from "src/@types";
 import DatePicker from "react-datepicker";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
+import { findDateTaskUnder } from "src/helpers/AssignmentDateInfo/findDateTaskUnder";
+import { useForm } from "react-hook-form";
 
 const CONSTANTS = {
 	INVALID_DATE_STRING:
@@ -50,25 +52,34 @@ const fetchRandomColor = (): string =>
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { end, start } = useAssignmentDateInfoContext();
+	const { dates, end, format, start } = useAssignmentDateInfoContext();
+	const { updateTasks, editTask, tasks } = useTaskContext();
+	const { formState, getValues, register, watch } = useForm({
+		defaultValues: { ...task, dueDate: task.dueDate.getTime(), points: parseInt(task.points, 10) },
+		mode: "all",
+		reValidateMode: "onChange",
+	});
+
+	console.log(getValues());
+
 	const [name, setName] = useState<string>(task.name);
 	const [document, setDocument] = useState<string>(task.document);
 	const [points, setPoints] = useState<string>(task.points);
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 	const [color, setColor] = useState<string>(task.color);
-	const { updateTasks, tasks } = useTaskContext();
 	const [timelineError, setTimelineError] = useState<boolean>(false);
 
 	/**
 	 * Updates the TaskContext's tasks
 	 */
 	function changeTasks(): void {
-		const newTask = { ...task, color, document, dueDate, name, points };
-		const clonedTasks = [...tasks].map(
-			(_task, ind): Task => (ind === index ? newTask : { ..._task, dueDate: new Date(_task.dueDate.getTime()) }),
-		);
-		const sortedTasks = clonedTasks.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
-		updateTasks(sortedTasks);
+		// const dateValueAssociatedWithNewTask = findDateTaskUnder(newTask, dates);
+		// newTask.color = dateValueAssociatedWithNewTask.color;
+		// const clonedTasks = [...tasks].map(
+		// 	(_task, ind): Task => (ind === index ? newTask : { ..._task, dueDate: new Date(_task.dueDate.getTime()) }),
+		// );
+		// const sortedTasks = clonedTasks.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
+		// updateTasks(sortedTasks);
 	}
 
 	/**
@@ -96,80 +107,61 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		<div>
 			<Modal
 				animation
-				data-testId="message-modal"
 				onHide={(): void => setEditMode(false)}
 				show={editMode}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>{"Edit Task"}</Modal.Title>
+					<Modal.Title className="fw-bold">{"Edit Task"}</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>
-					<Form.Group as={Row}>
-						<Col>
-							<p style={{ marginBottom: "0px" }}>{"Task Name"}</p>
-						</Col>
-						<Col>
-							<Form.Control
-								data-testId="change-name-field-box"
-								onChange={(ev): void => setName(ev.target.value)}
-								value={name}
-							/>
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row}>
-						<Col>
-							<p style={{ marginBottom: "0px" }}>{"Task Document Part"}</p>
-						</Col>
-						<Col>
-							<Form.Control
-								data-testId="change-document-part-box"
-								onChange={(ev): void => setDocument(ev.target.value)}
-								value={document}
-							/>
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row}>
-						<Col>
-							<p style={{ marginBottom: "0px" }}>{"Task Points"}</p>
-						</Col>
-						<Col>
-							<Form.Control
-								data-testId="change-task-points-box"
-								onChange={(ev): void => setPoints(ev.target.value)}
-								type="number"
-								value={parseInt(points, 10)}
-							/>
-						</Col>
-					</Form.Group>
-					<Form.Group as={Row}>
-						<Col>
-							<p style={{ marginBottom: "0px" }}>{"Task Due Date"}</p>
-						</Col>
-						<Col>
-							<DatePicker
-								dateFormat="Pp"
-								onChange={(date: Date): void => updateDueDate(date)}
-								selected={dueDate}
-								showTimeSelect
-							/>
-						</Col>
-					</Form.Group>
+				<Modal.Body className="d-flex flex-column">
+					<div className="d-flex flex-row justify-content-between mb-3">
+						<p className="my-auto">{"\u2022 Task Name"}</p>
+						<Form.Control
+							className="w-50"
+							onChange={(ev): void => setName(ev.target.value)}
+							value={name}
+						/>
+					</div>
+					<div className="d-flex flex-row justify-content-between mb-3">
+						<p className="my-auto">{"\u2022 Task Document Part"}</p>
+						<Form.Control
+							className="w-50"
+							onChange={(ev): void => setDocument(ev.target.value)}
+							value={document}
+						/>
+					</div>
+					<div className="d-flex flex-row justify-content-between mb-3">
+						<p className="my-auto">{"\u2022 Task Points"}</p>
+						<Form.Control
+							className="w-50"
+							onChange={(ev): void => setPoints(ev.target.value)}
+							type="number"
+							value={parseInt(points, 10)}
+						/>
+					</div>
+					<div className="d-flex flex-row justify-content-between mb-3">
+						<p className="my-auto">{"\u2022 Task Due Date"}</p>
+
+						<DatePicker
+							dateFormat="Pp"
+							onChange={(date: Date): void => updateDueDate(date)}
+							selected={dueDate}
+							showTimeSelect
+							wrapperClassName="w-50"
+						/>
+					</div>
 					{timelineError && <Form.Group as={Row}>{CONSTANTS.INVALID_DATE_STRING}</Form.Group>}
 					{!timelineError && (
-						<>
-							<br />
-							<br />
-							<div style={{ textAlign: "right" }}>
-								<Button
-									onClick={(): void => {
-										changeTasks();
-										setEditMode(!editMode);
-									}}
-								>
-									{"Save Changes"}
-								</Button>
-							</div>
-						</>
+						<div className="d-flex flex-row-reverse mt-4">
+							<Button
+								onClick={(): void => {
+									changeTasks();
+									setEditMode(!editMode);
+								}}
+							>
+								{"Save Changes"}
+							</Button>
+						</div>
 					)}
 				</Modal.Body>
 			</Modal>
