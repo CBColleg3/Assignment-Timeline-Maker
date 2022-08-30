@@ -10,15 +10,6 @@ import { useForm } from "react-hook-form";
 import { EDIT_TASK_CONSTANTS, INVALID, VALID } from "./EditTaskValidationMessages";
 import { isErrorsValid } from "src/common";
 
-const CONSTANTS = {
-	RANDOM_COLOR_BASE_IND: 0,
-	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
-	TASK_INDEX_INC: 1,
-	UPDATE_DAY_COUNTER_INC: 1,
-	UPDATE_LOOP_INC: 1,
-	UPDATE_POINT_SUM_VAL: 0,
-};
-
 /**
  * Props of the EditTask component
  */
@@ -28,23 +19,6 @@ type EditTaskProps = {
 	index: number;
 	setEditMode: (_editMode: boolean) => void;
 };
-
-/**
- * Used to generate random indexes for the color of the documents
- *
- * @param min The minimum value
- * @param max The maximum value
- * @returns Randomized value
- */
-const randomInt = (min: number, max: number): number =>
-	Math.floor(Math.random() * (max - min + CONSTANTS.RANDOM_NUMBER_FORMULA_CONSTANT_INC) + min);
-/**
- * This function generates a random crypto color
- *
- * @returns  {string} returns string for color
- */
-const fetchRandomColor = (): string =>
-	COLOR_HEX_ARRAY[randomInt(CONSTANTS.RANDOM_COLOR_BASE_IND, COLOR_HEX_ARRAY_LENGTH)];
 
 /**
  * Controls the editing of the singular task within the timeline
@@ -60,13 +34,10 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		mode: "all",
 		reValidateMode: "onChange",
 	});
-	const [dateError, setDateError] = React.useState<string>();
-
 	const { errors } = formState;
 
+	const [dateError, setDateError] = React.useState<string>();
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
-	const [color, setColor] = useState<string>(task.color);
-	const [timelineError, setTimelineError] = useState<boolean>(false);
 
 	/**
 	 * Helper function for validating the date, and setting the appropriate stats dependent on whether the date is in range
