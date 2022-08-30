@@ -64,8 +64,6 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 
 	const { errors } = formState;
 
-	console.log(errors);
-
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 	const [color, setColor] = useState<string>(task.color);
 	const [timelineError, setTimelineError] = useState<boolean>(false);
@@ -96,27 +94,6 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		// );
 		// const sortedTasks = clonedTasks.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
 		// updateTasks(sortedTasks);
-	}
-
-	/**
-	 *
-	 * Updates the due date of a task and also changes the color to a another tasks if the date already exists or a new one if the new date doesnt exist
-	 *
-	 * @param date the date parameter that is changed
-	 */
-	function updateDueDate(date: Date): void {
-		setDueDate(date);
-		let taskColor = fetchRandomColor();
-		[...tasks].forEach((_task) => {
-			if (_task.dueDate.toDateString() === date.toDateString()) {
-				taskColor = _task.color;
-			}
-		});
-		setTimelineError(false);
-		if (date.getTime() > end.date.getTime() || date.getTime() < start.date.getTime()) {
-			setTimelineError(true);
-		}
-		setColor(taskColor);
 	}
 
 	return (
@@ -209,7 +186,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 								dateFormat="Pp"
 								onChange={(date: Date): void => {
 									validateDate(date);
-									updateDueDate(date);
+									setDueDate(date);
 								}}
 								selected={dueDate}
 								showTimeSelect
