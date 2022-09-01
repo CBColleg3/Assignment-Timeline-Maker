@@ -4,7 +4,7 @@ import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
 import DatePicker from "react-datepicker";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
+import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH, isSameDay, updateDueDates } from "src/helpers";
 import { findDateTaskUnder } from "src/helpers/AssignmentDateInfo/findDateTaskUnder";
 import { useForm } from "react-hook-form";
 import { EDIT_TASK_CONSTANTS, INVALID, VALID } from "./EditTaskValidationMessages";
@@ -27,8 +27,8 @@ type EditTaskProps = {
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { dates, end, start } = useAssignmentDateInfoContext();
-	const { updateTasks, editTask, tasks } = useTaskContext();
+	const { dates, end, start, format } = useAssignmentDateInfoContext();
+	const { editTask, tasks, updateTasks } = useTaskContext();
 	const { formState, getValues, register, watch } = useForm({
 		defaultValues: { ...task },
 		mode: "all",
@@ -60,7 +60,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	function changeTasks(): void {
 		const updatedDate = findDateTaskUnder(dueDate, dates);
 		const { color } = updatedDate;
-		editTask({ ...getValues(), color }, index);
+		editTask({ ...getValues(), color, dueDate }, index, !isSameDay(task.dueDate, dueDate));
 	}
 
 	return (

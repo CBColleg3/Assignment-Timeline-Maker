@@ -45,10 +45,6 @@ export const App = (): JSX.Element => {
 	);
 
 	React.useEffect(() => {
-		console.log(tasks, start, end, format);
-	}, [tasks, start, end, format]);
-
-	React.useEffect(() => {
 		if (selectedFileText) {
 			parseFileText(selectedFileText);
 			setTasks(selectedFileText);

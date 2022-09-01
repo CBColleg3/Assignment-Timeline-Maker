@@ -28,9 +28,10 @@ export type iTaskContext = {
 	 *
 	 * @param _task - The partial task date to edit the task at index `_ind` with
 	 * @param _ind - The index where the task is located in the collection
+	 * @param _dateChanged - checks whether the date has changed when editing the task
 	 * @returns void
 	 */
-	editTask: (_task: Partial<Task>, _ind: number) => void;
+	editTask: (_task: Partial<Task>, _ind: number, _dateChanged?: boolean) => void;
 	/**
 	 * Inserts a task `_task` at index `_ind`
 	 *

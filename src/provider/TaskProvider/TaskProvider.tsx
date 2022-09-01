@@ -2,7 +2,7 @@
 import React, { type ReactNode } from "react";
 import type { iTaskContext, Task } from "src/@types";
 import { TaskContext } from "src/context";
-import { findParts, findPoints } from "src/helpers";
+import { isSameDay } from "src/helpers";
 
 type TaskProviderProps = {
 	children: ReactNode;
@@ -23,8 +23,26 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 			addTask: (task: Task): void => setTasks((oldTasks) => [...oldTasks, task]),
 			clearTasks: (): void => setTasks([]),
 			deleteTask: (ind: number) => setTasks((oldTasks) => oldTasks.filter((_, i) => i !== ind)),
-			editTask: (task: Partial<Task>, ind: number) =>
-				setTasks((oldTasks) => oldTasks.map((eachTask, i) => (i === ind ? { ...eachTask, ...task } : eachTask))),
+			editTask: (task: Partial<Task>, ind: number, dateChanged = false): void => {
+				console.log("date changed = ", dateChanged);
+				if (dateChanged) {
+					setTasks((oldTasks) => {
+						if (oldTasks && task.dueDate) {
+							const oldTask = oldTasks.splice(ind, 1)[0];
+							const updatedTask = { ...oldTask, ...task };
+							const index = oldTasks.findIndex((eachTask) => isSameDay(eachTask.dueDate, task?.dueDate));
+							const oldTaskClone = [...oldTasks].map((eachTask) => ({ ...eachTask }));
+							oldTaskClone.splice(index, 0, updatedTask);
+							return oldTaskClone;
+						}
+						return oldTasks;
+					});
+				} else {
+					setTasks((oldTasks) =>
+						oldTasks.map((eachTask, i) => (i === ind ? { ...eachTask, ...task } : eachTask)),
+					);
+				}
+			},
 			insertTask: (task: Task, ind: number): void => {
 				setTasks((oldTasks) => {
 					if (oldTasks) {
