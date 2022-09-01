@@ -1,5 +1,4 @@
 import { calcDays } from "./Task/calcDays";
-import { calcDiffInDays } from "./Task/calcDiffInDays";
 import { calcDiffInHours } from "./Task/calcDiffInHours";
 import { calcTotalPoints } from "./Task/calcTotalPoints";
 import { colorHex, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "./shared/colorHex";
@@ -33,7 +32,6 @@ export {
 	calcDays,
 	calcDayRange,
 	calcHourRange,
-	calcDiffInDays,
 	calcDiffInHours,
 	calcTotalPoints,
 	colorHex,

@@ -226,7 +226,11 @@
 		"no-undef-init": "error",
 		"no-unused-vars": [
 			"warn",
-			{ "argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }
+			{
+				"argsIgnorePattern": "^_",
+				"destructuredArrayIgnorePattern": "^_",
+				"caughtErrorsIgnorePattern": "^_"
+			}
 		],
 		"no-use-before-define": "error",
 		"array-bracket-newline": ["error", "consistent"],
@@ -553,7 +557,6 @@
 		"@typescript-eslint/no-invalid-this": "error",
 		"@typescript-eslint/no-loop-func": "error",
 		"@typescript-eslint/no-loss-of-precision": "error",
-		"@typescript-eslint/no-magic-numbers": ["error", { "ignoreArrayIndexes": true }],
 		"@typescript-eslint/no-redeclare": "error",
 		"@typescript-eslint/no-restricted-imports": "error",
 		"@typescript-eslint/no-shadow": "error",

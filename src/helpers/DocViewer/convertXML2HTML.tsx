@@ -126,7 +126,7 @@ export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): J
 	});
 
 	const containedTask = tasks.filter((eachTask) =>
-		isTaskInElement([eachTask.document, eachTask.name], content),
+		isTaskInElement([eachTask.description, eachTask.name], content),
 	);
 
 	// Setting global CSS with styles extracted from global elements

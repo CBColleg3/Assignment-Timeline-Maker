@@ -1,8 +1,8 @@
 export type Task = {
 	name: string;
 	id: number;
-	document: string;
-	points: string;
+	description: string;
+	points: number;
 	color: string;
 	dueDate: Date;
 	autoDueDate: boolean;

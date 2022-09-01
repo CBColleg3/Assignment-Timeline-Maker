@@ -42,7 +42,8 @@ export const TimelineDates = ({
 			>
 				{taskDates.map((taskDate: Date, _ind: number): JSX.Element => {
 					const currentlySelected = taskDate.getTime() === currentTaskDate.getTime();
-					return (
+					const containsTasks = tasks.filter((eachTask) => isSameDay(eachTask.dueDate, taskDate)).length > 0;
+					return containsTasks ? (
 						<Accordion.Item
 							eventKey={`${taskDate.getTime()}`}
 							key={`element-${taskDate.toDateString()}-${_ind}`}
@@ -82,7 +83,9 @@ export const TimelineDates = ({
 									</div>
 								</div>
 							</Accordion.Header>
-							<Accordion.Body className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}>
+							<Accordion.Body
+								className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}
+							>
 								{tasks
 									.filter((eachTask) => isSameDay(eachTask.dueDate, currentTaskDate))
 									.map((eachTask: Task, _taskInd) => (
@@ -91,11 +94,16 @@ export const TimelineDates = ({
 											href={`#${eachTask.name}-${eachTask.id}`}
 											key={`${eachTask.name}-${_taskInd}`}
 										>
-											{`\u2022 ${truncateText(`${eachTask.name} - ${eachTask.document}`, CONSTANTS.TASK_DESC_LENGTH)}`}
+											{`\u2022 ${truncateText(
+												`${eachTask.name} - ${eachTask.description}`,
+												CONSTANTS.TASK_DESC_LENGTH,
+											)}`}
 										</a>
 									))}
 							</Accordion.Body>
 						</Accordion.Item>
+					) : (
+						<span key={`element-${taskDate.toDateString()}-${_ind}`} />
 					);
 				})}
 			</Accordion>

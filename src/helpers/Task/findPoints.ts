@@ -42,11 +42,11 @@ export const findPoints = (fileText: string | undefined): Task[] => {
 					tasks.push({
 						autoDueDate: true,
 						color: "0000",
-						document: elem.toString(),
+						description: elem.toString(),
 						dueDate: new Date(),
 						id: taskIndex + CONSTANTS.TASK_INDEX_INC,
 						name: `${"Finish Task"}  ${taskIndex + CONSTANTS.TASK_INDEX_INC}`,
-						points: parsedPoints,
+						points: parseInt(parsedPoints, 10),
 					});
 					taskIndex += CONSTANTS.TASK_INDEX_INC;
 				}

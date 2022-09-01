@@ -2,16 +2,12 @@
 /* eslint-disable no-loop-func -- no invalid practices being used*/
 import type { AssignmentDate, Task } from "src/@types";
 import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
-import {
-	calcTotalPoints,
-	calcDiffInDays,
-	COLOR_HEX_ARRAY,
-	COLOR_HEX_ARRAY_LENGTH,
-	calcDays,
-	calcDiffInHours,
-} from "src/helpers";
+import { calcTotalPoints, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
+import { mutateCurrentDay } from "../AssignmentDateInfo/mutateCurrentDay";
+import { calcDiff } from "./calcDiff";
 
 const CONSTANTS = {
+	MS_IN_DAY: 86400000.0,
 	RANDOM_COLOR_BASE_IND: 0,
 	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
 	UPDATE_DAY_COUNTER_INC: 1,
@@ -72,8 +68,10 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
  * an object with a date, a boolean, and a number. The boolean is for the number of days to complete the task increases while the number is the
  * total number of points before the number of days increases. It then updates all of the tasks dueDate fields and updates TaskArray state.
  *
- * @param tasks The task objects
- * @param assignmentDateRange The assignment date
+ * @param tasks - The task objects
+ * @param end - The end date
+ * @param start - The start date
+ * @param format - The format of the dates (day, hour, etc)
  * @returns The updated Tasks
  */
 const updateDueDates = (
@@ -86,48 +84,19 @@ const updateDueDates = (
 		...eachTask,
 		dueDate: new Date(eachTask.dueDate),
 	}));
+	let incrementDate = false;
 	let runningTotal = 0;
 	let currentColor = fetchRandomColor();
+	let usedColors = [currentColor];
 
-	const clonedAssignmentDate = {
-		end: new Date(end.date.getTime()),
-		start: new Date(start.date.getTime()),
-	};
+	const pointsThreshold = Math.ceil(calcTotalPoints(tasks) / calcDiff(start.date, end.date, format));
 
-	const totalPoints = calcTotalPoints(tasks);
-	const dateDiff = calcDiffInDays(clonedAssignmentDate.start, clonedAssignmentDate.end);
-	const hourDiff = calcDiffInHours(clonedAssignmentDate.start, clonedAssignmentDate.end);
-	const pointsPerDay = Math.ceil(totalPoints / dateDiff);
-	const pointsPerHour = Math.ceil(totalPoints / hourDiff);
+	const currentDay = new Date(start.date.getTime());
 
-	const pointsPerTimeGiven = format === "day" ? pointsPerDay : pointsPerHour;
-
-	const currentDay = new Date(clonedAssignmentDate.start.getTime());
-
-	const usedColors = [currentColor];
-
-	for (let i = 0; i < taskClone.length; i += CONSTANTS.UPDATE_LOOP_INC) {
+	for (let i = 0; i < taskClone.length; i += 1) {
 		const eachTask = taskClone[i];
-		const response: CalculateDayResponse = calcDays(eachTask, {
-			currentDay,
-			pointsPerDay: pointsPerTimeGiven,
-			runningTotal,
-		});
-		if (
-			response.incrementDate &&
-			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() &&
-			format === "day"
-		) {
-			currentDay.setDate(currentDay.getDate() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
-			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
-		}
-		if (
-			response.incrementDate &&
-			currentDay.getTime() + CONSTANTS.UPDATE_DAY_COUNTER_INC <= clonedAssignmentDate.end.getTime() &&
-			format === "hour"
-		) {
-			currentDay.setHours(currentDay.getHours() + CONSTANTS.UPDATE_DAY_COUNTER_INC);
-			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
+		if (runningTotal + eachTask.points > pointsThreshold) {
+			incrementDate = true;
 		}
 		taskClone = [...taskClone].map((eTask, ind) => {
 			if (ind === i) {
@@ -135,7 +104,13 @@ const updateDueDates = (
 			}
 			return { ...eTask, color: eTask.color };
 		});
-		runningTotal = response.updatedTotal;
+		runningTotal = incrementDate ? 0 : runningTotal + eachTask.points;
+		if (incrementDate) {
+			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
+			usedColors = [...usedColors, currentColor];
+			mutateCurrentDay(currentDay, format, "inc");
+			incrementDate = false;
+		}
 	}
 	return taskClone;
 };

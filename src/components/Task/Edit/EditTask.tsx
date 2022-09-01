@@ -27,10 +27,10 @@ type EditTaskProps = {
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { dates, end, format, start } = useAssignmentDateInfoContext();
+	const { dates, end, start } = useAssignmentDateInfoContext();
 	const { updateTasks, editTask, tasks } = useTaskContext();
 	const { formState, getValues, register, watch } = useForm({
-		defaultValues: { ...task, points: parseInt(task.points, 10) },
+		defaultValues: { ...task },
 		mode: "all",
 		reValidateMode: "onChange",
 	});
@@ -58,13 +58,9 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	 * Updates the TaskContext's tasks
 	 */
 	function changeTasks(): void {
-		// const dateValueAssociatedWithNewTask = findDateTaskUnder(newTask, dates);
-		// newTask.color = dateValueAssociatedWithNewTask.color;
-		// const clonedTasks = [...tasks].map(
-		// 	(_task, ind): Task => (ind === index ? newTask : { ..._task, dueDate: new Date(_task.dueDate.getTime()) }),
-		// );
-		// const sortedTasks = clonedTasks.sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime());
-		// updateTasks(sortedTasks);
+		const updatedDate = findDateTaskUnder(dueDate, dates);
+		const { color } = updatedDate;
+		editTask({ ...getValues(), color }, index);
 	}
 
 	return (
@@ -104,9 +100,9 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 							<Form.Control
 								as="textarea"
 								className="w-100"
-								isInvalid={isErrorsValid(errors.document).invalid}
-								isValid={isErrorsValid(errors.document).valid}
-								{...register("document", {
+								isInvalid={isErrorsValid(errors.description).invalid}
+								isValid={isErrorsValid(errors.description).valid}
+								{...register("description", {
 									maxLength: {
 										message: INVALID.description.maxLength,
 										value: EDIT_TASK_CONSTANTS.description.maxLength,
@@ -122,8 +118,8 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 									setValueAs: (value: string) => value.trim(),
 								})}
 							/>
-							{errors?.document && (
-								<Form.Control.Feedback type="invalid">{errors.document.message}</Form.Control.Feedback>
+							{errors?.description && (
+								<Form.Control.Feedback type="invalid">{errors.description.message}</Form.Control.Feedback>
 							)}
 							<Form.Control.Feedback type="valid">{VALID.description}</Form.Control.Feedback>
 						</Form.Group>

@@ -34,7 +34,7 @@ export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 					setEditMode(!editMode);
 				}}
 			>
-				{task.document}
+				{task.description}
 			</h5>
 			<h4
 				className="clickable_text"

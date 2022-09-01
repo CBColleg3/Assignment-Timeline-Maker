@@ -47,11 +47,11 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
 			autoDueDate: false,
 			color: tasks[index].color,
-			document: "Type Document Text Here.",
+			description: "Type Document Text Here.",
 			dueDate: tasks[index].dueDate,
 			id: modifiedTaskArr.length + CONSTANTS.TASK_INDEX_INC,
 			name: "New Task",
-			points: "0",
+			points: 0,
 		});
 		updateTasks(modifiedTaskArr);
 	}
