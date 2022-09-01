@@ -1,11 +1,13 @@
+import React from "react";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, OverlayTrigger } from "react-bootstrap";
 import type { OverlayInjectedProps } from "react-bootstrap/esm/Overlay";
 import type { Task } from "src/@types";
 import { useTaskContext } from "src/context";
 import { renderOverlayTriggerTooltip } from "src/helpers/shared/renderOverlayTriggerTooltip";
+import styles from "./AddRemoveTask.module.css";
+import { generateNewTask } from "src/helpers/Task/generateNewTask";
 
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
@@ -33,7 +35,7 @@ type AddRemoveTaskProps = {
  * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
 export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
-	const { tasks, updateTasks } = useTaskContext();
+	const { tasks, insertTask, deleteTask } = useTaskContext();
 	const IND_INC = 1;
 	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
 	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
@@ -43,36 +45,25 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	 *
 	 * @param ind current task index in the array of tasks
 	 */
-	function addPart(ind: number): void {
-		const modifiedTaskArr: Task[] = [...tasks].map((eachTask) => ({
-			...eachTask,
-			dueDate: new Date(eachTask.dueDate),
-		}));
-		modifiedTaskArr.splice(ind + IND_INC, MODIFIED_TASK_SPLICE_DELETE_COUNT, {
-			autoDueDate: false,
-			color: tasks[index].color,
-			description: "Type Document Text Here.",
-			dueDate: tasks[index].dueDate,
-			id: modifiedTaskArr.length + CONSTANTS.TASK_INDEX_INC,
-			name: "New Task",
-			points: 0,
-		});
-		updateTasks(modifiedTaskArr);
-	}
+	const addPart = React.useCallback(
+		(color: string, dueDate: Date, ind: number, id: number) => {
+			const genericTask = generateNewTask(color, dueDate, ind, id);
+			insertTask(genericTask, ind);
+		},
+		[insertTask],
+	);
+
+	React.useEffect(() => {
+		console.log(tasks);
+	}, [tasks]);
 
 	/**
 	 * This function removes the current task you're on.
 	 *
-	 * @param {number} ind current task index in the array of tasks
+	 * @param ind - current task index in the array of tasks
+	 * @returns void
 	 */
-	function removePart(ind: number): void {
-		const modifiedPtsArr = [...tasks].map((eachTask) => ({
-			...eachTask,
-			dueDate: new Date(eachTask.dueDate),
-		}));
-		modifiedPtsArr.splice(ind, MODIFIED_PTS_SPLICE_DELETE_COUNT);
-		updateTasks(modifiedPtsArr);
-	}
+	const removePart = React.useCallback((ind: number): void => deleteTask(ind), [deleteTask]);
 
 	return (
 		<div className="d-flex flex-row justify-content-start mt-4">
@@ -84,10 +75,13 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 			>
 				<Button
 					className="me-2 rounded-circle"
-					onClick={(): void => addPart(index)}
+					onClick={(): void => addPart(tasks[index].color, tasks[index].dueDate, index, tasks.length)}
 					variant="outline-success"
 				>
-					<FontAwesomeIcon icon={faPlus} />
+					<FontAwesomeIcon
+						className={styles.fontawesome_buttons}
+						icon={faPlus}
+					/>
 				</Button>
 			</OverlayTrigger>
 			<OverlayTrigger
@@ -101,7 +95,10 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 					onClick={(): void => removePart(index)}
 					variant="outline-danger"
 				>
-					<FontAwesomeIcon icon={faMinus} />
+					<FontAwesomeIcon
+						className={styles.fontawesome_buttons}
+						icon={faMinus}
+					/>
 				</Button>
 			</OverlayTrigger>
 		</div>

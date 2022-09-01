@@ -27,13 +27,23 @@ type EditTaskProps = {
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
+	console.log("task = ", task);
 	const { dates, end, start, format } = useAssignmentDateInfoContext();
 	const { editTask, tasks, updateTasks } = useTaskContext();
-	const { formState, getValues, register, watch } = useForm({
+	const { formState, getValues, register, reset } = useForm({
 		defaultValues: { ...task },
 		mode: "all",
 		reValidateMode: "onChange",
 	});
+
+	console.log(getValues());
+
+	React.useEffect(() => {
+		if (task) {
+			reset({ ...task });
+		}
+	}, [reset, task]);
+
 	const { errors } = formState;
 
 	const [dateError, setDateError] = React.useState<string>();

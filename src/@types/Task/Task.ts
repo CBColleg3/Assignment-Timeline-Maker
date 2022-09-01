@@ -5,5 +5,8 @@ export type Task = {
 	points: number;
 	color: string;
 	dueDate: Date;
+	/**
+	 * @deprecated
+	 */
 	autoDueDate: boolean;
 };
