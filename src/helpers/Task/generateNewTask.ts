@@ -12,7 +12,7 @@ import type { Task } from "src/@types";
 export const generateNewTask = (color: string, dueDate: Date, ind: number, id: number): Task => ({
 	autoDueDate: false,
 	color,
-	description: `Make new task ${ind}`,
+	description: `Make new task ${ind}, the description must be at least 20 characters long.`,
 	dueDate,
 	id,
 	name: `New Task ${ind}`,
