@@ -1,7 +1,11 @@
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import type { OverlayInjectedProps } from "react-bootstrap/esm/Overlay";
 import type { Task } from "src/@types";
 import { useTaskContext } from "src/context";
+import { renderOverlayTriggerTooltip } from "src/helpers/shared/renderOverlayTriggerTooltip";
 
 const CONSTANTS = {
 	RANDOM_COLOR_BASE_IND: 0,
@@ -71,19 +75,35 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	}
 
 	return (
-		<div>
-			<Button
-				className="bg-success mx-auto"
-				onClick={(): void => addPart(index)}
+		<div className="d-flex flex-row justify-content-start mt-4">
+			<OverlayTrigger
+				overlay={(props: OverlayInjectedProps): JSX.Element =>
+					renderOverlayTriggerTooltip(props, "Add Task")
+				}
+				placement="bottom"
 			>
-				{"Add Task"}
-			</Button>
-			<Button
-				className="bg-danger mx-auto"
-				onClick={(): void => removePart(index)}
+				<Button
+					className="me-2 rounded-circle"
+					onClick={(): void => addPart(index)}
+					variant="outline-success"
+				>
+					<FontAwesomeIcon icon={faPlus} />
+				</Button>
+			</OverlayTrigger>
+			<OverlayTrigger
+				overlay={(props: OverlayInjectedProps): JSX.Element =>
+					renderOverlayTriggerTooltip(props, "Remove Task")
+				}
+				placement="bottom"
 			>
-				{"Remove Task"}
-			</Button>
+				<Button
+					className="ms-1 rounded-circle"
+					onClick={(): void => removePart(index)}
+					variant="outline-danger"
+				>
+					<FontAwesomeIcon icon={faMinus} />
+				</Button>
+			</OverlayTrigger>
 		</div>
 	);
 };

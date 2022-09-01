@@ -59,7 +59,9 @@ export const TimelineDragDrop = (): JSX.Element => {
 										<VerticalTimelineElement
 											className="vertical-timeline-element--work"
 											contentStyle={{
+												boxShadow: "0 .5rem 1rem rgba(0,0,0,.15)",
 												color: `#${task.color}`,
+												marginBottom: "20px",
 											}}
 											iconStyle={{
 												background: `#${task.color}`,

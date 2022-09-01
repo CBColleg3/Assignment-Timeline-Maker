@@ -24,7 +24,6 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 			clearTasks: (): void => setTasks([]),
 			deleteTask: (ind: number) => setTasks((oldTasks) => oldTasks.filter((_, i) => i !== ind)),
 			editTask: (task: Partial<Task>, ind: number, dateChanged = false): void => {
-				console.log("date changed = ", dateChanged);
 				if (dateChanged) {
 					setTasks((oldTasks) => {
 						if (oldTasks && task.dueDate) {

@@ -30,7 +30,7 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const { start, end, format } = useAssignmentDateInfoContext();
+	const { dates, format, start } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
 	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
 		useFiles();
@@ -39,9 +39,9 @@ export const App = (): JSX.Element => {
 
 	const setTasks = React.useMemo(
 		() => (fileText: string) => {
-			updateTasks(updateDueDates(findPoints(findParts(fileText)), end, start, format));
+			updateTasks(updateDueDates(findPoints(findParts(fileText)), format, dates));
 		},
-		[end, format, start, updateTasks],
+		[dates, format, updateTasks],
 	);
 
 	React.useEffect(() => {

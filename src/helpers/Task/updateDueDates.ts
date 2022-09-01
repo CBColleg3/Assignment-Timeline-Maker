@@ -3,6 +3,7 @@
 import type { AssignmentDate, Task } from "src/@types";
 import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
 import { calcTotalPoints, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH } from "src/helpers";
+import { findDateTaskUnder } from "../AssignmentDateInfo/findDateTaskUnder";
 import { mutateCurrentDay } from "../AssignmentDateInfo/mutateCurrentDay";
 import { calcDiff } from "./calcDiff";
 
@@ -69,29 +70,27 @@ const fetchRandomColorWithoutDuplicates = (usedColors: string[]): string => {
  * total number of points before the number of days increases. It then updates all of the tasks dueDate fields and updates TaskArray state.
  *
  * @param tasks - The task objects
- * @param end - The end date
- * @param start - The start date
  * @param format - The format of the dates (day, hour, etc)
+ * @param dates - The assignment dates we will be using to generate the colors of the tasks
  * @returns The updated Tasks
  */
 const updateDueDates = (
 	tasks: Task[],
-	end: AssignmentDate,
-	start: AssignmentDate,
 	format: iAssignmentDateInfoContextFormat,
+	dates: AssignmentDate[],
 ): Task[] => {
+	const end = dates[dates.length - 1];
+	const start = dates[0];
+	const currentDay = new Date(start.date.getTime());
+	const pointsThreshold = Math.ceil(calcTotalPoints(tasks) / calcDiff(start.date, end.date, format));
+
 	let taskClone = [...tasks].map((eachTask) => ({
 		...eachTask,
 		dueDate: new Date(eachTask.dueDate),
 	}));
 	let incrementDate = false;
 	let runningTotal = 0;
-	let currentColor = fetchRandomColor();
-	let usedColors = [currentColor];
-
-	const pointsThreshold = Math.ceil(calcTotalPoints(tasks) / calcDiff(start.date, end.date, format));
-
-	const currentDay = new Date(start.date.getTime());
+	let currentColor = findDateTaskUnder(currentDay, dates).color;
 
 	for (let i = 0; i < taskClone.length; i += 1) {
 		const eachTask = taskClone[i];
@@ -106,9 +105,8 @@ const updateDueDates = (
 		});
 		runningTotal = incrementDate ? 0 : runningTotal + eachTask.points;
 		if (incrementDate) {
-			currentColor = fetchRandomColorWithoutDuplicates(usedColors);
-			usedColors = [...usedColors, currentColor];
 			mutateCurrentDay(currentDay, format, "inc");
+			currentColor = findDateTaskUnder(currentDay, dates).color;
 			incrementDate = false;
 		}
 	}
