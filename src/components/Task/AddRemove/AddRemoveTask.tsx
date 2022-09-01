@@ -68,6 +68,7 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	return (
 		<div className="d-flex flex-row justify-content-start mt-4">
 			<OverlayTrigger
+				delay={{ hide: 400, show: 200 }}
 				overlay={(props: OverlayInjectedProps): JSX.Element =>
 					renderOverlayTriggerTooltip(props, "Add Task")
 				}
@@ -85,6 +86,7 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 				</Button>
 			</OverlayTrigger>
 			<OverlayTrigger
+				delay={{ hide: 300, show: 200 }}
 				overlay={(props: OverlayInjectedProps): JSX.Element =>
 					renderOverlayTriggerTooltip(props, "Remove Task")
 				}

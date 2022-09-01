@@ -36,6 +36,10 @@ export const TimelineDragDrop = (): JSX.Element => {
 		updateTasks(recoloredTasks);
 	};
 
+	React.useEffect(() => {
+		console.log("in timelinedragdrop, tasks = ", tasks);
+	}, [tasks]);
+
 	return (
 		<DragDropContext onDragEnd={OnDragEnd}>
 			<Droppable droppableId="vertical-timeline-element--work">
@@ -48,7 +52,7 @@ export const TimelineDragDrop = (): JSX.Element => {
 							<Draggable
 								draggableId={task.id.toString()}
 								index={index}
-								key={task.id}
+								key={`${task.name}-${task.id}`}
 							>
 								{(prov): JSX.Element => (
 									<span

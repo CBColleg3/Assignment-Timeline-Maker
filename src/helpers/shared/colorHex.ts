@@ -1,5 +1,4 @@
 const colorHex: Record<string, string> = {
-	aliceblue: "#f0f8ff",
 	antiquewhite: "#faebd7",
 	aqua: "#00ffff",
 	aquamarine: "#7fffd4",
@@ -51,7 +50,6 @@ const colorHex: Record<string, string> = {
 	gray: "#808080",
 	green: "#008000",
 	greenyellow: "#adff2f",
-	honeydew: "#f0fff0",
 	hotpink: "#ff69b4",
 	"indianred ": "#cd5c5c",
 	indigo: "#4b0082",
@@ -114,7 +112,6 @@ const colorHex: Record<string, string> = {
 	saddlebrown: "#8b4513",
 	salmon: "#fa8072",
 	seagreen: "#2e8b57",
-	seashell: "#fff5ee",
 	sienna: "#a0522d",
 	silver: "#c0c0c0",
 	skyblue: "#87ceeb",

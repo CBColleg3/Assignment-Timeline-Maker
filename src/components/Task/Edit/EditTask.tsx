@@ -27,7 +27,6 @@ type EditTaskProps = {
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	console.log("task = ", task);
 	const { dates, end, start, format } = useAssignmentDateInfoContext();
 	const { editTask, tasks, updateTasks } = useTaskContext();
 	const { formState, getValues, register, reset } = useForm({
@@ -36,18 +35,17 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		reValidateMode: "onChange",
 	});
 
-	console.log(getValues());
+	const [dateError, setDateError] = React.useState<string>();
+	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 
 	React.useEffect(() => {
 		if (task) {
 			reset({ ...task });
+			setDueDate(task.dueDate);
 		}
 	}, [reset, task]);
 
 	const { errors } = formState;
-
-	const [dateError, setDateError] = React.useState<string>();
-	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 
 	/**
 	 * Helper function for validating the date, and setting the appropriate stats dependent on whether the date is in range
