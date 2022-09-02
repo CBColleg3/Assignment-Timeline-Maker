@@ -2,7 +2,7 @@ import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Accordion } from "react-bootstrap";
-import type { AssignmentDate, Task } from "src/@types";
+import type { Task } from "src/@types";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
 import styles from "./TimelineDates.module.css";

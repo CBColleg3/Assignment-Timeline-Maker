@@ -1,5 +1,5 @@
 import React from "react";
-import type { AssignmentDate, Task } from "src/@types";
+import type { Task } from "src/@types";
 import { EditTask } from "src/components/Task/Edit/EditTask";
 import { useAssignmentDateInfoContext } from "src/context";
 

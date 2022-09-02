@@ -12,7 +12,7 @@ type ErrorValidity = {
 /**
  * Utility function for determining whether an errors object is deemed as invalid
  *
- * @param errors - output from the `formState` value which is returned by the `useForm` hook call
+ * @param error - output from the `formState` value which is returned by the `useForm` hook call
  * @returns Whether the errors object passed in results in a valid input or invalid input
  */
 export const isErrorsValid = (error?: FieldError): ErrorValidity =>

@@ -20,7 +20,7 @@ export const generateAssignmentDatesFromStartEnd = (
 		let currentDate: AssignmentDate = start;
 		const range = [start];
 		do {
-			const { date, rank } = currentDate;
+			const { date } = currentDate;
 			currentDate = {
 				color: generateRandomColorHex(),
 				date: new Date(date.getTime() + MS_IN_DAY),

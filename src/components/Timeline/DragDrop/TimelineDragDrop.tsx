@@ -3,7 +3,7 @@ import React from "react";
 import { AddRemoveTask } from "src/components/Task/AddRemove/AddRemoveTask";
 import "./TimelineDragDrop.css";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd";
-import type { AssignmentDate, Task } from "src/@types";
+import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useTaskContext } from "src/context";
@@ -12,7 +12,6 @@ import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- *@param {TimelineDragDropProps} timeline drag drop props from Timeline
  * @returns {JSX.Element} A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
@@ -35,10 +34,6 @@ export const TimelineDragDrop = (): JSX.Element => {
 		const recoloredTasks = changeTaskColor(movedTasks, destination.index);
 		updateTasks(recoloredTasks);
 	};
-
-	React.useEffect(() => {
-		console.log("in timelinedragdrop, tasks = ", tasks);
-	}, [tasks]);
 
 	return (
 		<DragDropContext onDragEnd={OnDragEnd}>

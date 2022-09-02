@@ -6,7 +6,6 @@ import { isSameDay } from "../Task/isSameDay";
  *
  * @param newDate - The date we are filtering for
  * @param dates - The dates we are filtering through
- * @param format - The date format we are going to use to find the millisecond value we are going to compare the task dueDate against the date's date.
  * @returns The assignment date that corresponds to the task
  */
 export const findDateTaskUnder = (newDate: Date, dates: AssignmentDate[]): AssignmentDate => {

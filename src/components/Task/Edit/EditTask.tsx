@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { useState } from "react";
-import { Button, Col, Form, Row, Modal } from "react-bootstrap";
-import type { AssignmentDate, Task } from "src/@types";
+import { Button, Form, Modal } from "react-bootstrap";
+import type { Task } from "src/@types";
 import DatePicker from "react-datepicker";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH, isSameDay, updateDueDates } from "src/helpers";
+import { isSameDay } from "src/helpers";
 import { findDateTaskUnder } from "src/helpers/AssignmentDateInfo/findDateTaskUnder";
 import { useForm } from "react-hook-form";
 import { EDIT_TASK_CONSTANTS, INVALID, VALID } from "./EditTaskValidationMessages";
@@ -27,8 +27,8 @@ type EditTaskProps = {
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { dates, end, start, format } = useAssignmentDateInfoContext();
-	const { editTask, tasks, updateTasks } = useTaskContext();
+	const { dates, end, start } = useAssignmentDateInfoContext();
+	const { editTask } = useTaskContext();
 	const { formState, getValues, register, reset } = useForm({
 		defaultValues: { ...task },
 		mode: "all",

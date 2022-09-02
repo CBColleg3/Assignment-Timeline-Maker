@@ -1,4 +1,4 @@
-import type { Error, AssignmentDate } from "src/@types";
+import type { Error } from "src/@types";
 
 const MS_IN_DAY = 86400000;
 const MIN_DAY = 2;
@@ -6,7 +6,8 @@ const MIN_DAY = 2;
 /**
  * Validates the date input, and returns error if error is detected, else undefined
  *
- * @param assignmentDate The assignment date to validate the input with
+ * @param start - the start date
+ * @param end - the end date
  * @returns The error that is generated, undefined if none
  */
 export const validateSetDateTimeInput = (start: Date, end: Date): Error | undefined => {

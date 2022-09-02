@@ -3,20 +3,10 @@ import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, OverlayTrigger } from "react-bootstrap";
 import type { OverlayInjectedProps } from "react-bootstrap/esm/Overlay";
-import type { Task } from "src/@types";
 import { useTaskContext } from "src/context";
 import { renderOverlayTriggerTooltip } from "src/helpers/shared/renderOverlayTriggerTooltip";
 import styles from "./AddRemoveTask.module.css";
 import { generateNewTask } from "src/helpers/Task/generateNewTask";
-
-const CONSTANTS = {
-	RANDOM_COLOR_BASE_IND: 0,
-	RANDOM_NUMBER_FORMULA_CONSTANT_INC: 1,
-	TASK_INDEX_INC: 1,
-	UPDATE_DAY_COUNTER_INC: 1,
-	UPDATE_LOOP_INC: 1,
-	UPDATE_POINT_SUM_VAL: 0,
-};
 
 /**
  * Props for the AddRemoveTask component
@@ -36,9 +26,6 @@ type AddRemoveTaskProps = {
  */
 export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	const { tasks, insertTask, deleteTask } = useTaskContext();
-	const IND_INC = 1;
-	const MODIFIED_TASK_SPLICE_DELETE_COUNT = 0;
-	const MODIFIED_PTS_SPLICE_DELETE_COUNT = 1;
 
 	/**
 	 * This function adds a part right below the task you've selected.
@@ -52,10 +39,6 @@ export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 		},
 		[insertTask],
 	);
-
-	React.useEffect(() => {
-		console.log(tasks);
-	}, [tasks]);
 
 	/**
 	 * This function removes the current task you're on.
