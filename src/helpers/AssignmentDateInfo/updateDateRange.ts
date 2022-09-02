@@ -2,8 +2,6 @@ import type { AssignmentDate } from "src/@types/AssignmentDate/AssignmentDate";
 import { generateRandomColorHex } from "../shared/generateRandomColorHex";
 import { isSameDay } from "../Task/isSameDay";
 
-const MS_IN_DAY = 86400000;
-
 /**
  * Utility function for updating a date range contingent on whether the user decides to update the end or the start, the start will always
  * be less than the end, so we can always loop from start --> end and guarantee we will generate a range
