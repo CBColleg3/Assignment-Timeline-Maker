@@ -16,8 +16,7 @@ const MIN_TOTAL = 0;
  * @returns Whether to update the date, and the amount
  */
 export const calcDays = (currentTask: Task, payload: CalculateDayPayload): CalculateDayResponse => {
-	const taskPoints = parseInt(currentTask.points, 10);
-	const updatedTotal = payload.runningTotal + taskPoints;
+	const updatedTotal = currentTask.points + payload.runningTotal;
 	const incrementDate = updatedTotal >= payload.pointsPerDay;
 
 	return {

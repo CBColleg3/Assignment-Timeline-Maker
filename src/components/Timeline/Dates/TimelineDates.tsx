@@ -2,8 +2,8 @@ import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Accordion } from "react-bootstrap";
-import type { AssignmentDate, Task } from "src/@types";
-import { useTaskContext } from "src/context";
+import type { Task } from "src/@types";
+import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
 import styles from "./TimelineDates.module.css";
 
@@ -15,7 +15,6 @@ const CONSTANTS = {
 };
 
 type TimelineDatesProps = {
-	assignmentDate: AssignmentDate;
 	taskDates: Date[];
 	currentTaskDate: Date;
 	setCurrentTaskDate: (_date: Date) => void;
@@ -28,11 +27,11 @@ type TimelineDatesProps = {
  * @returns The timeline date selector
  */
 export const TimelineDates = ({
-	assignmentDate,
 	currentTaskDate,
 	setCurrentTaskDate,
 	taskDates,
 }: TimelineDatesProps): JSX.Element => {
+	const { format } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
 
 	return (
@@ -43,7 +42,8 @@ export const TimelineDates = ({
 			>
 				{taskDates.map((taskDate: Date, _ind: number): JSX.Element => {
 					const currentlySelected = taskDate.getTime() === currentTaskDate.getTime();
-					return (
+					const containsTasks = tasks.filter((eachTask) => isSameDay(eachTask.dueDate, taskDate)).length > 0;
+					return containsTasks ? (
 						<Accordion.Item
 							eventKey={`${taskDate.getTime()}`}
 							key={`element-${taskDate.toDateString()}-${_ind}`}
@@ -55,12 +55,12 @@ export const TimelineDates = ({
 								}}
 							>
 								<div className="d-flex flex-row">
-									{assignmentDate.timelineType === "day" && (
+									{format === "day" && (
 										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
 											{`${CONSTANTS.DAY_STRING} ${_ind + CONSTANTS.DAY_IND_INCREMENT} - ${taskDate.toDateString()}`}
 										</span>
 									)}
-									{assignmentDate.timelineType === "time" && (
+									{format === "hour" && (
 										<span className={currentlySelected ? "text-primary fw-bold" : ""}>
 											{`${CONSTANTS.HOUR_STRING} ${
 												_ind + CONSTANTS.DAY_IND_INCREMENT
@@ -83,7 +83,9 @@ export const TimelineDates = ({
 									</div>
 								</div>
 							</Accordion.Header>
-							<Accordion.Body className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}>
+							<Accordion.Body
+								className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}
+							>
 								{tasks
 									.filter((eachTask) => isSameDay(eachTask.dueDate, currentTaskDate))
 									.map((eachTask: Task, _taskInd) => (
@@ -92,11 +94,16 @@ export const TimelineDates = ({
 											href={`#${eachTask.name}-${eachTask.id}`}
 											key={`${eachTask.name}-${_taskInd}`}
 										>
-											{`\u2022 ${truncateText(`${eachTask.name} - ${eachTask.document}`, CONSTANTS.TASK_DESC_LENGTH)}`}
+											{`\u2022 ${truncateText(
+												`${eachTask.name} - ${eachTask.description}`,
+												CONSTANTS.TASK_DESC_LENGTH,
+											)}`}
 										</a>
 									))}
 							</Accordion.Body>
 						</Accordion.Item>
+					) : (
+						<span key={`element-${taskDate.toDateString()}-${_ind}`} />
 					);
 				})}
 			</Accordion>

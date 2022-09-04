@@ -1,0 +1,1 @@
+Task --- rename `document` field to `description`, make `points` an int

@@ -9,7 +9,7 @@ import type { Task } from "src/@types";
 export function calcTotalPoints(tasks: Task[]): number {
 	let total = 0;
 	for (const task of tasks) {
-		total += parseInt(task.points, 10);
+		total += task.points;
 	}
 	return total;
 }
