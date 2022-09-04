@@ -28,8 +28,8 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	React.useEffect(() => {
 		if (changingDate) {
 			const updatedDateRange = updateDateRange(dates[0].date, dates[dates.length - 1].date, dates);
-			updateTasks(updateDueDates(tasks, format, updatedDateRange));
 			setChangingDate(false);
+			updateTasks(updateDueDates(tasks, format, updatedDateRange));
 			setDates(updatedDateRange);
 		}
 	}, [dates, format, changingDate, updateTasks, tasks]);

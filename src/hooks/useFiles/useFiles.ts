@@ -62,6 +62,10 @@ type iUseFiles = {
 	 */
 	selectedFileText: string | undefined;
 	/**
+	 * Whether the user is actively selecting a file or not
+	 */
+	selectingFile: boolean;
+	/**
 	 * Updates the internal `files` array with the passed in File[]
 	 *
 	 * @param _files - The new files to replace the internal `files` state
@@ -79,6 +83,12 @@ type iUseFiles = {
 	 * @param _selectedFileIndex - The selected file index that will override the current internal `selectedFileIndex` state
 	 */
 	setSelectedFileIndex: (_selectedFileIndex: number | undefined) => void;
+	/**
+	 * Updates the selecting file status with the passed in _selectingFile argument
+	 *
+	 * @param _selectingFile - The new status of selecting the file
+	 */
+	setSelectingFile: (_selectingFile: boolean) => void;
 };
 
 /**
@@ -91,6 +101,7 @@ export const useFiles = (): iUseFiles => {
 	const [selectedFile, setSelectedFile] = React.useState<File | undefined>();
 	const [selectedFileIndex, setSelectedFileIndex] = React.useState<number | undefined>();
 	const [selectedFileText, setSelectedFileText] = React.useState<string | undefined>();
+	const [selectingFile, setSelectingFile] = React.useState<boolean>(false);
 
 	/**
 	 * Callback function to read the passed in file `file` and set the `selectedFileText` to that read value, returns a void
@@ -111,11 +122,11 @@ export const useFiles = (): iUseFiles => {
 	 * is valid, then the selected file is read, and the internal `selectedFileText` state is populated with the output of `readSelectedFile` function.
 	 */
 	React.useEffect(() => {
-		if (selectedFile) {
+		if (selectedFile && selectingFile) {
 			// eslint-disable-next-line no-console -- Pending creation of logger class, see: pino library
 			readSelectedFile(selectedFile).catch((_err: unknown) => console.error(_err));
 		}
-	}, [selectedFile, readSelectedFile]);
+	}, [selectedFile, selectingFile, readSelectedFile]);
 
 	/**
 	 * Main props, implementation of the `iUseFiles` interface, implements all methods and all properties.
@@ -135,15 +146,24 @@ export const useFiles = (): iUseFiles => {
 			selectFile: (index: number): void => {
 				setSelectedFileIndex(index);
 				setSelectedFile(files[index]);
+				setSelectingFile(true);
 			},
 			selectedFile,
 			selectedFileIndex,
 			selectedFileText,
+			selectingFile,
 			setFiles: (newFiles: File[]): void => setFiles(newFiles),
-			setSelectedFile: (newFile: File): void => setSelectedFile(newFile),
-			setSelectedFileIndex: (index: number | undefined): void => setSelectedFileIndex(index),
+			setSelectedFile: (newFile: File): void => {
+				setSelectingFile(true);
+				setSelectedFile(newFile);
+			},
+			setSelectedFileIndex: (index: number | undefined): void => {
+				setSelectingFile(true);
+				setSelectedFileIndex(index);
+			},
+			setSelectingFile: (_selectingFile: boolean) => setSelectingFile(_selectingFile),
 		}),
-		[files, selectedFile, selectedFileText, selectedFileIndex],
+		[files, selectedFile, selectedFileText, selectedFileIndex, selectingFile],
 	);
 
 	return memoProps;

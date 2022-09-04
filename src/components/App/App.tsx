@@ -32,8 +32,17 @@ const ALERT_CONSTANTS = {
 export const App = (): JSX.Element => {
 	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
-	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
-		useFiles();
+	const {
+		deleteFile,
+		files,
+		isFileSelected,
+		selectedFileIndex,
+		selectedFileText,
+		setFiles,
+		selectFile,
+		selectingFile,
+		setSelectingFile,
+	} = useFiles();
 	const { parsedDocument, parseFileText } = useDocument();
 	const [errors, setErrors] = React.useState<Errors>({});
 
@@ -45,11 +54,12 @@ export const App = (): JSX.Element => {
 	);
 
 	React.useEffect(() => {
-		if (selectedFileText && !changingDate) {
+		if (selectingFile && selectedFileText) {
 			parseFileText(selectedFileText);
 			setTasks(selectedFileText);
+			setSelectingFile(false);
 		}
-	}, [selectedFileText, parseFileText, setTasks, changingDate]);
+	}, [selectedFileText, parseFileText, setTasks, selectingFile, setSelectingFile]);
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
