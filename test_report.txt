@@ -1,12 +1,12 @@
 
 > timeline-maker@0.1.0 test
-> react-scripts test "--coverage"
+> react-scripts test --coverage
 
 No tests found, exiting with code 1
 Run with `--passWithNoTests` to exit with code 0
 In /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker
-  63 files checked.
+  109 files checked.
   testMatch: /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/**/__tests__/**/*.{js,jsx,ts,tsx}, /home/runner/work/Assignment-Timeline-Maker/Assignment-Timeline-Maker/src/**/*.{spec,test}.{js,jsx,ts,tsx} - 0 matches
-  testPathIgnorePatterns: /node_modules/ - 63 matches
+  testPathIgnorePatterns: /node_modules/ - 109 matches
   testRegex:  - 0 matches
 Pattern:  - 0 matches
