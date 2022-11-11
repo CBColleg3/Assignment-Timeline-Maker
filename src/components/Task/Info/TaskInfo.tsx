@@ -1,6 +1,7 @@
 import React from "react";
 import type { Task } from "src/@types";
 import { EditTask } from "src/components/Task/Edit/EditTask";
+import { useAssignmentDateInfoContext } from "src/context";
 
 type TaskInfoProps = {
 	task: Task;
@@ -15,6 +16,7 @@ type TaskInfoProps = {
  * @returns {JSX.Element} Info displayed for the user about each task
  */
 export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
+	const { format } = useAssignmentDateInfoContext();
 	const [editMode, setEditMode] = React.useState<boolean>(false);
 	return (
 		<div>
@@ -32,7 +34,7 @@ export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 					setEditMode(!editMode);
 				}}
 			>
-				{task.document}
+				{task.description}
 			</h5>
 			<h4
 				className="clickable_text"
@@ -48,7 +50,12 @@ export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 					setEditMode(!editMode);
 				}}
 			>
-				{new Date(task.dueDate).toDateString()}
+				{format === "day" && <span>{new Date(task.dueDate).toDateString()}</span>}
+				{format === "hour" && (
+					<span>
+						{new Date(task.dueDate).toLocaleTimeString()} {new Date(task.dueDate).toLocaleDateString()}
+					</span>
+				)}
 			</h5>
 
 			<EditTask

@@ -1,5 +1,6 @@
 import React from "react";
-import type { HTMLStyle } from "src/@types";
+import type { HTMLStyle, Task } from "src/@types";
+import { isTaskInElement } from "./isTaskInElement";
 import { translateXMLElementStyling } from "./translateXMLElementStyling";
 
 const MIN_PARAGRAPH_CHILD_LENGTH = 1;
@@ -8,6 +9,18 @@ const FLAT_DIMENSION = 2;
 const CONTENT_SLICE_INDEX = 1;
 const MIN_ATTRIBUTE_LENGTH = 0;
 const LIST_ELEMENT_DOES_NOT_EXIST = -1;
+const HIGHLIGHT_STYLES = ["backgroundColor", "color"];
+const BORDER_STYLE = "border";
+const BORDER_RADIUS = "borderRadius";
+const BORDER_RADIUS_AMT = 10;
+
+/**
+ * Generates a border style for the component
+ *
+ * @param color The color to generate the border for
+ * @returns The generated border style
+ */
+const generateBorderStyle = (color: string): string => `solid #${color}`;
 
 /**
  * Utility function for determining whether an element is a space
@@ -50,10 +63,12 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
 /**
  * Takes an Element containing 'w:p' xml tag information and extracts the text information from it
  *
- * @param {Element} par xml element representing a 'w:p' xml tag
- * @returns {JSX.Element} <p> html tag containing the text information within the 'w:p' tag
+ * @param par xml element representing a 'w:p' xml tag
+ * @param tasks The tasks we want to compare the parsed text to, to apply highlighting upon matching
+ * @param startDate (temp) the start date
+ * @returns <p> html tag containing the text information within the 'w:p' tag
  */
-export const convertXML2HTML = (par: Element): JSX.Element => {
+export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): JSX.Element => {
 	const htmlElement = par as HTMLElement;
 	const parChildren = [...htmlElement.children];
 	if (isSpace(parChildren.length)) {
@@ -62,19 +77,25 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 
 	// Initialize css object
 	const globalCSS: { [key: string]: string } = {};
-	const contentCSS: { [key: string]: Record<string, string> } = {};
+	const contentCSS: { [key: string]: string } = {};
 
 	// Gather nested elements from xml element
 	const globalElements = traverseXmlTree(parChildren[BASE_INDEX]);
 	const contentElements = parChildren
 		.slice(CONTENT_SLICE_INDEX)
-		.map((eachElement) => traverseXmlTree(eachElement));
-	// .flat(FLAT_DIMENSION);
+		.map((eachElement) => traverseXmlTree(eachElement))
+		.flat(FLAT_DIMENSION);
 
-	// Get text content chunks from node
-	const content = [...par.getElementsByTagName("w:t")].map((eachContentElement) =>
-		eachContentElement.innerHTML.replaceAll("&gt;", ">").replaceAll("&lt;", "<"),
-	);
+	// Get text content from node
+	const content = [...par.getElementsByTagName("w:t")]
+		.map((eachContentElement) => eachContentElement.innerHTML)
+		.join("")
+		.replaceAll("&gt;", ">")
+		.replaceAll("&lt;", "<");
+
+	if (content === "") {
+		return <p />;
+	}
 
 	// Gather all css styling from all global elements
 	const globalStyles = globalElements
@@ -86,57 +107,55 @@ export const convertXML2HTML = (par: Element): JSX.Element => {
 		.flat(FLAT_DIMENSION)
 		.filter((elem) => elem.value !== "");
 
-	// Gather all css styling from all content elements for each chunk of text
-	const contentStyles = contentElements.map((textChunk) =>
-		textChunk
-			.map((eachElement) => {
-				if (eachElement.attributes.length > MIN_ATTRIBUTE_LENGTH) {
-					return [...eachElement.attributes].map((eachAttribute) =>
-						translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
-					);
-				}
-				return translateXMLElementStyling(eachElement.tagName, { name: "", value: "" });
-			})
-			.flat(FLAT_DIMENSION)
-			.filter((elem) => elem.value !== ""),
-	);
+	// Gather all css styling from all content elements
+	const contentStyles = contentElements
+		.map((eachElement) => {
+			if (eachElement.attributes.length > MIN_ATTRIBUTE_LENGTH) {
+				return [...eachElement.attributes].map((eachAttribute) =>
+					translateXMLElementStyling(eachElement.tagName, convertAttributeToHtmlStyle(eachAttribute)),
+				);
+			}
+			return translateXMLElementStyling(eachElement.tagName, { name: "", value: "" });
+		})
+		.flat(FLAT_DIMENSION)
+		.filter((elem) => elem.value !== "");
 
-	// Setting content CSS with styles extracted from content elements for each chunk of text
-	contentStyles.forEach((textChunk, chunkIndex) => {
-		contentCSS[chunkIndex] = {};
-		textChunk.forEach((eachStyle) => {
-			contentCSS[chunkIndex][eachStyle.name] = eachStyle.value;
-		});
+	// Setting content CSS with styles extracted from content elements
+	contentStyles.forEach((eachStyle) => {
+		contentCSS[eachStyle.name] = eachStyle.value;
 	});
+
+	const containedTask = tasks.filter((eachTask) =>
+		isTaskInElement([eachTask.description, eachTask.name], content),
+	);
 
 	// Setting global CSS with styles extracted from global elements
 	globalStyles.forEach((eachStyle) => {
-		globalCSS[eachStyle.name] = eachStyle.value;
+		if (HIGHLIGHT_STYLES.includes(eachStyle.name) && containedTask.length) {
+			const [task] = containedTask;
+			const taskStartDiff = task.dueDate.getDate() - startDate.getDate();
+			globalCSS[BORDER_STYLE] = generateBorderStyle(task.color);
+			globalCSS[BORDER_RADIUS] = `${BORDER_RADIUS_AMT * taskStartDiff}px`;
+		} else {
+			globalCSS[eachStyle.name] = eachStyle.value;
+		}
 	});
 
 	const isListElementPresent = globalElements.findIndex((eachElement) =>
 		eachElement.tagName.includes("w:numPr"),
 	);
 
-	// Create a span for each chunk of text with its designated styling
-	const styledContent = content.map((text, index) => (
-		<span
-			key={`textChunk-${index}`}
-			style={contentCSS[index]}
-		>
-			{text}
-		</span>
-	));
-
 	return (
 		<div style={globalCSS}>
 			<span>
 				{isListElementPresent !== LIST_ELEMENT_DOES_NOT_EXIST ? (
 					<ul>
-						<li>{styledContent}</li>
+						<li>
+							<span style={contentCSS}>{content}</span>
+						</li>
 					</ul>
 				) : (
-					<span>{styledContent}</span>
+					<span style={contentCSS}>{content}</span>
 				)}
 			</span>
 		</div>

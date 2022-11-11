@@ -1,16 +1,20 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType } from "src/@types";
+import { Button, Form, Modal } from "react-bootstrap";
+import type { UpdateDateType } from "src/@types";
+import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
 import EndDate from "../EndDate";
 import StartDate from "../StartDate";
 
 type DateModalProps = {
-	assignmentDate: AssignmentDate;
+	end: Date;
+	format: iAssignmentDateInfoContextFormat;
 	isShowing: boolean;
 	onClose: () => void;
+	start: Date;
 	title: string;
 	updateConfirm: (_confirmValue: boolean) => void;
 	updateDates: (_type: UpdateDateType, _value: Date) => void;
+	updateTimelineType: (_type: iAssignmentDateInfoContextFormat) => void;
 };
 
 /**
@@ -20,17 +24,21 @@ type DateModalProps = {
  * @returns The Modal used to update the start and end date
  */
 export const DateModal = ({
-	assignmentDate,
+	end,
+	format,
 	isShowing,
 	onClose,
+	start,
 	title,
 	updateConfirm,
 	updateDates,
+	updateTimelineType,
 }: DateModalProps): JSX.Element => {
 	const [modalConfirm, setModalConfirm] = React.useState(false);
+
 	return (
 		<Modal
-			onHide={onClose}
+			onHide={(): void => onClose()}
 			show={isShowing}
 		>
 			<Modal.Header closeButton>
@@ -38,13 +46,35 @@ export const DateModal = ({
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
-					startDate={assignmentDate.start}
+					startDate={start}
 					update={(value: Date): void => updateDates("start", value)}
 				/>
 				<EndDate
-					endDate={assignmentDate.end}
+					endDate={end}
 					update={(value: Date): void => updateDates("end", value)}
 				/>
+				<span>
+					<Form.Check
+						checked={format === "day"}
+						label="Day"
+						name="timelineType"
+						onChange={(): void => {
+							updateTimelineType("day");
+						}}
+						type="radio"
+						value="day"
+					/>
+					<Form.Check
+						checked={format === "hour"}
+						label="Hour"
+						name="timelineType"
+						onChange={(): void => {
+							updateTimelineType("hour");
+						}}
+						type="radio"
+						value="time"
+					/>
+				</span>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button

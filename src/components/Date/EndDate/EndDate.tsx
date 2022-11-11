@@ -30,7 +30,7 @@ export const EndDate = ({ endDate, update }: EndDateProps): JSX.Element => (
 			<ReactDatePicker
 				closeOnScroll
 				dateFormat="Pp"
-				onChange={update}
+				onChange={(date: Date): void => update(date)}
 				peekNextMonth
 				required
 				selected={endDate}

@@ -1,0 +1,21 @@
+iAssignmentDateContext
+
+- Array of dates, and instead of start and end
+- I have 2 functions, getStart() and getEnd(), that return the head and tail of the list
+- have a constant called format, that controls what format it is in.
+- have a function called changeFormat(), that takes in a format, and changes the format field
+- function called clearDates()
+
+
+
+AssignmentDate:
+
+cloneDate() - returns a clone of the date of the assignmentdate
+color - the color of the date
+date - The actual date
+rank - The ranking of the date
+
+
+format ---
+
+"year" | "month" | "day" | "hour" | "minute" | "second"

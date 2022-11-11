@@ -1,17 +1,16 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import type { AssignmentDate } from "src/@types";
 import TimelineDragDrop from "src/components/Timeline/DragDrop";
 import { TimelineDates } from "./Dates/TimelineDates";
 import { calcDayRange } from "src/helpers";
-import { Button } from "react-bootstrap";
-import styles from "./Timeline.module.css";
+import { calcHourRange } from "src/helpers/Task/calcHourRange";
+import { useAssignmentDateInfoContext } from "src/context";
+import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
 /**
  * Props for the Timeline component
  */
 type TimelineProps = {
-	assignmentDate: AssignmentDate;
 	passRef: React.RefObject<HTMLSpanElement>;
 };
 
@@ -21,56 +20,69 @@ type TimelineProps = {
  * @param {TimelineProps} props The passed in props for the Timeline component
  * @returns {JSX.Element} The Timeline component
  */
-export const Timeline = ({ assignmentDate, passRef }: TimelineProps): JSX.Element => {
-	const [currentTaskDate, setCurrentTaskDate] = React.useState(assignmentDate.start);
+export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
+	const { end, format, start } = useAssignmentDateInfoContext();
+	const [currentTaskDate, setCurrentTaskDate] = React.useState(start.date);
 	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
-	const [openAll, setOpenAll] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		if (assignmentDate) {
-			setTaskDates(calcDayRange(assignmentDate.start, assignmentDate.end));
+		if (start && end) {
+			if (format === "day") {
+				setTaskDates(calcDayRange(start.date, end.date));
+			} else {
+				setTaskDates(calcHourRange(start.date, end.date));
+			}
 		}
-	}, [assignmentDate]);
+	}, [end, start, format]);
 
 	return (
 		<div>
-			<div className="d-flex flex-row justify-content-around">
-				<TimelineDates
-					setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
-					taskDates={taskDates}
-				/>
-				<Button
-					className="h-50 my-auto"
-					onClick={(): void => setOpenAll((oldValue) => !oldValue)}
-					variant={openAll ? "outline-danger" : "outline-success"}
-				>
-					{openAll ? "Close All Tasks" : "Open All Tasks"}
-				</Button>
-			</div>
 			<span ref={passRef}>
-				<div>
-					<div
-						className={`d-flex flex-row justify-content-around bg-danger rounded-3 p-4 text-light opacity-75 w-75 mx-auto mb-3 ${styles.start_end_container} ${styles.start_end_text} align-items-center`}
-						style={{ fontWeight: "bold" }}
+				<VerticalTimeline layout="1-column">
+					<VerticalTimelineElement
+						className="vertical-timeline-element--work rounded-5"
+						contentArrowStyle={{
+							borderRight: "7px solid  rgb(160, 16, 82)",
+						}}
+						contentStyle={{
+							background: "rgb(160, 16, 82)",
+							color: "#fff",
+						}}
+						iconStyle={{
+							background: "rgb(160, 16, 82)",
+							color: "#fff",
+						}}
 					>
-						{"Lets start the tasks for "} {currentTaskDate.toDateString()} {"\n"}
-						{"Due Date: "} {assignmentDate.end.toLocaleDateString()}{" "}
-						{assignmentDate.end.toLocaleTimeString([], {
-							hour: "2-digit",
-							minute: "2-digit",
-						})}{" "}
-					</div>
-					<TimelineDragDrop
-						currentTaskDate={currentTaskDate}
-						opened={openAll}
-					/>
-					<div
-						className={`d-flex flex-row justify-content-around bg-primary rounded-3 p-4 text-light opacity-75 w-75 mx-auto mt-3 ${styles.start_end_container} ${styles.start_end_text} align-items-center`}
-						style={{ fontWeight: "bold" }}
+						<h3 className="text-center text-decoration-underline">{"Task Table of Contents"}</h3>
+						<div className="my-3 fs-6 text-center">
+							{`\u2022 Due: ${end.date.toLocaleDateString()} ${end.date.toLocaleTimeString([], {
+								hour: "2-digit",
+								minute: "2-digit",
+							})} \u2022`}
+						</div>
+						<TimelineDates
+							currentTaskDate={currentTaskDate}
+							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
+							taskDates={taskDates}
+						/>
+					</VerticalTimelineElement>
+					<TimelineDragDrop />
+					<VerticalTimelineElement
+						contentArrowStyle={{
+							borderRight: "7px solid  rgb(33, 150, 243)",
+						}}
+						contentStyle={{
+							background: "rgb(33, 150, 243)",
+							color: "#fff",
+						}}
+						iconStyle={{
+							background: "rgb(33, 150, 243)",
+							color: "#fff",
+						}}
 					>
 						{currentTaskDate.toDateString()} {" tasks are now complete!!"}
-					</div>
-				</div>
+					</VerticalTimelineElement>
+				</VerticalTimeline>
 			</span>
 		</div>
 	);

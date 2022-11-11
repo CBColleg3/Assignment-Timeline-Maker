@@ -7,6 +7,6 @@
     "quoteProps": "as-needed",
     "bracketSpacing": true,
     "bracketSameLine": false,
-    "printWidth": 110,
+    "printWidth": 105,
     "singleAttributePerLine": true
 }

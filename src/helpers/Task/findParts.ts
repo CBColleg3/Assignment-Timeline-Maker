@@ -3,12 +3,12 @@ import { parseFileTextToXML } from "src/helpers";
 /**
  * Accepts string of document.xml and locates 'w:t' tags containing text and returns string of text contained in document.xml
  *
- * @param {Promise<any>} fileText DocumentText used for finding parts
- * @returns {Promise<any>} A promise of any type
+ * @param fileText - DocumentText used for finding parts
+ * @returns All w:t tags concatenated
  */
-export const findParts = async (fileText: Promise<string | undefined>): Promise<string> => {
+export const findParts = (fileText: string | undefined): string => {
 	const CHILD_NODES_INDEX = 0;
-	const xmlDoc = await parseFileTextToXML(fileText);
+	const xmlDoc = parseFileTextToXML(fileText);
 	if (xmlDoc) {
 		const textArray = xmlDoc.getElementsByTagName("w:t");
 		let total = "";

@@ -1,10 +1,10 @@
 /**
  * Utility function for parsing file text into a xml document
  *
- * @param fileText The text of the parsed file
+ * @param parsedText The text of the parsed file
+ * @returns The parsed document from the file text
  */
-export const parseFileTextToXML = async (fileText: Promise<string | undefined>): Promise<Document> => {
-	const parsedText = await fileText;
+export const parseFileTextToXML = (parsedText: string | undefined): Document => {
 	if (parsedText) {
 		const parser = new DOMParser();
 		const xmlConvertedTextDocument = parser.parseFromString(parsedText, "text/xml");

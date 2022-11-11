@@ -1,0 +1,14 @@
+- EditTask, make the document/description text input more practical for editing large descriptions, maybe make it expanding?
+- Integrate useForm into the editTask modal, to not allow changes if none have been made, makes the user think they have changed values if it's always enabled
+- Integrate the moving of tasks into the new context, should be easy, as there already is an moving function
+
+
+---- future:
+
+
+--- Save Progress/Caching
+-- integrate not caching, but a strategy similar that saves changes
+
+
+--- Export
+-- test export functionality, and see if it exports properly

@@ -1,6 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { AssignmentDate, UpdateDateType, Error, ERROR_OPS } from "src/@types";
+import type { UpdateDateType, Error, ERROR_OPS } from "src/@types";
+import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import { useAssignmentDateInfoContext } from "src/context";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
 
@@ -9,17 +11,15 @@ import DateModal from "./DateModal";
  */
 type SetDateTimeProps = {
 	/**
-	 * The current assignment date for the timeline
-	 */
-	assignmentDate: AssignmentDate;
-	/**
-	 * Propagates the local changes to the parent component
-	 */
-	update: (_dates: AssignmentDate) => void;
-	/**
 	 * Adds an error to the stack, disabling user from rendering website
 	 */
 	addError: (_error: Error | undefined, _operation: ERROR_OPS) => void;
+};
+
+type SetDateTimeState = {
+	format: iAssignmentDateInfoContextFormat;
+	end: Date;
+	start: Date;
 };
 
 const END_DAY_INIT_INCREMENT = 172800000;
@@ -30,10 +30,16 @@ const END_DAY_INIT_INCREMENT = 172800000;
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JSX.Element => {
+const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
+	const { changeFormat, end, format, setEndDate, setStartDate, start } = useAssignmentDateInfoContext();
 	const [confirm, setConfirm] = React.useState<boolean>(false);
-	const [dates, setDates] = React.useState<AssignmentDate>(assignmentDate);
 	const [displayModal, setDisplayModal] = React.useState(false);
+
+	const [tmpState, setTmpState] = React.useState<SetDateTimeState>({
+		end: end.date,
+		format,
+		start: start.date,
+	});
 
 	/**
 	 * Triggers when dates/confirm is updated
@@ -42,16 +48,20 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 	 */
 	React.useEffect(() => {
 		if (confirm) {
-			update(dates);
+			const { end: newEnd, format: newFormat, start: newStart } = tmpState;
 			setConfirm(false);
-			const error = validateSetDateTimeInput(dates);
+			const error = validateSetDateTimeInput(newStart, newEnd);
 			if (error) {
 				addError({ ...error }, "add");
+				setTmpState({ end: end.date, format, start: start.date });
 			} else {
+				setStartDate(newStart);
+				setEndDate(newEnd);
+				changeFormat(newFormat);
 				addError(undefined, "delete");
 			}
 		}
-	}, [dates, confirm, update, addError]);
+	}, [addError, changeFormat, confirm, setEndDate, setStartDate, tmpState, end.date, start.date, format]);
 
 	/**
 	 * Helper function to update the start/end date
@@ -62,11 +72,15 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 	const updateDate = (type: UpdateDateType, value: Date): void => {
 		switch (type) {
 			case "end": {
-				setDates({ ...dates, end: value });
+				if (value) {
+					setTmpState((oldState) => ({ ...oldState, end: value }));
+				}
 				break;
 			}
 			case "start": {
-				setDates({ ...dates, start: value });
+				if (value) {
+					setTmpState((oldState) => ({ ...oldState, start: value }));
+				}
 				break;
 			}
 			default: {
@@ -75,17 +89,35 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 		}
 	};
 
+	/**
+	 * Helper function to update the format of the internal `dates` array within the date context
+	 *
+	 * @param newFormat - The new format of the date
+	 */
+	const updateTimelineType = (newFormat: iAssignmentDateInfoContextFormat): void => {
+		if (newFormat) {
+			setTmpState((oldState) => ({ ...oldState, format: newFormat }));
+		}
+	};
+
 	return (
 		<>
 			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
 				<span className="mb-2">
 					<span className="fw-bold">{"Start:  "}</span>
-					{`${assignmentDate.start.toLocaleDateString()}  ${assignmentDate.start.toLocaleTimeString()}`}
+					{format === "day" && <span>{`${start.date.toLocaleDateString()}`}</span>}
+					{format === "hour" && (
+						<span>{`${start.date.toLocaleTimeString()} ${start.date.toLocaleDateString()}`}</span>
+					)}
 				</span>
 				<span>
 					<span className="fw-bold">{"End:  "}</span>
-					{`${assignmentDate.end.toLocaleDateString()}  ${assignmentDate.end.toLocaleTimeString()}`}
+					{format === "day" && <span>{`${end.date.toLocaleDateString()}`}</span>}
+					{format === "hour" && (
+						<span>{`${end.date.toLocaleTimeString()}  ${end.date.toLocaleDateString()}`}</span>
+					)}
 				</span>
+
 				<span className="mt-2">
 					<Button
 						className="w-100"
@@ -100,12 +132,15 @@ const SetDateTime = ({ update, assignmentDate, addError }: SetDateTimeProps): JS
 				</span>
 			</span>
 			<DateModal
-				assignmentDate={dates}
+				end={tmpState.end}
+				format={tmpState.format}
 				isShowing={displayModal}
 				onClose={(): void => setDisplayModal(false)}
+				start={tmpState.start}
 				title="Set Start &amp; End Dates"
 				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
-				updateDates={updateDate}
+				updateDates={(type: UpdateDateType, value: Date): void => updateDate(type, value)}
+				updateTimelineType={(newFormat: iAssignmentDateInfoContextFormat): void => updateTimelineType(newFormat)}
 			/>
 		</>
 	);
