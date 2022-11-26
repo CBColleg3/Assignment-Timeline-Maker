@@ -10,49 +10,53 @@ import styles from "./AppHeader.module.css";
  * @returns The application header component
  */
 export const AppHeader = (): JSX.Element => (
-	<div
-		className={
-			"text-center d-flex flex-column justify-content-center pb-4 border-bottom bg-light"
-		}
-	>
-		<div
-			className={`mt-5 h-100 ml-auto d-flex flex-row ${styles.header_title} justify-content-between`}
-		>
+	<div className={`d-flex flex-column justify-content-center align-items-center ${styles.app_header}`}>
+		<div className="d-flex flex-row justify-content-between position-relative">
 			<div>
-				<span className="fs-4 me-3">{"Assignment Timeline Maker"}</span>
-				<span>
-					<FontAwesomeIcon icon={faTimeline} size="2x" />
+				<span className={`fs-3 ${styles.app_header_title}`}>{"Assignment Timeline Maker"}</span>
+				<span className="ms-2">
+					<FontAwesomeIcon
+						icon={faTimeline}
+						size="2x"
+					/>
 				</span>
 			</div>
-			<span className="float-right pe-5 pt-1" role="button">
-				<a
-					className="text-dark"
-					href="https://github.com/CBColleg3/Assignment-Timeline-Maker"
-				>
-					<FontAwesomeIcon icon={faGithub} size="2x" />
-				</a>
-			</span>
 		</div>
-		<div className="text-muted text-wrap w-50 mx-auto text-center mt-3">
-			<span className="fw-bolder">{"Authors:"}</span>
+		<div className="d-flex flex-row justify-content-center mt-3">
 			<a
-				className={` ${styles.author_link} text-decoration-none mx-2 text-secondary`}
+				className={` ${styles.author_link} mx-2`}
 				href="https://github.com/CBColleg3"
 			>
 				{"Christopher Bennett"}
 			</a>
 			<a
-				className={` ${styles.author_link} text-decoration-none mx-2 text-secondary`}
+				className={` ${styles.author_link} mx-2`}
 				href="https://github.com/bgallamoza"
 			>
 				{"Brennan Gallamoza"}
 			</a>
 			<a
-				className={` ${styles.author_link} text-decoration-none mx-2 text-secondary`}
+				className={` ${styles.author_link} mx-2`}
 				href="https://github.com/cthacker-udel"
 			>
 				{"Cameron Thacker"}
 			</a>
 		</div>
+		<span
+			className={`${styles.github_icon}`}
+			role="button"
+		>
+			<a
+				className="text-dark"
+				href="https://github.com/CBColleg3/Assignment-Timeline-Maker"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				<FontAwesomeIcon
+					icon={faGithub}
+					size="2x"
+				/>
+			</a>
+		</span>
 	</div>
 );

@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { type ReactNode } from "react";
 import { Alert } from "react-bootstrap";
 
+/**
+ * The variant of the timeline alert, specifies the theme. See https://getbootstrap.com/docs/5.2/utilities/background/ for a list of all the backgrounds
+ */
 type TimelineAlertVariant =
 	| "danger"
 	| "dark"
@@ -13,20 +16,65 @@ type TimelineAlertVariant =
 	| "success"
 	| "warning";
 
+/**
+ * The props available to use with the TimelineAlert component
+ */
 type TimelineAlertProps = {
+	/**
+	 * The body of the timeline alert, can either be a string or an react component.
+	 */
 	body?: ReactNode | string;
+	/**
+	 * The custom class name that can be supplied to the body element of the TimelineAlert
+	 */
 	bodyClassName?: string;
+	/**
+	 * The custom class name that can be supplied to the 
+	 */
 	componentClassName?: string;
+	/**
+	 * Whether the alert should be dismissible or not, boolean value
+	 */
 	dismissible?: boolean;
+	/**
+	 * CSS override for the header of the alert
+	 */
 	headerClassName?: string;
+	/**
+	 * A link to an external resource, can either be an full React component or just a string to display
+	 */
 	link?: ReactNode | string;
+	/**
+	 * The CSS override for the link component
+	 */
 	linkClassName?: string;
+	/**
+	 * Callback that fires once the alert is removed
+	 */
 	onClose?: (_a: unknown, _b: unknown) => void;
+	/**
+	 * Boolean controlling whether the alert is showing or not
+	 */
 	show?: boolean;
+	/**
+	 * The subtitle of the alert, can either be a full React component or a string to be displayed
+	 */
 	subtitle?: ReactNode | string;
+	/**
+	 * The CSS override for the subtitle component
+	 */
 	subtitleClassName?: string;
+	/**
+	 * The title of the alert, can either be a ReactNode or a string to display
+	 */
 	title?: ReactNode | string;
+	/**
+	 * The CSS override for the title component
+	 */
 	titleClassName?: string;
+	/**
+	 * The theme of the alert, which color scheme to configure the alert in
+	 */
 	variant?: TimelineAlertVariant;
 };
 

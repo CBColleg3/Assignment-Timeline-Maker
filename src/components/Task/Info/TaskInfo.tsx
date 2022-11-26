@@ -3,8 +3,17 @@ import type { Task } from "src/@types";
 import { EditTask } from "src/components/Task/Edit/EditTask";
 import { useAssignmentDateInfoContext } from "src/context";
 
+/**
+ * The properties of the TaskInfo component
+ */
 type TaskInfoProps = {
+	/**
+	 * The task object itself
+	 */
 	task: Task;
+	/**
+	 * The index of the task
+	 */
 	index: number;
 };
 
@@ -12,7 +21,9 @@ type TaskInfoProps = {
  *TaskInfo component, contains the title, points, document part, and due date text displayed on website
  *with clickable text to display a modal for the EditTask mode component
  *
- * @param {TaskInfoProps} props Passed in props from TaskInfo Component
+ * @param props Passed in props from TaskInfo Component
+ * @param props.task - The task object itself
+ * @param props.index - The index of the task within the internal tasks array
  * @returns {JSX.Element} Info displayed for the user about each task
  */
 export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {

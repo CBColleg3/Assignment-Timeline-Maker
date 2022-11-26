@@ -7,6 +7,9 @@ import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
 import styles from "./TimelineDates.module.css";
 
+/**
+ * TimelineDates constant values
+ */
 const CONSTANTS = {
 	DAY_IND_INCREMENT: 1,
 	DAY_STRING: "Day ",
@@ -14,9 +17,21 @@ const CONSTANTS = {
 	TASK_DESC_LENGTH: 75,
 };
 
+/**
+ * The properties of the Timeline component
+ */
 type TimelineDatesProps = {
+	/**
+	 * The array of dates for the timeline
+	 */
 	taskDates: Date[];
+	/**
+	 * The current task date
+	 */
 	currentTaskDate: Date;
+	/**
+	 * The function to set the current task date
+	 */
 	setCurrentTaskDate: (_date: Date) => void;
 };
 

@@ -11,13 +11,17 @@ import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeli
  * Props for the Timeline component
  */
 type TimelineProps = {
+	/**
+	 * Ref passed in from the parent to wrap around the entire timeline
+	 */
 	passRef: React.RefObject<HTMLSpanElement>;
 };
 
 /**
  * Generates vertical timeline with tasks and calculates days to complete tasks
  *
- * @param {TimelineProps} props The passed in props for the Timeline component
+ * @param props The passed in props for the Timeline component
+ * @param props.passRef - The ref object that holds the reference to the entire timeline component
  * @returns {JSX.Element} The Timeline component
  */
 export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
