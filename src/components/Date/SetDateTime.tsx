@@ -2,9 +2,11 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import type { UpdateDateType, Error, ERROR_OPS } from "src/@types";
 import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import { Divider } from "src/common/components/Divider/Divider";
 import { useAssignmentDateInfoContext } from "src/context";
 import { validateSetDateTimeInput } from "src/helpers";
 import DateModal from "./DateModal";
+import styles from "./SetDateTime.module.css";
 
 /**
  * Types of props for SetDateTime component
@@ -102,35 +104,40 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 
 	return (
 		<>
-			<span className="d-flex flex-column mt-4 h-100 justify-content-around">
-				<span className="mb-2">
-					<span className="fw-bold">{"Start:  "}</span>
-					{format === "day" && <span>{`${start.date.toLocaleDateString()}`}</span>}
-					{format === "hour" && (
-						<span>{`${start.date.toLocaleTimeString()} ${start.date.toLocaleDateString()}`}</span>
-					)}
-				</span>
-				<span>
-					<span className="fw-bold">{"End:  "}</span>
-					{format === "day" && <span>{`${end.date.toLocaleDateString()}`}</span>}
-					{format === "hour" && (
-						<span>{`${end.date.toLocaleTimeString()}  ${end.date.toLocaleDateString()}`}</span>
-					)}
-				</span>
-
-				<span className="mt-2">
-					<Button
-						className="w-100"
-						onClick={(): void => {
-							setDisplayModal(true);
-						}}
-						size="sm"
-						variant="outline-primary"
-					>
-						{"Update"}
-					</Button>
-				</span>
-			</span>
+			<div className={`d-flex flex-column justify-content-center align-items-center ${styles.select_date}`}>
+				<div className={`${styles.date_times}`}>
+					<div className="d-flex flex-column">
+						<div className="fw-bold text-center">{"Start "}</div>
+						<div>
+							{format === "day" && <span>{`${start.date.toLocaleDateString()}`}</span>}
+							{format === "hour" && (
+								<span>{`${start.date.toLocaleTimeString()} ${start.date.toLocaleDateString()}`}</span>
+							)}
+						</div>
+					</div>
+					<div className="d-flex flex-column">
+						<div className="text-center fw-bold">{"End "}</div>
+						<div>
+							{format === "day" && <span>{`${end.date.toLocaleDateString()}`}</span>}
+							{format === "hour" && (
+								<span>{`${end.date.toLocaleTimeString()}  ${end.date.toLocaleDateString()}`}</span>
+							)}
+						</div>
+					</div>
+				</div>
+				<Divider classNameOverride="w-75" />
+				<Button
+					className="w-50 rounded-pill"
+					onClick={(): void => {
+						setDisplayModal(true);
+					}}
+					size="sm"
+					variant="outline-primary"
+				>
+					{"Update"}
+				</Button>
+				<div className={`position-absolute ${styles.date_section_header}`}>{"Dates"}</div>
+			</div>
 			<DateModal
 				end={tmpState.end}
 				format={tmpState.format}
@@ -140,7 +147,9 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 				title="Set Start &amp; End Dates"
 				updateConfirm={(confirmValue): void => setConfirm(confirmValue)}
 				updateDates={(type: UpdateDateType, value: Date): void => updateDate(type, value)}
-				updateTimelineType={(newFormat: iAssignmentDateInfoContextFormat): void => updateTimelineType(newFormat)}
+				updateTimelineType={(newFormat: iAssignmentDateInfoContextFormat): void =>
+					updateTimelineType(newFormat)
+				}
 			/>
 		</>
 	);

@@ -16,6 +16,8 @@ import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
 import { findParts, findPoints, updateDueDates } from "src/helpers";
 
+import styles from "./App.module.css";
+
 const ALERT_CONSTANTS = {
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
 	CHOOSE_A_FILE: "Choose a file",
@@ -83,23 +85,21 @@ export const App = (): JSX.Element => {
 	return (
 		<div className="d-flex flex-column">
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5 shadow-lg">
-				<span>
-					<SetDateTime
-						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
-							updateErrors("date", operation, error)
-						}
-					/>
-				</span>
-				<span className="my-auto">
-					<FileDisplay
-						deleteFile={(index: number): void => deleteFile(index)}
-						files={files}
-						selectFile={(index: number): void => selectFile(index)}
-						selectedFileIndex={selectedFileIndex}
-						uploadElementRef={timelineRef.current}
-					/>
-				</span>
+			<div
+				className={`d-flex flex-row justify-content-between border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
+			>
+				<SetDateTime
+					addError={(error: Error | undefined, operation: ERROR_OPS): void =>
+						updateErrors("date", operation, error)
+					}
+				/>
+				<FileDisplay
+					deleteFile={(index: number): void => deleteFile(index)}
+					files={files}
+					selectFile={(index: number): void => selectFile(index)}
+					selectedFileIndex={selectedFileIndex}
+					uploadElementRef={timelineRef.current}
+				/>
 				<FileImport
 					files={files}
 					update={(theFiles: File[]): void => setFiles(theFiles)}
