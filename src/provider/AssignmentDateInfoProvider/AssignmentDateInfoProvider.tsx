@@ -9,6 +9,7 @@ import { generateInitialAssignmentDateInfoDates } from "src/helpers/AssignmentDa
 import { updateDateRange } from "src/helpers/AssignmentDateInfo/updateDateRange";
 
 type AssignmentInfoProviderProps = {
+	// React component that is "wrapped" by the parent, aka <div><random /></div> (random is the "children" of div)
 	children: ReactNode;
 };
 
