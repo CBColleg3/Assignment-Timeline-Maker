@@ -127,7 +127,7 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 				</div>
 				<Divider classNameOverride="w-75" />
 				<Button
-					className="w-50 rounded-pill"
+					className={`w-25 rounded-pill ${styles.date_section_button}`}
 					onClick={(): void => {
 						setDisplayModal(true);
 					}}
