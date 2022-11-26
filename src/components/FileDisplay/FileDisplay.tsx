@@ -51,7 +51,7 @@ const FileDisplay = ({
 	selectedFileIndex,
 	uploadElementRef,
 }: FileDisplayProps): JSX.Element => (
-	<>
+	<div className={`${styles.file_display_section}`}>
 		{files?.length ? (
 			<ListGroup>
 				{files.map((eachFile, index) => {
@@ -99,13 +99,14 @@ const FileDisplay = ({
 			</ListGroup>
 		) : (
 			<Alert
-				className="px-4"
+				className={`${styles.file_display_alert}`}
 				variant="warning"
 			>
-				{"No files imported"}
+				{"No Files Imported"}
 			</Alert>
 		)}
-	</>
+		<div className={`${styles.file_display_section_header}`}>{"Files"}</div>
+	</div>
 );
 
 export { FileDisplay };

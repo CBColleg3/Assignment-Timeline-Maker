@@ -86,7 +86,7 @@ export const App = (): JSX.Element => {
 		<div className="d-flex flex-column">
 			<AppHeader />
 			<div
-				className={`d-flex flex-row justify-content-between border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
+				className={`d-flex flex-row border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
 			>
 				<SetDateTime
 					addError={(error: Error | undefined, operation: ERROR_OPS): void =>
