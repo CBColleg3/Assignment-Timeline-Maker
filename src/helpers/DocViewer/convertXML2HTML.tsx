@@ -12,7 +12,6 @@ const LIST_ELEMENT_DOES_NOT_EXIST = -1;
 const BORDER_STYLE = "border";
 const BORDER_RADIUS = "borderRadius";
 const BORDER_RADIUS_AMT = 10;
-// const HIGHLIGHT_STYLES = ["backgroundColor", "color"];
 
 /**
  * Generates a border style for the component
