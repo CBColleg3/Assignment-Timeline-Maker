@@ -6,17 +6,19 @@ import type { Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { SetDateTime } from "../Date/SetDateTime";
 import FileImport from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Col } from "react-bootstrap";
+import { Button, Col } from "react-bootstrap";
 import AppHeader from "./AppHeader";
 import FileDisplay from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
+import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
 import { findParts, findPoints, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
+import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
+import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
 
 const ALERT_CONSTANTS = {
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
@@ -32,6 +34,8 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
+	const { addToast } = useTimelineToastContext();
+
 	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
 	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
@@ -83,7 +87,7 @@ export const App = (): JSX.Element => {
 	);
 
 	return (
-		<div className="d-flex flex-column">
+		<div className={`d-flex flex-column position-relative ${styles.app_component}`}>
 			<AppHeader />
 			<div
 				className={`d-flex flex-row border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
@@ -105,7 +109,19 @@ export const App = (): JSX.Element => {
 					update={(theFiles: File[]): void => setFiles(theFiles)}
 				/>
 			</div>
-			{!errors.date && !errors.file ? (
+			<Button
+				onClick={(): void => {
+					addToast({
+						linkText: "random link",
+						message: "This is a test message",
+						subtitle: "Test subtitle",
+						title: "This is a test",
+					});
+				}}
+			>
+				{"Add toast test"}
+			</Button>
+			{/* {!errors.date && !errors.file ? (
 				<>
 					{isFileSelected ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
@@ -191,7 +207,8 @@ export const App = (): JSX.Element => {
 					title={<span className="fw-bolder">{ALERT_CONSTANTS.CANNOT_RENDER_TIMELINE}</span>}
 					variant="danger"
 				/>
-			)}
+			)} */}
+			<TimelineToastContainer />
 		</div>
 	);
 };

@@ -44,3 +44,9 @@
     color: rgba(0, 0, 0, .30);
     font-weight: 600;
 }
+
+.file_display_container {
+    max-height: 15vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}

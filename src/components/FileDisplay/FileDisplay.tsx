@@ -53,7 +53,7 @@ const FileDisplay = ({
 }: FileDisplayProps): JSX.Element => (
 	<div className={`${styles.file_display_section}`}>
 		{files?.length ? (
-			<ListGroup>
+			<ListGroup className={`${styles.file_display_container}`}>
 				{files.map((eachFile, index) => {
 					const isSelectedFile = index === selectedFileIndex;
 					const selectedClassName = isSelectedFile ? "-currSelection" : "";

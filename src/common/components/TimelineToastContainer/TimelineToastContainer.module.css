@@ -1,0 +1,39 @@
+
+.timeline_toast_container {
+    position: absolute;
+}
+
+.timeline_toast_container_bottomend {
+    top: 100%;
+    left: 100%;
+}
+
+.timeline_toast_container_bottomstart {
+    top: 100%;
+    right: 100%;
+}
+
+.timeline_toast_container_end {
+    top: 50%;
+    left: 100%;
+}
+
+.timeline_toast_container_start {
+    top: 50%;
+    right: 100%;
+}
+
+.timeline_toast_container_top {
+    bottom: 100%;
+    right: 50%;
+}
+
+.timeline_toast_container_topend {
+    bottom: 100%;
+    left: 100%;
+}
+
+.timeline_toast_container_topstart {
+    bottom: 100%;
+    right: 100%;
+}
