@@ -9,10 +9,10 @@ const FLAT_DIMENSION = 2;
 const CONTENT_SLICE_INDEX = 1;
 const MIN_ATTRIBUTE_LENGTH = 0;
 const LIST_ELEMENT_DOES_NOT_EXIST = -1;
-const HIGHLIGHT_STYLES = ["backgroundColor", "color"];
 const BORDER_STYLE = "border";
 const BORDER_RADIUS = "borderRadius";
 const BORDER_RADIUS_AMT = 10;
+// const HIGHLIGHT_STYLES = ["backgroundColor", "color"];
 
 /**
  * Generates a border style for the component
@@ -131,7 +131,7 @@ export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): J
 
 	// Setting global CSS with styles extracted from global elements
 	globalStyles.forEach((eachStyle) => {
-		if (HIGHLIGHT_STYLES.includes(eachStyle.name) && containedTask.length) {
+		if (containedTask.length) {
 			const [task] = containedTask;
 			const taskStartDiff = task.dueDate.getDate() - startDate.getDate();
 			globalCSS[BORDER_STYLE] = generateBorderStyle(task.color);
