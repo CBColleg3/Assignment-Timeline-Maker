@@ -62,7 +62,6 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 					onClick={(): void => {
 						if (modalConfirm) {
 							let success = false;
-							console.info(`--Confirming change--\nStart: ${newStart}\nEnd: ${newEnd}\nFormat: ${newFormat}`);
 							if (start.date.getTime() !== newStart.getTime()) {
 								setStart({ ...start, date: newStart });
 								success = true;

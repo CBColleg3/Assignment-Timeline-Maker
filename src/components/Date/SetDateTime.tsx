@@ -21,7 +21,6 @@ const formatOutput = (date: Date, fmt: iAssignmentDateInfoContextFormat): string
 /**
  * Set Date and Time components on the timeline
  *
- * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
 const SetDateTime = (): JSX.Element => {
