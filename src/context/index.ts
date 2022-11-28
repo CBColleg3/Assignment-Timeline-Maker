@@ -1,6 +1,6 @@
 export * from "./Task";
 export * from "./AssignmentDateInfo";
-export * from "./TimelineToast";
+export * from "./Files";
 
 /**
  * This is an index file, used for when other files import this module, they only have to import from the folder name, and not the individual files.

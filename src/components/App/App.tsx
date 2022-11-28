@@ -10,7 +10,7 @@ import { AppHeader } from "./AppHeader";
 import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
+import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
 import { addToast, findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
