@@ -8,11 +8,11 @@ import { FilesProvider } from "./provider/FilesProvider";
 ReactDOM.render(
 	<React.StrictMode>
 		<FilesProvider>
-			<TaskProvider>
-				<AssignmentDateInfoProvider>
+			<AssignmentDateInfoProvider>
+				<TaskProvider>
 					<App />
-				</AssignmentDateInfoProvider>
-			</TaskProvider>
+				</TaskProvider>
+			</AssignmentDateInfoProvider>
 		</FilesProvider>
 	</React.StrictMode>,
 	document.getElementById("root"),

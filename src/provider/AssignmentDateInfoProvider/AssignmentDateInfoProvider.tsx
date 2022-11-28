@@ -21,19 +21,9 @@ type AssignmentInfoProviderProps = {
  * @returns Children wrapped with AssignmentDateInfoContext initial value
  */
 export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
-	const { tasks, updateTasks } = useTaskContext();
 	const [changingDate, setChangingDate] = React.useState<boolean>(false);
 	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
-
-	React.useEffect(() => {
-		if (changingDate) {
-			const updatedDateRange = updateDateRange(dates[0].date, dates[dates.length - 1].date, dates);
-			updateTasks(updateDueDates(tasks, format, updatedDateRange));
-			setChangingDate(false);
-			setDates(updatedDateRange);
-		}
-	}, [dates, format, changingDate, updateTasks, tasks]);
 
 	const functionalProps = React.useMemo(
 		() => ({

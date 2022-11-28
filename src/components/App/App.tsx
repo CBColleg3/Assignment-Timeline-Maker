@@ -10,7 +10,7 @@ import { AppHeader } from "./AppHeader";
 import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
+import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
 import { addToast, findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
@@ -33,27 +33,10 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
+	const ref = React.createRef<HTMLSpanElement>();
 	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
-	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
-		useFiles();
-	const { parsedDocument, parseFileText } = useDocument();
-
-	const setTasks = React.useMemo(
-		() => (fileText: string) => {
-			updateTasks(updateDueDates(findPoints(findParts(fileText)), format, dates));
-		},
-		[dates, format, updateTasks],
-	);
-
-	React.useEffect(() => {
-		if (selectedFileText && !changingDate) {
-			parseFileText(selectedFileText);
-			setTasks(selectedFileText);
-		}
-	}, [selectedFileText, parseFileText, setTasks, changingDate]);
-
-	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
+	const { files, selectedFile } = useFilesContext();
 
 	return (
 		<div className={`d-flex flex-column position-relative ${styles.app_component}`}>
@@ -65,13 +48,13 @@ export const App = (): JSX.Element => {
 				<FileDisplay />
 				<FileImport />
 			</div>
-			{/* {!errors.date && !errors.file ? (
+			{files.length > 0 ? (
 				<>
-					{isFileSelected ? (
+					{selectedFile !== undefined ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{tasks?.length ? (
-									<Timeline passRef={timelineRef} />
+									<Timeline passRef={ref} />
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
@@ -88,7 +71,7 @@ export const App = (): JSX.Element => {
 									</div>
 								)}
 							</Col>
-							<Col lg={5}>
+							{/* <Col lg={5}>
 								{parsedDocument ? (
 									<DocViewer
 										docXML={parsedDocument}
@@ -111,11 +94,11 @@ export const App = (): JSX.Element => {
 										</span>
 									</div>
 								)}{" "}
-							</Col>
+							</Col> */}
 						</div>
 					) : (
 						<>
-							{files?.length ? (
+							{files.length > 0 ? (
 								<TimelineAlert
 									body={ALERT_CONSTANTS.NO_FILE_SELECTED}
 									componentClassName="w-75 mt-4 mx-auto text-center"
@@ -140,18 +123,16 @@ export const App = (): JSX.Element => {
 			) : (
 				<TimelineAlert
 					body={
-						<span className="mx-auto mt-2">
-							<ul>
-								{errors.date && <li>{errors.date.message}</li>}
-								{errors.file && <li>{errors.file.message}</li>}
-							</ul>
+						<span>
+							{ALERT_CONSTANTS.SELECT_FILE_FROM_LINK}
+							<span className="fw-bold mx-1">{ALERT_CONSTANTS.CHOOSE_A_FILE}</span>
+							{ALERT_CONSTANTS.OR_DRAG_DROP}
 						</span>
 					}
-					componentClassName="w-75 mt-4 mx-auto d-flex flex-column text-center"
-					title={<span className="fw-bolder">{ALERT_CONSTANTS.CANNOT_RENDER_TIMELINE}</span>}
-					variant="danger"
+					componentClassName="w-75 mt-4 mx-auto text-center"
+					variant="info"
 				/>
-			)} */}
+			)}
 			<TimelineToastContainer orientation="right" />
 		</div>
 	);

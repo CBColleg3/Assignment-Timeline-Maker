@@ -42,7 +42,10 @@ const generateTimelineToast = (toastProperties: Partial<TimelineToast>): HTMLDiv
 
 	if (toastProperties.message !== undefined) {
 		toastMessage = document.createElement("div");
-		toastMessage.innerHTML = toastProperties.message;
+		toastMessage.innerHTML =
+			typeof toastProperties.message === "string"
+				? toastProperties.message
+				: toastProperties.message.outerHTML;
 		toastMessage.className = `${styles.toast_message} ${toastProperties.messageCSSOverride ?? ""}`;
 	}
 
@@ -81,7 +84,7 @@ const generateTimelineToast = (toastProperties: Partial<TimelineToast>): HTMLDiv
  */
 const generateInfoToast = (
 	title: string,
-	message: string,
+	message: HTMLElement | string,
 	subtitle?: string,
 ): Partial<TimelineToast> => ({ message, subtitle, title, variant: "info" });
 
@@ -95,7 +98,7 @@ const generateInfoToast = (
  */
 const generateErrorToast = (
 	title: string,
-	message: string,
+	message: HTMLElement | string,
 	subtitle?: string,
 ): Partial<TimelineToast> => ({ message, subtitle, title, variant: "error" });
 
@@ -109,7 +112,7 @@ const generateErrorToast = (
  */
 const generateSuccessToast = (
 	title: string,
-	message: string,
+	message: HTMLElement | string,
 	subtitle?: string,
 ): Partial<TimelineToast> => ({ message, subtitle, title, variant: "success" });
 

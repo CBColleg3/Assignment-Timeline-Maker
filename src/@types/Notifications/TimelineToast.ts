@@ -27,7 +27,7 @@ type TimelineToast = {
 	/**
 	 * The message of the toast
 	 */
-	message?: string;
+	message?: HTMLElement | string;
 	/**
 	 * Override option for users who want to  customize the message style
 	 */

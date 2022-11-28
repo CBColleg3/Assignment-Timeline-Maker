@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
 import { useAssignmentDateInfoContext } from "src/context";
-import { addToast, generateSuccessToast } from "src/helpers";
+import { addToast, generateErrorToast, generateSuccessToast } from "src/helpers";
 import { DateFormat } from "../DateFormat/DateFormat";
 import { EndDate } from "../EndDate";
 import { StartDate } from "../StartDate";
@@ -62,15 +62,29 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 					onClick={(): void => {
 						if (modalConfirm) {
 							let success = false;
-							if (start.date.getTime() !== newStart.getTime()) {
+							let failure = false;
+							const failureMessage = document.createElement("ul");
+							if (newStart.getTime() > newEnd.getTime()) {
+								failure = true;
+								failureMessage.innerHTML = "<li>Start time must be before End time</li>";
+							}
+							if (newEnd.getTime() < newStart.getTime()) {
+								failure = true;
+								failureMessage.innerHTML = `${failureMessage.innerHTML}<li>End Time must be after Start Time</li>`;
+							}
+							if (Math.abs(newStart.getFullYear() - newEnd.getFullYear()) > 99) {
+								failure = true;
+								failureMessage.innerHTML = `${failureMessage.innerHTML}<li>End Time and Start Time cannot be more than 99 years apart`;
+							}
+							if (!failure && start.date.getTime() !== newStart.getTime()) {
 								setStart({ ...start, date: newStart });
 								success = true;
 							}
-							if (end.date.getTime() !== newEnd.getTime()) {
+							if (!failure && end.date.getTime() !== newEnd.getTime()) {
 								setEnd({ ...end, date: newEnd });
 								success = true;
 							}
-							if (format !== newFormat) {
+							if (!failure && format !== newFormat) {
 								changeFormat(newFormat);
 								success = true;
 							}
@@ -78,6 +92,7 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 							setShowing(false);
 							closeModal();
 							success && addToast(generateSuccessToast("Date Notification", "Successfully updated the dates!"));
+							failure && addToast(generateErrorToast("Date Notification", failureMessage));
 						} else {
 							setModalConfirm(true);
 						}

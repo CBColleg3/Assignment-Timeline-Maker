@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-floating-promises -- disabled */
 /* eslint-disable @typescript-eslint/no-magic-numbers -- not needed for this file */
 import React, { type ReactNode } from "react";
 import type { iTaskContext, Task } from "src/@types";
-import { TaskContext } from "src/context";
-import { isSameDay } from "src/helpers";
+import { TaskContext, useAssignmentDateInfoContext, useFilesContext } from "src/context";
+import {
+	findParts,
+	findPoints,
+	isSameDay,
+	parseFileTextToXML,
+	readFile,
+	updateDueDates,
+} from "src/helpers";
 
 type TaskProviderProps = {
 	children: ReactNode;
@@ -16,7 +24,20 @@ type TaskProviderProps = {
  * @returns The wrapped child component
  */
 export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
+	const { selectedFile } = useFilesContext();
+	const { format, dates } = useAssignmentDateInfoContext();
 	const [tasks, setTasks] = React.useState<Task[]>([]);
+
+	React.useEffect(() => {
+		if (selectedFile !== undefined) {
+			readFile(selectedFile).then((result: string | undefined) => {
+				if (result) {
+					console.log("setting tasks");
+					setTasks(updateDueDates(findPoints(findParts(result)), format, dates));
+				}
+			});
+		}
+	}, [selectedFile, dates, format]);
 
 	const functionalProps = React.useMemo(
 		() => ({
