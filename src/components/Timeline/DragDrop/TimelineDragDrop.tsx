@@ -6,8 +6,9 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from "react-be
 import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
-import { useTaskContext } from "src/context";
+import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { changeTaskColor } from "src/helpers/DragDrop/changeTaskColor";
+import { isSameDay } from "src/helpers";
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
@@ -15,6 +16,7 @@ import { changeTaskColor } from "src/helpers/DragDrop/changeTaskColor";
  * @returns {JSX.Element} A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
+	const { currentSelectedDate } = useAssignmentDateInfoContext();
 	const { tasks, updateTasks } = useTaskContext();
 	/**
 	 * Handles the drag end operation
@@ -43,41 +45,45 @@ export const TimelineDragDrop = (): JSX.Element => {
 						{...provided.droppableProps}
 						ref={provided.innerRef}
 					>
-						{tasks.map((task: Task, index: number) => (
-							<Draggable
-								draggableId={task.id.toString()}
-								index={index}
-								key={`${task.name}-${task.id}`}
-							>
-								{(prov): JSX.Element => (
-									<span
-										ref={prov.innerRef}
-										{...prov.draggableProps}
-										{...prov.dragHandleProps}
-									>
-										<VerticalTimelineElement
-											className="vertical-timeline-element--work"
-											contentStyle={{
-												boxShadow: "0 .5rem 1rem rgba(0,0,0,.15)",
-												color: `#${task.color}`,
-												marginBottom: "20px",
-											}}
-											iconStyle={{
-												background: `#${task.color}`,
-												color: "#fff",
-											}}
-											id={`${task.name}-${task.id}`}
+						{tasks
+							.filter((eachTask: Task) =>
+								currentSelectedDate ? isSameDay(eachTask.dueDate, currentSelectedDate?.date) : true,
+							)
+							.map((task: Task, index: number) => (
+								<Draggable
+									draggableId={task.id.toString()}
+									index={index}
+									key={`${task.name}-${task.id}`}
+								>
+									{(prov): JSX.Element => (
+										<span
+											ref={prov.innerRef}
+											{...prov.draggableProps}
+											{...prov.dragHandleProps}
 										>
-											<TaskInfo
-												index={index}
-												task={task}
-											/>
-											<AddRemoveTask index={index} />
-										</VerticalTimelineElement>
-									</span>
-								)}
-							</Draggable>
-						))}
+											<VerticalTimelineElement
+												className="vertical-timeline-element--work"
+												contentStyle={{
+													boxShadow: "0 .5rem 1rem rgba(0,0,0,.15)",
+													color: `#${task.color}`,
+													marginBottom: "20px",
+												}}
+												iconStyle={{
+													background: `#${task.color}`,
+													color: "#fff",
+												}}
+												id={`${task.name}-${task.id}`}
+											>
+												<TaskInfo
+													index={index}
+													task={task}
+												/>
+												<AddRemoveTask index={index} />
+											</VerticalTimelineElement>
+										</span>
+									)}
+								</Draggable>
+							))}
 					</div>
 				)}
 			</Droppable>

@@ -23,19 +23,7 @@ type TimelineProps = {
  * @returns {JSX.Element} The Timeline component
  */
 export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
-	const { end, format, start } = useAssignmentDateInfoContext();
-	const [currentTaskDate, setCurrentTaskDate] = React.useState(start.date);
-	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
-
-	React.useEffect(() => {
-		if (start && end) {
-			if (format === "day") {
-				setTaskDates(calcDayRange(start.date, end.date));
-			} else {
-				setTaskDates(calcHourRange(start.date, end.date));
-			}
-		}
-	}, [end, start, format]);
+	const { currentSelectedDate, end, format, start } = useAssignmentDateInfoContext();
 
 	return (
 		<div>
@@ -62,11 +50,7 @@ export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
 								minute: "2-digit",
 							})} \u2022`}
 						</div>
-						<TimelineDates
-							currentTaskDate={currentTaskDate}
-							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
-							taskDates={taskDates}
-						/>
+						<TimelineDates />
 					</VerticalTimelineElement>
 					<TimelineDragDrop />
 					<VerticalTimelineElement
@@ -82,7 +66,9 @@ export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
 							color: "#fff",
 						}}
 					>
-						{currentTaskDate.toDateString()} {" tasks are now complete!!"}
+						{currentSelectedDate === undefined
+							? "All Tasks are now complete!"
+							: `${currentSelectedDate?.date.toDateString()} tasks are now complete!!`}
 					</VerticalTimelineElement>
 				</VerticalTimeline>
 			</span>

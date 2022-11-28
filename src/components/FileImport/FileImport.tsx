@@ -23,7 +23,6 @@ const CONSTANTS = {
 /**
  * Used for importing .xml files into the website. also updates taskArray.
  *
- * @param {FileImportProps} props The properties of the FileImport component
  * @returns {JSX.Element} FileImport component, houses logic for adding file
  */
 export const FileImport = (): JSX.Element => {

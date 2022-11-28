@@ -26,6 +26,10 @@ export type iAssignmentDateInfoContext = {
 	 */
 	clearDates: () => void;
 	/**
+	 * The current selected date from the Timeline Table of Contents
+	 */
+	currentSelectedDate: AssignmentDate | undefined;
+	/**
 	 * The dates that display
 	 */
 	dates: AssignmentDate[];
@@ -68,6 +72,10 @@ export type iAssignmentDateInfoContext = {
 	 * @returns void
 	 */
 	moveDate: (_from: number, _to: number) => void;
+	/**
+	 * Sets the currently selected date via the Timeline Table of Contents
+	 */
+	setCurrentlySelectedDate: (_date: AssignmentDate | undefined) => void;
 	/**
 	 * Sets the end AssignmentDate of the collection to the argument `_date`
 	 *

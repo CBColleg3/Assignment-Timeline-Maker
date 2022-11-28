@@ -5,12 +5,9 @@ import type {
 	iAssignmentDateInfoContextFormat,
 	iAssignmentDateInfoContext,
 } from "src/@types";
-import { AssignmentDateInfoContext, useTaskContext } from "src/context";
+import { AssignmentDateInfoContext } from "src/context";
 import {
-	updateDueDates,
 	generateInitialAssignmentDateInfoDates,
-	updateDateRange,
-	calcDayRange,
 	generateAssignmentDatesFromStartEnd,
 } from "src/helpers";
 
@@ -27,10 +24,13 @@ type AssignmentInfoProviderProps = {
  * @returns Children wrapped with AssignmentDateInfoContext initial value
  */
 export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
+	const [currentSelectedDate, setCurrentSelectedDate] = React.useState<AssignmentDate | undefined>(
+		undefined,
+	);
 	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
 
-	const functionalProps = React.useMemo(
+	const functionalProps: Partial<iAssignmentDateInfoContext> = React.useMemo(
 		() => ({
 			addDate: (date: AssignmentDate): void => {
 				setDates((oldDates) => [...oldDates, date]);
@@ -71,6 +71,9 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					return oldDates;
 				});
 			},
+			setCurrentlySelectedDate: (date: AssignmentDate | undefined): void => {
+				setCurrentSelectedDate(date);
+			},
 			setEnd: (date: AssignmentDate): void => {
 				setDates((oldDates) => generateAssignmentDatesFromStartEnd(oldDates[0], date));
 			},
@@ -93,13 +96,14 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
 		() => ({
-			...functionalProps,
+			...(functionalProps as unknown as iAssignmentDateInfoContext),
+			currentSelectedDate,
 			dates,
 			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
 			format,
 			start: dates[0],
 		}),
-		[dates, format, functionalProps],
+		[currentSelectedDate, dates, format, functionalProps],
 	);
 
 	return (
