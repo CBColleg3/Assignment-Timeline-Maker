@@ -1,10 +1,14 @@
 
 .toast_layout {
-    padding: 1em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    z-index: 1;
 }
 
 .toast_layout_error {
@@ -24,35 +28,46 @@
     font-weight: 600;
     width: 100%;
     text-align: center;
-    border-bottom: .5px rgba(0, 0, 0, .15);
+    border-bottom: .5px solid rgba(0, 0, 0, .15);
 }
 
 .toast_subtitle {
-    font-size: .75em;
+    font-size: .85em;
     font-weight: 200;
     width: 100%;
     text-align: center;
-    color: rgba(108, 117, 125, .25);
+    color: rgba(108, 117, 125, .55);
     font-style: italic;
 }
 
 .toast_message {
     font-size: 1.05em;
-    font-weight: 500;
-    width: 100%;
-    line-height: .05em;
     text-indent: .5em;
+    font-weight: 500;
     text-align: start;
+    width: max-content;
+    height: max-content;
+    scrollbar-width: thin;
+    padding-left: .5em;
+    padding-right: .5em;
+    margin-top: .5em;
+    padding-bottom: 1em;
 }
 
 .toast_link_error {
     color: lightblue;
+    margin-top: 1.5em;
+    text-align: end;
 }
 
 .toast_link_info {
     color: lightcoral;
+    margin-top: 1.5em;
+    text-align: end;
 }
 
 .toast_link_success {
     color: crimson;
+    margin-top: 1.5em;
+    text-align: end;
 }

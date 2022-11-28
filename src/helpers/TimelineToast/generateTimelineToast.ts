@@ -8,7 +8,7 @@ import styles from "./generateTimelineToastStyles.module.css";
 const disappearAnimation: Keyframe[] = [{ opacity: "100%" }, { opacity: "0%" }];
 
 const disappearAnimationProperties: KeyframeAnimationOptions = {
-	duration: 2000,
+	duration: 1000,
 	easing: "ease-in-out",
 };
 
@@ -48,15 +48,15 @@ const generateTimelineToast = (toastProperties: Partial<TimelineToast>): HTMLDiv
 		toastLink = document.createElement("a");
 		toastLink.innerHTML = toastProperties.linkText;
 		toastLink.href = toastProperties.linkHref ?? "#";
-		toastLink.className = `${
-			styles[`toast_link_${toastProperties.variant ?? "info"} ${toastProperties.linkCSSOverride ?? ""}`]
+		toastLink.className = `${styles[`toast_link_${toastProperties.variant ?? "info"}`]} ${
+			toastProperties.linkCSSOverride ?? ""
 		}`;
 	}
 
 	toastTemplate.appendChild(toastTitle as Element);
 	toastTemplate.appendChild(toastSubtitle as Element);
-	toastTemplate.append(toastMessage as Element);
-	toastTemplate.append(toastLink as Element);
+	toastTemplate.appendChild(toastMessage as Element);
+	toastTemplate.appendChild(toastLink as Element);
 	return toastTemplate;
 };
 

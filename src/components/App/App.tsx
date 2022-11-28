@@ -208,7 +208,7 @@ export const App = (): JSX.Element => {
 					variant="danger"
 				/>
 			)} */}
-			<TimelineToastContainer />
+			<TimelineToastContainer orientation="right" />
 		</div>
 	);
 };

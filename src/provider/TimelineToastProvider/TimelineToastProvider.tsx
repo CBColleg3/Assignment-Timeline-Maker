@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-floating-promises -- no await in setTimeout */
 import React, { type ReactNode } from "react";
 import type { iTimelineToastContext } from "src/@types/Context";
 import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
+import type { TimelineToastContainerOrientation } from "src/common/components/TimelineToastContainer/TimelineToastContainer";
 import { TimelineToastContext } from "src/context/TimelineToast/TimelineToastContext";
 import {
 	disappearAnimation,
@@ -25,10 +27,16 @@ export const TimelineToastProvider = ({ children }: TimelineToastProviderPropert
 			addToast: (_toast: TimelineToast): void => {
 				const timelineToastContainer = document.querySelector("#timeline_toast_container");
 				const generatedToastElement = generateTimelineToast(_toast);
-				timelineToastContainer?.appendChild(generatedToastElement);
+
+				if (timelineToastContainer?.childElementCount === 0) {
+					timelineToastContainer?.appendChild(generatedToastElement);
+				} else {
+					timelineToastContainer?.insertBefore(generatedToastElement, timelineToastContainer.children[0]);
+				}
 				setTimeout(() => {
-					generatedToastElement.animate(disappearAnimation, disappearAnimationProperties);
-					timelineToastContainer?.removeChild(generatedToastElement);
+					generatedToastElement
+						.animate(disappearAnimation, disappearAnimationProperties)
+						.finished.then(() => timelineToastContainer?.removeChild(generatedToastElement));
 				}, _toast.displayTime ?? 3000);
 			},
 		}),
