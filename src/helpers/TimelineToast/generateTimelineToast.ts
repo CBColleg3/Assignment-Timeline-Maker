@@ -1,4 +1,4 @@
-import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
+import type { TimelineToast } from "src/@types/Notifications/TimelineToast";
 
 import styles from "./generateTimelineToastStyles.module.css";
 

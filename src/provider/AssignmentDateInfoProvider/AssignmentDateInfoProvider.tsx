@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers -- not needed for this */
 import React, { type ReactNode } from "react";
-import type { AssignmentDate } from "src/@types";
-import type { iAssignmentDateInfoContext } from "src/@types/AssignmentDate/iAssignmentDateInfoContext";
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import type {
+	AssignmentDate,
+	iAssignmentDateInfoContextFormat,
+	iAssignmentDateInfoContext,
+} from "src/@types";
 import { AssignmentDateInfoContext, useTaskContext } from "src/context";
-import { updateDueDates } from "src/helpers";
-import { generateInitialAssignmentDateInfoDates } from "src/helpers/AssignmentDateInfo/generateInitialAssignmentDateInfoDates";
-import { updateDateRange } from "src/helpers/AssignmentDateInfo/updateDateRange";
+import { updateDueDates, generateInitialAssignmentDateInfoDates, updateDateRange } from "src/helpers";
 
 type AssignmentInfoProviderProps = {
 	// React component that is "wrapped" by the parent, aka <div><random /></div> (random is the "children" of div)

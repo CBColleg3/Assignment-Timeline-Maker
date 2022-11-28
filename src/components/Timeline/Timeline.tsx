@@ -1,9 +1,7 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import TimelineDragDrop from "src/components/Timeline/DragDrop";
-import { TimelineDates } from "./Dates/TimelineDates";
-import { calcDayRange } from "src/helpers";
-import { calcHourRange } from "src/helpers/Task/calcHourRange";
+import { TimelineDragDrop, TimelineDates } from "src/components";
+import { calcDayRange, calcHourRange } from "src/helpers";
 import { useAssignmentDateInfoContext } from "src/context";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type { iAssignmentDateInfoContext } from "src/@types/AssignmentDate/iAssignmentDateInfoContext";
+import type { iAssignmentDateInfoContext } from "src/@types/Context/iAssignmentDateInfoContext";
 
 /**
  * The context object, which contains either the AssignmentDateInfoContext or undefined. Read more here: https://reactjs.org/docs/context.html

@@ -1,2 +1,2 @@
-export { useFiles } from "./useFiles";
-export { useDocument } from "./useDocument";
+export * from "./useFiles";
+export * from "./useDocument";

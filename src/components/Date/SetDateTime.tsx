@@ -1,22 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import type { UpdateDateType, Error, ERROR_OPS } from "src/@types";
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import type { UpdateDateType, iAssignmentDateInfoContextFormat } from "src/@types";
 import { Divider } from "src/common/components/Divider/Divider";
 import { useAssignmentDateInfoContext } from "src/context";
-import { validateSetDateTimeInput } from "src/helpers";
-import DateModal from "./DateModal";
+import { addToast, validateSetDateTimeInput } from "src/helpers";
+import { DateModal } from "./DateModal";
 import styles from "./SetDateTime.module.css";
-
-/**
- * Types of props for SetDateTime component
- */
-type SetDateTimeProps = {
-	/**
-	 * Adds an error to the stack, disabling user from rendering website
-	 */
-	addError: (_error: Error | undefined, _operation: ERROR_OPS) => void;
-};
 
 type SetDateTimeState = {
 	format: iAssignmentDateInfoContextFormat;
@@ -32,7 +21,7 @@ const END_DAY_INIT_INCREMENT = 172800000;
  * @param {SetDateTimeProps} props Passed in properties
  * @returns {JSX.Element} The rendered SetDateTime component
  */
-const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
+const SetDateTime = (): JSX.Element => {
 	const { changeFormat, end, format, setEndDate, setStartDate, start } = useAssignmentDateInfoContext();
 	const [confirm, setConfirm] = React.useState<boolean>(false);
 	const [displayModal, setDisplayModal] = React.useState(false);
@@ -54,16 +43,15 @@ const SetDateTime = ({ addError }: SetDateTimeProps): JSX.Element => {
 			setConfirm(false);
 			const error = validateSetDateTimeInput(newStart, newEnd);
 			if (error) {
-				addError({ ...error }, "add");
+				addToast(error);
 				setTmpState({ end: end.date, format, start: start.date });
 			} else {
 				setStartDate(newStart);
 				setEndDate(newEnd);
 				changeFormat(newFormat);
-				addError(undefined, "delete");
 			}
 		}
-	}, [addError, changeFormat, confirm, setEndDate, setStartDate, tmpState, end.date, start.date, format]);
+	}, [changeFormat, confirm, setEndDate, setStartDate, tmpState, end.date, start.date, format]);
 
 	/**
 	 * Helper function to update the start/end date

@@ -1,4 +1,4 @@
-import type { TimelineToast } from "../Timeline/TimelineToast/TimelineToast";
+import type { TimelineToast } from "../Notifications/TimelineToast";
 
 /**
  * Type for the attributes of the TimelineToastContext

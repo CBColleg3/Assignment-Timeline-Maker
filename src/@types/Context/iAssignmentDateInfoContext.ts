@@ -1,4 +1,4 @@
-import type { AssignmentDate } from "./AssignmentDate";
+import type { AssignmentDate } from "../AssignmentDate/AssignmentDate";
 import type { iAssignmentDateInfoContextFormat } from "./iAssignmentDateInfoContextFormat";
 
 /**

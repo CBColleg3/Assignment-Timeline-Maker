@@ -1,5 +1,5 @@
 import React from "react";
-import type { iAssignmentDateInfoContext } from "src/@types/AssignmentDate/iAssignmentDateInfoContext";
+import type { iAssignmentDateInfoContext } from "src/@types/Context/iAssignmentDateInfoContext";
 import { AssignmentDateInfoContext } from "./AssignmentDateInfoContext";
 
 /**

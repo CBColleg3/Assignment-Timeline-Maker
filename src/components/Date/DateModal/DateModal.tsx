@@ -1,9 +1,8 @@
 import React from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import type { UpdateDateType } from "src/@types";
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
-import EndDate from "../EndDate";
-import StartDate from "../StartDate";
+import type { UpdateDateType, iAssignmentDateInfoContextFormat } from "src/@types";
+import { EndDate } from "../EndDate";
+import { StartDate } from "../StartDate";
 
 type DateModalProps = {
 	end: Date;

@@ -1,4 +1,5 @@
-import type { Error } from "src/@types";
+import type { TimelineToast } from "src/@types";
+import { generateErrorToast } from "../TimelineToast";
 
 const MS_IN_DAY = 86400000;
 const MIN_DAY = 2;
@@ -10,19 +11,19 @@ const MIN_DAY = 2;
  * @param end - the end date
  * @returns The error that is generated, undefined if none
  */
-export const validateSetDateTimeInput = (start: Date, end: Date): Error | undefined => {
+export const validateSetDateTimeInput = (start: Date, end: Date): TimelineToast | undefined => {
 	if (start && end) {
 		// eslint-disable-next-line no-undef-init -- eslint conflict for this specific case
-		let error = undefined;
-		const header = "Date Error";
+		let error: TimelineToast | undefined = undefined;
+		const title = "Date Error";
 		if (start.toUTCString() === end.toUTCString()) {
-			error = { header, message: "Dates cannot be the same time" };
+			error = { message: "Dates cannot be the same time", title };
 		} else if (start.getTime() > end.getTime()) {
-			error = { header, message: "Start date must be less than end date" };
+			error = { message: "Start date must be less than end date", title };
 		} else if (end.getTime() - start.getTime() < MS_IN_DAY * MIN_DAY) {
-			error = { header, message: "Start date must be 2 days away from end date" };
+			error = { message: "Start date must be 2 days away from end date", title };
 		}
 		return error;
 	}
-	return { header: "Start and End date Invalid", message: "Start and End date must be valid values" };
+	return generateErrorToast("Start and End date Invalid", "Start and End date must be valid values");
 };

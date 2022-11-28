@@ -1,4 +1,4 @@
-import type { Task } from "./Task";
+import type { Task } from "../Task/Task";
 
 /**
  * Type for the TaskContext Context object

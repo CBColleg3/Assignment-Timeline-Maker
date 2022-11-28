@@ -2,13 +2,12 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type { Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { SetDateTime } from "../Date/SetDateTime";
-import FileImport from "../FileImport";
+import { FileImport } from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Button, Col } from "react-bootstrap";
-import AppHeader from "./AppHeader";
-import FileDisplay from "../FileDisplay";
+import { AppHeader } from "./AppHeader";
+import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
@@ -17,7 +16,7 @@ import { TimelineAlert } from "../TimelineAlert";
 import { findParts, findPoints, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
-import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
+import type { TimelineToast } from "src/@types/Notifications/TimelineToast";
 import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
 
 const ALERT_CONSTANTS = {
@@ -39,7 +38,6 @@ export const App = (): JSX.Element => {
 	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
 		useFiles();
 	const { parsedDocument, parseFileText } = useDocument();
-	const [errors, setErrors] = React.useState<Errors>({});
 
 	const setTasks = React.useMemo(
 		() => (fileText: string) => {
@@ -57,44 +55,13 @@ export const App = (): JSX.Element => {
 
 	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
 
-	/**
-	 * ERROR MANAGEMENT
-	 *
-	 * Utility function for updating the errors object via Error object
-	 *
-	 * @param theType - The type of error to append/delete with the errors state
-	 * @param operation - The type of operation the user is executing
-	 * @param error - The error to add to the errors state if add operation is selected
-	 */
-	const updateErrors = React.useCallback(
-		(theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
-			switch (theType) {
-				case "date": {
-					setErrors({ ...errors, date: operation === "delete" ? undefined : error });
-					break;
-				}
-				case "file": {
-					setErrors({ ...errors, file: operation === "delete" ? undefined : error });
-					break;
-				}
-				default:
-					break;
-			}
-		},
-		[errors],
-	);
-
 	return (
 		<div className={`d-flex flex-column position-relative ${styles.app_component}`}>
 			<AppHeader />
 			<div
 				className={`d-flex flex-row border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
 			>
-				<SetDateTime
-					addError={(error: Error | undefined, operation: ERROR_OPS): void =>
-						updateErrors("date", operation, error)
-					}
-				/>
+				<SetDateTime />
 				<FileDisplay
 					deleteFile={(index: number): void => deleteFile(index)}
 					files={files}
