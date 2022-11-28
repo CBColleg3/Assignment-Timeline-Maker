@@ -10,6 +10,13 @@ export type iFilesContext = {
 	 */
 	addFile: (_file: File) => void;
 	/**
+	 * Adds multiple files to the internal files collection `files`
+	 *
+	 * @param _files - The files we are adding to the internal files state
+	 * @returns void due to internal mutation
+	 */
+	addFiles: (_files: File[]) => void;
+	/**
 	 * Clears all files in the internal `files` state
 	 *
 	 * @returns void due to internal mutation

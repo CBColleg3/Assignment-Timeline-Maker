@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import styles from "./FileImport.module.css";
+import { useFilesContext } from "src/context";
 
 /**
  * Initial values for the component
@@ -19,20 +20,13 @@ const CONSTANTS = {
 };
 
 /**
- * Props for the FileImport component
- */
-type FileImportProps = {
-	files: File[] | undefined;
-	update: (_theFiles: File[]) => void;
-};
-
-/**
  * Used for importing .xml files into the website. also updates taskArray.
  *
  * @param {FileImportProps} props The properties of the FileImport component
  * @returns {JSX.Element} FileImport component, houses logic for adding file
  */
-export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
+export const FileImport = (): JSX.Element => {
+	const { addFiles, files } = useFilesContext();
 	const [dragging, setDragging] = React.useState(initialValues.dragging);
 	const fileRef = React.createRef<HTMLInputElement>();
 
@@ -65,7 +59,7 @@ export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 				if (event.dataTransfer.files) {
 					const filteredFiles = filterFiles(event.dataTransfer.files);
 					if (filteredFiles.length >= CONSTANTS.MIN_FILE_COUNT) {
-						update(filteredFiles);
+						addFiles(filteredFiles);
 					}
 				}
 				if (fileRef.current) {
@@ -83,7 +77,7 @@ export const FileImport = ({ files, update }: FileImportProps): JSX.Element => {
 					if (event.target.files) {
 						const filteredFiles = filterFiles(event.target.files);
 						if (filteredFiles.length >= CONSTANTS.MIN_FILE_COUNT) {
-							update(filteredFiles);
+							addFiles(filteredFiles);
 						}
 					}
 					if (fileRef.current) {

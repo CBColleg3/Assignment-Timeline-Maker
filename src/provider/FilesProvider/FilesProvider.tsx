@@ -20,6 +20,7 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 	const functionalProps: Partial<iFilesContext> = React.useMemo(
 		() => ({
 			addFile: (_file: File) => setFiles((oldFiles: File[]) => [...oldFiles, _file]),
+			addFiles: (_files: File[]) => setFiles((oldFiles: File[]) => [...oldFiles, ..._files]),
 			clearFiles: () => setFiles([]),
 			removeFileByIndex: (_index: number) =>
 				setFiles((oldFiles: File[]) => oldFiles.filter((_, index) => index !== _index)),

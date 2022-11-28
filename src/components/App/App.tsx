@@ -62,17 +62,8 @@ export const App = (): JSX.Element => {
 				className={`d-flex flex-row border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
 			>
 				<SetDateTime />
-				<FileDisplay
-					deleteFile={(index: number): void => deleteFile(index)}
-					files={files}
-					selectFile={(index: number): void => selectFile(index)}
-					selectedFileIndex={selectedFileIndex}
-					uploadElementRef={timelineRef.current}
-				/>
-				<FileImport
-					files={files}
-					update={(theFiles: File[]): void => setFiles(theFiles)}
-				/>
+				<FileDisplay />
+				<FileImport />
 			</div>
 			{/* {!errors.date && !errors.file ? (
 				<>

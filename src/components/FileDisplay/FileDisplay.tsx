@@ -6,6 +6,7 @@ import { Alert, ListGroup } from "react-bootstrap";
 import { displayFileWithSize } from "src/helpers";
 import styles from "./FileDisplay.module.css";
 import { uploadDocument } from "src/helpers/shared/uploadDocument";
+import { useFilesContext } from "src/context";
 
 /**
  * Props for the FileDisplay component
@@ -44,69 +45,67 @@ type FileDisplayProps = {
  * @param props.uploadElementRef - The ref of the upload component
  * @returns A component which displays the files supplied to it, and allows for adding and deleting of files
  */
-const FileDisplay = ({
-	deleteFile,
-	files,
-	selectFile,
-	selectedFileIndex,
-	uploadElementRef,
-}: FileDisplayProps): JSX.Element => (
-	<div className={`${styles.file_display_section}`}>
-		{files?.length ? (
-			<ListGroup className={`${styles.file_display_container}`}>
-				{files.map((eachFile, index) => {
-					const isSelectedFile = index === selectedFileIndex;
-					const selectedClassName = isSelectedFile ? "-currSelection" : "";
-					const selectedVariant = isSelectedFile ? "primary" : "light";
-					return (
-						<ListGroup.Item
-							action
-							className="d-flex flex-row justify-content-between"
-							eventKey={`${index}-file-${eachFile.name}${selectedClassName}`}
-							key={`${index}${selectedClassName}`}
-							onClick={(): void => selectFile(index)}
-							variant={selectedVariant}
-						>
-							<span className="me-3">{displayFileWithSize(eachFile)}</span>
-							<span className="ms-2">
-								{isSelectedFile && (
+const FileDisplay = (): JSX.Element => {
+	const { files, removeFileByIndex, selectedFile, setSelectedFile } = useFilesContext();
+
+	return (
+		<div className={`${styles.file_display_section}`}>
+			{files?.length > 0 ? (
+				<ListGroup className={`${styles.file_display_container}`}>
+					{files.map((eachFile, index) => {
+						const isSelectedFile = eachFile.name === selectedFile?.name;
+						const selectedClassName = isSelectedFile ? "-currSelection" : "";
+						const selectedVariant = isSelectedFile ? "primary" : "light";
+						return (
+							<ListGroup.Item
+								action
+								className="d-flex flex-row justify-content-between"
+								eventKey={`${index}-file-${eachFile.name}${selectedClassName}`}
+								key={`${index}${selectedClassName}`}
+								onClick={(): void => setSelectedFile(index)}
+								variant={selectedVariant}
+							>
+								<span className="me-3">{displayFileWithSize(eachFile)}</span>
+								<span className="ms-2">
+									{/* {isSelectedFile && (
+										<FontAwesomeIcon
+											className={`${styles.list_icon} p-1 rounded`}
+											icon={faUpload}
+											onClick={(): void => uploadDocument(uploadElementRef)}
+										/>
+									)} */}
 									<FontAwesomeIcon
 										className={`${styles.list_icon} p-1 rounded`}
-										icon={faUpload}
-										onClick={(): void => uploadDocument(uploadElementRef)}
+										icon={faEraser}
+										onClick={(): void => removeFileByIndex(index)}
 									/>
-								)}
-								<FontAwesomeIcon
-									className={`${styles.list_icon} p-1 rounded`}
-									icon={faEraser}
-									onClick={(): void => deleteFile(index)}
-								/>
-								{isSelectedFile ? (
-									<FontAwesomeIcon
-										className="p-1 rounded"
-										icon={faCircleCheck}
-									/>
-								) : (
-									<FontAwesomeIcon
-										className="p-1 rounded"
-										icon={faCircle}
-									/>
-								)}
-							</span>
-						</ListGroup.Item>
-					);
-				})}
-			</ListGroup>
-		) : (
-			<Alert
-				className={`${styles.file_display_alert}`}
-				variant="warning"
-			>
-				{"No Files Imported"}
-			</Alert>
-		)}
-		<div className={`${styles.file_display_section_header}`}>{"Files"}</div>
-	</div>
-);
+									{isSelectedFile ? (
+										<FontAwesomeIcon
+											className="p-1 rounded"
+											icon={faCircleCheck}
+										/>
+									) : (
+										<FontAwesomeIcon
+											className="p-1 rounded"
+											icon={faCircle}
+										/>
+									)}
+								</span>
+							</ListGroup.Item>
+						);
+					})}
+				</ListGroup>
+			) : (
+				<Alert
+					className={`${styles.file_display_alert}`}
+					variant="warning"
+				>
+					{"No Files Imported"}
+				</Alert>
+			)}
+			<div className={`${styles.file_display_section_header}`}>{"Files"}</div>
+		</div>
+	);
+};
 
 export { FileDisplay };
