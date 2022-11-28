@@ -75,10 +75,10 @@ export const TimelineDragDrop = (): JSX.Element => {
 												id={`${task.name}-${task.id}`}
 											>
 												<TaskInfo
-													index={index}
+													index={tasks.findIndex((eachTask: Task) => eachTask.id === task.id)}
 													task={task}
 												/>
-												<AddRemoveTask index={index} />
+												<AddRemoveTask index={tasks.findIndex((eachTask: Task) => eachTask.id === task.id)} />
 											</VerticalTimelineElement>
 										</span>
 									)}

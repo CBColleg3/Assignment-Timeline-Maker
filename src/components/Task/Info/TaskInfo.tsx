@@ -72,7 +72,7 @@ export const TaskInfo = ({ task, index }: TaskInfoProps): JSX.Element => {
 			<EditTask
 				editMode={editMode}
 				index={index}
-				setEditMode={setEditMode}
+				setEditMode={(newEditMode: boolean): void => setEditMode(newEditMode)}
 				task={task}
 			/>
 		</div>

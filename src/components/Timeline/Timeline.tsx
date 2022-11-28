@@ -1,7 +1,6 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
 import { TimelineDragDrop, TimelineDates } from "src/components";
-import { calcDayRange, calcHourRange } from "src/helpers";
 import { useAssignmentDateInfoContext } from "src/context";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
@@ -23,7 +22,7 @@ type TimelineProps = {
  * @returns {JSX.Element} The Timeline component
  */
 export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
-	const { currentSelectedDate, end, format, start } = useAssignmentDateInfoContext();
+	const { currentSelectedDate, end } = useAssignmentDateInfoContext();
 
 	return (
 		<div>
