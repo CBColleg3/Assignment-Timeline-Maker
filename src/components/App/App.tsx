@@ -34,7 +34,7 @@ const ALERT_CONSTANTS = {
  */
 export const App = (): JSX.Element => {
 	const ref = React.createRef<HTMLSpanElement>();
-	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
+	const { dates, format, start } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
 	const { files, selectedFile } = useFilesContext();
 

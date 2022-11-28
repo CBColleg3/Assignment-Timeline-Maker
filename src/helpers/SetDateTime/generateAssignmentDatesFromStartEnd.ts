@@ -1,7 +1,7 @@
 import type { AssignmentDate } from "src/@types";
 import { generateRandomColorHex } from "../shared/generateRandomColorHex";
 
-const MS_IN_DAY = 86400000;
+const MS_IN_DAY = 864_000_00;
 
 /**
  * Utility function for generating the range of dates from start to end
@@ -27,7 +27,7 @@ export const generateAssignmentDatesFromStartEnd = (
 				rank: range.length,
 			};
 			range.push(currentDate);
-		} while (Math.abs(currentDate.date.getTime() - end.date.getTime()) < MS_IN_DAY);
+		} while (Math.abs(currentDate.date.getTime() - end.date.getTime()) > MS_IN_DAY);
 		if (!exclusive) {
 			range.push(end);
 		}

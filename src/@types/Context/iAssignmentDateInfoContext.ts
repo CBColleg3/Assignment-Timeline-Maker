@@ -20,10 +20,6 @@ export type iAssignmentDateInfoContext = {
 	 */
 	changeFormat: (_fmt: iAssignmentDateInfoContextFormat) => void;
 	/**
-	 * Designates whether the user is editing the date, which signifies changes need to be made to the tasks
-	 */
-	changingDate: boolean;
-	/**
 	 * Clears all dates from the collection
 	 *
 	 * @returns void

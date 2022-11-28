@@ -41,9 +41,7 @@ export const FileImport = (): JSX.Element => {
 		const theFiles = Object.values(fileList);
 		const currentFileNames = files?.map((eachFile) => eachFile.name);
 		return currentFileNames
-			? files
-				? [...files, ...theFiles.filter((eachFile) => !currentFileNames.includes(eachFile.name))]
-				: theFiles.filter((eachFile) => !currentFileNames.includes(eachFile.name))
+			? theFiles.filter((eachFile) => !currentFileNames.includes(eachFile.name))
 			: theFiles;
 	};
 

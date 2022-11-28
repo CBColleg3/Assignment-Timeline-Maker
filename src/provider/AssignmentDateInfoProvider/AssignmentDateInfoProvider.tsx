@@ -6,7 +6,13 @@ import type {
 	iAssignmentDateInfoContext,
 } from "src/@types";
 import { AssignmentDateInfoContext, useTaskContext } from "src/context";
-import { updateDueDates, generateInitialAssignmentDateInfoDates, updateDateRange } from "src/helpers";
+import {
+	updateDueDates,
+	generateInitialAssignmentDateInfoDates,
+	updateDateRange,
+	calcDayRange,
+	generateAssignmentDatesFromStartEnd,
+} from "src/helpers";
 
 type AssignmentInfoProviderProps = {
 	// React component that is "wrapped" by the parent, aka <div><random /></div> (random is the "children" of div)
@@ -21,7 +27,6 @@ type AssignmentInfoProviderProps = {
  * @returns Children wrapped with AssignmentDateInfoContext initial value
  */
 export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
-	const [changingDate, setChangingDate] = React.useState<boolean>(false);
 	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
 
@@ -32,7 +37,6 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 			},
 			changeFormat: (fmt: iAssignmentDateInfoContextFormat): void => {
 				setFormat(fmt);
-				setChangingDate(true);
 			},
 			clearDates: () => setDates([]),
 			deleteDate: (ind: number) => setDates((oldDates) => oldDates.filter((_, i) => i !== ind)),
@@ -40,7 +44,6 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 				setDates((oldDates) =>
 					oldDates.map((eachDate, dateInd) => (dateInd === ind ? { ...eachDate, ...date } : eachDate)),
 				);
-				setChangingDate(true);
 			},
 			insertDate: (date: AssignmentDate, ind: number): void => {
 				setDates((oldDates) => {
@@ -51,7 +54,6 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					}
 					return oldDates;
 				});
-				setChangingDate(true);
 			},
 			moveDate: (from: number, to: number): void => {
 				setDates((oldDates) => {
@@ -68,27 +70,22 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					}
 					return oldDates;
 				});
-				setChangingDate(true);
 			},
 			setEnd: (date: AssignmentDate): void => {
-				setDates((oldDates) => [...oldDates.slice(0, oldDates.length - 1), date]);
-				setChangingDate(true);
+				setDates((oldDates) => generateAssignmentDatesFromStartEnd(oldDates[0], date));
 			},
 			setEndDate: (date: Date): void => {
-				setDates((oldDates) =>
-					oldDates.map((eachDate, ind) => (ind === oldDates.length - 1 ? { ...eachDate, date } : eachDate)),
+				setDates((oldDates: AssignmentDate[]) =>
+					generateAssignmentDatesFromStartEnd({ ...oldDates[0] }, { ...oldDates[oldDates.length - 1], date }),
 				);
-				setChangingDate(true);
 			},
 			setStart: (date: AssignmentDate): void => {
-				setDates((oldDates) => [date, ...oldDates.slice(1)]);
-				setChangingDate(true);
+				setDates((oldDates) => generateAssignmentDatesFromStartEnd(oldDates[0], date));
 			},
 			setStartDate: (date: Date): void => {
-				setDates((oldDates) =>
-					oldDates.map((eachDate, ind) => (ind === 0 ? { ...eachDate, date } : eachDate)),
+				setDates((oldDates: AssignmentDate[]) =>
+					generateAssignmentDatesFromStartEnd({ ...oldDates[0], date }, oldDates[oldDates.length - 1]),
 				);
-				setChangingDate(true);
 			},
 		}),
 		[],
@@ -97,13 +94,12 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
 		() => ({
 			...functionalProps,
-			changingDate,
 			dates,
 			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
 			format,
 			start: dates[0],
 		}),
-		[dates, format, functionalProps, changingDate],
+		[dates, format, functionalProps],
 	);
 
 	return (

@@ -44,7 +44,6 @@ const colorHex: Record<string, string> = {
 	floralwhite: "#fffaf0",
 	forestgreen: "#228b22",
 	fuchsia: "#ff00ff",
-	ghostwhite: "#f8f8ff",
 	gold: "#ffd700",
 	goldenrod: "#daa520",
 	gray: "#808080",
