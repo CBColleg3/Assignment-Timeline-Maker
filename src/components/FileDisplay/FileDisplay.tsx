@@ -9,40 +9,8 @@ import { uploadDocument } from "src/helpers/shared/uploadDocument";
 import { useFilesContext } from "src/context";
 
 /**
- * Props for the FileDisplay component
- */
-type FileDisplayProps = {
-	/**
-	 * Function that removes a file, given the index of the file within the files array
-	 */
-	deleteFile: (_idx: number) => void;
-	/**
-	 * The array of files currently being displayed
-	 */
-	files: File[];
-	/**
-	 * Initiates the selection process for when the user selects a new file
-	 */
-	selectFile: (_idx: number) => void;
-	/**
-	 * The index of the selected file
-	 */
-	selectedFileIndex: number | undefined;
-	/**
-	 * The ref of the upload element, to provide additional support for drag/drop.
-	 */
-	uploadElementRef: HTMLSpanElement | null;
-};
-
-/**
  * This component houses the logic for adding, deleting files from the imported file list
  *
- * @param props - The passed in properties, used to display the current files and also update them as well with deleting
- * @param props.deleteFile - The function to remove file at index `_ind` from the internal `files` array
- * @param props.files - The internal array of displayed files
- * @param props.selectFile - The function to initiate the select file path
- * @param props.selectedFileIndex - The index of the currently selected file
- * @param props.uploadElementRef - The ref of the upload component
  * @returns A component which displays the files supplied to it, and allows for adding and deleting of files
  */
 const FileDisplay = (): JSX.Element => {

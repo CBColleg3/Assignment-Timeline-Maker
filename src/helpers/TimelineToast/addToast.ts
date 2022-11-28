@@ -41,5 +41,5 @@ export const addToast = (_toast: TimelineToast): void => {
 				timelineToastContainer?.removeChild(generatedToastElement);
 			}
 		});
-	}, _toast.displayTime ?? 3000);
+	}, _toast.displayTime ?? 99999);
 };

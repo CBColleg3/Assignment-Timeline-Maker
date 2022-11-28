@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import styles from "./FileImport.module.css";
 import { useFilesContext } from "src/context";
+import { addToast, generateSuccessToast } from "src/helpers";
 
 /**
  * Initial values for the component
@@ -59,6 +60,14 @@ export const FileImport = (): JSX.Element => {
 				if (event.dataTransfer.files) {
 					const filteredFiles = filterFiles(event.dataTransfer.files);
 					if (filteredFiles.length >= CONSTANTS.MIN_FILE_COUNT) {
+						addToast(
+							generateSuccessToast(
+								"Uploaded Files Successfully!",
+								`You uploaded the files ${filteredFiles
+									.map((eachFile: File) => eachFile.name)
+									.join(", ")} successfully!`,
+							),
+						);
 						addFiles(filteredFiles);
 					}
 				}
@@ -77,6 +86,14 @@ export const FileImport = (): JSX.Element => {
 					if (event.target.files) {
 						const filteredFiles = filterFiles(event.target.files);
 						if (filteredFiles.length >= CONSTANTS.MIN_FILE_COUNT) {
+							addToast(
+								generateSuccessToast(
+									"Uploaded Files Successfully!",
+									`You uploaded the files ${filteredFiles
+										.map((eachFile: File) => eachFile.name)
+										.join(", ")} successfully!`,
+								),
+							);
 							addFiles(filteredFiles);
 						}
 					}

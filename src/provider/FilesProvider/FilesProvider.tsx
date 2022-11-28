@@ -17,6 +17,12 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 	const [files, setFiles] = React.useState<File[]>([]);
 	const [selectedFile, setSelectedFile] = React.useState<File>();
 
+	React.useEffect(() => {
+		if (files.length === 0) {
+			setSelectedFile(undefined);
+		}
+	}, [files]);
+
 	const functionalProps: Partial<iFilesContext> = React.useMemo(
 		() => ({
 			addFile: (_file: File) => setFiles((oldFiles: File[]) => [...oldFiles, _file]),
