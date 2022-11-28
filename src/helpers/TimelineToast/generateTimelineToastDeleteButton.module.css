@@ -11,6 +11,7 @@
     height: min-content;
     width: min-content;
     line-height: 1em;
+    font-weight: 600;
 }
 
 .delete_button:hover {
