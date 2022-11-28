@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
 import { useAssignmentDateInfoContext } from "src/context";
+import { addToast, generateSuccessToast } from "src/helpers";
 import { DateFormat } from "../DateFormat/DateFormat";
 import { EndDate } from "../EndDate";
 import { StartDate } from "../StartDate";
@@ -60,19 +61,24 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 				<Button
 					onClick={(): void => {
 						if (modalConfirm) {
+							let success = false;
 							console.info(`--Confirming change--\nStart: ${newStart}\nEnd: ${newEnd}\nFormat: ${newFormat}`);
 							if (start.date.getTime() !== newStart.getTime()) {
 								setStart({ ...start, date: newStart });
+								success = true;
 							}
 							if (end.date.getTime() !== newEnd.getTime()) {
 								setEnd({ ...end, date: newEnd });
+								success = true;
 							}
 							if (format !== newFormat) {
 								changeFormat(newFormat);
+								success = true;
 							}
 							setModalConfirm(false);
 							setShowing(false);
 							closeModal();
+							success && addToast(generateSuccessToast("Date Notification", "Successfully updated the dates!"));
 						} else {
 							setModalConfirm(true);
 						}
