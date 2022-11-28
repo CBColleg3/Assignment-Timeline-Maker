@@ -1,19 +1,14 @@
 import React from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import type { UpdateDateType, iAssignmentDateInfoContextFormat } from "src/@types";
+import { Button, Modal } from "react-bootstrap";
+import type { iAssignmentDateInfoContextFormat } from "src/@types";
+import { useAssignmentDateInfoContext } from "src/context";
+import { DateFormat } from "../DateFormat/DateFormat";
 import { EndDate } from "../EndDate";
 import { StartDate } from "../StartDate";
 
 type DateModalProps = {
-	end: Date;
-	format: iAssignmentDateInfoContextFormat;
-	isShowing: boolean;
-	onClose: () => void;
-	start: Date;
+	closeModal: () => void;
 	title: string;
-	updateConfirm: (_confirmValue: boolean) => void;
-	updateDates: (_type: UpdateDateType, _value: Date) => void;
-	updateTimelineType: (_type: iAssignmentDateInfoContextFormat) => void;
 };
 
 /**
@@ -22,57 +17,42 @@ type DateModalProps = {
  * @param {DateModalProps} props The passed in props from the `SetDateTime` component
  * @returns The Modal used to update the start and end date
  */
-export const DateModal = ({
-	end,
-	format,
-	isShowing,
-	onClose,
-	start,
-	title,
-	updateConfirm,
-	updateDates,
-	updateTimelineType,
-}: DateModalProps): JSX.Element => {
+export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element => {
+	const { changeFormat, end, format, start, setEnd, setStart } = useAssignmentDateInfoContext();
+	const [newStart, setNewStart] = React.useState<Date>(start.date);
+	const [newEnd, setNewEnd] = React.useState<Date>(end.date);
+	const [newFormat, setNewFormat] = React.useState<iAssignmentDateInfoContextFormat>(format);
+
+	const [showing, setShowing] = React.useState<boolean>(true);
 	const [modalConfirm, setModalConfirm] = React.useState(false);
 
 	return (
 		<Modal
-			onHide={(): void => onClose()}
-			show={isShowing}
+			onHide={(): void => {
+				closeModal();
+				setShowing(false);
+			}}
+			show={showing}
 		>
 			<Modal.Header closeButton>
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
-					startDate={start}
-					update={(value: Date): void => updateDates("start", value)}
+					updateValue={(newStartDate: Date): void => setNewStart(newStartDate)}
+					value={newStart}
 				/>
 				<EndDate
-					endDate={end}
-					update={(value: Date): void => updateDates("end", value)}
+					updateValue={(newEndDate: Date): void => setNewEnd(newEndDate)}
+					value={newEnd}
 				/>
 				<div className="d-flex flex-column border p-2 rounded">
 					<div className="fw-bolder fs-6 mb-2">{"Date Format"}</div>
-					<Form.Check
-						checked={format === "day"}
-						label="Day"
-						name="timelineType"
-						onChange={(): void => {
-							updateTimelineType("day");
-						}}
-						type="radio"
-						value="day"
-					/>
-					<Form.Check
-						checked={format === "hour"}
-						label="Hour"
-						name="timelineType"
-						onChange={(): void => {
-							updateTimelineType("hour");
-						}}
-						type="radio"
-						value="time"
+					<DateFormat
+						updateValue={(newFormatSpec: iAssignmentDateInfoContextFormat): void =>
+							setNewFormat(newFormatSpec)
+						}
+						value={newFormat}
 					/>
 				</div>
 			</Modal.Body>
@@ -80,9 +60,19 @@ export const DateModal = ({
 				<Button
 					onClick={(): void => {
 						if (modalConfirm) {
-							updateConfirm(true);
-							onClose();
+							console.info(`--Confirming change--\nStart: ${newStart}\nEnd: ${newEnd}\nFormat: ${newFormat}`);
+							if (start.date.getTime() !== newStart.getTime()) {
+								setStart({ ...start, date: newStart });
+							}
+							if (end.date.getTime() !== newEnd.getTime()) {
+								setEnd({ ...end, date: newEnd });
+							}
+							if (format !== newFormat) {
+								changeFormat(newFormat);
+							}
 							setModalConfirm(false);
+							setShowing(false);
+							closeModal();
 						} else {
 							setModalConfirm(true);
 						}

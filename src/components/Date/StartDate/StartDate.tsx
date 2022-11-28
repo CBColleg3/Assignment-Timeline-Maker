@@ -3,18 +3,9 @@ import { Button } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import styles from "./StartDate.module.css";
 
-/**
- * StartDate's prop types
- */
-type StartDateProps = {
-	/**
-	 * The current start date
-	 */
-	startDate: Date;
-	/**
-	 * The function to update the start date
-	 */
-	update: (_theDate: Date) => void;
+type StartDateProperties = {
+	updateValue: (_newDate: Date) => void;
+	value: Date;
 };
 
 /**
@@ -23,16 +14,16 @@ type StartDateProps = {
  * @param {StartDateProps} props The properties passed into the StartDate component
  * @returns {JSX.Element} The datepicker to update the start date
  */
-export const StartDate = ({ startDate, update }: StartDateProps): JSX.Element => (
+export const StartDate = ({ updateValue, value }: StartDateProperties): JSX.Element => (
 	<div className={"d-flex flex-row p-3 rounded border mb-3"}>
 		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">{"Start Date"}</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"
-			onChange={(date: Date): void => update(date)}
+			onChange={(newDate: Date): void => updateValue(newDate)}
 			peekNextMonth
 			required
-			selected={startDate}
+			selected={value}
 			selectsEnd
 			shouldCloseOnSelect
 			showTimeSelect
