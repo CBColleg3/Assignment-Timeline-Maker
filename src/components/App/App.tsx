@@ -14,7 +14,7 @@ import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
-import { findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
+import { findParts, findPoints, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
 import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
@@ -34,8 +34,6 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const { addToast } = useTimelineToastContext();
-
 	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
 	const { updateTasks, tasks } = useTaskContext();
 	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
@@ -109,13 +107,6 @@ export const App = (): JSX.Element => {
 					update={(theFiles: File[]): void => setFiles(theFiles)}
 				/>
 			</div>
-			<Button
-				onClick={(): void => {
-					addToast(generateInfoToast("Test toast", "Toast message"));
-				}}
-			>
-				{"Add toast test"}
-			</Button>
 			{/* {!errors.date && !errors.file ? (
 				<>
 					{isFileSelected ? (

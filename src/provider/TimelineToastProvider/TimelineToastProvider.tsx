@@ -2,7 +2,6 @@
 import React, { type ReactNode } from "react";
 import type { iTimelineToastContext } from "src/@types/Context";
 import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
-import type { TimelineToastContainerOrientation } from "src/common/components/TimelineToastContainer/TimelineToastContainer";
 import { TimelineToastContext } from "src/context/TimelineToast/TimelineToastContext";
 import {
 	disappearAnimation,
@@ -38,9 +37,15 @@ export const TimelineToastProvider = ({ children }: TimelineToastProviderPropert
 				}
 
 				deleteButton.onclick = (): void => {
-					generatedToastElement
-						.animate(disappearAnimation, disappearAnimationProperties)
-						.finished.then(() => timelineToastContainer?.removeChild(generatedToastElement));
+					if (timelineToastContainer?.contains(generatedToastElement)) {
+						generatedToastElement
+							.animate(disappearAnimation, disappearAnimationProperties)
+							.finished.then(() => {
+								if (timelineToastContainer?.contains(generatedToastElement)) {
+									timelineToastContainer?.removeChild(generatedToastElement);
+								}
+							});
+					}
 				};
 
 				setTimeout(() => {
