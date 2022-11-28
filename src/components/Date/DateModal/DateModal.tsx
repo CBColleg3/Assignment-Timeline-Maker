@@ -52,7 +52,8 @@ export const DateModal = ({
 					endDate={end}
 					update={(value: Date): void => updateDates("end", value)}
 				/>
-				<span>
+				<div className="d-flex flex-column border p-2 rounded">
+					<div className="fw-bolder fs-6 mb-2">{"Date Format"}</div>
 					<Form.Check
 						checked={format === "day"}
 						label="Day"
@@ -73,7 +74,7 @@ export const DateModal = ({
 						type="radio"
 						value="time"
 					/>
-				</span>
+				</div>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button

@@ -17,11 +17,11 @@ export const validateSetDateTimeInput = (start: Date, end: Date): TimelineToast 
 		let error: TimelineToast | undefined = undefined;
 		const title = "Date Error";
 		if (start.toUTCString() === end.toUTCString()) {
-			error = { message: "Dates cannot be the same time", title };
+			error = { message: "Dates cannot be the same time", title, variant: "error" };
 		} else if (start.getTime() > end.getTime()) {
-			error = { message: "Start date must be less than end date", title };
+			error = { message: "Start date must be less than end date", title, variant: "error" };
 		} else if (end.getTime() - start.getTime() < MS_IN_DAY * MIN_DAY) {
-			error = { message: "Start date must be 2 days away from end date", title };
+			error = { message: "Start date must be 2 days away from end date", title, variant: "error" };
 		}
 		return error;
 	}

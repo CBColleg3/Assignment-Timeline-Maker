@@ -9,8 +9,9 @@ import {
 import { generateTimelineToastDeleteButton } from "./generateTimelineToastDeleteButton";
 
 /**
- *
- * @param _toast
+ * Function for handling the addition and deletion of the toast we added
+ * 
+ * @param _toast - The toast we are adding to the timeline toast container
  */
 export const addToast = (_toast: TimelineToast): void => {
 	const timelineToastContainer = document.querySelector("#timeline_toast_container");

@@ -13,7 +13,7 @@ import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
-import { findParts, findPoints, updateDueDates } from "src/helpers";
+import { addToast, findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
 import type { TimelineToast } from "src/@types/Notifications/TimelineToast";
