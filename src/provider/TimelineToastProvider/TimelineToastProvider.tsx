@@ -8,6 +8,7 @@ import {
 	disappearAnimation,
 	disappearAnimationProperties,
 	generateTimelineToast,
+	generateTimelineToastDeleteButton,
 } from "src/helpers/TimelineToast";
 
 type TimelineToastProviderProperties = {
@@ -27,16 +28,29 @@ export const TimelineToastProvider = ({ children }: TimelineToastProviderPropert
 			addToast: (_toast: TimelineToast): void => {
 				const timelineToastContainer = document.querySelector("#timeline_toast_container");
 				const generatedToastElement = generateTimelineToast(_toast);
+				const deleteButton = generateTimelineToastDeleteButton();
+				generatedToastElement.appendChild(deleteButton);
 
 				if (timelineToastContainer?.childElementCount === 0) {
 					timelineToastContainer?.appendChild(generatedToastElement);
 				} else {
 					timelineToastContainer?.insertBefore(generatedToastElement, timelineToastContainer.children[0]);
 				}
-				setTimeout(() => {
+
+				deleteButton.onclick = (): void => {
 					generatedToastElement
 						.animate(disappearAnimation, disappearAnimationProperties)
 						.finished.then(() => timelineToastContainer?.removeChild(generatedToastElement));
+				};
+
+				setTimeout(() => {
+					generatedToastElement
+						.animate(disappearAnimation, disappearAnimationProperties)
+						.finished.then(() => {
+							if (timelineToastContainer?.contains(generatedToastElement)) {
+								timelineToastContainer?.removeChild(generatedToastElement);
+							}
+						});
 				}, _toast.displayTime ?? 3000);
 			},
 		}),

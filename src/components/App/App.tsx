@@ -14,7 +14,7 @@ import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useTaskContext, useTimelineToastContext } from "src/context";
 import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
-import { findParts, findPoints, updateDueDates } from "src/helpers";
+import { findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
 import type { TimelineToast } from "src/@types/Timeline/TimelineToast/TimelineToast";
@@ -111,12 +111,7 @@ export const App = (): JSX.Element => {
 			</div>
 			<Button
 				onClick={(): void => {
-					addToast({
-						linkText: "random link",
-						message: "This is a test message",
-						subtitle: "Test subtitle",
-						title: "This is a test",
-					});
+					addToast(generateInfoToast("Test toast", "Toast message"));
 				}}
 			>
 				{"Add toast test"}

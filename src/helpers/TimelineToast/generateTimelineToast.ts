@@ -13,10 +13,15 @@ const disappearAnimationProperties: KeyframeAnimationOptions = {
 };
 
 /**
+ * Generates a timeline toast notification to display to the user. Appended into the toast notification container.
  *
- * @param toastProperties
+ * @param toastProperties - The properties of the timeline toast, all fields are not required
+ * @returns - The DOM element equivalent of the TimelineToast
  */
 const generateTimelineToast = (toastProperties: Partial<TimelineToast>): HTMLDivElement => {
+	/**
+	 * The template
+	 */
 	const toastTemplate = document.createElement("div");
 	let toastTitle = null;
 	let toastSubtitle = null;
@@ -53,11 +58,69 @@ const generateTimelineToast = (toastProperties: Partial<TimelineToast>): HTMLDiv
 		}`;
 	}
 
-	toastTemplate.appendChild(toastTitle as Element);
-	toastTemplate.appendChild(toastSubtitle as Element);
-	toastTemplate.appendChild(toastMessage as Element);
-	toastTemplate.appendChild(toastLink as Element);
+	if (toastTitle !== null) {
+		toastTemplate.appendChild(toastTitle as Element);
+	}
+	if (toastSubtitle !== null) {
+		toastTemplate.appendChild(toastSubtitle as Element);
+	}
+	if (toastMessage !== null) {
+		toastTemplate.appendChild(toastMessage as Element);
+	}
+	if (toastLink !== null) {
+		toastTemplate.appendChild(toastLink as Element);
+	}
+
 	return toastTemplate;
 };
 
-export { disappearAnimation, disappearAnimationProperties, generateTimelineToast };
+/**
+ * Generates an info toast given the title and the message
+ *
+ * @param title - The title of the toast
+ * @param message - The message to display in the toast
+ * @param subtitle - The subtitle of the toast
+ * @returns The info toast with the supplied message and title
+ */
+const generateInfoToast = (
+	title: string,
+	message: string,
+	subtitle?: string,
+): Partial<TimelineToast> => ({ message, subtitle, title, variant: "info" });
+
+/**
+ * Generates an error toast given the title and the message
+ *
+ * @param title - The title of the toast
+ * @param message - The message to display in the toast
+ * @param subtitle - The subtitle of the toast
+ * @returns The info toast with the supplied message and title
+ */
+const generateErrorToast = (
+	title: string,
+	message: string,
+	subtitle?: string,
+): Partial<TimelineToast> => ({ message, subtitle, title, variant: "error" });
+
+/**
+ * Generates an success toast given the title and the message
+ *
+ * @param title - The title of the toast
+ * @param message - The message to display in the toast
+ * @param subtitle - The subtitle of the toast
+ * @returns The info toast with the supplied message and title
+ */
+const generateSuccessToast = (
+	title: string,
+	message: string,
+	subtitle?: string,
+): Partial<TimelineToast> => ({ message, subtitle, title, variant: "success" });
+
+export {
+	disappearAnimation,
+	disappearAnimationProperties,
+	generateTimelineToast,
+	generateErrorToast,
+	generateInfoToast,
+	generateSuccessToast,
+};

@@ -6,7 +6,7 @@
 }
 
 .timeline_toast_container_right {
-    left: 80%;
+    left: 79%;
     display: flex;
     flex-direction: column-reverse;
     height: 100vh;
@@ -16,7 +16,7 @@
 }
 
 .timeline_toast_container_left {
-    right: 80%;
+    right: 79%;
     display: flex;
     flex-direction: column-reverse;
     height: 100vh;
@@ -26,7 +26,7 @@
 }
 
 .timeline_toast_container_top {
-    bottom: 80%;
+    bottom: 79%;
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -36,7 +36,7 @@
 }
 
 .timeline_toast_container_bottom {
-    top: 80%;
+    top: 79%;
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -46,7 +46,7 @@
 }
 
 .timeline_toast_container_bottom_leftright {
-    top: 80%;
+    top: 79%;
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -56,7 +56,7 @@
 }
 
 .timeline_toast_container_bottom_rightleft {
-    top: 80%;
+    top: 79%;
     display: flex;
     flex-direction: row-reverse;
     width: 100vw;
@@ -66,7 +66,7 @@
 }
 
 .timeline_toast_container_left_downtop {
-    right: 80%;
+    right: 79%;
     display: flex;
     flex-direction: column-reverse;
     height: 100vh;
@@ -76,7 +76,7 @@
 }
 
 .timeline_toast_container_left_topdown {
-    right: 80%;
+    right: 79%;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -86,7 +86,7 @@
 }
 
 .timeline_toast_container_right_downtop {
-    left: 80%;
+    left: 79%;
     display: flex;
     flex-direction: column-reverse;
     height: 100vh;
@@ -96,7 +96,7 @@
 }
 
 .timeline_toast_container_right_topdown {
-    left: 80%;
+    left: 79%;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -106,7 +106,7 @@
 }
 
 .timeline_toast_container_top_leftright {
-    bottom: 80%;
+    bottom: 79%;
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -116,7 +116,7 @@
 }
 
 .timeline_toast_container_top_rightleft {
-    bottom: 80%;
+    bottom: 79%;
     display: flex;
     flex-direction: row-reverse;
     width: 100vw;

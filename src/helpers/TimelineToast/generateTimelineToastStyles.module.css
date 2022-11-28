@@ -9,6 +9,9 @@
     flex-direction: column;
     justify-content: space-around;
     z-index: 1;
+    border-radius: 1em;
+    margin-bottom: 1.5em;
+    position: relative;
 }
 
 .toast_layout_error {
