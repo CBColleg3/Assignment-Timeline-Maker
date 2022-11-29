@@ -5,18 +5,15 @@ import { Timeline } from "../Timeline/Timeline";
 import { SetDateTime } from "../Date/SetDateTime";
 import { FileImport } from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
-import { Button, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { AppHeader } from "./AppHeader";
 import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
 import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
-import { useFiles, useDocument } from "src/hooks";
 import { TimelineAlert } from "../TimelineAlert";
-import { addToast, findParts, findPoints, generateInfoToast, updateDueDates } from "src/helpers";
 
 import styles from "./App.module.css";
-import type { TimelineToast } from "src/@types/Notifications/TimelineToast";
 import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
 
 const ALERT_CONSTANTS = {
@@ -34,9 +31,8 @@ const ALERT_CONSTANTS = {
  */
 export const App = (): JSX.Element => {
 	const ref = React.createRef<HTMLSpanElement>();
-	const { dates, format, start } = useAssignmentDateInfoContext();
-	const { updateTasks, tasks } = useTaskContext();
-	const { files, selectedFile } = useFilesContext();
+	const { tasks } = useTaskContext();
+	const { files, selectedFile, selectedFileXML } = useFilesContext();
 
 	return (
 		<div className={`d-flex flex-column position-relative ${styles.app_component}`}>
@@ -71,14 +67,9 @@ export const App = (): JSX.Element => {
 									</div>
 								)}
 							</Col>
-							{/* <Col lg={5}>
-								{parsedDocument ? (
-									<DocViewer
-										docXML={parsedDocument}
-										fileImported={isFileSelected}
-										startDate={start.date}
-										tasks={tasks}
-									/>
+							<Col lg={5}>
+								{selectedFile && selectedFileXML ? (
+									<DocViewer />
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
@@ -94,7 +85,7 @@ export const App = (): JSX.Element => {
 										</span>
 									</div>
 								)}{" "}
-							</Col> */}
+							</Col>
 						</div>
 					) : (
 						<>

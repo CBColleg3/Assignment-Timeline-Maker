@@ -1,7 +1,7 @@
 import React, { type ReactNode } from "react";
 import type { iFilesContext } from "src/@types";
 import { FilesContext } from "src/context";
-import { readFile } from "src/helpers";
+import { parseFileTextToXML, readFile } from "src/helpers";
 
 type FilesProviderProperties = {
 	children: ReactNode;
@@ -18,6 +18,7 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 	const [files, setFiles] = React.useState<File[]>([]);
 	const [selectedFile, setSelectedFile] = React.useState<File>();
 	const [selectedFileText, setSelectedFileText] = React.useState<string>();
+	const [selectedFileXML, setSelectedFileXML] = React.useState<Document | undefined>(undefined);
 
 	React.useEffect(() => {
 		if (files.length === 0) {
@@ -39,6 +40,8 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 				readFile(files[_index])
 					.then((result: string | undefined) => {
 						setSelectedFileText(result);
+						const parsedFileText: Document = parseFileTextToXML(result);
+						setSelectedFileXML(parsedFileText);
 					})
 					.catch((error: unknown) => {
 						console.error(`Failed to read file ${(error as Error).stack}`);
@@ -54,8 +57,9 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 			files,
 			selectedFile,
 			selectedFileText,
+			selectedFileXML,
 		}),
-		[files, functionalProps, selectedFile, selectedFileText],
+		[files, functionalProps, selectedFile, selectedFileText, selectedFileXML],
 	);
 
 	return <FilesContext.Provider value={filesMemo}>{children}</FilesContext.Provider>;
