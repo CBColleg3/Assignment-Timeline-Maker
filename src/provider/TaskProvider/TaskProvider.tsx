@@ -24,28 +24,31 @@ type TaskProviderProps = {
  * @returns The wrapped child component
  */
 export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
-	const { selectedFile } = useFilesContext();
+	const { selectedFileText } = useFilesContext();
 	const { format, dates } = useAssignmentDateInfoContext();
 	const [tasks, setTasks] = React.useState<Task[]>([]);
+	const [confirmedEdit, setConfirmedEdit] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		if (selectedFile !== undefined) {
-			readFile(selectedFile).then((result: string | undefined) => {
-				if (result) {
-					console.log("setting tasks");
-					setTasks(updateDueDates(findPoints(findParts(result)), format, dates));
-				}
-			});
+		if (confirmedEdit) {
+			setConfirmedEdit(false);
+			setTasks(updateDueDates(tasks, format, dates));
 		}
-	}, [selectedFile, dates, format]);
+	}, [confirmedEdit, format, dates, tasks]);
 
-	const functionalProps = React.useMemo(
+	React.useEffect(() => {
+		if (selectedFileText !== undefined) {
+			setTasks(updateDueDates(findPoints(findParts(selectedFileText)), format, dates));
+		}
+	}, [selectedFileText, dates, format]);
+
+	const functionalProps: Partial<iTaskContext> = React.useMemo(
 		() => ({
 			addTask: (task: Task): void => setTasks((oldTasks) => [...oldTasks, task]),
 			clearTasks: (): void => setTasks([]),
 			deleteTask: (ind: number) => setTasks((oldTasks) => oldTasks.filter((_, i) => i !== ind)),
-			editTask: (task: Partial<Task>, ind: number, dateChanged = false): void => {
-				if (dateChanged) {
+			editTask: (task: Partial<Task>, ind: number, changedDateOrPoints?: boolean): void => {
+				if (changedDateOrPoints) {
 					setTasks((oldTasks) => {
 						if (oldTasks && task.dueDate) {
 							const oldTask = oldTasks.splice(ind, 1)[0];
@@ -57,6 +60,7 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 						}
 						return oldTasks;
 					});
+					setConfirmedEdit(true);
 				} else {
 					setTasks((oldTasks) =>
 						oldTasks.map((eachTask, i) => (i === ind ? { ...eachTask, ...task } : eachTask)),
@@ -98,11 +102,12 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 
 	const taskMemo: iTaskContext = React.useMemo(
 		() => ({
-			...functionalProps,
+			...(functionalProps as unknown as iTaskContext),
+			confirmedEdit,
 			tasks,
 			updateTasks,
 		}),
-		[functionalProps, tasks, updateTasks],
+		[confirmedEdit, functionalProps, tasks, updateTasks],
 	);
 
 	return <TaskContext.Provider value={taskMemo}>{children}</TaskContext.Provider>;

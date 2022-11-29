@@ -1,6 +1,7 @@
 import React, { type ReactNode } from "react";
 import type { iFilesContext } from "src/@types";
 import { FilesContext } from "src/context";
+import { readFile } from "src/helpers";
 
 type FilesProviderProperties = {
 	children: ReactNode;
@@ -16,6 +17,7 @@ type FilesProviderProperties = {
 export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Element => {
 	const [files, setFiles] = React.useState<File[]>([]);
 	const [selectedFile, setSelectedFile] = React.useState<File>();
+	const [selectedFileText, setSelectedFileText] = React.useState<string>();
 
 	React.useEffect(() => {
 		if (files.length === 0) {
@@ -32,7 +34,16 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 				setFiles((oldFiles: File[]) => oldFiles.filter((_, index) => index !== _index)),
 			removeFileByName: (_name: string) =>
 				setFiles((oldFiles: File[]) => oldFiles.filter((eachFile) => eachFile.name !== _name)),
-			setSelectedFile: (_index: number) => setSelectedFile(files[_index]),
+			setSelectedFile: (_index: number): void => {
+				setSelectedFile(files[_index]);
+				readFile(files[_index])
+					.then((result: string | undefined) => {
+						setSelectedFileText(result);
+					})
+					.catch((error: unknown) => {
+						console.error(`Failed to read file ${(error as Error).stack}`);
+					});
+			},
 		}),
 		[files],
 	);
@@ -42,8 +53,9 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 			...(functionalProps as unknown as iFilesContext),
 			files,
 			selectedFile,
+			selectedFileText,
 		}),
-		[files, functionalProps, selectedFile],
+		[files, functionalProps, selectedFile, selectedFileText],
 	);
 
 	return <FilesContext.Provider value={filesMemo}>{children}</FilesContext.Provider>;

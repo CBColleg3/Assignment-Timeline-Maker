@@ -61,7 +61,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		}
 	}, [reset, task]);
 
-	const { errors } = formState;
+	const { dirtyFields, errors } = formState;
 
 	/**
 	 * Helper function for validating the date, and setting the appropriate stats dependent on whether the date is in range
@@ -84,7 +84,11 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	function changeTasks(): void {
 		const updatedDate = findDateTaskUnder(dueDate, dates);
 		const { color } = updatedDate;
-		editTask({ ...getValues(), color, dueDate }, index, !isSameDay(task.dueDate, dueDate));
+		editTask(
+			{ ...getValues(), color, dueDate },
+			index,
+			!isSameDay(task.dueDate, dueDate) || dirtyFields.points,
+		);
 	}
 
 	return (

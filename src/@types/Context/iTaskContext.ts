@@ -17,6 +17,10 @@ export type iTaskContext = {
 	 */
 	clearTasks: () => void;
 	/**
+	 * Confirmed an edit on a task
+	 */
+	confirmedEdit: boolean;
+	/**
 	 * Deletes a task at `_ind` from the task collection
 	 *
 	 * @param _ind - The array index where the task that is being removed is located

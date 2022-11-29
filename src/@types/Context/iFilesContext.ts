@@ -45,6 +45,10 @@ export type iFilesContext = {
 	 */
 	selectedFile: File | undefined;
 	/**
+	 * The text of the selected file
+	 */
+	selectedFileText: string | undefined;
+	/**
 	 * Sets the selected file internal state by using the index to access the file at that index within the internal files array
 	 */
 	setSelectedFile: (_index: number) => void;
