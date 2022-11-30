@@ -17,7 +17,7 @@ const FLASK_URL =
 export const DocViewer = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
 	const { tasks } = useTaskContext();
-	const { selectedFileXML } = useFilesContext();
+	const { selectedFileXML, selectedFile } = useFilesContext();
 	const paragraphs = extractParagraphs(selectedFileXML);
 	const originalContent = getParagraphTextContent(paragraphs);
 
@@ -26,26 +26,30 @@ export const DocViewer = (): JSX.Element => {
 	const [useSimpleContent, setUseSimpleContent] = useState<boolean>(false);
 
 	useEffect(() => {
-		let isMounted = true;
 		const controller = new AbortController();
 		simplifyText(`${FLASK_URL}/api/simplify`, controller, {
 			text: originalContent,
-		}).then((receivedContent: string[]) => {
-			if (isMounted) {
-				setSimpleContent(receivedContent);
-			}
 		})
-			.catch(() => {
-				if (isMounted) {
-					setSimpleContent(undefined);
+			.then((receivedContent: string[]) => {
+				setSimpleContent(receivedContent);
+			})
+			.catch((err) => {
+				if (err.name === "AbortError") {
+					console.log("abort error");
 				}
 			});
 		return () => {
 			controller.abort();
-			isMounted = false;
 		};
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedFileXML]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [selectedFile]);
+
+	// DEBUGGING, originalContent not changing values at the same time as currentContent
+	useEffect(() => {
+		console.log("ORIGINAL CONTENT", originalContent);
+		console.log("CURRENT CONTENT", currentContent);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [originalContent]);
 
 	return (
 		<div className="doc-viewer-page">

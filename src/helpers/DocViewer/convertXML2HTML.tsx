@@ -68,8 +68,8 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
  * @param startDate (temp) the start date
  * @returns <p> html tag containing the text information within the 'w:p' tag
  */
-export const convertXML2HTML = (par: Element, content: string, tasks: Task[], startDate: Date): JSX.Element => {
-	if (content === "") {
+export const convertXML2HTML = (par: Element, content: string | undefined, tasks: Task[], startDate: Date): JSX.Element => {
+	if (content === "" || content === undefined) {
 		return <p />;
 	}
 
