@@ -49,7 +49,8 @@ export const DocViewer = (): JSX.Element => {
 			})
 			.catch((err) => {
 				if (err.name === "AbortError") {
-					console.log("abort error");
+					// eslint-disable-next-line no-console
+					console.log("Abort Error");
 				}
 			});
 		return () => {
