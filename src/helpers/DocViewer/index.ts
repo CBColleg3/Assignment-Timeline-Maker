@@ -3,3 +3,4 @@ export { extractParagraphs } from "./extractParagraphs";
 export { isTaskInElement } from "./isTaskInElement";
 export { translateXMLElementStyling } from "./translateXMLElementStyling";
 export { getParagraphTextContent } from "./getParagraphTextContent";
+export { simplifyText } from "./simplifyText";

@@ -7,7 +7,7 @@ import type { Task } from "src/@types";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { changeTaskColor } from "src/helpers/DragDrop/changeTaskColor";
+import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
 import { isSameDay } from "src/helpers";
 
 /**

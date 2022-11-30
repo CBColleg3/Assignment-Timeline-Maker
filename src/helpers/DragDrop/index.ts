@@ -1,1 +1,1 @@
-export { changeTaskColor } from "./changeTaskColor";
+export { changeTaskColor } from "./ChangeTaskColor";

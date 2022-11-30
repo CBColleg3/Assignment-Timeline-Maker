@@ -5,6 +5,7 @@
  * @param elementText The element text we are using as the comparison base
  * @returns Whether any text field is within the elementText
  */
-export const isTaskInElement = (taskFields: string[], elementText: string): boolean =>
-	taskFields.some((eachTaskField) => eachTaskField.toLowerCase().includes(elementText.toLowerCase())) ||
-	taskFields.some((eachTaskField) => elementText.toLowerCase().includes(eachTaskField.toLowerCase()));
+export const isTaskInElement = (taskFields: string[], elementText: string | undefined): boolean =>
+	elementText !== undefined &&
+	(taskFields.some((eachTaskField) => eachTaskField.toLowerCase().includes(elementText.toLowerCase())) ||
+	taskFields.some((eachTaskField) => elementText.toLowerCase().includes(eachTaskField.toLowerCase())));

@@ -10,11 +10,12 @@ import { AppHeader } from "./AppHeader";
 import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
+import { useFilesContext, useTaskContext } from "src/context";
 import { TimelineAlert } from "../TimelineAlert";
 
 import styles from "./App.module.css";
 import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
+
 
 const ALERT_CONSTANTS = {
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
