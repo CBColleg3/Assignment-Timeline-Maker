@@ -4,6 +4,4 @@
  * It receives all contents of the folder without having to access the individual files.
  */
 
-export { Timeline } from "./Timeline";
-export * from "./DragDrop";
-export * from "./Dates";
+export { TimelineAlert } from "./TimelineAlert";

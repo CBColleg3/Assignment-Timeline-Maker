@@ -19,23 +19,35 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 	const [selectedFile, setSelectedFile] = React.useState<File>();
 	const [selectedFileText, setSelectedFileText] = React.useState<string>();
 	const [selectedFileXML, setSelectedFileXML] = React.useState<Document | undefined>(undefined);
+	const [removingFile, setRemovingFile] = React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		if (files.length === 0) {
+		if (removingFile) {
+			console.log("resetting all values");
+			setSelectedFileXML(undefined);
+			setRemovingFile(false);
 			setSelectedFile(undefined);
+			setSelectedFileText(undefined);
 		}
-	}, [files]);
+	}, [removingFile]);
 
 	const functionalProps: Partial<iFilesContext> = React.useMemo(
 		() => ({
 			addFile: (_file: File) => setFiles((oldFiles: File[]) => [...oldFiles, _file]),
 			addFiles: (_files: File[]) => setFiles((oldFiles: File[]) => [...oldFiles, ..._files]),
 			clearFiles: () => setFiles([]),
-			removeFileByIndex: (_index: number) =>
-				setFiles((oldFiles: File[]) => oldFiles.filter((_, index) => index !== _index)),
-			removeFileByName: (_name: string) =>
-				setFiles((oldFiles: File[]) => oldFiles.filter((eachFile) => eachFile.name !== _name)),
-			setSelectedFile: (_index: number): void => {
+			removeFileByIndex: (_index: number): void => {
+				console.log("calling remove index");
+				setRemovingFile(true);
+				setFiles((oldFiles: File[]) => oldFiles.filter((_, index) => index !== _index));
+			},
+			removeFileByName: (_name: string): void => {
+				console.log("calling remove name");
+				setRemovingFile(true);
+				setFiles((oldFiles: File[]) => oldFiles.filter((eachFile) => eachFile.name !== _name));
+			},
+			updateSelectedFile: (_index: number): void => {
+				console.log("updating file");
 				setSelectedFile(files[_index]);
 				readFile(files[_index])
 					.then((result: string | undefined) => {
