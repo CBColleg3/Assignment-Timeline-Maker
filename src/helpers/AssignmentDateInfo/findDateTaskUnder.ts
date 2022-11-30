@@ -13,5 +13,9 @@ export const findDateTaskUnder = (newDate: Date, dates: AssignmentDate[]): Assig
 		const { date } = eachDate;
 		return isSameDay(newDate, date);
 	});
+	
+	if(filteredResult.length < 1) {
+		filteredResult.push(dates[0]);
+	}
 	return { ...filteredResult[0], color: filteredResult[0].color.substring(1) };
 };
