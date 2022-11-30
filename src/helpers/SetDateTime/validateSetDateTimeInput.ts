@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents -- disabled */
 import type { TimelineToast } from "src/@types";
 import { generateErrorToast } from "../TimelineToast";
 
