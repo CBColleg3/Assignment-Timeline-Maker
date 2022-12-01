@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents -- disabled */
 import React from "react";
 import type { iFilesContext } from "src/@types";
 import { FilesContext } from "./FilesContext";

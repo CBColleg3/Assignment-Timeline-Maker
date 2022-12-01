@@ -4,4 +4,4 @@
  * It receives all contents of the folder without having to access the individual files.
  */
 
-export { changeTaskColor } from "./changeTaskColor";
+export { changeTaskColor } from "./ChangeTaskColor";
