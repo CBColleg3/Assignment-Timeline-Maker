@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 # from flask_cors import CORS #comment this on deployment
 import os
-from api.helpers import format_response
 from api.utils import simplify_text
 
 REACT_APP_PATH = "templates"
