@@ -47,8 +47,10 @@ export const DocViewer = (): JSX.Element => {
 			.then((receivedContent: string[]) => {
 				setMlContent((oldMlContent: MLContent) => ({ ...oldMlContent, simplifiedContent: receivedContent }));
 			})
-			.catch((err) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- disabled
+			.catch((err: any) => {
 				if (err.name === "AbortError") {
+					// eslint-disable-next-line no-console -- disabled
 					console.log("abort error");
 				}
 			});
