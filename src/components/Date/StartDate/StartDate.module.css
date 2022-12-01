@@ -1,3 +1,6 @@
+/*
+    When the datepicker is displayed, the button at the bottom-most of the datepicker, labeled "Today"
+*/
 .today_button {
     width: 100%;
     border: none;

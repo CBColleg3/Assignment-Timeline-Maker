@@ -2,8 +2,17 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
 
+/**
+ * The properties of the DateFormat component
+ */
 type DateFormatProperties = {
+	/**
+	 * The callback function to update the value being passed in as a prop from SetDateTime
+	 */
 	updateValue: (_newFormat: iAssignmentDateInfoContextFormat) => void;
+	/**
+	 * The value that the input is given, via SetDateTime component
+	 */
 	value: iAssignmentDateInfoContextFormat;
 };
 

@@ -16,7 +16,7 @@ const BORDER_RADIUS_AMT = 10;
 /**
  * Generates a border style for the component
  *
- * @param color The color to generate the border for
+ * @param color - The color to generate the border for
  * @returns The generated border style
  */
 const generateBorderStyle = (color: string): string => `solid #${color}`;
@@ -24,7 +24,7 @@ const generateBorderStyle = (color: string): string => `solid #${color}`;
 /**
  * Utility function for determining whether an element is a space
  *
- * @param childrenAmount The amount of children in the node
+ * @param childrenAmount - The amount of children in the node
  * @returns Whether the children amount designates a space
  */
 const isSpace = (childrenAmount: number): boolean => childrenAmount === MIN_PARAGRAPH_CHILD_LENGTH;
@@ -32,8 +32,8 @@ const isSpace = (childrenAmount: number): boolean => childrenAmount === MIN_PARA
 /**
  * Traverses an xml element recursively and returns all elements
  *
- * @param element The current element we are traversing through
- * @param elements The stack of elements initialized at the root level
+ * @param element - The current element we are traversing through
+ * @param elements - The stack of elements initialized at the root level
  * @returns All the elements within the element
  */
 const traverseXmlTree = (element: Element, elements: Element[] = []): Element[] => {
@@ -51,7 +51,7 @@ const traverseXmlTree = (element: Element, elements: Element[] = []): Element[] 
 /**
  * Utility function for generating an html style from a node attribute
  *
- * @param attribute The attribute to convert to HTML style
+ * @param attribute - The attribute to convert to HTML style
  * @returns The HTML stylized attribute
  */
 const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
@@ -62,9 +62,9 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
 /**
  * Takes an Element containing 'w:p' xml tag information and extracts the text information from it
  *
- * @param par xml element representing a 'w:p' xml tag
- * @param tasks The tasks we want to compare the parsed text to, to apply highlighting upon matching
- * @param startDate (temp) the start date
+ * @param par - xml element representing a 'w:p' xml tag
+ * @param tasks - The tasks we want to compare the parsed text to, to apply highlighting upon matching
+ * @param startDate - (temp) the start date
  * @returns <p> html tag containing the text information within the 'w:p' tag
  */
 export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): JSX.Element => {

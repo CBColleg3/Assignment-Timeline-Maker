@@ -3,7 +3,13 @@ import type { iFilesContext } from "src/@types";
 import { FilesContext } from "src/context";
 import { parseFileTextToXML, readFile } from "src/helpers";
 
+/**
+ * Detailing what type the properties of the FilesProvider component are going to be
+ */
 type FilesProviderProperties = {
+	/**
+	 * Read more about the special children prop here: https://reactjs.org/docs/composition-vs-inheritance.html *(Containment section)*
+	 */
 	children: ReactNode;
 };
 
@@ -19,7 +25,7 @@ type FilesProviderProperties = {
 export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Element => {
 	/**
 	 * The list of files the user currently has imported. Initialized as an empty list to avoid any bugs with undefined. Is populated as the user adds files from the upload component, or
-	 * removes files from the 
+	 * removes files from the
 	 */
 	const [files, setFiles] = React.useState<File[]>([]);
 	/**
@@ -53,7 +59,7 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 	}, [removingFile]);
 
 	/**
-	 * 	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
+	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
 	 * objects, and specifically using them to supply the Provider a value. You must memoize them or else it results in lots of unnecessary re-renders. This is basically, memoizing the functional props of
 	 * the provider, and making it so whenever we try to recalculate the value of `functionalProps`, we check if the dependency is completely different from the past one, and that the value of the dependency is not
 	 * the same as the one before the changed one. If that is the case, then we already have calculated the value, so therefore we just return the value without running any complex computations. This is especially helpful for
@@ -85,6 +91,7 @@ export const FilesProvider = ({ children }: FilesProviderProperties): JSX.Elemen
 						setSelectedFileXML(parsedFileText);
 					})
 					.catch((error: unknown) => {
+						// eslint-disable-next-line no-console -- disabled, needed for logging error
 						console.error(`Failed to read file ${(error as Error).stack}`);
 					});
 			},

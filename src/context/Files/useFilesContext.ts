@@ -3,9 +3,11 @@ import type { iFilesContext } from "src/@types";
 import { FilesContext } from "./FilesContext";
 
 /**
- * Custom hook for accessing the FilesContext value and returning it, if improperly accessed, an error is thrown.
+ * Uses the FilesContext context (getting it's value), returning the value of the context
  *
- * @returns FilesContext value if properly accessed
+ * @returns The FilesContext value. We throw an error if the task context we are accessing is undefined, meaning that
+ * we are accessing the context from an invalid element, because context should only be accessed from elements that are children of the context's provider. Read more
+ * about context here: https://reactjs.org/docs/context.html
  */
 export const useFilesContext = (): iFilesContext => {
 	const contextValue: iFilesContext | undefined = React.useContext<iFilesContext | undefined>(

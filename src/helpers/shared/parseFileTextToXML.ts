@@ -1,7 +1,7 @@
 /**
  * Utility function for parsing file text into a xml document
  *
- * @param parsedText The text of the parsed file
+ * @param parsedText - The text of the parsed file
  * @returns The parsed document from the file text
  */
 export const parseFileTextToXML = (parsedText: string | undefined): Document => {

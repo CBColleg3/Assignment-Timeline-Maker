@@ -17,19 +17,41 @@ type AssignmentInfoProviderProps = {
 };
 
 /**
- * HOC wrapper providing initial values of the context to the child component
+ * HOC that passes down the task context to any child.
+ * - **Read more about HOC components: https://reactjs.org/docs/higher-order-components.html.**
+ * - **Read more about context: https://reactjs.org/docs/context.html**
  *
- * @param props The properties of the HOC context provider
- * @param props.children The children of the HOC context provider
- * @returns Children wrapped with AssignmentDateInfoContext initial value
+ * @param props The properties of the component, read more about properties here: https://reactjs.org/docs/components-and-props.html
+ * @param props.children The child component that will be receiving the AssignmentDateInfo context, read more about the special children prop here: https://reactjs.org/docs/composition-vs-inheritance.html *(Containment section)*
+ * @returns The wrapped child component
  */
 export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
+	/**
+	 * The currently selected date, which is selected via the table of contents
+	 */
 	const [currentSelectedDate, setCurrentSelectedDate] = React.useState<AssignmentDate | undefined>(
 		undefined,
 	);
+	/**
+	 * The array of dates the user generates by selecting an `start` and `end` date
+	 */
 	const [dates, setDates] = React.useState<AssignmentDate[]>(generateInitialAssignmentDateInfoDates());
+	/**
+	 * The format of the dates, can be set to either days, hours, minutes, seconds, etc. Specification of all formats available can be checked in the `iAssignmentDateInfoContextFormat` type
+	 */
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
 
+	/**
+	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
+	 * objects, and specifically using them to supply the Provider a value. You must memoize them or else it results in lots of unnecessary re-renders. This is basically, memoizing the functional props of
+	 * the provider, and making it so whenever we try to recalculate the value of `functionalProps`, we check if the dependency is completely different from the past one, and that the value of the dependency is not
+	 * the same as the one before the changed one. If that is the case, then we already have calculated the value, so therefore we just return the value without running any complex computations. This is especially helpful for
+	 * objects. React has a tendency to treat values as different by examining their memory addresses, an object can have completely the same values, but if it differs in the memory address, then React treats it as a different value.
+	 * You can read more about the useMemo hook here: https://reactjs.org/docs/hooks-reference.html#usememo
+	 * --
+	 * Specifically, this property is memoized to prevent unecessary renders where the object is technically different but the contents are different, which is a common practice when utilizing objects
+	 * and Provider values.
+	 */
 	const functionalProps: Partial<iAssignmentDateInfoContext> = React.useMemo(
 		() => ({
 			addDate: (date: AssignmentDate): void => {
@@ -94,6 +116,12 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 		[],
 	);
 
+	/**
+	 * We apply the same practice as described above, and make sure that we memoize our Provider value, **especially** if it is an object. This will save us a ton of unnecessary renders.
+	 * --
+	 * What this object, `filesMemo` is specifically doing, is combining both the `functionalProps` described above, with the local state of this provider. They combine together to form
+	 * a fully complete iFilesContext value. Which we then pass into the Provider's value, for the children to consume it.
+	 */
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
 		() => ({
 			...(functionalProps as unknown as iAssignmentDateInfoContext),
@@ -106,6 +134,11 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 		[currentSelectedDate, dates, format, functionalProps],
 	);
 
+	/**
+	 * Returning AssignmentDateInfoContext.Provider which is supplied the value of `memoProps` due to the reasons specified in the above documentation. That Provider is wrapping the `children` prop
+	 * which is also described and linked to in the documentation above. Because we are rendering the children as a child of this provider, the entire value of that `children` prop is able to access the provider's value
+	 * without any errors.
+	 */
 	return (
 		<AssignmentDateInfoContext.Provider value={memoProps}>{children}</AssignmentDateInfoContext.Provider>
 	);

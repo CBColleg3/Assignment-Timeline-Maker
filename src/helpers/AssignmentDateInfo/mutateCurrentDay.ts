@@ -1,5 +1,8 @@
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
 
+/**
+ * The type of mutation we are executing, either decrement or increment the value
+ */
 type MutateType = "dec" | "inc";
 
 /**

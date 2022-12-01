@@ -7,15 +7,26 @@ import { DateFormat } from "../DateFormat/DateFormat";
 import { EndDate } from "../EndDate";
 import { StartDate } from "../StartDate";
 
+/**
+ * Properties of the DateModal component
+ */
 type DateModalProps = {
+	/**
+	 * The function to close the modal, which updates the boolean from it's parent that is conditionally rendering it
+	 */
 	closeModal: () => void;
+	/**
+	 * The title of the DateModal
+	 */
 	title: string;
 };
 
 /**
  * Helper component used to mediate the updating of the start and end date
  *
- * @param {DateModalProps} props The passed in props from the `SetDateTime` component
+ * @param props The passed in props from the `SetDateTime` component
+ * @param props.closeModal - The function to trigger on/off the conditional rendering of the DateModal
+ * @param props.title - The title of the DateModal
  * @returns The Modal used to update the start and end date
  */
 export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element => {

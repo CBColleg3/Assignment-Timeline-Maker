@@ -3,14 +3,35 @@
 import type { AssignmentDate, Task, iAssignmentDateInfoContextFormat } from "src/@types";
 import { calcTotalPoints, findDateTaskUnder, mutateCurrentDay, calcDiff } from "src/helpers";
 
+/**
+ * The response from the function that calculates the days of the tasks
+ */
 type CalculateDayResponse = {
+	/**
+	 * Whether we have to increment the date or not
+	 */
 	incrementDate: boolean;
+	/**
+	 * The updated total # of points
+	 */
 	updatedTotal: number;
 };
 
+/**
+ * The calculate day payload, the *running total* we are using when calculating the tasks' respective days
+ */
 type CalculateDayPayload = {
+	/**
+	 * The current running total, measured in points
+	 */
 	runningTotal: number;
+	/**
+	 * The # of points we are limiting per day
+	 */
 	pointsPerDay: number;
+	/**
+	 * The current day we are on in this current iteration
+	 */
 	currentDay: Date;
 };
 

@@ -6,6 +6,9 @@ import { useAssignmentDateInfoContext } from "src/context";
 import { DateModal } from "./DateModal";
 import styles from "./SetDateTime.module.css";
 
+/**
+ * The amount of milliseconds we increment the time of the end day
+ */
 const END_DAY_INIT_INCREMENT = 172800000;
 
 /**
@@ -21,7 +24,7 @@ const formatOutput = (date: Date, fmt: iAssignmentDateInfoContextFormat): string
 /**
  * Set Date and Time components on the timeline
  *
- * @returns {JSX.Element} The rendered SetDateTime component
+ * @returns The rendered SetDateTime component
  */
 const SetDateTime = (): JSX.Element => {
 	const { end, format, start } = useAssignmentDateInfoContext();

@@ -10,24 +10,42 @@ import { AppHeader } from "./AppHeader";
 import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
+import { useFilesContext, useTaskContext } from "src/context";
 import { TimelineAlert } from "../TimelineAlert";
 
 import styles from "./App.module.css";
 import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
 
+/**
+ * Text constants supplied to the TimelineAlert component
+ */
 const ALERT_CONSTANTS = {
+	/**
+	 * Text constant is used when the Timeline is unable to be rendered
+	 */
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
+	/**
+	 * Text constant is used when a file is not present in the FileDisplay component, aka the user has not uploaded a file
+	 */
 	CHOOSE_A_FILE: "Choose a file",
+	/**
+	 * Text constant is used when a file is uploaded and present in the FileDisplay component, prompting the user to select a file to begin timeline generation
+	 */
 	NO_FILE_SELECTED: "Must select a file from the above list to begin timeline generation",
+	/**
+	 * Text constant when a file is not present in the FileDisplay component, and instructing the user to also use the drag-drop functionality for uploading files
+	 */
 	OR_DRAG_DROP: "or drag-and-drop files into the outlined box to begin timeline generation",
+	/**
+	 * Text constant when a file is not present in the FileDisplay component, and instructing the user to use the "choose a file" link for uploading files
+	 */
 	SELECT_FILE_FROM_LINK: "Select file(s) from the link",
 };
 
 /**
- * Root component
+ * The main application, houses all the components for generating a timeline of the assignments given a document
  *
- * @returns Main application component
+ * @returns The Assignment-Timeline Generator
  */
 export const App = (): JSX.Element => {
 	const ref = React.createRef<HTMLSpanElement>();

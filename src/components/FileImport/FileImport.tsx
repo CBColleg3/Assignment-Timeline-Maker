@@ -21,7 +21,7 @@ const CONSTANTS = {
 };
 
 /**
- * Used for importing .xml files into the website. also updates taskArray.
+ * Used for importing .xml files into the website. Also updates taskArray once a file that has been imported from this interface is selected from the FileDisplay component.
  *
  * @returns {JSX.Element} FileImport component, houses logic for adding file
  */

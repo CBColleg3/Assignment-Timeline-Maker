@@ -2,7 +2,13 @@ import React from "react";
 
 import styles from "./Divider.module.css";
 
+/**
+ * The properties of the Divider component
+ */
 type DividerProperties = {
+	/**
+	 * The className that overrides the default className, for user customization
+	 */
 	classNameOverride?: string;
 };
 

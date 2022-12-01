@@ -6,8 +6,7 @@
 
 export { calcDayRange } from "./calcDayRange";
 export { calcDays } from "./calcDays";
-export { calcDiff } from "./calcDiff";
-export { calcDiffInHours } from "./calcDiffInHours";
+export * from "./calcDiff";
 export { calcHourRange } from "./calcHourRange";
 export { calcTotalPoints } from "./calcTotalPoints";
 export { findParts } from "./findParts";

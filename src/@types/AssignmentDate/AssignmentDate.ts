@@ -1,3 +1,6 @@
+/**
+ * The date of an assignment, which multiple tasks can fall under
+ */
 export type AssignmentDate = {
 	/**
 	 * Returns a clone of the internal `date` member

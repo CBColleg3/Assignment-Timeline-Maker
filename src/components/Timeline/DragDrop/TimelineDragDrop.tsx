@@ -13,7 +13,7 @@ import { isSameDay } from "src/helpers";
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- * @returns {JSX.Element} A drag-droppable timeline element
+ * @returns A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
 	const { currentSelectedDate } = useAssignmentDateInfoContext();

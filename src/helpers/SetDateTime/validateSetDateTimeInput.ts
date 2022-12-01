@@ -1,7 +1,13 @@
 import type { TimelineToast } from "src/@types";
 import { generateErrorToast } from "../TimelineToast";
 
+/**
+ * # of milliseconds in day
+ */
 const MS_IN_DAY = 86400000;
+/**
+ * Minimum number of days start date can be behind end day
+ */
 const MIN_DAY = 2;
 
 /**

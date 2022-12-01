@@ -1,10 +1,16 @@
 
+/*
+    The overlying container properties
+*/
 .timeline_toast_container {
     position: absolute;
     display: flex;
     flex-direction: column-reverse;
 }
 
+/*
+    The container if right orientation is selected
+*/
 .timeline_toast_container_right {
     left: 79%;
     display: flex;
@@ -15,6 +21,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if left orientation is selected
+*/
 .timeline_toast_container_left {
     right: 79%;
     display: flex;
@@ -25,6 +34,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if top orientation is selected
+*/
 .timeline_toast_container_top {
     bottom: 79%;
     display: flex;
@@ -35,6 +47,9 @@
     overflow-x: scroll;
 }
 
+/*
+    The container if bottom orientation is selected
+*/
 .timeline_toast_container_bottom {
     top: 79%;
     display: flex;
@@ -45,6 +60,9 @@
     overflow-x: scroll;
 }
 
+/*
+    The container if bottom_leftright orientation is selected
+*/
 .timeline_toast_container_bottom_leftright {
     top: 79%;
     display: flex;
@@ -55,6 +73,9 @@
     overflow-x: scroll;
 }
 
+/*
+    The container if bottom_rightleft orientation is selected
+*/
 .timeline_toast_container_bottom_rightleft {
     top: 79%;
     display: flex;
@@ -65,6 +86,9 @@
     overflow-x: scroll;
 }
 
+/*
+    The container if left_downtop orientation is selected
+*/
 .timeline_toast_container_left_downtop {
     right: 79%;
     display: flex;
@@ -75,6 +99,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if left_topdown orientation is selected
+*/
 .timeline_toast_container_left_topdown {
     right: 79%;
     display: flex;
@@ -85,6 +112,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if right_downtop orientation is selected
+*/
 .timeline_toast_container_right_downtop {
     left: 79%;
     display: flex;
@@ -95,6 +125,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if right_topdown orientation is selected
+*/
 .timeline_toast_container_right_topdown {
     left: 79%;
     display: flex;
@@ -105,6 +138,9 @@
     overflow-y: auto;
 }
 
+/*
+    The container if top_leftright orientation is selected
+*/
 .timeline_toast_container_top_leftright {
     bottom: 79%;
     display: flex;
@@ -115,6 +151,9 @@
     overflow-x: scroll;
 }
 
+/*
+    The container if top_rightleft orientation is selected
+*/
 .timeline_toast_container_top_rightleft {
     bottom: 79%;
     display: flex;

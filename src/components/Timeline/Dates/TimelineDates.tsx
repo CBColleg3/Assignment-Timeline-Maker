@@ -11,9 +11,21 @@ import styles from "./TimelineDates.module.css";
  * TimelineDates constant values
  */
 const CONSTANTS = {
+	/**
+	 * Increment utilized when displaying the hour/day count, increment index + 1, hour index 0 --> hour (0 + 1) --> hour 1
+	 */
 	DAY_IND_INCREMENT: 1,
+	/**
+	 * Constant string we interpolate into the incremented day index
+	 */
 	DAY_STRING: "Day ",
+	/**
+	 * Constant string we interpolate into the incremented hour index
+	 */
 	HOUR_STRING: "Hour ",
+	/**
+	 * The maximum length of a task description, description is truncated at 75 characters
+	 */
 	TASK_DESC_LENGTH: 75,
 };
 

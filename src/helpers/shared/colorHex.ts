@@ -1,3 +1,6 @@
+/**
+ * Hashmap of all the colors, their names mapped to their hex values
+ */
 const colorHex: Record<string, string> = {
 	antiquewhite: "#faebd7",
 	aqua: "#00ffff",
@@ -126,6 +129,9 @@ const colorHex: Record<string, string> = {
 	yellowgreen: "#9acd32",
 };
 
+/**
+ * The array of the raw color values, without the hashtag in-front of them
+ */
 const COLOR_HEX_ARRAY = [
 	"71b4f0",
 	"f0a848",
@@ -267,6 +273,9 @@ const COLOR_HEX_ARRAY = [
 	"9acd32",
 ];
 
-const COLOR_HEX_ARRAY_LENGTH = 141;
+/**
+ * The length of the above array
+ */
+const COLOR_HEX_ARRAY_LENGTH = COLOR_HEX_ARRAY.length;
 
 export { colorHex, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH };

@@ -18,6 +18,9 @@
     }
 }
 
+/*
+    Style for the "choose a file" link that is present in the drop area
+*/
 .choose_a_file {
     cursor: pointer;
     position: relative;
@@ -25,6 +28,11 @@
     transition: color .5 ease-in-out;
 }
 
+/*
+    Style that is applied after the link is done rendering, only appears when the user
+    hovers over the link, then we set right to 0 which triggers the line to begin rendering
+    from left to right
+*/
 .choose_a_file::after {
     position: absolute;
     content: "";
@@ -36,10 +44,17 @@
     transition: right .5s ease-in-out;
 }
 
+/*
+    Hover effect on the link, completely reducing the right space being applied to the link. Which
+    activates the transition, causing the link to fill up it's left space via animation function.
+*/
 .choose_a_file:hover::after {
     right: 0;
 }
 
+/*
+    Style for when the user is dragging files over the drag area
+*/
 .drag_area_on {
     animation-name: drag_area_on_anim;
     animation-timing-function: ease-in-out;
@@ -47,6 +62,9 @@
     animation-fill-mode: forwards;
 }
 
+/*
+    Style for when the user is not dragging files over the drag area
+*/
 .drag_area_off {
     animation-name: drag_area_off_anim;
     animation-timing-function: ease-in-out;
@@ -54,10 +72,16 @@
     animation-fill-mode: forwards;
 }
 
+/*
+    The style for the invisible form before it renders, which serves as the input to the label "choose a file", but cannot be visible.
+*/
 .invisible_form:before {
     opacity: 0;
 }
 
+/*
+    The style for the invisible form, which serves as the input to the label "choose a file", but cannot be visible
+*/
 .invisible_form {
     width: 0.1px;
     height: 0.1px;
@@ -67,6 +91,9 @@
     z-index: -1;
 }
 
+/*
+    The overall section of the drop area present in the row of other sections such as "file" and "dates"
+*/
 .file_import_section {
     width: 33.33333vw;
     min-height: 20vh;
@@ -78,6 +105,9 @@
     position: relative;
 }
 
+/*
+    The styling for the section header, which is the label at the top left of the section
+*/
 .file_import_section_header {
     position: absolute;
     bottom: 90%;

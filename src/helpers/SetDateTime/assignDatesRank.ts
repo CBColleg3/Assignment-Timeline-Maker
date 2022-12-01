@@ -1,5 +1,8 @@
 import type { AssignmentDate } from "src/@types";
 
+/**
+ * The value we increment the rank by for each iteration of the dates
+ */
 const INDEX_IND = 1;
 
 /**

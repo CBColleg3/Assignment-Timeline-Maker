@@ -6,8 +6,7 @@ import { extractParagraphs, convertXML2HTML } from "src/helpers";
 /**
  * Renders the document imported, or an empty div if not imported
  *
- * @param {DocViewerProps} props `docXML`: the document, `fileImported`: Whether a file has been imported or not
- * @returns {JSX.Element} DocViewer component
+ * @returns  The uploaded document displayed on the page
  */
 export const DocViewer = (): JSX.Element => {
 	const { start } = useAssignmentDateInfoContext();
