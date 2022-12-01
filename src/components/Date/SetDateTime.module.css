@@ -1,0 +1,26 @@
+
+.select_date {
+    position: relative;
+    min-height: 20vh;
+    min-width: 33.33333vw;
+    border-right: .5px solid rgba(0, 0, 0, .15);
+}
+
+.date_times {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.date_section_header {
+    bottom: 90%;
+    right: 90%;
+    font-size: .80em;
+    color: rgba(0, 0, 0, .30);
+    font-weight: 600;
+}
+
+.date_section_button {
+    font-size: 1.05em;
+}

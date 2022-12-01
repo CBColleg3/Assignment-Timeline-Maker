@@ -1,20 +1,15 @@
 import React from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import type { UpdateDateType } from "src/@types";
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
-import EndDate from "../EndDate";
-import StartDate from "../StartDate";
+import { Button, Modal } from "react-bootstrap";
+import type { iAssignmentDateInfoContextFormat } from "src/@types";
+import { useAssignmentDateInfoContext } from "src/context";
+import { addToast, generateErrorToast, generateSuccessToast } from "src/helpers";
+import { DateFormat } from "../DateFormat/DateFormat";
+import { EndDate } from "../EndDate";
+import { StartDate } from "../StartDate";
 
 type DateModalProps = {
-	end: Date;
-	format: iAssignmentDateInfoContextFormat;
-	isShowing: boolean;
-	onClose: () => void;
-	start: Date;
+	closeModal: () => void;
 	title: string;
-	updateConfirm: (_confirmValue: boolean) => void;
-	updateDates: (_type: UpdateDateType, _value: Date) => void;
-	updateTimelineType: (_type: iAssignmentDateInfoContextFormat) => void;
 };
 
 /**
@@ -23,66 +18,81 @@ type DateModalProps = {
  * @param {DateModalProps} props The passed in props from the `SetDateTime` component
  * @returns The Modal used to update the start and end date
  */
-export const DateModal = ({
-	end,
-	format,
-	isShowing,
-	onClose,
-	start,
-	title,
-	updateConfirm,
-	updateDates,
-	updateTimelineType,
-}: DateModalProps): JSX.Element => {
+export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element => {
+	const { changeFormat, end, format, start, setEnd, setStart } = useAssignmentDateInfoContext();
+	const [newStart, setNewStart] = React.useState<Date>(start.date);
+	const [newEnd, setNewEnd] = React.useState<Date>(end.date);
+	const [newFormat, setNewFormat] = React.useState<iAssignmentDateInfoContextFormat>(format);
+
+	const [showing, setShowing] = React.useState<boolean>(true);
 	const [modalConfirm, setModalConfirm] = React.useState(false);
 
 	return (
 		<Modal
-			onHide={(): void => onClose()}
-			show={isShowing}
+			onHide={(): void => {
+				closeModal();
+				setShowing(false);
+			}}
+			show={showing}
 		>
 			<Modal.Header closeButton>
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
-					startDate={start}
-					update={(value: Date): void => updateDates("start", value)}
+					updateValue={(newStartDate: Date): void => setNewStart(newStartDate)}
+					value={newStart}
 				/>
 				<EndDate
-					endDate={end}
-					update={(value: Date): void => updateDates("end", value)}
+					updateValue={(newEndDate: Date): void => setNewEnd(newEndDate)}
+					value={newEnd}
 				/>
-				<span>
-					<Form.Check
-						checked={format === "day"}
-						label="Day"
-						name="timelineType"
-						onChange={(): void => {
-							updateTimelineType("day");
-						}}
-						type="radio"
-						value="day"
+				<div className="d-flex flex-column border p-2 rounded">
+					<div className="fw-bolder fs-6 mb-2">{"Date Format"}</div>
+					<DateFormat
+						updateValue={(newFormatSpec: iAssignmentDateInfoContextFormat): void =>
+							setNewFormat(newFormatSpec)
+						}
+						value={newFormat}
 					/>
-					<Form.Check
-						checked={format === "hour"}
-						label="Hour"
-						name="timelineType"
-						onChange={(): void => {
-							updateTimelineType("hour");
-						}}
-						type="radio"
-						value="time"
-					/>
-				</span>
+				</div>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button
 					onClick={(): void => {
 						if (modalConfirm) {
-							updateConfirm(true);
-							onClose();
+							let success = false;
+							let failure = false;
+							const failureMessage = document.createElement("ul");
+							if (newStart.getTime() > newEnd.getTime()) {
+								failure = true;
+								failureMessage.innerHTML = "<li>Start time must be before End time</li>";
+							}
+							if (newEnd.getTime() < newStart.getTime()) {
+								failure = true;
+								failureMessage.innerHTML = `${failureMessage.innerHTML}<li>End Time must be after Start Time</li>`;
+							}
+							if (Math.abs(newStart.getFullYear() - newEnd.getFullYear()) > 99) {
+								failure = true;
+								failureMessage.innerHTML = `${failureMessage.innerHTML}<li>End Time and Start Time cannot be more than 99 years apart`;
+							}
+							if (!failure && start.date.getTime() !== newStart.getTime()) {
+								setStart({ ...start, date: newStart });
+								success = true;
+							}
+							if (!failure && end.date.getTime() !== newEnd.getTime()) {
+								setEnd({ ...end, date: newEnd });
+								success = true;
+							}
+							if (!failure && format !== newFormat) {
+								changeFormat(newFormat);
+								success = true;
+							}
 							setModalConfirm(false);
+							setShowing(false);
+							closeModal();
+							success && addToast(generateSuccessToast("Date Notification", "Successfully updated the dates!"));
+							failure && addToast(generateErrorToast("Date Notification", failureMessage));
 						} else {
 							setModalConfirm(true);
 						}

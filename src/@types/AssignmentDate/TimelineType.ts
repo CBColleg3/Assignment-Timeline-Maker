@@ -1,1 +1,1 @@
-export type TimelineTypes = "day" | "time" | "week";
+export type TimelineType = "day" | "time" | "week";

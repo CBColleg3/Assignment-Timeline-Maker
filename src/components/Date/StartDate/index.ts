@@ -1,3 +1,1 @@
-import { StartDate } from "./StartDate";
-
-export default StartDate;
+export { StartDate } from "./StartDate";

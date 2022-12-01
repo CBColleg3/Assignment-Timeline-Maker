@@ -2,19 +2,20 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Timeline } from "../Timeline/Timeline";
-import type { Error, Errors, ERROR_OPS, ERROR_TYPES } from "src/@types";
 import { SetDateTime } from "../Date/SetDateTime";
-import FileImport from "../FileImport";
+import { FileImport } from "../FileImport";
 import { DocViewer } from "../DocViewer/DocViewer";
 import { Col } from "react-bootstrap";
-import AppHeader from "./AppHeader";
-import FileDisplay from "../FileDisplay";
+import { AppHeader } from "./AppHeader";
+import { FileDisplay } from "../FileDisplay";
 
 import { ClimbingBoxLoader, ClockLoader } from "react-spinners";
-import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { useFiles, useDocument } from "src/hooks";
+import { useFilesContext, useTaskContext } from "src/context";
 import { TimelineAlert } from "../TimelineAlert";
-import { findParts, findPoints, updateDueDates } from "src/helpers";
+
+import styles from "./App.module.css";
+import { TimelineToastContainer } from "src/common/components/TimelineToastContainer";
+
 
 const ALERT_CONSTANTS = {
 	CANNOT_RENDER_TIMELINE: "Cannot render Timeline",
@@ -30,88 +31,27 @@ const ALERT_CONSTANTS = {
  * @returns Main application component
  */
 export const App = (): JSX.Element => {
-	const { dates, format, start, changingDate } = useAssignmentDateInfoContext();
-	const { updateTasks, tasks } = useTaskContext();
-	const { deleteFile, files, isFileSelected, selectedFileIndex, selectedFileText, setFiles, selectFile } =
-		useFiles();
-	const { parsedDocument, parseFileText } = useDocument();
-	const [errors, setErrors] = React.useState<Errors>({});
-
-	const setTasks = React.useMemo(
-		() => (fileText: string) => {
-			updateTasks(updateDueDates(findPoints(findParts(fileText)), format, dates));
-		},
-		[dates, format, updateTasks],
-	);
-
-	React.useEffect(() => {
-		if (selectedFileText && !changingDate) {
-			parseFileText(selectedFileText);
-			setTasks(selectedFileText);
-		}
-	}, [selectedFileText, parseFileText, setTasks, changingDate]);
-
-	const timelineRef: React.RefObject<HTMLSpanElement> = React.createRef();
-
-	/**
-	 * ERROR MANAGEMENT
-	 *
-	 * Utility function for updating the errors object via Error object
-	 *
-	 * @param theType - The type of error to append/delete with the errors state
-	 * @param operation - The type of operation the user is executing
-	 * @param error - The error to add to the errors state if add operation is selected
-	 */
-	const updateErrors = React.useCallback(
-		(theType: ERROR_TYPES, operation: ERROR_OPS, error?: Error): void => {
-			switch (theType) {
-				case "date": {
-					setErrors({ ...errors, date: operation === "delete" ? undefined : error });
-					break;
-				}
-				case "file": {
-					setErrors({ ...errors, file: operation === "delete" ? undefined : error });
-					break;
-				}
-				default:
-					break;
-			}
-		},
-		[errors],
-	);
+	const ref = React.createRef<HTMLSpanElement>();
+	const { tasks } = useTaskContext();
+	const { files, selectedFile, selectedFileXML } = useFilesContext();
 
 	return (
-		<div className="d-flex flex-column">
+		<div className={`d-flex flex-column position-relative ${styles.app_component}`}>
 			<AppHeader />
-			<div className="d-flex flex-row justify-content-around border-bottom border-opacity-50 pb-5 shadow-lg">
-				<span>
-					<SetDateTime
-						addError={(error: Error | undefined, operation: ERROR_OPS): void =>
-							updateErrors("date", operation, error)
-						}
-					/>
-				</span>
-				<span className="my-auto">
-					<FileDisplay
-						deleteFile={(index: number): void => deleteFile(index)}
-						files={files}
-						selectFile={(index: number): void => selectFile(index)}
-						selectedFileIndex={selectedFileIndex}
-						uploadElementRef={timelineRef.current}
-					/>
-				</span>
-				<FileImport
-					files={files}
-					update={(theFiles: File[]): void => setFiles(theFiles)}
-				/>
+			<div
+				className={`d-flex flex-row border-bottom border-opacity-50 shadow-lg ${styles.app_settings_menu}`}
+			>
+				<SetDateTime />
+				<FileDisplay />
+				<FileImport />
 			</div>
-			{!errors.date && !errors.file ? (
+			{files.length > 0 ? (
 				<>
-					{isFileSelected ? (
+					{selectedFile !== undefined ? (
 						<div className="d-flex flex-row pt-3 bg-light shadow">
 							<Col>
 								{tasks?.length ? (
-									<Timeline passRef={timelineRef} />
+									<Timeline passRef={ref} />
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
@@ -129,13 +69,8 @@ export const App = (): JSX.Element => {
 								)}
 							</Col>
 							<Col lg={5}>
-								{parsedDocument ? (
-									<DocViewer
-										docXML={parsedDocument}
-										fileImported={isFileSelected}
-										startDate={start.date}
-										tasks={tasks}
-									/>
+								{selectedFile && selectedFileXML ? (
+									<DocViewer />
 								) : (
 									<div className="w-100 d-flex flex-row justify-content-center">
 										<span className="d-flex flex-column">
@@ -155,7 +90,7 @@ export const App = (): JSX.Element => {
 						</div>
 					) : (
 						<>
-							{files?.length ? (
+							{files.length > 0 ? (
 								<TimelineAlert
 									body={ALERT_CONSTANTS.NO_FILE_SELECTED}
 									componentClassName="w-75 mt-4 mx-auto text-center"
@@ -180,18 +115,17 @@ export const App = (): JSX.Element => {
 			) : (
 				<TimelineAlert
 					body={
-						<span className="mx-auto mt-2">
-							<ul>
-								{errors.date && <li>{errors.date.message}</li>}
-								{errors.file && <li>{errors.file.message}</li>}
-							</ul>
+						<span>
+							{ALERT_CONSTANTS.SELECT_FILE_FROM_LINK}
+							<span className="fw-bold mx-1">{ALERT_CONSTANTS.CHOOSE_A_FILE}</span>
+							{ALERT_CONSTANTS.OR_DRAG_DROP}
 						</span>
 					}
-					componentClassName="w-75 mt-4 mx-auto d-flex flex-column text-center"
-					title={<span className="fw-bolder">{ALERT_CONSTANTS.CANNOT_RENDER_TIMELINE}</span>}
-					variant="danger"
+					componentClassName="w-75 mt-4 mx-auto text-center"
+					variant="info"
 				/>
 			)}
+			<TimelineToastContainer orientation="right" />
 		</div>
 	);
 };

@@ -1,4 +1,4 @@
-import type { Task } from "./Task";
+import type { Task } from "../Task/Task";
 
 /**
  * Type for the TaskContext Context object
@@ -16,6 +16,10 @@ export type iTaskContext = {
 	 * @returns void
 	 */
 	clearTasks: () => void;
+	/**
+	 * Confirmed an edit on a task
+	 */
+	confirmedEdit: boolean;
 	/**
 	 * Deletes a task at `_ind` from the task collection
 	 *

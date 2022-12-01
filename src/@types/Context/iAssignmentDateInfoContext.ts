@@ -1,4 +1,4 @@
-import type { AssignmentDate } from "./AssignmentDate";
+import type { AssignmentDate } from "../AssignmentDate/AssignmentDate";
 import type { iAssignmentDateInfoContextFormat } from "./iAssignmentDateInfoContextFormat";
 
 /**
@@ -20,15 +20,15 @@ export type iAssignmentDateInfoContext = {
 	 */
 	changeFormat: (_fmt: iAssignmentDateInfoContextFormat) => void;
 	/**
-	 * Designates whether the user is editing the date, which signifies changes need to be made to the tasks
-	 */
-	changingDate: boolean;
-	/**
 	 * Clears all dates from the collection
 	 *
 	 * @returns void
 	 */
 	clearDates: () => void;
+	/**
+	 * The current selected date from the Timeline Table of Contents
+	 */
+	currentSelectedDate: AssignmentDate | undefined;
 	/**
 	 * The dates that display
 	 */
@@ -72,6 +72,10 @@ export type iAssignmentDateInfoContext = {
 	 * @returns void
 	 */
 	moveDate: (_from: number, _to: number) => void;
+	/**
+	 * Sets the currently selected date via the Timeline Table of Contents
+	 */
+	setCurrentlySelectedDate: (_date: AssignmentDate | undefined) => void;
 	/**
 	 * Sets the end AssignmentDate of the collection to the argument `_date`
 	 *

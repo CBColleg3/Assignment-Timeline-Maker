@@ -1,0 +1,78 @@
+
+.toast_layout {
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 1;
+    border-radius: 1em;
+    margin-bottom: 1.5em;
+    position: relative;
+}
+
+.toast_layout_error {
+    background-color: rgba(255, 193, 7, .65);
+}
+
+.toast_layout_info {
+    background-color: rgba(13, 202, 240, .65);
+}
+
+.toast_layout_success {
+    background-color: rgba(25, 135, 84, .65);
+}
+
+.toast_title {
+    font-size: 1.15em;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    border-bottom: .5px solid rgba(0, 0, 0, .15);
+}
+
+.toast_subtitle {
+    font-size: .85em;
+    font-weight: 200;
+    width: 100%;
+    text-align: center;
+    color: rgba(108, 117, 125, .55);
+    font-style: italic;
+}
+
+.toast_message {
+    display: flex;
+    font-size: 1.05em;
+    text-indent: .5em;
+    font-weight: 500;
+    width: max-content;
+    height: max-content;
+    max-width: 100%;
+    scrollbar-width: thin;
+    padding-left: .5em;
+    padding-right: .5em;
+    margin-top: .5em;
+    padding-bottom: 1em;
+    flex-wrap: wrap;
+}
+
+.toast_link_error {
+    color: lightblue;
+    margin-top: 1.5em;
+    text-align: end;
+}
+
+.toast_link_info {
+    color: lightcoral;
+    margin-top: 1.5em;
+    text-align: end;
+}
+
+.toast_link_success {
+    color: crimson;
+    margin-top: 1.5em;
+    text-align: end;
+}

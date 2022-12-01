@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-floating-promises -- disabled */
 /* eslint-disable @typescript-eslint/no-magic-numbers -- not needed for this file */
 import React, { type ReactNode } from "react";
 import type { iTaskContext, Task } from "src/@types";
-import { TaskContext } from "src/context";
-import { isSameDay } from "src/helpers";
+import { TaskContext, useAssignmentDateInfoContext, useFilesContext } from "src/context";
+import {
+	findParts,
+	findPoints,
+	isSameDay,
+	parseFileTextToXML,
+	readFile,
+	updateDueDates,
+} from "src/helpers";
 
 type TaskProviderProps = {
 	children: ReactNode;
@@ -16,15 +24,31 @@ type TaskProviderProps = {
  * @returns The wrapped child component
  */
 export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
+	const { selectedFileText } = useFilesContext();
+	const { format, dates } = useAssignmentDateInfoContext();
 	const [tasks, setTasks] = React.useState<Task[]>([]);
+	const [confirmedEdit, setConfirmedEdit] = React.useState<boolean>(false);
 
-	const functionalProps = React.useMemo(
+	React.useEffect(() => {
+		if (confirmedEdit) {
+			setConfirmedEdit(false);
+			setTasks(updateDueDates(tasks, format, dates));
+		}
+	}, [confirmedEdit, format, dates, tasks]);
+
+	React.useEffect(() => {
+		if (selectedFileText !== undefined) {
+			setTasks(updateDueDates(findPoints(findParts(selectedFileText)), format, dates));
+		}
+	}, [selectedFileText, dates, format]);
+
+	const functionalProps: Partial<iTaskContext> = React.useMemo(
 		() => ({
 			addTask: (task: Task): void => setTasks((oldTasks) => [...oldTasks, task]),
 			clearTasks: (): void => setTasks([]),
 			deleteTask: (ind: number) => setTasks((oldTasks) => oldTasks.filter((_, i) => i !== ind)),
-			editTask: (task: Partial<Task>, ind: number, dateChanged = false): void => {
-				if (dateChanged) {
+			editTask: (task: Partial<Task>, ind: number, changedDateOrPoints?: boolean): void => {
+				if (changedDateOrPoints) {
 					setTasks((oldTasks) => {
 						if (oldTasks && task.dueDate) {
 							const oldTask = oldTasks.splice(ind, 1)[0];
@@ -36,6 +60,7 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 						}
 						return oldTasks;
 					});
+					setConfirmedEdit(true);
 				} else {
 					setTasks((oldTasks) =>
 						oldTasks.map((eachTask, i) => (i === ind ? { ...eachTask, ...task } : eachTask)),
@@ -77,11 +102,12 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 
 	const taskMemo: iTaskContext = React.useMemo(
 		() => ({
-			...functionalProps,
+			...(functionalProps as unknown as iTaskContext),
+			confirmedEdit,
 			tasks,
 			updateTasks,
 		}),
-		[functionalProps, tasks, updateTasks],
+		[confirmedEdit, functionalProps, tasks, updateTasks],
 	);
 
 	return <TaskContext.Provider value={taskMemo}>{children}</TaskContext.Provider>;

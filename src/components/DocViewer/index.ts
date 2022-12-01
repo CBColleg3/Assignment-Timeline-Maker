@@ -1,3 +1,1 @@
-import { DocViewer } from "./DocViewer";
-
-export default DocViewer;
+export { DocViewer } from "./DocViewer";

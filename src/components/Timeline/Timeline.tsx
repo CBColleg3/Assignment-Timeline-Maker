@@ -1,9 +1,6 @@
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import TimelineDragDrop from "src/components/Timeline/DragDrop";
-import { TimelineDates } from "./Dates/TimelineDates";
-import { calcDayRange } from "src/helpers";
-import { calcHourRange } from "src/helpers/Task/calcHourRange";
+import { TimelineDragDrop, TimelineDates } from "src/components";
 import { useAssignmentDateInfoContext } from "src/context";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 
@@ -11,29 +8,21 @@ import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeli
  * Props for the Timeline component
  */
 type TimelineProps = {
+	/**
+	 * Ref passed in from the parent to wrap around the entire timeline
+	 */
 	passRef: React.RefObject<HTMLSpanElement>;
 };
 
 /**
  * Generates vertical timeline with tasks and calculates days to complete tasks
  *
- * @param {TimelineProps} props The passed in props for the Timeline component
+ * @param props The passed in props for the Timeline component
+ * @param props.passRef - The ref object that holds the reference to the entire timeline component
  * @returns {JSX.Element} The Timeline component
  */
 export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
-	const { end, format, start } = useAssignmentDateInfoContext();
-	const [currentTaskDate, setCurrentTaskDate] = React.useState(start.date);
-	const [taskDates, setTaskDates] = React.useState<Date[]>([]);
-
-	React.useEffect(() => {
-		if (start && end) {
-			if (format === "day") {
-				setTaskDates(calcDayRange(start.date, end.date));
-			} else {
-				setTaskDates(calcHourRange(start.date, end.date));
-			}
-		}
-	}, [end, start, format]);
+	const { currentSelectedDate, end } = useAssignmentDateInfoContext();
 
 	return (
 		<div>
@@ -60,11 +49,7 @@ export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
 								minute: "2-digit",
 							})} \u2022`}
 						</div>
-						<TimelineDates
-							currentTaskDate={currentTaskDate}
-							setCurrentTaskDate={(newDate: Date): void => setCurrentTaskDate(newDate)}
-							taskDates={taskDates}
-						/>
+						<TimelineDates />
 					</VerticalTimelineElement>
 					<TimelineDragDrop />
 					<VerticalTimelineElement
@@ -80,7 +65,9 @@ export const Timeline = ({ passRef }: TimelineProps): JSX.Element => {
 							color: "#fff",
 						}}
 					>
-						{currentTaskDate.toDateString()} {" tasks are now complete!!"}
+						{currentSelectedDate === undefined
+							? "All Tasks are now complete!"
+							: `${currentSelectedDate?.date.toDateString()} tasks are now complete!!`}
 					</VerticalTimelineElement>
 				</VerticalTimeline>
 			</span>

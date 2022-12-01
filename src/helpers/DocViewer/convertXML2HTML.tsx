@@ -63,11 +63,16 @@ const convertAttributeToHtmlStyle = (attribute: Attr): HTMLStyle => {
  * Takes an Element containing 'w:p' xml tag information and extracts the text information from it
  *
  * @param par xml element representing a 'w:p' xml tag
+ * @param content text content for this current paragraph
  * @param tasks The tasks we want to compare the parsed text to, to apply highlighting upon matching
  * @param startDate (temp) the start date
  * @returns <p> html tag containing the text information within the 'w:p' tag
  */
-export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): JSX.Element => {
+export const convertXML2HTML = (par: Element, content: string | undefined, tasks: Task[], startDate: Date): JSX.Element => {
+	if (content === "" || content === undefined) {
+		return <p />;
+	}
+
 	const htmlElement = par as HTMLElement;
 	const parChildren = [...htmlElement.children];
 	if (isSpace(parChildren.length)) {
@@ -84,17 +89,6 @@ export const convertXML2HTML = (par: Element, tasks: Task[], startDate: Date): J
 		.slice(CONTENT_SLICE_INDEX)
 		.map((eachElement) => traverseXmlTree(eachElement))
 		.flat(FLAT_DIMENSION);
-
-	// Get text content from node
-	const content = [...par.getElementsByTagName("w:t")]
-		.map((eachContentElement) => eachContentElement.innerHTML)
-		.join("")
-		.replaceAll("&gt;", ">")
-		.replaceAll("&lt;", "<");
-
-	if (content === "") {
-		return <p />;
-	}
 
 	// Gather all css styling from all global elements
 	const globalStyles = globalElements

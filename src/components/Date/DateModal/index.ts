@@ -1,3 +1,1 @@
-import { DateModal } from "./DateModal";
-
-export default DateModal;
+export { DateModal } from "./DateModal";

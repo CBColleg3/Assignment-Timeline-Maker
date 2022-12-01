@@ -1,3 +1,6 @@
+/**
+ * EditTask component constants
+ */
 const EDIT_TASK_CONSTANTS = {
 	description: {
 		maxLength: 1000,
@@ -14,6 +17,9 @@ const EDIT_TASK_CONSTANTS = {
 	},
 };
 
+/**
+ * Valid constants
+ */
 const VALID = {
 	description: "Valid task description",
 	dueDate: "Valid task due date",
@@ -21,6 +27,9 @@ const VALID = {
 	points: "Valid task points",
 };
 
+/**
+ * Invalid constants
+ */
 const INVALID = {
 	description: {
 		maxLength: `Description must be at most ${EDIT_TASK_CONSTANTS.description.maxLength} characters.`,

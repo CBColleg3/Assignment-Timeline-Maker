@@ -14,16 +14,32 @@ import { isErrorsValid } from "src/common";
  * Props of the EditTask component
  */
 type EditTaskProps = {
+	/**
+	 * The task object itself
+	 */
 	task: Task;
+	/**
+	 * Whether the task is in edit mode or not
+	 */
 	editMode: boolean;
+	/**
+	 * The index of the task
+	 */
 	index: number;
+	/**
+	 * Function to alter the edit mode
+	 */
 	setEditMode: (_editMode: boolean) => void;
 };
 
 /**
  * Controls the editing of the singular task within the timeline
  *
- * @param {EditTaskProps} props The props passed into the EditTask component
+ * @param props The props passed into the EditTask component
+ * @param props.task - The task object itself
+ * @param props.editMode - Whether the task is in edit mode or not
+ * @param props.index - The index of the task within the internal tasks array
+ * @param props.setEditMode - Function to set the edit mode
  * @returns {JSX.Element} The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
@@ -45,7 +61,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 		}
 	}, [reset, task]);
 
-	const { errors } = formState;
+	const { dirtyFields, errors } = formState;
 
 	/**
 	 * Helper function for validating the date, and setting the appropriate stats dependent on whether the date is in range
@@ -68,7 +84,11 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	function changeTasks(): void {
 		const updatedDate = findDateTaskUnder(dueDate, dates);
 		const { color } = updatedDate;
-		editTask({ ...getValues(), color, dueDate }, index, !isSameDay(task.dueDate, dueDate));
+		editTask(
+			{ ...getValues(), color, dueDate },
+			index,
+			!isSameDay(task.dueDate, dueDate) || dirtyFields.points,
+		);
 	}
 
 	return (

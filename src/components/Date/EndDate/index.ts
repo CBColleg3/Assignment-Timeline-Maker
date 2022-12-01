@@ -1,3 +1,1 @@
-import { EndDate } from "./EndDate";
-
-export default EndDate;
+export { EndDate } from "./EndDate";

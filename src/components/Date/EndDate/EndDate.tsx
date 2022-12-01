@@ -3,51 +3,40 @@ import { Button } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
 import styles from "./EndDate.module.css";
 
-/**
- * EndDate's prop types
- */
-type EndDateProps = {
-	/**
-	 * The current end date
-	 */
-	endDate: Date;
-	/**
-	 * The function to update the end date
-	 */
-	update: (_theDate: Date) => void;
+type EndDateProperties = {
+	updateValue: (_newDate: Date) => void;
+	value: Date;
 };
 
 /**
- * EndDate component, which houses all the logic for gathering and updating the end date
+ * EndDate is a component which houses the logic to update the end date, and set it as well.
  *
- * @param {EndDateProps} props The props passed into the component
- * @returns {JSX.Element} The datetime component to gather and update the end date
+ * @param {EndDateProperties} props The properties passed into the EndDate component
+ * @returns {JSX.Element} The datepicker to update the end date
  */
-export const EndDate = ({ endDate, update }: EndDateProps): JSX.Element => (
-	<div className="d-flex flex-row">
-		<span className="fw-bolder fs-6 text-start text-nowrap my-auto">{"End Date"}</span>
-		<span className="my-auto ms-2">
-			<ReactDatePicker
-				closeOnScroll
-				dateFormat="Pp"
-				onChange={(date: Date): void => update(date)}
-				peekNextMonth
-				required
-				selected={endDate}
-				selectsEnd
-				shouldCloseOnSelect
-				showTimeSelect
-				todayButton={
-					<Button
-						className={`${styles.today_button}`}
-						size="sm"
-						variant="outline-primary"
-					>
-						{"Today"}
-					</Button>
-				}
-				useWeekdaysShort
-			/>
-		</span>
+export const EndDate = ({ updateValue, value }: EndDateProperties): JSX.Element => (
+	<div className={"d-flex flex-row p-3 rounded border mb-3"}>
+		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">{"End Date"}</span>
+		<ReactDatePicker
+			closeOnScroll
+			dateFormat="Pp"
+			onChange={(newDate: Date): void => updateValue(newDate)}
+			peekNextMonth
+			required
+			selected={value}
+			selectsEnd
+			shouldCloseOnSelect
+			showTimeSelect
+			todayButton={
+				<Button
+					className={`${styles.today_button}`}
+					size="sm"
+					variant="outline-primary"
+				>
+					{"Today"}
+				</Button>
+			}
+			useWeekdaysShort
+		/>
 	</div>
 );

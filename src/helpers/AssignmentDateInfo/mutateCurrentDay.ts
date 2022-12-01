@@ -1,4 +1,4 @@
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
+import type { iAssignmentDateInfoContextFormat } from "src/@types";
 
 type MutateType = "dec" | "inc";
 

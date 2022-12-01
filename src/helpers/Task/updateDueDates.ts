@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func -- no invalid practices being used*/
 /* eslint-disable no-loop-func -- no invalid practices being used*/
-import type { AssignmentDate, Task } from "src/@types";
-import type { iAssignmentDateInfoContextFormat } from "src/@types/AssignmentDate/iAssignmentDateInfoContextFormat";
-import { calcTotalPoints } from "src/helpers";
-import { findDateTaskUnder } from "../AssignmentDateInfo/findDateTaskUnder";
-import { mutateCurrentDay } from "../AssignmentDateInfo/mutateCurrentDay";
-import { calcDiff } from "./calcDiff";
+import type { AssignmentDate, Task, iAssignmentDateInfoContextFormat } from "src/@types";
+import { calcTotalPoints, findDateTaskUnder, mutateCurrentDay, calcDiff } from "src/helpers";
 
 type CalculateDayResponse = {
 	incrementDate: boolean;

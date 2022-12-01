@@ -1,2 +1,2 @@
-export { TaskProvider } from "./TaskProvider";
-export { AssignmentDateInfoProvider } from "./AssignmentDateInfoProvider";
+export * from "./AssignmentDateInfoProvider";
+export * from "./TaskProvider";

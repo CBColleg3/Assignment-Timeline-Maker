@@ -1,0 +1,126 @@
+
+.timeline_toast_container {
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.timeline_toast_container_right {
+    left: 79%;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_left {
+    right: 79%;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_top {
+    bottom: 79%;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+
+.timeline_toast_container_bottom {
+    top: 79%;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+
+.timeline_toast_container_bottom_leftright {
+    top: 79%;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+
+.timeline_toast_container_bottom_rightleft {
+    top: 79%;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+
+.timeline_toast_container_left_downtop {
+    right: 79%;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_left_topdown {
+    right: 79%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_right_downtop {
+    left: 79%;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_right_topdown {
+    left: 79%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 20vw;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.timeline_toast_container_top_leftright {
+    bottom: 79%;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+
+.timeline_toast_container_top_rightleft {
+    bottom: 79%;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100vw;
+    height: 20vh;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
