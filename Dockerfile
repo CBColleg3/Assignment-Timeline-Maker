@@ -37,4 +37,6 @@ RUN python -m spacy download en_core_web_md && echo "MUSS SETUP SUCCESSFUL"
 
 # switch back to app root and run docker command script
 WORKDIR /app
+RUN python api/utils.py && echo "MODEL SUCCESSFULLY DOWNLOADED AND TESTED"
+
 CMD . ./deploy.sh

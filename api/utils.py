@@ -9,5 +9,5 @@ def simplify_text(text: List[str], model_name:str='muss_en_wikilarge_mined') -> 
     return pred_sentences
 
 if __name__ == "__main__":
-    result = simplify_text("Have I already been in this cave?")
+    result = simplify_text(["Have I already been in this cave?"])
     print(result)
