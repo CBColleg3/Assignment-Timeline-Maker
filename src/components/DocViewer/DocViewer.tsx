@@ -2,9 +2,11 @@
 /* eslint-disable indent -- disabled prettier/eslint conflict */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import React, { useState, useEffect } from "react";
+import { Placeholder, Spinner } from "react-bootstrap";
 import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
 import { extractParagraphs, convertXML2HTML, getParagraphTextContent, simplifyText } from "src/helpers";
 import { ContentSwitch } from "./ContentSwitch";
+import styles from "./DocViewer.module.css";
 
 type MLContent = {
 	currentContent: string[];
@@ -65,17 +67,54 @@ export const DocViewer = (): JSX.Element => {
 				setUseSimpleContent={(newValue: boolean): void => setUseSimpleContent(newValue)}
 				useSimpleContent={useSimpleContent}
 			/>
-			<div className="doc-viewer-content">
-				{mlContent.currentContent !== undefined
-					? paragraphs.map(
-							(par: Element, _parIndex: number): JSX.Element => (
-								<span key={`xml-par-${_parIndex}`}>
-									{convertXML2HTML(par, mlContent.currentContent[_parIndex], tasks, start.date)}
-								</span>
-							),
-					  )
-					: "Simplified Content is Loading..."}
-			</div>
+			{useSimpleContent ? (
+				mlContent.simplifiedContent?.length > 0 ? (
+					<div className="doc-viewer-content shadow border p-3 mt-2 rounded">
+						{mlContent.simplifiedContent !== undefined
+							? paragraphs.map(
+									(par: Element, _parIndex: number): JSX.Element => (
+										<span key={`xml-par-${_parIndex}`}>
+											{convertXML2HTML(par, mlContent.currentContent[_parIndex], tasks, start.date)}
+										</span>
+									),
+							  )
+							: "Simplified Content is Loading..."}
+					</div>
+				) : (
+					<div
+						className={`doc-viewer-content shadow border p-3 mt-2 rounded ${styles.placeholder_doc_viewer}`}
+					>
+						<Placeholder
+							animation="wave"
+							as="div"
+							bg="dark"
+							className="opacity-75 h-100 d-flex flex-column justify-content-center align-items-center"
+							size="lg"
+						>
+							<div className="d-flex flex-column align-items-center">
+								<span className="text-light fw-bold fs-5">{"Loading Simplified Content"}</span>
+								<Spinner
+									animation="border"
+									className="mt-2"
+									variant="light"
+								/>
+							</div>
+						</Placeholder>
+					</div>
+				)
+			) : (
+				<div className="doc-viewer-content shadow border p-3 mt-2 rounded">
+					{mlContent.currentContent !== undefined
+						? paragraphs.map(
+								(par: Element, _parIndex: number): JSX.Element => (
+									<span key={`xml-par-${_parIndex}`}>
+										{convertXML2HTML(par, mlContent.currentContent[_parIndex], tasks, start.date)}
+									</span>
+								),
+						  )
+						: "Simplified Content is Loading..."}
+				</div>
+			)}
 		</div>
 	);
 };
