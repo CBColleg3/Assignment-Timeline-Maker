@@ -84,14 +84,10 @@ export const DocViewer = (): JSX.Element => {
 					<div
 						className={`doc-viewer-content shadow border p-3 mt-2 rounded ${styles.placeholder_doc_viewer}`}
 					>
-						<Placeholder
-							animation="wave"
-							as="div"
-							bg="dark"
-							className="opacity-75 h-100 d-flex flex-column justify-content-center align-items-center"
-							size="lg"
-						>
-							<div className="d-flex flex-column align-items-center">
+						<div className={`opacity-75 d-flex flex-column rounded ${styles.placeholder_doc_viewer}`}>
+							<div
+								className={`d-flex flex-column align-items-center justify-content-center rounded ${styles.placeholder_animated_div}`}
+							>
 								<span className="text-light fw-bold fs-5">{"Loading Simplified Content"}</span>
 								<Spinner
 									animation="border"
@@ -99,7 +95,7 @@ export const DocViewer = (): JSX.Element => {
 									variant="light"
 								/>
 							</div>
-						</Placeholder>
+						</div>
 					</div>
 				)
 			) : (
