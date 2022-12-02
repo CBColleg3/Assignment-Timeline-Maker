@@ -40,6 +40,10 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	 * The format of the dates, can be set to either days, hours, minutes, seconds, etc. Specification of all formats available can be checked in the `iAssignmentDateInfoContextFormat` type
 	 */
 	const [format, setFormat] = React.useState<iAssignmentDateInfoContextFormat>("day");
+	/**
+	 * Changing the format of the AssignmentDates
+	 */
+	const [fmtMutating, setFmtMutating] = React.useState<boolean>(false);
 
 	/**
 	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
@@ -49,7 +53,7 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	 * objects. React has a tendency to treat values as different by examining their memory addresses, an object can have completely the same values, but if it differs in the memory address, then React treats it as a different value.
 	 * You can read more about the useMemo hook here: https://reactjs.org/docs/hooks-reference.html#usememo
 	 * --
-	 * Specifically, this property is memoized to prevent unecessary renders where the object is technically different but the contents are different, which is a common practice when utilizing objects
+	 * Specifically, this property is memoized to prevent unnecessary renders where the object is technically different but the contents are different, which is a common practice when utilizing objects
 	 * and Provider values.
 	 */
 	const functionalProps: Partial<iAssignmentDateInfoContext> = React.useMemo(
@@ -93,6 +97,9 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					return oldDates;
 				});
 			},
+			setChangingFormat: (_fmt: boolean): void => {
+				setFmtMutating(_fmt);
+			},
 			setCurrentlySelectedDate: (date: AssignmentDate | undefined): void => {
 				setCurrentSelectedDate(date);
 			},
@@ -125,14 +132,28 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
 		() => ({
 			...(functionalProps as unknown as iAssignmentDateInfoContext),
+			changingFormat: fmtMutating,
 			currentSelectedDate,
 			dates,
 			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
 			format,
 			start: dates[0],
 		}),
-		[currentSelectedDate, dates, format, functionalProps],
+		[currentSelectedDate, dates, fmtMutating, format, functionalProps],
 	);
+
+	/**
+	 * Triggers when the `fmtMutating` value is changed, which happens when the user changes the AssignmentDate format.
+	 *
+	 * The anonymous function sets `fmtMutating` to false, and also sets the dates according to the format
+	 */
+	React.useEffect(() => {
+		if (fmtMutating) {
+			console.log("in fmtMutating");
+			setFmtMutating(false);
+			setDates(generateAssignmentDatesFromStartEnd(dates[0], dates[dates.length - 1], false, format));
+		}
+	}, [dates, fmtMutating, format]);
 
 	/**
 	 * Returning AssignmentDateInfoContext.Provider which is supplied the value of `memoProps` due to the reasons specified in the above documentation. That Provider is wrapping the `children` prop

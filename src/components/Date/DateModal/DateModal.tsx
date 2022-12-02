@@ -30,7 +30,8 @@ type DateModalProps = {
  * @returns The Modal used to update the start and end date
  */
 export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element => {
-	const { changeFormat, end, format, start, setEnd, setStart } = useAssignmentDateInfoContext();
+	const { changeFormat, end, format, start, setEnd, setStart, setChangingFormat } =
+		useAssignmentDateInfoContext();
 	const [newStart, setNewStart] = React.useState<Date>(start.date);
 	const [newEnd, setNewEnd] = React.useState<Date>(end.date);
 	const [newFormat, setNewFormat] = React.useState<iAssignmentDateInfoContextFormat>(format);
@@ -97,6 +98,7 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 							}
 							if (!failure && format !== newFormat) {
 								changeFormat(newFormat);
+								setChangingFormat(true);
 								success = true;
 							}
 							setModalConfirm(false);

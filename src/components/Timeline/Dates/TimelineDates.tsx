@@ -5,6 +5,7 @@ import { Accordion } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { isSameDay, truncateText } from "src/helpers";
+import { doesDateContainTasks } from "src/helpers/AssignmentDateInfo/doesDateContainTasks";
 import styles from "./TimelineDates.module.css";
 
 /**
@@ -72,6 +73,7 @@ export const TimelineDates = (): JSX.Element => {
 				</Accordion.Item>
 				{dates
 					.map((eachAssignmentDate: AssignmentDate) => eachAssignmentDate.date)
+					.filter((eachDate: Date) => doesDateContainTasks(eachDate, tasks, format))
 					.map((taskDate: Date, _ind: number): JSX.Element => {
 						const currentlySelected = taskDate.getTime() === currentSelectedDate?.date.getTime();
 						const containsTasks = tasks.filter((eachTask) => isSameDay(eachTask.dueDate, taskDate)).length > 0;

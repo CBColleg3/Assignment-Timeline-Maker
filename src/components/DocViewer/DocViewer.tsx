@@ -1,8 +1,8 @@
 /* eslint-disable no-mixed-spaces-and-tabs -- disabled prettier/eslint conflict */
 /* eslint-disable indent -- disabled prettier/eslint conflict */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-import React, { useState, useEffect } from "react";
-import { Placeholder, Spinner } from "react-bootstrap";
+import React from "react";
+import { Spinner } from "react-bootstrap";
 import { useAssignmentDateInfoContext, useFilesContext, useTaskContext } from "src/context";
 import { extractParagraphs, convertXML2HTML, getParagraphTextContent, simplifyText } from "src/helpers";
 import { ContentSwitch } from "./ContentSwitch";
@@ -39,9 +39,9 @@ export const DocViewer = (): JSX.Element => {
 		};
 	});
 
-	const [useSimpleContent, setUseSimpleContent] = useState<boolean>(false);
+	const [useSimpleContent, setUseSimpleContent] = React.useState<boolean>(false);
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const controller = new AbortController();
 		simplifyText(`${FLASK_URL}/api/simplify`, controller, {
 			text: mlContent.originalContent,
