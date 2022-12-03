@@ -4,7 +4,7 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { isSameDay, truncateText } from "src/helpers";
+import { isSameDay, isSameFuncGenerator, truncateText } from "src/helpers";
 import { doesDateContainTasks } from "src/helpers/AssignmentDateInfo/doesDateContainTasks";
 import styles from "./TimelineDates.module.css";
 
@@ -123,7 +123,7 @@ export const TimelineDates = (): JSX.Element => {
 									className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}
 								>
 									{tasks
-										.filter((eachTask) => isSameDay(eachTask.dueDate, currentSelectedDate?.date))
+										.filter((eachTask) => isSameFuncGenerator(format)(eachTask.dueDate, currentSelectedDate?.date))
 										.map((eachTask: Task, _taskInd) => (
 											<a
 												className="text-decoration-none my-2"

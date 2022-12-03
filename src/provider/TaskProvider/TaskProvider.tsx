@@ -27,7 +27,7 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 	/**
 	 * Accessing the AssignmentDateInfoContext value of both `format` and `dates`, which we will use within our hooks to ensure the tasks are being properly instantiated.
 	 */
-	const { format, dates } = useAssignmentDateInfoContext();
+	const { changingFormat, format, dates } = useAssignmentDateInfoContext();
 	/**
 	 * This is the local state, which is the collection of tasks that is parsed from the file text. This is instantiated only when the user selects a file, and that file
 	 * contains the proper tasks.
@@ -64,6 +64,13 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 			setTasks(updateDueDates(findPoints(findParts(selectedFileText)), format, dates));
 		}
 	}, [selectedFileText, dates, format]);
+
+	React.useEffect(() => {
+		if (changingFormat && dates !== undefined) {
+			console.log("in useEffect for updating task due dates", dates);
+			setTasks((oldTasks) => updateDueDates(oldTasks, format, dates));
+		}
+	}, [changingFormat, dates, format]);
 
 	/**
 	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with

@@ -149,11 +149,12 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	 */
 	React.useEffect(() => {
 		if (fmtMutating) {
-			console.log("in fmtMutating");
+			setDates((oldDates) =>
+				generateAssignmentDatesFromStartEnd(oldDates[0], oldDates[oldDates.length - 1], false, format),
+			);
 			setFmtMutating(false);
-			setDates(generateAssignmentDatesFromStartEnd(dates[0], dates[dates.length - 1], false, format));
 		}
-	}, [dates, fmtMutating, format]);
+	}, [fmtMutating, format]);
 
 	/**
 	 * Returning AssignmentDateInfoContext.Provider which is supplied the value of `memoProps` due to the reasons specified in the above documentation. That Provider is wrapping the `children` prop
