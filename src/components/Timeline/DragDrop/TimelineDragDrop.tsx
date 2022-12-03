@@ -8,7 +8,7 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
-import { isSameDay, isSameFuncGenerator } from "src/helpers";
+import { isSameFuncGenerator } from "src/helpers";
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
