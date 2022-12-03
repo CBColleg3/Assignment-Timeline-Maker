@@ -43,7 +43,7 @@ type EditTaskProps = {
  * @returns The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { dates, end, start } = useAssignmentDateInfoContext();
+	const { dates, end, format, start } = useAssignmentDateInfoContext();
 	const { editTask } = useTaskContext();
 	const { formState, getValues, register, reset } = useForm({
 		defaultValues: { ...task },
@@ -87,7 +87,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	 * Updates the TaskContext's tasks
 	 */
 	function changeTasks(): void {
-		const updatedDate = findDateTaskUnder(dueDate, dates);
+		const updatedDate = findDateTaskUnder(dueDate, dates, format);
 		const { color } = updatedDate;
 		editTask(
 			{ ...getValues(), color, dueDate },

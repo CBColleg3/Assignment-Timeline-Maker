@@ -11,6 +11,13 @@ import {
 	generateAssignmentDatesFromStartEnd,
 } from "src/helpers";
 
+type ChangingFormat = {
+	changing: boolean;
+	type: iAssignmentDateInfoContextFormat;
+	updateTasks?: boolean;
+	values?: AssignmentDate[];
+};
+
 type AssignmentInfoProviderProps = {
 	// React component that is "wrapped" by the parent, aka <div><random /></div> (random is the "children" of div)
 	children: ReactNode;
@@ -25,7 +32,7 @@ type AssignmentInfoProviderProps = {
  * @param props.children The child component that will be receiving the AssignmentDateInfo context, read more about the special children prop here: https://reactjs.org/docs/composition-vs-inheritance.html *(Containment section)*
  * @returns The wrapped child component
  */
-export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
+const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderProps): JSX.Element => {
 	/**
 	 * The currently selected date, which is selected via the table of contents
 	 */
@@ -43,7 +50,28 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	/**
 	 * Changing the format of the AssignmentDates
 	 */
-	const [fmtMutating, setFmtMutating] = React.useState<boolean>(false);
+	const [formatMutating, setFormatMutating] = React.useState<ChangingFormat>({
+		changing: false,
+		type: format,
+	});
+
+	/**
+	 * This function propagates the changed dates up to the TaskProvider, without having any complex state
+	 *
+	 * @param newDates - The new assignment dates we must update the tasks with
+	 */
+	const updateTaskDates = (newDates: AssignmentDate[]): void => {
+		setFormatMutating((oldFormatMutating: ChangingFormat) => ({
+			...oldFormatMutating,
+			updateTasks: true,
+			values: newDates,
+		}));
+		setFormatMutating((oldFormatMutating: ChangingFormat) => ({
+			...oldFormatMutating,
+			updateTasks: false,
+			values: undefined,
+		}));
+	};
 
 	/**
 	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
@@ -62,7 +90,7 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 				setDates((oldDates) => [...oldDates, date]);
 			},
 			changeFormat: (fmt: iAssignmentDateInfoContextFormat): void => {
-				setFormat(fmt);
+				setFormatMutating({ changing: true, type: fmt });
 			},
 			clearDates: () => setDates([]),
 			deleteDate: (ind: number) => setDates((oldDates) => oldDates.filter((_, i) => i !== ind)),
@@ -97,9 +125,6 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 					return oldDates;
 				});
 			},
-			setChangingFormat: (_fmt: boolean): void => {
-				setFmtMutating(_fmt);
-			},
 			setCurrentlySelectedDate: (date: AssignmentDate | undefined): void => {
 				setCurrentSelectedDate(date);
 			},
@@ -132,14 +157,14 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	const memoProps: iAssignmentDateInfoContext = React.useMemo(
 		() => ({
 			...(functionalProps as unknown as iAssignmentDateInfoContext),
-			changingFormat: fmtMutating,
+			changingFormat: formatMutating,
 			currentSelectedDate,
 			dates,
 			end: dates.length === 1 ? dates[0] : dates[dates.length - 1],
 			format,
 			start: dates[0],
 		}),
-		[currentSelectedDate, dates, fmtMutating, format, functionalProps],
+		[currentSelectedDate, dates, formatMutating, format, functionalProps],
 	);
 
 	/**
@@ -148,13 +173,25 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 	 * The anonymous function sets `fmtMutating` to false, and also sets the dates according to the format
 	 */
 	React.useEffect(() => {
-		if (fmtMutating) {
-			setDates((oldDates) =>
-				generateAssignmentDatesFromStartEnd(oldDates[0], oldDates[oldDates.length - 1], false, format),
-			);
-			setFmtMutating(false);
+		if (formatMutating.changing) {
+			setDates((oldDates) => {
+				const newDates = generateAssignmentDatesFromStartEnd(
+					oldDates[0],
+					oldDates[oldDates.length - 1],
+					false,
+					formatMutating.type,
+				);
+				updateTaskDates(newDates);
+				return newDates;
+			});
+			setFormat(formatMutating.type);
+			setFormatMutating((oldMutating: ChangingFormat) => ({
+				...oldMutating,
+				changing: false,
+				updateTasks: true,
+			}));
 		}
-	}, [fmtMutating, format]);
+	}, [formatMutating]);
 
 	/**
 	 * Returning AssignmentDateInfoContext.Provider which is supplied the value of `memoProps` due to the reasons specified in the above documentation. That Provider is wrapping the `children` prop
@@ -165,3 +202,5 @@ export const AssignmentDateInfoProvider = ({ children }: AssignmentInfoProviderP
 		<AssignmentDateInfoContext.Provider value={memoProps}>{children}</AssignmentDateInfoContext.Provider>
 	);
 };
+
+export { AssignmentDateInfoProvider, type ChangingFormat };

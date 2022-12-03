@@ -61,7 +61,7 @@ const updateDueDates = (
 	}));
 	let incrementDate = false;
 	let runningTotal = 0;
-	let currentColor = findDateTaskUnder(currentDay, dates).color;
+	let currentColor = findDateTaskUnder(currentDay, dates, format).color;
 
 	for (let i = 0; i < taskClone.length; i += 1) {
 		const eachTask = taskClone[i];
@@ -77,7 +77,7 @@ const updateDueDates = (
 		runningTotal = incrementDate ? 0 : runningTotal + eachTask.points;
 		if (incrementDate) {
 			mutateCurrentDay(currentDay, format, "inc");
-			currentColor = findDateTaskUnder(currentDay, dates).color;
+			currentColor = findDateTaskUnder(currentDay, dates, format).color;
 			incrementDate = false;
 		}
 	}

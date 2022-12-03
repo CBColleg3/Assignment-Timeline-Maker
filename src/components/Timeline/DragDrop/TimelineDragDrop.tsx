@@ -19,9 +19,6 @@ export const TimelineDragDrop = (): JSX.Element => {
 	const { currentSelectedDate, format } = useAssignmentDateInfoContext();
 	const { tasks, updateTasks } = useTaskContext();
 
-	React.useEffect(() => {
-		console.log(format);
-	}, [format]);
 	/**
 	 * Handles the drag end operation
 	 *

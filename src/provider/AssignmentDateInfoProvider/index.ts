@@ -4,4 +4,4 @@
  * It receives all contents of the folder without having to access the individual files.
  */
 
-export { AssignmentDateInfoProvider } from "./AssignmentDateInfoProvider";
+export { AssignmentDateInfoProvider, type ChangingFormat } from "./AssignmentDateInfoProvider";

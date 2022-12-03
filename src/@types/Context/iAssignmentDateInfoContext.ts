@@ -1,3 +1,4 @@
+import type { ChangingFormat } from "src/provider";
 import type { AssignmentDate } from "../AssignmentDate/AssignmentDate";
 import type { iAssignmentDateInfoContextFormat } from "./iAssignmentDateInfoContextFormat";
 
@@ -22,7 +23,7 @@ export type iAssignmentDateInfoContext = {
 	/**
 	 * Whether the user is changing the format or not
 	 */
-	changingFormat: boolean;
+	changingFormat: ChangingFormat;
 	/**
 	 * Clears all dates from the collection
 	 *
@@ -76,10 +77,6 @@ export type iAssignmentDateInfoContext = {
 	 * @returns void
 	 */
 	moveDate: (_from: number, _to: number) => void;
-	/**
-	 * Sets the changing format value, aka whether the user is changing the AssignmentDate format or not
-	 */
-	setChangingFormat: (_fmt: boolean) => void;
 	/**
 	 * Sets the currently selected date via the Timeline Table of Contents
 	 */

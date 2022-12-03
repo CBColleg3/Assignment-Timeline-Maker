@@ -1,4 +1,5 @@
-import type { AssignmentDate } from "src/@types";
+import type { AssignmentDate, iAssignmentDateInfoContextFormat } from "src/@types";
+import { isSameFuncGenerator } from "../Task";
 import { isSameDay } from "../Task/isSameDay";
 
 /**
@@ -8,10 +9,14 @@ import { isSameDay } from "../Task/isSameDay";
  * @param dates - The dates we are filtering through
  * @returns The assignment date that corresponds to the task
  */
-export const findDateTaskUnder = (newDate: Date, dates: AssignmentDate[]): AssignmentDate => {
+export const findDateTaskUnder = (
+	newDate: Date,
+	dates: AssignmentDate[],
+	format: iAssignmentDateInfoContextFormat,
+): AssignmentDate => {
 	const filteredResult = dates.filter((eachDate) => {
 		const { date } = eachDate;
-		return isSameDay(newDate, date);
+		return isSameFuncGenerator(format)(newDate, date);
 	});
 	return { ...filteredResult[0], color: filteredResult[0].color.substring(1) };
 };

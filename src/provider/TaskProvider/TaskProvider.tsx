@@ -66,11 +66,10 @@ export const TaskProvider = ({ children }: TaskProviderProps): JSX.Element => {
 	}, [selectedFileText, dates, format]);
 
 	React.useEffect(() => {
-		if (changingFormat && dates !== undefined) {
-			console.log("in useEffect for updating task due dates", dates);
-			setTasks((oldTasks) => updateDueDates(oldTasks, format, dates));
+		if (changingFormat.updateTasks && changingFormat.values !== undefined) {
+			setTasks((oldTasks) => updateDueDates(oldTasks, changingFormat.type, changingFormat.values ?? []));
 		}
-	}, [changingFormat, dates, format]);
+	}, [changingFormat]);
 
 	/**
 	 * This is a little more complicated then the useEffects above. This is using the `useMemo` hook, which is a powerful hook if used correctly. The general standard practice is, when dealing with
