@@ -118,7 +118,12 @@ export const App = (): JSX.Element => {
 									body={
 										<span>
 											{ALERT_CONSTANTS.SELECT_FILE_FROM_LINK}
-											<span className="fw-bold mx-1">{ALERT_CONSTANTS.CHOOSE_A_FILE}</span>
+											<label
+												className={`fw-bold mx-1 ${styles.choose_a_file_link}`}
+												htmlFor="assignment_import"
+											>
+												{ALERT_CONSTANTS.CHOOSE_A_FILE}
+											</label>
 											{ALERT_CONSTANTS.OR_DRAG_DROP}
 										</span>
 									}
@@ -134,7 +139,12 @@ export const App = (): JSX.Element => {
 					body={
 						<span>
 							{ALERT_CONSTANTS.SELECT_FILE_FROM_LINK}
-							<span className="fw-bold mx-1">{ALERT_CONSTANTS.CHOOSE_A_FILE}</span>
+							<label
+								className={`fw-bold mx-1 ${styles.choose_a_file_link}`}
+								htmlFor="assignment_import"
+							>
+								{ALERT_CONSTANTS.CHOOSE_A_FILE}
+							</label>
 							{ALERT_CONSTANTS.OR_DRAG_DROP}
 						</span>
 					}
