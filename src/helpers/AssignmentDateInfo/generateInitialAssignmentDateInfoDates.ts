@@ -2,6 +2,9 @@
 import type { AssignmentDate } from "src/@types";
 import { generateRandomColorHex } from "../shared/generateRandomColorHex";
 
+/**
+ * Milliseconds in a day
+ */
 const MS_IN_DAY = 86400000;
 
 /**

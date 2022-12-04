@@ -2,6 +2,9 @@ import React from "react";
 
 import styles from "./TimelineToastContainer.module.css";
 
+/**
+ * The orientation the user can set on the TimelineToast container, specifying it's position on the page
+ */
 type TimelineToastContainerOrientation =
 	| "bottom_leftright"
 	| "bottom_rightleft"
@@ -16,7 +19,13 @@ type TimelineToastContainerOrientation =
 	| "top_rightleft"
 	| "top";
 
+/**
+ * The properties of the TimelineToast container component
+ */
 type TimelineToastContainerProperties = {
+	/**
+	 * The orientation of the TimelineToast container
+	 */
 	orientation?: TimelineToastContainerOrientation;
 };
 

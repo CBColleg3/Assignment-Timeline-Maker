@@ -1,4 +1,7 @@
 
+/*
+    The CSS styling of the overall toast layout, the entire container of the toast.
+*/
 .toast_layout {
     padding-right: 2em;
     padding-left: 2em;
@@ -14,18 +17,30 @@
     position: relative;
 }
 
+/*
+    Specific styling for the toast if the error variant is selected
+*/
 .toast_layout_error {
     background-color: rgba(255, 193, 7, .65);
 }
 
+/*
+    Specific styling for the toast if the info variant is selected
+*/
 .toast_layout_info {
     background-color: rgba(13, 202, 240, .65);
 }
 
+/*
+    Specific styling for the toast if the success variant is selected
+*/
 .toast_layout_success {
     background-color: rgba(25, 135, 84, .65);
 }
 
+/*
+    The styling for the title of the toast, if the title is supplied in the toast's generation
+*/
 .toast_title {
     font-size: 1.15em;
     font-weight: 600;
@@ -34,6 +49,9 @@
     border-bottom: .5px solid rgba(0, 0, 0, .15);
 }
 
+/*
+    The styling for the subtitle of the toast, if the subtitle is supplied in the toast's generation
+*/
 .toast_subtitle {
     font-size: .85em;
     font-weight: 200;
@@ -43,6 +61,9 @@
     font-style: italic;
 }
 
+/*
+    The styling for the toast's message, if the message is supplied in the toast's generation
+*/
 .toast_message {
     display: flex;
     font-size: 1.05em;
@@ -59,18 +80,27 @@
     flex-wrap: wrap;
 }
 
+/*
+    The styling for the toast's link, if the link is supplied in the toast's generation and also if the toast is supplied with the error variant
+*/
 .toast_link_error {
     color: lightblue;
     margin-top: 1.5em;
     text-align: end;
 }
 
+/*
+    The styling for the toast's link, if the link is supplied in the toast's generation and also if the toast is supplied with the info variant
+*/
 .toast_link_info {
     color: lightcoral;
     margin-top: 1.5em;
     text-align: end;
 }
 
+/*
+    The styling for the toast's link, if the link is supplied in the toast's generation and also if the toast is supplied with the success variant
+*/
 .toast_link_success {
     color: crimson;
     margin-top: 1.5em;

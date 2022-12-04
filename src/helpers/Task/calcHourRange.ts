@@ -1,5 +1,14 @@
+/**
+ * # of milliseconds in a day
+ */
 const DAY_IN_MS = 86400000;
+/**
+ * # of hours in a day
+ */
 const HOURS_IN_DAY = 24;
+/**
+ * # of milliseconds in an hour
+ */
 const HOUR_IN_MS = DAY_IN_MS / HOURS_IN_DAY;
 
 /**

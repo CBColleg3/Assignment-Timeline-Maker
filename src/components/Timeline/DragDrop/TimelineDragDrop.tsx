@@ -8,16 +8,17 @@ import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import { TaskInfo } from "src/components/Task/Info/TaskInfo";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
 import { changeTaskColor } from "src/helpers/DragDrop/ChangeTaskColor";
-import { isSameDay } from "src/helpers";
+import { isSameFuncGenerator } from "src/helpers";
 
 /**
  * TimelineDragDrop component, which houses the logic for rendering a drag and droppable timeline node component
  *
- * @returns {JSX.Element} A drag-droppable timeline element
+ * @returns A drag-droppable timeline element
  */
 export const TimelineDragDrop = (): JSX.Element => {
-	const { currentSelectedDate } = useAssignmentDateInfoContext();
+	const { currentSelectedDate, format } = useAssignmentDateInfoContext();
 	const { tasks, updateTasks } = useTaskContext();
+
 	/**
 	 * Handles the drag end operation
 	 *
@@ -47,7 +48,9 @@ export const TimelineDragDrop = (): JSX.Element => {
 					>
 						{tasks
 							.filter((eachTask: Task) =>
-								currentSelectedDate ? isSameDay(eachTask.dueDate, currentSelectedDate?.date) : true,
+								currentSelectedDate
+									? isSameFuncGenerator(format)(eachTask.dueDate, currentSelectedDate?.date)
+									: true,
 							)
 							.map((task: Task, index: number) => (
 								<Draggable
@@ -64,6 +67,7 @@ export const TimelineDragDrop = (): JSX.Element => {
 											<VerticalTimelineElement
 												className="vertical-timeline-element--work"
 												contentStyle={{
+													border: `0.1px solid #${task.color}`,
 													boxShadow: "0 .5rem 1rem rgba(0,0,0,.15)",
 													color: `#${task.color}`,
 													marginBottom: "20px",

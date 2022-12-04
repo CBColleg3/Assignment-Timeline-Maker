@@ -1,3 +1,8 @@
+/*
+    Style applying to the header of the TimelineDates dropdown
+*/
 .task_table_contents_header {
     width: 85%;
+    max-height: 45vh;
+    overflow-y: auto;
 }

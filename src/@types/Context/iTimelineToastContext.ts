@@ -6,6 +6,8 @@ import type { TimelineToast } from "../Notifications/TimelineToast";
 export type iTimelineToastContext = {
 	/**
 	 * Adds a toast to the pending queue
+	 *
+	 * @param _toast - The toast we are adding to the queue
 	 */
 	addToast: (_toast: TimelineToast) => void;
 };

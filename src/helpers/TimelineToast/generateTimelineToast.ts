@@ -2,8 +2,14 @@ import type { TimelineToast } from "src/@types/Notifications/TimelineToast";
 
 import styles from "./generateTimelineToastStyles.module.css";
 
+/**
+ * The actual animation itself, specifying that we will be going from 100% opacity(visibility) to 0% opacity(visibility)
+ */
 const disappearAnimation: Keyframe[] = [{ opacity: "100%" }, { opacity: "0%" }];
 
+/**
+ * The animation properties pre-made to avoid any inconsistencies when applying it.
+ */
 const disappearAnimationProperties: KeyframeAnimationOptions = {
 	duration: 1000,
 	easing: "ease-in-out",

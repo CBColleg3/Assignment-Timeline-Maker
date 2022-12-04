@@ -1,3 +1,5 @@
+import { faCalendarDays, faGear } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
@@ -7,15 +9,26 @@ import { DateFormat } from "../DateFormat/DateFormat";
 import { EndDate } from "../EndDate";
 import { StartDate } from "../StartDate";
 
+/**
+ * Properties of the DateModal component
+ */
 type DateModalProps = {
+	/**
+	 * The function to close the modal, which updates the boolean from it's parent that is conditionally rendering it
+	 */
 	closeModal: () => void;
+	/**
+	 * The title of the DateModal
+	 */
 	title: string;
 };
 
 /**
  * Helper component used to mediate the updating of the start and end date
  *
- * @param {DateModalProps} props The passed in props from the `SetDateTime` component
+ * @param props The passed in props from the `SetDateTime` component
+ * @param props.closeModal - The function to trigger on/off the conditional rendering of the DateModal
+ * @param props.title - The title of the DateModal
  * @returns The Modal used to update the start and end date
  */
 export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element => {
@@ -36,7 +49,14 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 			show={showing}
 		>
 			<Modal.Header closeButton>
-				<Modal.Title>{title}</Modal.Title>
+				<Modal.Title>
+					<FontAwesomeIcon
+						className="me-1 fa-spin"
+						icon={faGear}
+						size="xs"
+					/>
+					{title}
+				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
@@ -48,7 +68,14 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 					value={newEnd}
 				/>
 				<div className="d-flex flex-column border p-2 rounded">
-					<div className="fw-bolder fs-6 mb-2">{"Date Format"}</div>
+					<div className="fw-bolder fs-6 mb-2">
+						<FontAwesomeIcon
+							className="pe-1"
+							icon={faCalendarDays}
+							size="sm"
+						/>
+						{"Date Format"}
+					</div>
 					<DateFormat
 						updateValue={(newFormatSpec: iAssignmentDateInfoContextFormat): void =>
 							setNewFormat(newFormatSpec)

@@ -1,11 +1,26 @@
 import type { FieldError } from "react-hook-form";
 
+/**
+ * Constants for the useFormHelpers file
+ */
 const CONSTANTS = {
+	/**
+	 * The minimum number of object keys to determine if an error is invalid
+	 */
 	IS_INVALID_KEYS_MIN_LENGTH: 1,
 };
 
+/**
+ * Whether the error type is a valid error or invalid error (valid meaning the user entered the correct value, invalid meaning the user entered incorrect values)
+ */
 type ErrorValidity = {
+	/**
+	 * The user entered in the correct value
+	 */
 	valid: boolean;
+	/**
+	 * The user entered in the wrong values
+	 */
 	invalid: boolean;
 };
 

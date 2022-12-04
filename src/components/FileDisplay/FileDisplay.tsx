@@ -1,11 +1,10 @@
 /* eslint-disable react/no-array-index-key -- index aids in unique keys */
 import React from "react";
-import { faCircle, faCircleCheck, faEraser, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faCircleCheck, faEraser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, ListGroup } from "react-bootstrap";
 import { displayFileWithSize } from "src/helpers";
 import styles from "./FileDisplay.module.css";
-import { uploadDocument } from "src/helpers/shared/uploadDocument";
 import { useFilesContext } from "src/context";
 
 /**
@@ -14,7 +13,10 @@ import { useFilesContext } from "src/context";
  * @returns A component which displays the files supplied to it, and allows for adding and deleting of files
  */
 const FileDisplay = (): JSX.Element => {
-	const { files, removeFileByIndex, selectedFile, setSelectedFile } = useFilesContext();
+	/**
+	 * Where we access the FilesContext, specifically the files, the removeFileByIndex, selectedFile, and the function to update the selected file
+	 */
+	const { files, removeFileByIndex, selectedFile, updateSelectedFile } = useFilesContext();
 
 	return (
 		<div className={`${styles.file_display_section}`}>
@@ -30,7 +32,9 @@ const FileDisplay = (): JSX.Element => {
 								className="d-flex flex-row justify-content-between"
 								eventKey={`${index}-file-${eachFile.name}${selectedClassName}`}
 								key={`${index}${selectedClassName}`}
-								onClick={(): void => setSelectedFile(index)}
+								onClick={(): void => {
+									updateSelectedFile(index);
+								}}
 								variant={selectedVariant}
 							>
 								<span className="me-3">{displayFileWithSize(eachFile)}</span>

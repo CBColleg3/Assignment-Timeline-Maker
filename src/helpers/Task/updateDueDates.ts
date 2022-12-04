@@ -3,14 +3,35 @@
 import type { AssignmentDate, Task, iAssignmentDateInfoContextFormat } from "src/@types";
 import { calcTotalPoints, findDateTaskUnder, mutateCurrentDay, calcDiff } from "src/helpers";
 
+/**
+ * The response from the function that calculates the days of the tasks
+ */
 type CalculateDayResponse = {
+	/**
+	 * Whether we have to increment the date or not
+	 */
 	incrementDate: boolean;
+	/**
+	 * The updated total # of points
+	 */
 	updatedTotal: number;
 };
 
+/**
+ * The calculate day payload, the *running total* we are using when calculating the tasks' respective days
+ */
 type CalculateDayPayload = {
+	/**
+	 * The current running total, measured in points
+	 */
 	runningTotal: number;
+	/**
+	 * The # of points we are limiting per day
+	 */
 	pointsPerDay: number;
+	/**
+	 * The current day we are on in this current iteration
+	 */
 	currentDay: Date;
 };
 
@@ -40,7 +61,7 @@ const updateDueDates = (
 	}));
 	let incrementDate = false;
 	let runningTotal = 0;
-	let currentColor = findDateTaskUnder(currentDay, dates).color;
+	let currentColor = findDateTaskUnder(currentDay, dates, format).color;
 
 	for (let i = 0; i < taskClone.length; i += 1) {
 		const eachTask = taskClone[i];
@@ -56,7 +77,7 @@ const updateDueDates = (
 		runningTotal = incrementDate ? 0 : runningTotal + eachTask.points;
 		if (incrementDate) {
 			mutateCurrentDay(currentDay, format, "inc");
-			currentColor = findDateTaskUnder(currentDay, dates).color;
+			currentColor = findDateTaskUnder(currentDay, dates, format).color;
 			incrementDate = false;
 		}
 	}

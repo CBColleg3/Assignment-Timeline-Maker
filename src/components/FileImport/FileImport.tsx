@@ -1,9 +1,22 @@
+/* eslint-disable indent -- disabled */
+/* eslint-disable no-unused-vars -- disabled */
+/* eslint-disable no-shadow -- disabled */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import styles from "./FileImport.module.css";
 import { useFilesContext } from "src/context";
 import { addToast, generateSuccessToast } from "src/helpers";
+
+enum DraggingStatus {
+	NOT_BEGUN = -1,
+	STARTED = 0,
+}
+
+type DraggingState = {
+	status: DraggingStatus;
+	value: number;
+};
 
 /**
  * Initial values for the component
@@ -21,13 +34,16 @@ const CONSTANTS = {
 };
 
 /**
- * Used for importing .xml files into the website. also updates taskArray.
+ * Used for importing .xml files into the website. Also updates taskArray once a file that has been imported from this interface is selected from the FileDisplay component.
  *
  * @returns {JSX.Element} FileImport component, houses logic for adding file
  */
 export const FileImport = (): JSX.Element => {
 	const { addFiles, files } = useFilesContext();
-	const [dragging, setDragging] = React.useState(initialValues.dragging);
+	const [draggingState, setDraggingState] = React.useState<DraggingState>({
+		status: DraggingStatus.NOT_BEGUN,
+		value: 0,
+	});
 	const fileRef = React.createRef<HTMLInputElement>();
 
 	/**
@@ -47,10 +63,25 @@ export const FileImport = (): JSX.Element => {
 	return (
 		<div
 			className={`${styles.file_import_section} ${
-				dragging !== initialValues.dragging ? styles.drag_area_on : styles.drag_area_off
+				draggingState.value !== initialValues.dragging
+					? styles.drag_area_on
+					: draggingState.status !== DraggingStatus.NOT_BEGUN
+					? styles.drag_area_off
+					: ""
 			}`}
-			onDragEnter={(): void => setDragging((oldValue) => oldValue + CONSTANTS.DRAGGING_NUM_CONST)}
-			onDragLeave={(): void => setDragging((oldValue) => oldValue - CONSTANTS.DRAGGING_NUM_CONST)}
+			onDragEnter={(): void =>
+				setDraggingState((oldDraggingState: DraggingState) => ({
+					...oldDraggingState,
+					status: DraggingStatus.STARTED,
+					value: oldDraggingState.value + CONSTANTS.DRAGGING_NUM_CONST,
+				}))
+			}
+			onDragLeave={(): void =>
+				setDraggingState((oldDraggingState: DraggingState) => ({
+					...oldDraggingState,
+					value: oldDraggingState.value - CONSTANTS.DRAGGING_NUM_CONST,
+				}))
+			}
 			onDragOver={(event): void => event.preventDefault()}
 			onDrop={(event: React.DragEvent<HTMLSpanElement>): void => {
 				event.preventDefault();
@@ -71,7 +102,10 @@ export const FileImport = (): JSX.Element => {
 				if (fileRef.current) {
 					fileRef.current.value = "";
 				}
-				setDragging(initialValues.dragging);
+				setDraggingState((oldDraggingState: DraggingState) => ({
+					...oldDraggingState,
+					value: initialValues.dragging,
+				}));
 			}}
 		>
 			<input

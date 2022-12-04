@@ -1,3 +1,6 @@
+/*
+    When the datepicker component is rendered, the bottom-most button labeled "Today"
+*/
 .today_button {
     width: 95%;
 }
