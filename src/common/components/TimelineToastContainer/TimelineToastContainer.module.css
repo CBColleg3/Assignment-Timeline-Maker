@@ -6,6 +6,7 @@
     position: absolute;
     display: flex;
     flex-direction: column-reverse;
+    pointer-events: none;
 }
 
 /*

@@ -18,6 +18,27 @@ ANIMATIONS
     }
 }
 
+@keyframes appear_anim {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+@keyframes header_icon_anim {
+    0% {
+        rotate: 0deg;
+    }
+    50% {
+        rotate: 360deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+
 
 /*
   
@@ -70,6 +91,17 @@ ANIMATIONS
 
 .app_header_title {
     font-weight: 600;
+    animation-name: appear_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.app_header_icon {
+    animation-name: header_icon_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: both;
 }
 
 .github_icon {
