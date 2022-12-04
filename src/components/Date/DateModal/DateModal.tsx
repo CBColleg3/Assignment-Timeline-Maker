@@ -1,3 +1,5 @@
+import { faCalendarDays, faGear } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import type { iAssignmentDateInfoContextFormat } from "src/@types";
@@ -47,7 +49,14 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 			show={showing}
 		>
 			<Modal.Header closeButton>
-				<Modal.Title>{title}</Modal.Title>
+				<Modal.Title>
+					<FontAwesomeIcon
+						className="me-1 fa-spin"
+						icon={faGear}
+						size="xs"
+					/>
+					{title}
+				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<StartDate
@@ -59,7 +68,14 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 					value={newEnd}
 				/>
 				<div className="d-flex flex-column border p-2 rounded">
-					<div className="fw-bolder fs-6 mb-2">{"Date Format"}</div>
+					<div className="fw-bolder fs-6 mb-2">
+						<FontAwesomeIcon
+							className="pe-1"
+							icon={faCalendarDays}
+							size="sm"
+						/>
+						{"Date Format"}
+					</div>
 					<DateFormat
 						updateValue={(newFormatSpec: iAssignmentDateInfoContextFormat): void =>
 							setNewFormat(newFormatSpec)

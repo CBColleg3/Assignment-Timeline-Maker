@@ -1,3 +1,5 @@
+import { faFlagCheckered } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
@@ -29,7 +31,14 @@ type EndDateProperties = {
  */
 export const EndDate = ({ updateValue, value }: EndDateProperties): JSX.Element => (
 	<div className={"d-flex flex-row p-3 rounded border mb-3"}>
-		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">{"End Date"}</span>
+		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">
+			<FontAwesomeIcon
+				className="pe-1"
+				icon={faFlagCheckered}
+				size="sm"
+			/>
+			{"End Date"}
+		</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"

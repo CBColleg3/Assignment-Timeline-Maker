@@ -1,3 +1,5 @@
+import { faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button } from "react-bootstrap";
 import ReactDatePicker from "react-datepicker";
@@ -9,7 +11,7 @@ import styles from "./StartDate.module.css";
 type StartDateProperties = {
 	/**
 	 * Function to update the temporary start date coming from the parent component
-	 * 
+	 *
 	 * @param _newDate - The temporary start date supplied by the DateModal component
 	 */
 	updateValue: (_newDate: Date) => void;
@@ -29,7 +31,14 @@ type StartDateProperties = {
  */
 export const StartDate = ({ updateValue, value }: StartDateProperties): JSX.Element => (
 	<div className={"d-flex flex-row p-3 rounded border mb-3"}>
-		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">{"Start Date"}</span>
+		<span className="fw-bolder fs-6 text-start text-nowrap align-self-center me-3">
+			<FontAwesomeIcon
+				className="pe-1 fa-shake"
+				icon={faStopwatch}
+				size="sm"
+			/>
+			{"Start Date"}
+		</span>
 		<ReactDatePicker
 			closeOnScroll
 			dateFormat="Pp"
