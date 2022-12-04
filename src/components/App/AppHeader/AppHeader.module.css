@@ -90,7 +90,7 @@ ANIMATIONS
 .author_one_link {
     visibility: hidden;
     animation-name: appear_visibility_anim;
-    animation-delay: 1s;
+    animation-delay: .5s;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
@@ -99,7 +99,7 @@ ANIMATIONS
 .author_two_link {
     visibility: hidden;
     animation-name: appear_visibility_anim;
-    animation-delay: 2s;
+    animation-delay: 1.15s;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
@@ -108,7 +108,7 @@ ANIMATIONS
 .author_three_link {
     visibility: hidden;
     animation-name: appear_visibility_anim;
-    animation-delay: 3s;
+    animation-delay: 1.75s;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
