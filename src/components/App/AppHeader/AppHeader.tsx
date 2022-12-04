@@ -12,32 +12,34 @@ import styles from "./AppHeader.module.css";
 export const AppHeader = (): JSX.Element => (
 	<div className={`d-flex flex-column justify-content-center align-items-center ${styles.app_header}`}>
 		<div className="d-flex flex-row justify-content-between position-relative">
-			<div>
-				<span className={`fs-3 ${styles.app_header_title}`}>{"Assignment Timeline Maker"}</span>
-				<span className="ms-2">
+			<div className={`${styles.app_header_title_container}`}>
+				<div className={`${styles.app_header_icon_container}`}>
 					<FontAwesomeIcon
 						className={`${styles.app_header_icon}`}
 						icon={faTimeline}
 						size="2x"
 					/>
-				</span>
+				</div>
+				<div className={`fs-3 ${styles.app_header_title} position-relative`}>
+					<span className={`${styles.app_header_title_contents}`}>{"Assignment Timeline Maker"}</span>
+				</div>
 			</div>
 		</div>
 		<div className="d-flex flex-row justify-content-center mt-3">
 			<a
-				className={` ${styles.author_link} mx-2`}
+				className={`${styles.author_one_link} ${styles.author_link} mx-2`}
 				href="https://github.com/CBColleg3"
 			>
 				{"Christopher Bennett"}
 			</a>
 			<a
-				className={` ${styles.author_link} mx-2`}
+				className={`${styles.author_two_link} ${styles.author_link} mx-2`}
 				href="https://github.com/bgallamoza"
 			>
 				{"Brennan Gallamoza"}
 			</a>
 			<a
-				className={` ${styles.author_link} mx-2`}
+				className={`${styles.author_three_link} ${styles.author_link} mx-2`}
 				href="https://github.com/cthacker-udel"
 			>
 				{"Cameron Thacker"}
