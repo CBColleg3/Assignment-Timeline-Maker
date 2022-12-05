@@ -84,7 +84,16 @@ export const DateModal = ({ closeModal, title }: DateModalProps): JSX.Element =>
 					/>
 				</div>
 			</Modal.Body>
-			<Modal.Footer>
+			<Modal.Footer className="d-flex flex-row justify-content-between">
+				<Button
+					onClick={(): void => {
+						closeModal();
+						setShowing(false);
+					}}
+					variant="outline-secondary"
+				>
+					{"Cancel"}
+				</Button>
 				<Button
 					onClick={(): void => {
 						if (modalConfirm) {

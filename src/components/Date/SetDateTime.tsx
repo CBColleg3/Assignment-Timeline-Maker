@@ -59,7 +59,7 @@ const SetDateTime = (): JSX.Element => {
 			{showModal && (
 				<DateModal
 					closeModal={(): void => setShowModal(false)}
-					title="Set Start &amp; End Dates"
+					title="Start &amp; End Dates"
 				/>
 			)}
 		</>

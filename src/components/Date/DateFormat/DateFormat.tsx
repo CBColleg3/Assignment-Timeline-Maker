@@ -27,9 +27,29 @@ type DateFormatProperties = {
 export const DateFormat = ({ updateValue, value }: DateFormatProperties): JSX.Element => (
 	<>
 		<Form.Check
+			checked={value === "year"}
+			label="Year"
+			name="timelineTypeYear"
+			onChange={(): void => {
+				updateValue("year");
+			}}
+			type="radio"
+			value="time"
+		/>
+		<Form.Check
+			checked={value === "month"}
+			label="Month"
+			name="timelineTypeMonth"
+			onChange={(): void => {
+				updateValue("month");
+			}}
+			type="radio"
+			value="time"
+		/>
+		<Form.Check
 			checked={value === "day"}
 			label="Day"
-			name="timelineType"
+			name="timelineTypeDay"
 			onChange={(): void => {
 				updateValue("day");
 			}}
@@ -39,9 +59,19 @@ export const DateFormat = ({ updateValue, value }: DateFormatProperties): JSX.El
 		<Form.Check
 			checked={value === "hour"}
 			label="Hour"
-			name="timelineType"
+			name="timelineTypeHour"
 			onChange={(): void => {
 				updateValue("hour");
+			}}
+			type="radio"
+			value="time"
+		/>
+		<Form.Check
+			checked={value === "minute"}
+			label="Minute"
+			name="timelineTypeMinute"
+			onChange={(): void => {
+				updateValue("minute");
 			}}
 			type="radio"
 			value="time"
