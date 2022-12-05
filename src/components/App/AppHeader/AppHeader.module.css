@@ -168,7 +168,7 @@ ANIMATIONS
     position: relative;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: nowrap;
 }
 
@@ -189,6 +189,7 @@ ANIMATIONS
     animation-duration: 1s;
     animation-fill-mode: both;
     transition: transform .7s ease-in-out;
+    margin-left: .5em;
     float: right;
 }
 

@@ -62,6 +62,6 @@
 */
 .file_display_container {
     max-height: 15vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
 }
