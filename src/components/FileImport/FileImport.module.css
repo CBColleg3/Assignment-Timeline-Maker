@@ -116,3 +116,30 @@
     color: rgba(0, 0, 0, .30);
     font-weight: 600;
 }
+
+.choose_file_icon {
+    margin-left: 47%;
+    margin-right: 53%;
+}
+
+.hovering_over_choose_icon {
+    transition: margin-left 1s ease-in-out, color 1s ease-in-out;
+    color: #0d6efd;
+    margin-left: 20%;
+}
+
+.hovering_over_choose_icon_left {
+    transition: margin-left 1s ease-in-out, color 1s ease-in-out;
+    color: black;
+    margin-left: 47%;
+}
+
+.hovering_over_choose_link_text {
+    transition: opacity 1s ease-in-out;
+    opacity: 25%;
+}
+
+.hovering_over_choose_link_text_left {
+    transition: opacity 1s ease-in-out;
+    opacity: 100%;
+}

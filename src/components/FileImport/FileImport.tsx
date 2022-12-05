@@ -13,9 +13,19 @@ enum DraggingStatus {
 	STARTED = 0,
 }
 
+enum HoveringStatus {
+	NOT_BEGUN = -1,
+	STARTED = 0,
+}
+
 type DraggingState = {
 	status: DraggingStatus;
 	value: number;
+};
+
+type HoveringChooseLinkState = {
+	on: boolean;
+	status: HoveringStatus;
 };
 
 /**
@@ -45,6 +55,8 @@ export const FileImport = (): JSX.Element => {
 		value: 0,
 	});
 	const fileRef = React.createRef<HTMLInputElement>();
+	const [hoveringOverChooseFileLink, setHoveringOverChooseFileLink] =
+		React.useState<HoveringChooseLinkState>({ on: false, status: HoveringStatus.NOT_BEGUN });
 
 	/**
 	 * Filters the current files against the files added, and only returns the files that are not already currently imported
@@ -136,7 +148,17 @@ export const FileImport = (): JSX.Element => {
 				type="file"
 			/>
 			<div className="p-5 d-flex flex-column rounded">
-				<span className="mx-auto">
+				<span
+					className={`${styles.choose_file_icon} ${
+						hoveringOverChooseFileLink.status === HoveringStatus.STARTED &&
+						hoveringOverChooseFileLink.on &&
+						styles.hovering_over_choose_icon
+					} ${
+						hoveringOverChooseFileLink.status === HoveringStatus.STARTED &&
+						!hoveringOverChooseFileLink.on &&
+						styles.hovering_over_choose_icon_left
+					}`}
+				>
 					<FontAwesomeIcon
 						icon={faFileArrowUp}
 						size="lg"
@@ -146,10 +168,36 @@ export const FileImport = (): JSX.Element => {
 					<label
 						className={`me-1 fw-bolder ${styles.choose_a_file}`}
 						htmlFor="assignment_import"
+						onMouseLeave={(): void => {
+							setHoveringOverChooseFileLink({
+								...hoveringOverChooseFileLink,
+								on: false,
+								status: HoveringStatus.STARTED,
+							});
+						}}
+						onMouseOver={(): void => {
+							setHoveringOverChooseFileLink({
+								...hoveringOverChooseFileLink,
+								on: true,
+								status: HoveringStatus.STARTED,
+							});
+						}}
 					>
 						{"Choose a file"}
 					</label>
-					<span>{"or drag it here"}</span>
+					<span
+						className={`${
+							hoveringOverChooseFileLink.status === HoveringStatus.STARTED &&
+							hoveringOverChooseFileLink.on &&
+							styles.hovering_over_choose_link_text
+						} ${
+							hoveringOverChooseFileLink.status === HoveringStatus.STARTED &&
+							!hoveringOverChooseFileLink.on &&
+							styles.hovering_over_choose_link_text_left
+						}`}
+					>
+						{"or drag it here"}
+					</span>
 				</span>
 			</div>
 			<div className={`${styles.file_import_section_header}`}>{"Upload"}</div>
