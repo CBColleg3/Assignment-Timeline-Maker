@@ -1,53 +1,150 @@
-# CREDIT TO ORIGINAL PROJECT - Special Thanks to Kristina Holsapple! 
-https://github.com/krishols/ss-timeline
+> Credit to Kristina Holsapple for the initial idea and implementation
+
+<div>
+    Assignment Timeline Maker
+</div>
+
+<hr />
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+  - [Symbol Table of Contents](#symbol-table-of-contents)
+- [Contributors](#contributors)
+- [Introduction](#introduction)
+- [Details](#details)
+  - [Header](#header)
+  - [Start \& End Date](#start--end-date)
+  - [File Display](#file-display)
+  - [File Uploader](#file-uploader)
+  - [Timeline](#timeline)
+  - [Document Viewer](#document-viewer)
 
 
-# Getting Started with Create React App
+### Symbol Table of Contents
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<table style="border: 1px solid rgba(0, 0, 0, .20);">
+    <thead style="border: 1px solid rgba(0, 0, 0, .20);">
+        <tr>
+            <td>
+                💻
+            </td>
+            <td>
+                📄
+            </td>
+            <td>
+                💼
+            </td>
+            <td>
+                ♻️
+            </td>
+            <td>
+                🤖
+            </td>
+            <td>
+                🖼️
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center;">
+                Programmer
+            </td>
+            <td style="text-align: center;">
+                Documentation
+            </td>
+            <td style="text-align: center;">
+                Manager
+            </td>
+            <td style="text-align: center;">
+                Maintainer
+            </td>
+            <td style="text-align: center;">
+                Machine Learning
+            </td>
+            <td style="text-align: center;">
+                Front-End
+            </td>
+        </tr>
+    </tbody>
+<table>
 
-## Available Scripts
+<hr />
 
-In the project directory, you can run:
+## Contributors
 
-### `npm install`
-Installs all npm directories
+<table>
+    <thead>
+        <tr>
+            <td style="font-weight: bold; font-size: 1.25em;">
+                Developer
+            </td>
+            <td style="font-weight: bold; font-size: 1.25em;">
+                Active
+            </td>
+            <td style="font-weight: bold; font-size: 1.25em;">
+                Contributions
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Christopher Bennett
+            </td>
+            <td>
+                ✅
+            </td>
+            <td>
+                💻💼♻️🖼️
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Brennan Gallamoza
+            </td>
+            <td>
+                ✅
+            </td>
+            <td>
+                💻📄♻️🤖
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Cameron Thacker
+            </td>
+            <td>
+                ✅
+            </td>
+            <td>
+                💻📄♻️🖼️
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-### `npm start`
+<hr />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Introduction
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The Assignment Timeline Maker is an application that aims to improve the ability of professors to accommodate neurodivergent students more efficiently through a helpful tool. Our application has two facets to it. The timeline it generates and the resultant document, a modified version of the original document uploaded. This timeline has all options for the user, ranging from changing the entire format of the timeline to editing small parts of it, which are the tasks of the timeline. The document viewer has two options for the user to select. One is the original document the other is the simplified document. Having tons of options and lots of flexibility for the user's preferences, we hope this application meets all your expectations!
 
-### `npm test`
+## Details
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Header
 
-### `npm run build`
+![image](https://user-images.githubusercontent.com/70614147/205526312-173402ba-3f53-489f-90c7-acc7957eb97b.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> This is the application header. It has links to the authors and the link to our repository, and also the name of the application.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Start & End Date
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### File Display
 
-### `npm run eject`
+### File Uploader
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Timeline
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Document Viewer
