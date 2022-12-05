@@ -21,21 +21,21 @@
     Specific styling for the toast if the error variant is selected
 */
 .toast_layout_error {
-    background-color: rgba(255, 193, 7, .65);
+    background-color: rgba(255, 193, 7, 1);
 }
 
 /*
     Specific styling for the toast if the info variant is selected
 */
 .toast_layout_info {
-    background-color: rgba(13, 202, 240, .65);
+    background-color: rgba(13, 202, 240, 1);
 }
 
 /*
     Specific styling for the toast if the success variant is selected
 */
 .toast_layout_success {
-    background-color: rgba(25, 135, 84, .65);
+    background-color: rgba(25, 135, 84, 1);
 }
 
 /*

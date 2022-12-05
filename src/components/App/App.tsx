@@ -152,7 +152,7 @@ export const App = (): JSX.Element => {
 					variant="info"
 				/>
 			)}
-			<TimelineToastContainer orientation="right" />
+			<TimelineToastContainer orientation="right_topdown" />
 		</div>
 	);
 };
