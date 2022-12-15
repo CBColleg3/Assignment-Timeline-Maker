@@ -27,6 +27,10 @@ export type iFilesContext = {
 	 */
 	files: File[];
 	/**
+	 * Sets the selected file internal state by using the index to access the file at that index within the internal files array
+	 */
+	updateSelectedFile: (_index: number) => void;
+	/**
 	 * Removes a file from the internal file collection `files` via index
 	 *
 	 * @param _index - The index of the file to remove
@@ -52,8 +56,4 @@ export type iFilesContext = {
 	 * The parsed XML of the selected file
 	 */
 	selectedFileXML: Document | undefined;
-	/**
-	 * Sets the selected file internal state by using the index to access the file at that index within the internal files array
-	 */
-	setSelectedFile: (_index: number) => void;
 };

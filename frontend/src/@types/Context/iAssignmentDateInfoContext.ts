@@ -1,3 +1,4 @@
+import type { ChangingFormat } from "src/provider";
 import type { AssignmentDate } from "../AssignmentDate/AssignmentDate";
 import type { iAssignmentDateInfoContextFormat } from "./iAssignmentDateInfoContextFormat";
 
@@ -19,6 +20,10 @@ export type iAssignmentDateInfoContext = {
 	 * @returns void
 	 */
 	changeFormat: (_fmt: iAssignmentDateInfoContextFormat) => void;
+	/**
+	 * Whether the user is changing the format or not
+	 */
+	changingFormat: ChangingFormat;
 	/**
 	 * Clears all dates from the collection
 	 *

@@ -31,11 +31,11 @@ const MS_PER_DAY = MS_PER_SECOND * SECONDS_PER_MINUTES * MINUTES_PER_HOURS * HOU
 const MS_PER_HOUR = MS_PER_SECOND * SECONDS_PER_MINUTES * MINUTES_PER_HOURS;
 
 /**
- * This function calculates the numerical difference between date 1 and date 2
+ * This function calculates the numerical difference in days between `date1` and `date2`
  *
- * @param {Date} date1 first day, usually the Start Date
- * @param {Date} date2 second day, usually the End Date
- * @returns {number} The difference in days between the two dates, floored.
+ * @param date1 - first day, usually the Start Date
+ * @param date2 - second day, usually the End Date
+ * @returns The difference in days between the two dates, floored.
  */
 const calcDiffInDays = (date1: Date, date2: Date): number => {
 	const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
@@ -44,7 +44,7 @@ const calcDiffInDays = (date1: Date, date2: Date): number => {
 };
 
 /**
- * This function calculates the numerical difference between date 1 and date 2
+ * This function calculates the numerical difference in hours between `date1` and `date2`
  *
  * @param {Date} date1 first day, usually the Start Date
  * @param {Date} date2 second day, usually the End Date
@@ -64,7 +64,7 @@ const calcDiffInHours = (date1: Date, date2: Date): number => {
  * @param diffType - The type of diff we are computing
  * @returns the diff specified between the two dates
  */
-export const calcDiff = (
+const calcDiff = (
 	start: Date,
 	end: Date,
 	diffType: iAssignmentDateInfoContextFormat = "day",
@@ -81,3 +81,5 @@ export const calcDiff = (
 		}
 	}
 };
+
+export { calcDiff, calcDiffInDays, calcDiffInHours };

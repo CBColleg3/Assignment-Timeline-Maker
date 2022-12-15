@@ -23,7 +23,7 @@ type AddRemoveTaskProps = {
  *
  * @param props The properties of the component
  * @param props.index - The current task index in the array of tasks
- * @returns {JSX.Element} AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
+ * @returns AddRemoveTask component, that houses the logic for updating a singular task in the array of tasks
  */
 export const AddRemoveTask = ({ index }: AddRemoveTaskProps): JSX.Element => {
 	const { tasks, insertTask, deleteTask } = useTaskContext();

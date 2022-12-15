@@ -53,3 +53,25 @@ CLASSES
   height: 100vh;
   width: 100vw;
 }
+
+.choose_a_file_link {
+  position: relative;
+  text-decoration: none;
+  transition: color .5 ease-in-out;
+  cursor: pointer;
+}
+
+.choose_a_file_link::after {
+  position: absolute;
+  content: "";
+  border-bottom: .1em solid  #0c8eac;
+  border-radius: 1em;
+  right: 100%;
+  bottom: .025em;
+  left: 0;
+  transition: right .5s ease-in-out;
+}
+
+.choose_a_file_link:hover::after {
+  right: 0;
+}

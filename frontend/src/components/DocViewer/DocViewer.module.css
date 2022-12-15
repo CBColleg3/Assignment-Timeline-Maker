@@ -1,0 +1,42 @@
+
+@keyframes placeholder_anim {
+    0% {
+        background-color: rgba(0, 0, 0, .7);
+    }
+    50% {
+        background-color: rgba(0, 0, 0, .5);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, .7);
+    }
+}
+
+@keyframes appear_anim {
+    0% {
+        opacity: 0%;
+    }
+    50% {
+        opacity: 50%;
+    }
+    100% {
+        opacity: 75%;
+    }
+}
+
+.placeholder_animated_div {
+    animation-name: placeholder_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+.placeholder_animated_div_appear {
+    animation-name: appear_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 3s;
+}
+
+.placeholder_doc_viewer {
+    min-height: 100vh;
+    height: 100vh;
+}

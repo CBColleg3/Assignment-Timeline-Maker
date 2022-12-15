@@ -40,10 +40,10 @@ type EditTaskProps = {
  * @param props.editMode - Whether the task is in edit mode or not
  * @param props.index - The index of the task within the internal tasks array
  * @param props.setEditMode - Function to set the edit mode
- * @returns {JSX.Element} The EditTask component
+ * @returns The EditTask component
  */
 export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps): JSX.Element => {
-	const { dates, end, start } = useAssignmentDateInfoContext();
+	const { dates, end, format, start } = useAssignmentDateInfoContext();
 	const { editTask } = useTaskContext();
 	const { formState, getValues, register, reset } = useForm({
 		defaultValues: { ...task },
@@ -54,6 +54,11 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	const [dateError, setDateError] = React.useState<string>();
 	const [dueDate, setDueDate] = useState<Date>(task.dueDate);
 
+	/**
+	 * Specifically in place for when the task is initially supplied, the if statement is executed, and the reset function
+	 * makes it so all the fields in the useForm hook are overridden with the fields of the task, and we set the due date to
+	 * the proper due date.
+	 */
 	React.useEffect(() => {
 		if (task) {
 			reset({ ...task });
@@ -82,7 +87,7 @@ export const EditTask = ({ task, editMode, index, setEditMode }: EditTaskProps):
 	 * Updates the TaskContext's tasks
 	 */
 	function changeTasks(): void {
-		const updatedDate = findDateTaskUnder(dueDate, dates);
+		const updatedDate = findDateTaskUnder(dueDate, dates, format);
 		const { color } = updatedDate;
 		editTask(
 			{ ...getValues(), color, dueDate },

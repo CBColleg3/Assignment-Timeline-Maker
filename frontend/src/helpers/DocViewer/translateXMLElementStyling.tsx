@@ -1,10 +1,16 @@
 import type { HTMLStyle } from "src/@types";
 
+/**
+ * Common divisor when we are modeling values from XML to HTML
+ */
 const COMMON_DIVISOR = 20;
+/**
+ * The divisor when we are converting OOXML font size values from OOXML to HTML
+ */
 const FONT_SIZE_DIVISOR = 1.75;
 
 /**
- * Translates XML Element & Attribute to HTML CSS style
+ * Translates XML Element & Attribute to HTML CSS style, defined by the HTMLStyle type
  *
  * @param xmlElementName The name of the xml tag, used to determine which styling to apply with the given attribute
  * @param attribute The attribute of the xml element, determines which settings of the style to set (margin has bottom, top, and right, etc)

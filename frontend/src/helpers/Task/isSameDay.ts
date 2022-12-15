@@ -1,5 +1,5 @@
 /**
- * Helper function for determining whether two dates are the same day
+ * Helper function for determining whether two dates (`date1`, `date2`) are the same day
  *
  * @param date1 The first date
  * @param date2 The second date

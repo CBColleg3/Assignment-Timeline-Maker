@@ -16,6 +16,7 @@ export const AppHeader = (): JSX.Element => (
 				<span className={`fs-3 ${styles.app_header_title}`}>{"Assignment Timeline Maker"}</span>
 				<span className="ms-2">
 					<FontAwesomeIcon
+						className={`${styles.app_header_icon}`}
 						icon={faTimeline}
 						size="2x"
 					/>

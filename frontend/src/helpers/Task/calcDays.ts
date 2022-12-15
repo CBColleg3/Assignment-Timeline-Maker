@@ -11,8 +11,8 @@ const MIN_TOTAL = 0;
  * - It calculates it by counting up until the index number given, and adding the sum for each arrayValue
  * and if the sum ever exceeds the pointsPerDay, then the Day goes up, rinse and repeat for all tasks.
  *
- * @param currentTask The current task being evaluated
- * @param payload The details that determine whether to increment the date or not
+ * @param currentTask - The current task being evaluated
+ * @param payload - The details that determine whether to increment the date or not
  * @returns Whether to update the date, and the amount
  */
 export const calcDays = (currentTask: Task, payload: CalculateDayPayload): CalculateDayResponse => {

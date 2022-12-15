@@ -1,8 +1,9 @@
+/**
+ * Hashmap of all the colors, their names mapped to their hex values
+ */
 const colorHex: Record<string, string> = {
-	antiquewhite: "#faebd7",
 	aqua: "#00ffff",
 	aquamarine: "#7fffd4",
-	azure: "#f0ffff",
 	bisque: "#ffe4c4",
 	black: "#000000",
 	blue: "#0000ff",
@@ -14,7 +15,6 @@ const colorHex: Record<string, string> = {
 	chocolate: "#d2691e",
 	coral: "#ff7f50",
 	cornflowerblue: "#6495ed",
-	cornsilk: "#fff8dc",
 	crimson: "#dc143c",
 	cyan: "#00ffff",
 	darkblue: "#00008b",
@@ -49,14 +49,11 @@ const colorHex: Record<string, string> = {
 	hotpink: "#ff69b4",
 	"indianred ": "#cd5c5c",
 	indigo: "#4b0082",
-	ivory: "#fffff0",
 	khaki: "#f0e68c",
 	lavender: "#e6e6fa",
 	lawngreen: "#7cfc00",
-	lemonchiffon: "#fffacd",
 	lightblue: "#add8e6",
 	lightcoral: "#f08080",
-	lightgoldenrodyellow: "#fafad2",
 	lightgreen: "#90ee90",
 	lightgrey: "#d3d3d3",
 	lightpink: "#ffb6c1",
@@ -79,12 +76,10 @@ const colorHex: Record<string, string> = {
 	mediumturquoise: "#48d1cc",
 	mediumvioletred: "#c71585",
 	midnightblue: "#191970",
-	mintcream: "#f5fffa",
 	mistyrose: "#ffe4e1",
 	moccasin: "#ffe4b5",
 	navajowhite: "#ffdead",
 	navy: "#000080",
-	oldlace: "#fdf5e6",
 	olive: "#808000",
 	olivedrab: "#6b8e23",
 	orange: "#ffa500",
@@ -94,7 +89,6 @@ const colorHex: Record<string, string> = {
 	palegreen: "#98fb98",
 	paleturquoise: "#afeeee",
 	palevioletred: "#d87093",
-	papayawhip: "#ffefd5",
 	peachpuff: "#ffdab9",
 	peru: "#cd853f",
 	pink: "#ffc0cb",
@@ -120,12 +114,13 @@ const colorHex: Record<string, string> = {
 	tomato: "#ff6347",
 	turquoise: "#40e0d0",
 	violet: "#ee82ee",
-	wheat: "#f5deb3",
-	whitesmoke: "#f5f5f5",
 	yellow: "#ffff00",
 	yellowgreen: "#9acd32",
 };
 
+/**
+ * The array of the raw color values, without the hashtag in-front of them
+ */
 const COLOR_HEX_ARRAY = [
 	"71b4f0",
 	"f0a848",
@@ -182,7 +177,6 @@ const COLOR_HEX_ARRAY = [
 	"ff69b4",
 	"cd5c5c",
 	"4b0082",
-	"fffff0",
 	"f0e68c",
 	"e6e6fa",
 	"f58eb0",
@@ -216,12 +210,10 @@ const COLOR_HEX_ARRAY = [
 	"48d1cc",
 	"c71585",
 	"191970",
-	"f5fffa",
 	"ffe4e1",
 	"ffe4b5",
 	"ffdead",
 	"000080",
-	"fdf5e6",
 	"808000",
 	"6b8e23",
 	"ffa500",
@@ -260,13 +252,15 @@ const COLOR_HEX_ARRAY = [
 	"ff6347",
 	"40e0d0",
 	"ee82ee",
-	"f5deb3",
 	"4a4a4a",
 	"d98989",
 	"d4d40d",
 	"9acd32",
 ];
 
-const COLOR_HEX_ARRAY_LENGTH = 141;
+/**
+ * The length of the above array
+ */
+const COLOR_HEX_ARRAY_LENGTH = COLOR_HEX_ARRAY.length;
 
 export { colorHex, COLOR_HEX_ARRAY, COLOR_HEX_ARRAY_LENGTH };

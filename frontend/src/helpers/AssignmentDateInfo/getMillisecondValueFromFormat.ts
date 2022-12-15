@@ -18,9 +18,6 @@ export const getMillisecondValueFromFormat = (format: iAssignmentDateInfoContext
 		case "minute": {
 			return milliseconds.MINUTE;
 		}
-		case "week": {
-			return milliseconds.WEEK;
-		}
 		case "second": {
 			return milliseconds.SECOND;
 		}

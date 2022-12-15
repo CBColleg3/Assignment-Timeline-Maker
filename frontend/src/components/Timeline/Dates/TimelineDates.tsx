@@ -4,16 +4,29 @@ import React from "react";
 import { Accordion } from "react-bootstrap";
 import type { AssignmentDate, Task } from "src/@types";
 import { useAssignmentDateInfoContext, useTaskContext } from "src/context";
-import { isSameDay, truncateText } from "src/helpers";
+import { isSameDay, isSameFuncGenerator, truncateText } from "src/helpers";
+import { doesDateContainTasks } from "src/helpers/AssignmentDateInfo/doesDateContainTasks";
 import styles from "./TimelineDates.module.css";
 
 /**
  * TimelineDates constant values
  */
 const CONSTANTS = {
+	/**
+	 * Increment utilized when displaying the hour/day count, increment index + 1, hour index 0 --> hour (0 + 1) --> hour 1
+	 */
 	DAY_IND_INCREMENT: 1,
+	/**
+	 * Constant string we interpolate into the incremented day index
+	 */
 	DAY_STRING: "Day ",
+	/**
+	 * Constant string we interpolate into the incremented hour index
+	 */
 	HOUR_STRING: "Hour ",
+	/**
+	 * The maximum length of a task description, description is truncated at 75 characters
+	 */
 	TASK_DESC_LENGTH: 75,
 };
 
@@ -60,6 +73,7 @@ export const TimelineDates = (): JSX.Element => {
 				</Accordion.Item>
 				{dates
 					.map((eachAssignmentDate: AssignmentDate) => eachAssignmentDate.date)
+					.filter((eachDate: Date) => doesDateContainTasks(eachDate, tasks, format))
 					.map((taskDate: Date, _ind: number): JSX.Element => {
 						const currentlySelected = taskDate.getTime() === currentSelectedDate?.date.getTime();
 						const containsTasks = tasks.filter((eachTask) => isSameDay(eachTask.dueDate, taskDate)).length > 0;
@@ -109,7 +123,7 @@ export const TimelineDates = (): JSX.Element => {
 									className={`${currentlySelected ? "text-primary" : "text-dark"} d-flex flex-column`}
 								>
 									{tasks
-										.filter((eachTask) => isSameDay(eachTask.dueDate, currentSelectedDate?.date))
+										.filter((eachTask) => isSameFuncGenerator(format)(eachTask.dueDate, currentSelectedDate?.date))
 										.map((eachTask: Task, _taskInd) => (
 											<a
 												className="text-decoration-none my-2"
