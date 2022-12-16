@@ -1,8 +1,6 @@
 > Credit to Kristina Holsapple for the initial idea and implementation
 
-<div>
-    Assignment Timeline Maker
-</div>
+# [**Assignment Timeline Maker**](https://assignment-timeline-maker.onrender.com)
 
 <hr />
 
