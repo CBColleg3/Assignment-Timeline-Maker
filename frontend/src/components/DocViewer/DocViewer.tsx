@@ -9,7 +9,6 @@ import { ContentSwitch } from "./ContentSwitch";
 import styles from "./DocViewer.module.css";
 
 type MLContent = {
-	currentContent: string[];
 	simplifiedContent: string[];
 	originalContent: string[];
 };
@@ -33,7 +32,6 @@ export const DocViewer = (): JSX.Element => {
 	const [mlContent, setMlContent] = React.useState<MLContent>(() => {
 		const origContent = getParagraphTextContent(extractParagraphs(selectedFileXML));
 		return {
-			currentContent: origContent,
 			originalContent: origContent,
 			simplifiedContent: [],
 		};
@@ -52,13 +50,8 @@ export const DocViewer = (): JSX.Element => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- disabled
 			.catch((err: any) => {
 				if (err.name === "AbortError") {
-<<<<<<< HEAD:frontend/src/components/DocViewer/DocViewer.tsx
 					// eslint-disable-next-line no-console
 					console.log("Abort Error");
-=======
-					// eslint-disable-next-line no-console -- disabled
-					console.log("abort error");
->>>>>>> origin/staging:src/components/DocViewer/DocViewer.tsx
 				}
 			});
 		return () => {
@@ -69,7 +62,7 @@ export const DocViewer = (): JSX.Element => {
 	return (
 		<div className="doc-viewer-page">
 			<ContentSwitch
-				setUseSimpleContent={(newValue: boolean): void => setUseSimpleContent(newValue)}
+				setUseSimpleContent={setUseSimpleContent}
 				useSimpleContent={useSimpleContent}
 			/>
 			{useSimpleContent ? (
@@ -79,7 +72,7 @@ export const DocViewer = (): JSX.Element => {
 							? paragraphs.map(
 									(par: Element, _parIndex: number): JSX.Element => (
 										<span key={`xml-par-${_parIndex}`}>
-											{convertXML2HTML(par, mlContent.currentContent[_parIndex], tasks, start.date)}
+											{convertXML2HTML(par, mlContent.simplifiedContent[_parIndex], tasks, start.date)}
 										</span>
 									),
 							  )
@@ -105,15 +98,13 @@ export const DocViewer = (): JSX.Element => {
 				)
 			) : (
 				<div className="doc-viewer-content shadow border p-3 mt-2 rounded">
-					{mlContent.currentContent !== undefined
-						? paragraphs.map(
-								(par: Element, _parIndex: number): JSX.Element => (
-									<span key={`xml-par-${_parIndex}`}>
-										{convertXML2HTML(par, mlContent.currentContent[_parIndex], tasks, start.date)}
-									</span>
-								),
-						  )
-						: "Simplified Content is Loading..."}
+					{paragraphs.map(
+						(par: Element, _parIndex: number): JSX.Element => (
+							<span key={`xml-par-${_parIndex}`}>
+								{convertXML2HTML(par, mlContent.originalContent[_parIndex], tasks, start.date)}
+							</span>
+						),
+					)}
 				</div>
 			)}
 		</div>

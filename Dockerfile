@@ -30,13 +30,13 @@ RUN pip3 install -r requirements.txt
 RUN echo "PIP INSTALLS SUCCESSFUL"
 
 # copy and setup MUSS text simplification model
-RUN git clone https://github.com/facebookresearch/muss.git
-WORKDIR /app/muss/
-RUN pip install -e .
-RUN python -m spacy download en_core_web_md && echo "MUSS SETUP SUCCESSFUL"
+# RUN git clone https://github.com/facebookresearch/muss.git
+# WORKDIR /app/muss/
+# RUN pip install -e .
+# RUN python -m spacy download en_core_web_md && echo "MUSS SETUP SUCCESSFUL"
 
 # switch back to app root and run docker command script
 WORKDIR /app
-RUN python api/utils.py && echo "MODEL SUCCESSFULLY DOWNLOADED AND TESTED"
+# RUN python api/utils.py && echo "MODEL SUCCESSFULLY DOWNLOADED AND TESTED"
 
 CMD . ./deploy.sh
