@@ -127,6 +127,10 @@
 
 <hr />
 
+## Developer Notes
+
+Documentation on our implementation and future goals can be found [here](https://docs.google.com/document/d/1piEopa9_ApFWdGLNgdaV4m7k6OUz0pRZ55AOpXgVdVM/edit?usp=sharing)
+
 ## Introduction
 
 The Assignment Timeline Maker is an application that aims to improve the ability of professors to accommodate neurodivergent students more efficiently through a helpful tool. Our application has two facets to it. The timeline it generates and the resultant document, a modified version of the original document uploaded. This timeline has all options for the user, ranging from changing the entire format of the timeline to editing small parts of it, which are the tasks of the timeline. The document viewer has two options for the user to select. One is the original document the other is the simplified document. Having tons of options and lots of flexibility for the user's preferences, we hope this application meets all your expectations!
