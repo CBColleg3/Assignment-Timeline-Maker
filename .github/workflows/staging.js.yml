@@ -4,36 +4,36 @@
 name: Node.js CI
 
 on:
-    push:
-        branches: [staging]
+  push:
+    branches: [staging]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-	defaults:
-	    run:
-		working-directory: frontend
+    defaults:
+      run:
+        working-directory: frontend
 
-        strategy:
-            matrix:
-                node-version: [16.x]
-                # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-        steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v2
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  cache: "npm"
-            - run: npm ci
-            - run: npm run lint
-            - run: npm run test -- --coverage |& tee ./public/test_report.txt
-            - run: echo "<html><head><meta http-equiv='refresh' content='0; URL=${{github.server_url}}/${{github.repository}}' /></head><body>Redirecting to repository</body></html>" > ./public/github.html
-            - name: GitInspector
-              run: |
-                  git clone https://github.com/jpwhite3/gitinspector.git
-                  git clone ${{github.server_url}}/${{github.repository}} original-src/
-                  python ./gitinspector/gitinspector.py ./original-src/ -f tsx,ts --grading -F html -x ./gitinspector > ./public/git_report.html
-            - run: npm run build --if-present
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test -- --coverage |& tee ./public/test_report.txt
+      - run: echo "<html><head><meta http-equiv='refresh' content='0; URL=${{github.server_url}}/${{github.repository}}' /></head><body>Redirecting to repository</body></html>" > ./public/github.html
+      - name: GitInspector
+        run: |
+          git clone https://github.com/jpwhite3/gitinspector.git
+          git clone ${{github.server_url}}/${{github.repository}} original-src/
+          python ./gitinspector/gitinspector.py ./original-src/ -f tsx,ts --grading -F html -x ./gitinspector > ./public/git_report.html
+      - run: npm run build --if-present
