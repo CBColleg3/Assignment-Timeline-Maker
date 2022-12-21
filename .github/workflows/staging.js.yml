@@ -11,10 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: frontend
-
     strategy:
       matrix:
         node-version: [16.x]
@@ -23,17 +19,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
+        working-directory: frontend
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+        working-directory: frontend
       - run: npm run lint
+        working-directory: frontend
       - run: npm run test -- --coverage |& tee ./public/test_report.txt
+        working-directory: frontend
       - run: echo "<html><head><meta http-equiv='refresh' content='0; URL=${{github.server_url}}/${{github.repository}}' /></head><body>Redirecting to repository</body></html>" > ./public/github.html
+        working-directory: frontend
       - name: GitInspector
+        working-directory: frontend
         run: |
           git clone https://github.com/jpwhite3/gitinspector.git
           git clone ${{github.server_url}}/${{github.repository}} original-src/
           python ./gitinspector/gitinspector.py ./original-src/ -f tsx,ts --grading -F html -x ./gitinspector > ./public/git_report.html
       - run: npm run build --if-present
+        working-directory: frontend
