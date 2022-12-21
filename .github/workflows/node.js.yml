@@ -7,12 +7,12 @@ on:
   push:
     branches: [main]
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: frontend
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+          cache-dependency-path: "./frontend/package-lock.json"
       - id: get-repo-values
         run: |
           url=https://$(echo "${{github.repository}}" | sed "s/\//.github.io\//")
