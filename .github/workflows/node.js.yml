@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [main]
+    branches: [flask-backend]
 
 defaults:
   run:
@@ -38,6 +38,7 @@ jobs:
           file: package.json
           field: homepage
           value: ${{ steps.get-repo-values.outputs.url }}
+          cache-dependency-path: "./frontend/package.json"
       - run: npm ci
       - run: npm run lint
       - run: npm run test -- --coverage |& tee ./public/test_report.txt
