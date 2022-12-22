@@ -1,0 +1,67 @@
+@keyframes list_icon_anim {
+
+    from {
+        background-color: transparent;
+    }
+
+    to {
+        background-color: lightgray;
+    }
+
+}
+
+/*
+    Hover rule for items within the list, when the user hovers their cursor over the item, this rule is applied
+*/
+.list_icon:hover {
+    animation-name: list_icon_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+/*
+    The style for the file display section, the container that contains the list of the individual files
+*/
+.file_display_section {
+    width: 33.33333vw;
+    min-height: 20vh;
+    border-right: .5px solid rgba(0, 0, 0, .15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/*
+    Style for the file display alert, which is when there are no files uploaded
+*/
+.file_display_alert {
+    width: fit-content;
+    margin: 0;
+    padding: 1.5em;
+    font-weight: 350;
+    font-size: 1.25em;
+}
+
+/*
+    The style for the section header, which is the small text you see in the top left of the section when the display is loaded
+*/
+.file_display_section_header {
+    position: absolute;
+    bottom: 90%;
+    right: 90%;
+    font-size: .80em;
+    color: rgba(0, 0, 0, .30);
+    font-weight: 600;
+}
+
+/*
+    The style for the over-arching file container
+*/
+.file_display_container {
+    max-height: 15vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}

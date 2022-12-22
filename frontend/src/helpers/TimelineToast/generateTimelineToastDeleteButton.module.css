@@ -1,0 +1,27 @@
+
+/*
+    Styling for the toast's delete button
+*/
+.delete_button {
+    position: absolute;
+    left: 90%;
+    bottom: 75%;
+    font-size: 1.15em;
+    pointer-events: all;
+    color: red;
+    cursor: pointer;
+    border-radius: 2em;
+    padding: .15em;
+    height: min-content;
+    width: min-content;
+    line-height: 1em;
+    font-weight: 600;
+}
+
+/*
+    Hover effect for the toast's delete button when the user hovers their mouse over the delete button
+*/
+.delete_button:hover {
+    transition: background-color 1s ease-in-out;
+    background-color: rgba(0, 0, 0, .05);
+}

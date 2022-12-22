@@ -1,8 +1,0 @@
-export const milliseconds = {
-	DAY: 86400000,
-	HOUR: 3600000,
-	MINUTE: 60000,
-	NOT_SUPPORTED: -1,
-	SECOND: 1000,
-	WEEK: 604800000,
-};

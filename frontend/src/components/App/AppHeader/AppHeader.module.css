@@ -1,0 +1,111 @@
+/*
+
+ANIMATIONS
+
+*/
+
+@keyframes author_link_anim {
+    from {
+        border-bottom-color: transparent;
+        border-bottom-width: 0px;
+        border-bottom-style: none;
+    }
+
+    to {
+        border-bottom-color: gray;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+}
+
+@keyframes appear_anim {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+@keyframes header_icon_anim {
+    0% {
+        rotate: 0deg;
+    }
+    50% {
+        rotate: 360deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
+
+
+/*
+  
+  CLASSES
+  
+  */
+
+.header_title {
+    margin-left: 40vw;
+}
+
+.github_icon_link {
+    color: black;
+}
+
+.author_link {
+    position: relative;
+    text-decoration: none;
+    transition: color .5 ease-in-out;
+    cursor: pointer;
+    color: gray;
+}
+
+.author_link::after {
+    position: absolute;
+    content: "";
+    border-bottom: .1em solid  black;
+    border-radius: 1em;
+    right: 100%;
+    bottom: .025em;
+    left: 0;
+    transition: right .5s ease-in-out;
+}
+
+.author_link:hover::after {
+    right: 0;
+}
+
+.author_link:hover {
+    color: black;
+}
+
+.app_header {
+    min-height: 20vh;
+    max-height: 20vh;
+    min-width: 100vw;
+    max-width: 100vw;
+    position: relative;
+}
+
+.app_header_title {
+    font-weight: 600;
+    animation-name: appear_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+.app_header_icon {
+    animation-name: header_icon_anim;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.github_icon {
+    position: absolute;
+    left: 97%;
+    bottom: 75%;
+}

@@ -1,0 +1,40 @@
+
+/*
+    The section of the dates, which is the row section alongside the section
+    "files" and "upload"
+*/
+.select_date {
+    position: relative;
+    min-height: 20vh;
+    min-width: 33.33333vw;
+    border-right: .5px solid rgba(0, 0, 0, .15);
+}
+
+/*
+    The style of the container that has the "start" and "end" dates displayed
+*/
+.date_times {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+/*
+    The header of the section, located in the top left of the section, and has
+    the faded text "Dates"
+*/
+.date_section_header {
+    bottom: 90%;
+    right: 90%;
+    font-size: .80em;
+    color: rgba(0, 0, 0, .30);
+    font-weight: 600;
+}
+
+/*
+    The button in the dates section, labeled "Update"
+*/
+.date_section_button {
+    font-size: 1.05em;
+}

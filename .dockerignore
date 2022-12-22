@@ -1,0 +1,4 @@
+templates*
+*.git
+*.gitignore
+commands.txt
